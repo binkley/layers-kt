@@ -1,6 +1,7 @@
 package hm.binkley.labs
 
 import hm.binkley.labs.Layers.Companion.firstLayer
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.util.function.Consumer
@@ -20,6 +21,13 @@ class LayersTest {
         val layer: SubLayer<*> = firstLayer.
                 saveAndNext(::ScratchLayer).
                 saveAndNext(::FinalLayer)
+    }
+
+    @Test
+    fun shouldHaveHistory() {
+        firstLayer.saveAndNext(::ScratchLayer)
+
+        assertEquals(listOf(firstLayer.view()), layers.history())
     }
 
     open class SubLayer<L : SubLayer<L>>(layers: Layers.LayersSurface) : Layer<L>(layers)

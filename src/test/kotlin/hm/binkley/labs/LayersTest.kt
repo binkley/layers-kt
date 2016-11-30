@@ -1,5 +1,6 @@
 package hm.binkley.labs
 
+import hm.binkley.labs.Layers.Companion.firstLayer
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.util.function.Consumer
@@ -10,7 +11,7 @@ class LayersTest {
 
     @BeforeEach
     fun setUpLayers() {
-        firstLayer = Layers.firstLayer(
+        firstLayer = firstLayer(
                 Consumer<Layers> { layers -> this.layers = layers },
                 ::ScratchLayer)
     }

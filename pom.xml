@@ -16,7 +16,7 @@
     </prerequisites>
 
     <groupId>hm.binkley</groupId>
-    <artifactId>layers-pom</artifactId>
+    <artifactId>layers-kt</artifactId>
     <version>0-SNAPSHOT</version>
 
     <name>Layers KT</name>

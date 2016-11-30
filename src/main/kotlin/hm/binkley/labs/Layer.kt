@@ -2,20 +2,16 @@ package hm.binkley.labs
 
 import java.util.*
 
-abstract class Layer<L : Layer<L>>(protected val layers: Layers.LayersSurface) : LayerView {
-    private val values: MutableMap<Any, Any> = LinkedHashMap()
-
-    fun view(): LayerView = this
-
-    @Suppress("UNCHECKED_CAST")
-    override operator fun <T> get(key: Any): T = values[key] as T
-
+abstract class Layer<L : Layer<L>>(
+        protected val layers: Layers.LayersSurface,
+        private val map: MutableMap<Any, Any> = LinkedHashMap())
+    : Map<Any, Any> by map {
     fun put(key: Any, value: Any): L {
-        values[key] = value
+        map[key] = value
         return self()
     }
 
-    operator fun set(key: Any, value: Any) = put(key, value)
+    operator fun set(key: Any, value: Any) = map.put(key, value)
 
     fun <K : Layer<K>> saveAndNext(next: (layers: Layers.LayersSurface) -> K): K
             = layers.saveAndNext(this, next)

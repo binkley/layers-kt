@@ -3,9 +3,9 @@ package hm.binkley.labs
 import java.util.*
 import java.util.function.Consumer
 
-class Layers private constructor(private val layers: MutableList<Layer<*>>) {
-    fun history(): List<LayerView> = layers
-
+class Layers private constructor(
+        private val layers: MutableList<Layer<*>>)
+    : List<Map<Any, Any>> by layers {
     companion object {
         fun <L : Layer<L>> firstLayer(ctor: (Layers.LayersSurface) -> Layer<L>,
                 holder: Consumer<Layers>): Layer<L> {

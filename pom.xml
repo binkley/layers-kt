@@ -58,7 +58,7 @@
         <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <metainf-services.version>1.7</metainf-services.version>
-        <minimum-coverage-ratio>0.90</minimum-coverage-ratio>
+        <minimum-coverage-ratio>0.85</minimum-coverage-ratio>
         <project.build.outputEncoding>${java.charset}</project.build.outputEncoding>
         <project.build.sourceEncoding>${java.charset}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${java.charset}</project.reporting.outputEncoding>

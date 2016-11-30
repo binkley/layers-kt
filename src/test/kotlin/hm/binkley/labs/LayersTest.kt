@@ -27,7 +27,7 @@ class LayersTest {
     fun shouldHaveHistory() {
         firstLayer.saveAndNext(::ScratchLayer)
 
-        assertEquals(listOf(firstLayer.view()), layers.history())
+        assertEquals(listOf(firstLayer), layers)
     }
 
     open class SubLayer<L : SubLayer<L>>(layers: Layers.LayersSurface) : Layer<L>(layers)

@@ -26,10 +26,4 @@ class LayerTest {
         firstLayer["A"] = 1
         assertSame(1, firstLayer["A"])
     }
-
-    @Test
-    fun shouldGetWhatIsPutViaView() {
-        firstLayer["A"] = 1
-        assertSame(1, firstLayer.view()["A"])
-    }
 }

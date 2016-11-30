@@ -1,3 +1,3 @@
 package hm.binkley.labs
 
-class ScratchLayer(layers: Layers) : Layer<ScratchLayer>(layers)
+class ScratchLayer(layers: Layers.LayersSurface) : Layer<ScratchLayer>(layers)

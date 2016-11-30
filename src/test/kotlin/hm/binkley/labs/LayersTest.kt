@@ -11,12 +11,17 @@ class LayersTest {
 
     @BeforeEach
     fun setUpLayers() {
-        firstLayer = firstLayer(
-                Consumer<Layers> { layers -> this.layers = layers },
-                ::ScratchLayer)
+        firstLayer = firstLayer(::ScratchLayer,
+                Consumer<Layers> { layers -> this.layers = layers })
     }
 
     @Test
-    fun shouldBootstrap() {
+    fun shouldChainSavingAndAssignToSuperType() {
+        val layer: SubLayer<*> = firstLayer.
+                saveAndNext(::ScratchLayer).
+                saveAndNext(::FinalLayer)
     }
+
+    open class SubLayer<L : SubLayer<L>>(layers: Layers.LayersSurface) : Layer<L>(layers)
+    class FinalLayer(layers: Layers.LayersSurface) : SubLayer<FinalLayer>(layers)
 }

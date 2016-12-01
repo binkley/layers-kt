@@ -7,5 +7,6 @@ abstract class Rule<in T, out R>(val name: String) : (Layers.RuleSurface) -> R {
 
     companion object {
         fun sumAll(): Rule<Int, Int> = SumAllRule()
+        fun floor(floor: Int): Rule<Int, Int> = FloorRule(floor)
     }
 }

@@ -38,12 +38,12 @@ class Layers private constructor(
     }
 
     private fun value(key: Any): Any {
-        return layers.
+        val layer = layers.
                 filter { it.containsKey(key) }.
                 filter { it[key] is Rule<*, *> }.
-                map { it[key] as Rule<*, *> }.
-                last().
-                invoke(this.RuleSurface(key))!!
+                last()
+        return (layer[key] as Rule<*, *>).
+                invoke(this.RuleSurface(layer, key))!!
     }
 
     companion object {
@@ -63,13 +63,22 @@ class Layers private constructor(
         }
     }
 
-    inner class RuleSurface internal constructor(val key: Any) {
-        @Suppress("UNCHECKED_CAST")
+    inner class RuleSurface internal constructor(val layer: Layer<*>, val key: Any) {
         fun <T> values(): List<T> {
             return layers.
-                    filter {it.contains(key) }.
+                    filter { it.contains(key) }.
                     filter { it[key] !is Rule<*, *> }.
-                    map { it[key] as T }
+                    map {
+                        @Suppress("UNCHECKED_CAST")
+                        it[key] as T
+                    }
+        }
+
+        fun <R> without(): R {
+            val without: MutableList<Layer<*>> = ArrayList(layers)
+            without.remove(layer)
+            @Suppress("UNCHECKED_CAST")
+            return Layers(without)[key] as R
         }
     }
 }

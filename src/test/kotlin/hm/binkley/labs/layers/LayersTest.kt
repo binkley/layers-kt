@@ -30,15 +30,6 @@ class LayersTest {
         assertEquals(listOf(firstLayer), layers.layers())
     }
 
-    @Test
-    fun shouldGetWhatIsPutInALayer() {
-        firstLayer.
-                put("A", 1).
-                saveAndNext(::ScratchLayer)
-
-        assertEquals(1, layers.get("A"))
-    }
-
     open class SubLayer<L : SubLayer<L>>(layers: Layers.LayerSurface) : Layer<L>(layers)
     class FinalLayer(layers: Layers.LayerSurface) : SubLayer<FinalLayer>(layers)
 }

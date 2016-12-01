@@ -11,6 +11,8 @@ abstract class Layer<L : Layer<L>>(
         return self()
     }
 
+    override fun toString(): String = map.toString()
+
     operator fun set(key: Any, value: Any) = map.put(key, value)
 
     fun <K : Layer<K>> saveAndNext(next: (layers: Layers.LayerSurface) -> K): K {

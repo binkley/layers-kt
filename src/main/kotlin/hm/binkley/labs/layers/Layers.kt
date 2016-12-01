@@ -10,6 +10,14 @@ class Layers private constructor(
         updateCache()
     }
 
+    override fun toString(): String {
+        var toString = "All: " + cache.toString()
+        layers.withIndex().reversed().
+                map { "" + (it.index + 1) + ": " + it.value }.
+                forEach { toString += "\n" + it }
+        return toString
+    }
+
     fun layers(): List<Map<Any, Any>> = layers
 
     private fun save(layer: Layer<*>) {

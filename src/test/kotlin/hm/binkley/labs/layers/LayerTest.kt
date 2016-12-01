@@ -1,16 +1,15 @@
-package hm.binkley.labs
+package hm.binkley.labs.layers
 
-import hm.binkley.labs.Layers.Companion.firstLayer
+import hm.binkley.labs.layers.Layers.Companion.firstLayer
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Assertions.assertThrows
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class LayerTest {
-    lateinit var layers: Layers
+    lateinit var layers: hm.binkley.labs.layers.Layers
     lateinit var firstLayer: Layer<*>
 
-    @BeforeEach
+    @org.junit.jupiter.api.BeforeEach
     fun setUpLayers() {
         firstLayer = firstLayer(::ScratchLayer)
         { layers -> this.layers = layers }

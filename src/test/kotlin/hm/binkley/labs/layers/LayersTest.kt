@@ -1,6 +1,6 @@
-package hm.binkley.labs
+package hm.binkley.labs.layers
 
-import hm.binkley.labs.Layers.Companion.firstLayer
+import hm.binkley.labs.layers.Layers.Companion.firstLayer
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

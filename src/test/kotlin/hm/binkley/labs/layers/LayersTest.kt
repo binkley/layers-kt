@@ -39,6 +39,6 @@ class LayersTest {
         assertEquals(1, layers.get("A"))
     }
 
-    open class SubLayer<L : SubLayer<L>>(layers: Layers.LayersSurface) : Layer<L>(layers)
-    class FinalLayer(layers: Layers.LayersSurface) : SubLayer<FinalLayer>(layers)
+    open class SubLayer<L : SubLayer<L>>(layers: Layers.LayerSurface) : Layer<L>(layers)
+    class FinalLayer(layers: Layers.LayerSurface) : SubLayer<FinalLayer>(layers)
 }

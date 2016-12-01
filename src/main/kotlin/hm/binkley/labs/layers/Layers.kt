@@ -24,15 +24,15 @@ class Layers private constructor(
     companion object {
         data class Return<L : Layer<L>>(val layers: Layers, val layer: L)
 
-        fun <L : Layer<L>> firstLayer(firstLayer: (Layers.LayersSurface) -> L): Return<L> {
+        fun <L : Layer<L>> firstLayer(firstLayer: (Layers.LayerSurface) -> L): Return<L> {
             val layers = Layers(ArrayList())
-            return Return(layers, firstLayer(layers.LayersSurface()))
+            return Return(layers, firstLayer(layers.LayerSurface()))
         }
     }
 
-    inner class LayersSurface internal constructor() {
+    inner class LayerSurface internal constructor() {
         fun <K : Layer<K>> saveAndNext(layer: Layer<*>,
-                next: (Layers.LayersSurface) -> K): K {
+                next: (Layers.LayerSurface) -> K): K {
             save(layer)
             return next(this)
         }

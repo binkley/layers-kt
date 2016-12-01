@@ -39,7 +39,6 @@ class Layers private constructor(
 
     private fun value(key: Any): Any {
         val layer = layers.
-                filter { it.containsKey(key) }.
                 filter { it[key] is Rule<*, *> }.
                 last()
         return (layer[key] as Rule<*, *>).

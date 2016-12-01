@@ -3,6 +3,7 @@ package hm.binkley.labs.layers
 import java.util.*
 
 abstract class Layer<L : Layer<L>>(
+        val name: String,
         protected val layers: Layers.LayerSurface,
         private var map: MutableMap<Any, Any> = LinkedHashMap())
     : Map<Any, Any> by map {
@@ -11,7 +12,7 @@ abstract class Layer<L : Layer<L>>(
         return self()
     }
 
-    override fun toString(): String = map.toString()
+    override fun toString(): String = name + ": " + map.toString()
 
     operator fun set(key: Any, value: Any) = map.put(key, value)
 

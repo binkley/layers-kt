@@ -11,8 +11,9 @@ class LayersTest {
 
     @BeforeEach
     fun setUpLayers() {
-        firstLayer = firstLayer(::ScratchLayer)
-        { layers -> this.layers = layers }
+        val (layers, firstLayer) = firstLayer(::ScratchLayer)
+        this.layers = layers
+        this.firstLayer = firstLayer
     }
 
     @Test

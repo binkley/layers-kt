@@ -22,11 +22,11 @@ class Layers private constructor(
     }
 
     companion object {
-        fun <L : Layer<L>> firstLayer(ctor: (Layers.LayersSurface) -> Layer<L>,
-                holder: (Layers) -> Unit): Layer<L> {
+        data class Return<L : Layer<L>>(val layers: Layers, val layer: L)
+
+        fun <L : Layer<L>> firstLayer(firstLayer: (Layers.LayersSurface) -> L): Return<L> {
             val layers = Layers(ArrayList())
-            holder.invoke(layers)
-            return ctor(layers.LayersSurface())
+            return Return(layers, firstLayer(layers.LayersSurface()))
         }
     }
 

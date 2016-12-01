@@ -1,6 +1,6 @@
-package hm.binkley.labs.layers.rules
+package hm.binkley.layers.rules
 
-import hm.binkley.labs.layers.Layers
+import hm.binkley.layers.Layers
 import java.lang.Math.max
 
 class FloorRule(val floor: Int) : Rule<Int, Int>("Floor ($floor)") {

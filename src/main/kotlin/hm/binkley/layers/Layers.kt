@@ -1,6 +1,6 @@
-package hm.binkley.labs.layers
+package hm.binkley.layers
 
-import hm.binkley.labs.layers.rules.Rule
+import hm.binkley.layers.rules.Rule
 import java.util.*
 
 class Layers private constructor(
@@ -56,7 +56,7 @@ class Layers private constructor(
 
     inner class LayerSurface internal constructor() {
         fun <K : Layer<K>> saveAndNext(layer: Layer<*>,
-                next: (Layers.LayerSurface) -> K): K {
+                next: (LayerSurface) -> K): K {
             save(layer)
             return next(this)
         }

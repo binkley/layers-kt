@@ -1,11 +1,11 @@
-package hm.binkley.labs.layers.rules
+package hm.binkley.layers.rules
 
-import hm.binkley.labs.layers.Layer
-import hm.binkley.labs.layers.Layers
-import hm.binkley.labs.layers.Layers.Companion.firstLayer
-import hm.binkley.labs.layers.ScratchLayer
-import hm.binkley.labs.layers.rules.Rule.Companion.floor
-import hm.binkley.labs.layers.rules.Rule.Companion.sumAll
+import hm.binkley.layers.Layer
+import hm.binkley.layers.Layers
+import hm.binkley.layers.Layers.Companion.firstLayer
+import hm.binkley.layers.ScratchLayer
+import hm.binkley.layers.rules.Rule.Companion.floor
+import hm.binkley.layers.rules.Rule.Companion.sumAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

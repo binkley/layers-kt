@@ -1,6 +1,6 @@
-package hm.binkley.labs.layers.rules
+package hm.binkley.layers.rules
 
-import hm.binkley.labs.layers.Layers.RuleSurface
+import hm.binkley.layers.Layers.RuleSurface
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

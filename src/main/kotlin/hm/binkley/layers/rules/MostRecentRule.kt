@@ -1,6 +1,6 @@
-package hm.binkley.labs.layers.rules
+package hm.binkley.layers.rules
 
-import hm.binkley.labs.layers.Layers
+import hm.binkley.layers.Layers
 
 class MostRecentRule<T>(val defaultValue: T) : Rule<T, T>("Most recent") {
     override fun invoke(layers: Layers.RuleSurface): T {

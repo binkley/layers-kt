@@ -1,9 +1,9 @@
-package hm.binkley.labs.layers
+package hm.binkley.layers
 
-import hm.binkley.labs.layers.Layers.Companion.firstLayer
-import hm.binkley.labs.layers.rules.Rule.Companion.floor
-import hm.binkley.labs.layers.rules.Rule.Companion.mostRecent
-import hm.binkley.labs.layers.rules.Rule.Companion.sumAll
+import hm.binkley.layers.Layers.Companion.firstLayer
+import hm.binkley.layers.rules.Rule.Companion.floor
+import hm.binkley.layers.rules.Rule.Companion.mostRecent
+import hm.binkley.layers.rules.Rule.Companion.sumAll
 
 class LayersMain
 

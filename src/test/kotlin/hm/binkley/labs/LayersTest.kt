@@ -2,9 +2,9 @@ package hm.binkley.labs
 
 import hm.binkley.labs.Layers.Companion.firstLayer
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.util.function.Consumer
 
 class LayersTest {
     lateinit var layers: Layers
@@ -12,8 +12,8 @@ class LayersTest {
 
     @BeforeEach
     fun setUpLayers() {
-        firstLayer = firstLayer(::ScratchLayer,
-                Consumer<Layers> { layers -> this.layers = layers })
+        firstLayer = firstLayer(::ScratchLayer)
+        { layers -> this.layers = layers }
     }
 
     @Test

@@ -2,9 +2,9 @@ package hm.binkley.labs
 
 import hm.binkley.labs.Layers.Companion.firstLayer
 import org.junit.jupiter.api.Assertions.assertSame
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.util.function.Consumer
 
 class LayerTest {
     lateinit var layers: Layers
@@ -12,8 +12,8 @@ class LayerTest {
 
     @BeforeEach
     fun setUpLayers() {
-        firstLayer = firstLayer(::ScratchLayer,
-                Consumer<Layers> { layers -> this.layers = layers })
+        firstLayer = firstLayer(::ScratchLayer)
+        { layers -> this.layers = layers }
     }
 
     @Test
@@ -25,5 +25,14 @@ class LayerTest {
     fun shouldGetWhatIsPut() {
         firstLayer["A"] = 1
         assertSame(1, firstLayer["A"])
+    }
+
+    @Test
+    fun shouldComplainIfModifyLayerAfterSaved() {
+        firstLayer.saveAndNext(::ScratchLayer)
+
+        val e: UnsupportedOperationException
+                = assertThrows(UnsupportedOperationException::class.java)
+        { firstLayer["B"] = 2; }
     }
 }

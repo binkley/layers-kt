@@ -39,8 +39,7 @@ internal class LayerTest {
     fun shouldComplainIfModifyLayerAfterSaved() {
         firstLayer.saveAndNext(::ScratchLayer)
 
-        val e: UnsupportedOperationException
-                = assertThrows(UnsupportedOperationException::class.java)
+        assertThrows<Exception>(UnsupportedOperationException::class.java)
         { firstLayer["B"] = 2; }
     }
 

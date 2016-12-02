@@ -25,7 +25,8 @@ internal class LayerSetRuleTest {
 
     @Test
     fun shouldAdd() {
-        firstLayer.put("A", layerSet<ScratchLayer>(unlimited())).
+        firstLayer.
+                put("A", layerSet<ScratchLayer>(unlimited())).
                 saveAndNext(::ScratchLayer).
                 put("A", add(firstLayer)).
                 saveAndNext(::ScratchLayer)
@@ -35,7 +36,8 @@ internal class LayerSetRuleTest {
 
     @Test
     fun shouldRemove() {
-        firstLayer.put("A", layerSet<ScratchLayer>(unlimited())).
+        firstLayer.
+                put("A", layerSet<ScratchLayer>(unlimited())).
                 saveAndNext(::ScratchLayer).
                 put("A", add(firstLayer)).
                 saveAndNext(::ScratchLayer).

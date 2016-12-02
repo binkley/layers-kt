@@ -1,3 +1,5 @@
 package hm.binkley.layers
 
-class ScratchLayer(layers: hm.binkley.layers.Layers.LayerSurface) : hm.binkley.layers.Layer<ScratchLayer>("Scratch", layers)
+import hm.binkley.layers.Layers.LayerSurface
+
+class ScratchLayer(layers: LayerSurface) : Layer<ScratchLayer>("Scratch", layers)

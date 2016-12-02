@@ -18,6 +18,7 @@ internal class LayersTest {
 
     @Test
     fun shouldChainSavingAndAssignToSuperType() {
+        @Suppress("UNUSED_VARIABLE")
         val layer: SubLayer<*> = firstLayer.
                 saveAndNext(::ScratchLayer).
                 saveAndNext(::FinalLayer)

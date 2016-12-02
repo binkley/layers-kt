@@ -8,5 +8,6 @@ abstract class FullnessFunction<L : Layer<L>>(val name: String)
 
     companion object {
         fun <L : Layer<L>> unlimited(): FullnessFunction<L> = UnlimitedFullness()
+        fun <L : Layer<L>> max(max: Int): FullnessFunction<L> = MaxFullness(max)
     }
 }

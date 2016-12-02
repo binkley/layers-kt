@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class LayerTest {
+internal class LayerTest {
     lateinit var layers: Layers
     lateinit var firstLayer: Layer<*>
 

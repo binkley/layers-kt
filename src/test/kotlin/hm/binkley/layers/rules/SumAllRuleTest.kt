@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class SumAllRuleTest {
+internal class SumAllRuleTest {
     lateinit var layers: Layers
     lateinit var firstLayer: Layer<*>
 

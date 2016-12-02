@@ -1,7 +1,7 @@
 package hm.binkley.layers.rules
 
-import hm.binkley.layers.Layers
+import hm.binkley.layers.Layers.RuleSurface
 
 class SumAllRule : Rule<Int, Int>("Sum all") {
-    override fun invoke(layers: Layers.RuleSurface) = layers.values<Int>().sum()
+    override fun invoke(layers: RuleSurface) = layers.values<Int>().sum()
 }

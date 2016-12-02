@@ -1,8 +1,8 @@
 package hm.binkley.layers.rules
 
-import hm.binkley.layers.Layers
+import hm.binkley.layers.Layers.RuleSurface
 
-abstract class Rule<in T, out R>(val name: String) : (Layers.RuleSurface) -> R {
+abstract class Rule<in T, out R>(val name: String) : (RuleSurface) -> R {
     override fun toString(): String = "[Rule: $name]"
 
     companion object {

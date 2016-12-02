@@ -21,6 +21,9 @@ class Layers private constructor(
 
     fun layers(): List<Map<*, *>> = layers
 
+    @Suppress("UNCHECKED_CAST")
+    fun <T> getT(key: Any): T = get(key) as T // TODO: Clash with Map.get
+
     private fun save(layer: Layer<*>) {
         layers.add(layer)
         updateCache()

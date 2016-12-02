@@ -18,7 +18,7 @@ internal class MaxFullnessTest {
         val (layers, firstLayer) = Layers.firstLayer(::ScratchLayer)
         this.layers = layers
         this.firstLayer = firstLayer
-        set = LayerSet("Bob", max(1))
+        set = LayerSet(max(1))
     }
 
     @Test

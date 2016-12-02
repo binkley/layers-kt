@@ -1,14 +1,12 @@
 package hm.binkley.layers.sets
 
 import hm.binkley.layers.Layer
+import hm.binkley.layers.rules.Rule
 import java.util.*
 
-class LayerSet<L : Layer<L>>(val name: String,
-        private val fullness: FullnessFunction<L>,
+class LayerSet<L : Layer<L>>(private val fullness: FullnessFunction<L>,
         private val set: MutableSet<L> = LinkedHashSet())
     : Set<L> by set {
-    override fun toString(): String = "[Set: $name ($fullness)]"
-
     fun add(element: L) {
         if (fullness.invoke(this, element))
             throw IndexOutOfBoundsException(fullness.name)
@@ -19,5 +17,9 @@ class LayerSet<L : Layer<L>>(val name: String,
     fun remove(element: L) {
         if (!set.remove(element))
             throw NoSuchElementException()
+    }
+
+    companion object {
+        fun <L : Layer<L>> rule(fullness: FullnessFunction<L>): Rule<LayerSetCommand<L>, LayerSet<L>> = LayerSetRule(fullness)
     }
 }

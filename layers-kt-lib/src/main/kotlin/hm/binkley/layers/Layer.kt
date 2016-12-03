@@ -5,8 +5,8 @@ import hm.binkley.layers.Layers.LayerSurface
 import java.util.*
 
 abstract class Layer<L : Layer<L>>(
-        val name: String,
         protected val layers: LayerSurface,
+        val name: String,
         private var map: MutableMap<Any, Any> = LinkedHashMap())
     : Map<Any, Any> by map {
     @Suppress("UNCHECKED_CAST")

@@ -1,6 +1,7 @@
 package hm.binkley.layers
 
 import hm.binkley.layers.Layers.Companion.firstLayer
+import hm.binkley.layers.Layers.LayerSurface
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Assertions.assertThrows
@@ -21,7 +22,7 @@ internal class LayerTest {
     @Test
     fun shouldKnowName() {
         assertEquals("Bob", firstLayer.
-                saveAndNext({ layers -> EgLayer("Bob", layers) }).name)
+                saveAndNext({ layers -> EgLayer(layers, "Bob") }).name)
     }
 
     @Test
@@ -43,5 +44,5 @@ internal class LayerTest {
         { firstLayer["B"] = 2; }
     }
 
-    class EgLayer(name: String, layers: Layers.LayerSurface) : Layer<EgLayer>(name, layers)
+    class EgLayer(layers: LayerSurface, name: String) : Layer<EgLayer>(layers, name)
 }

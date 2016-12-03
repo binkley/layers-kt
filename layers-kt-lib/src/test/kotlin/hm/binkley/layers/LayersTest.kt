@@ -1,6 +1,7 @@
 package hm.binkley.layers
 
 import hm.binkley.layers.Layers.Companion.firstLayer
+import hm.binkley.layers.Layers.LayerSurface
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,6 +32,8 @@ internal class LayersTest {
         assertEquals(listOf(firstLayer), layers.layers())
     }
 
-    open class SubLayer<L : SubLayer<L>>(name: String, layers: Layers.LayerSurface) : Layer<L>(name, layers)
-    class FinalLayer(layers: Layers.LayerSurface) : SubLayer<FinalLayer>("Final", layers)
+    open class SubLayer<L : SubLayer<L>>(layers: LayerSurface, name: String)
+        : Layer<L>(layers, name)
+    class FinalLayer(layers: Layers.LayerSurface)
+        : SubLayer<FinalLayer>(layers, "Final")
 }

@@ -37,7 +37,7 @@ class Layers private constructor(
     }
 
     private fun updateCache() {
-        val updated: MutableSet<Any> = LinkedHashSet()
+        val updated = LinkedHashSet<Any>()
         layers.flatMap { it.keys }.
                 distinct().
                 forEach {
@@ -94,7 +94,7 @@ class Layers private constructor(
         }
 
         fun <R> without(): R {
-            val without: MutableList<Layer<*>> = ArrayList(layers)
+            val without = ArrayList<Layer<*>>(layers)
             without.remove(layer)
             @Suppress("UNCHECKED_CAST")
             return Layers(without)[key] as R

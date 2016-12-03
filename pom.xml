@@ -24,6 +24,7 @@
 
     <modules>
         <module>layers-kt-lib</module>
+        <module>layers-kt-domain</module>
     </modules>
 
     <licenses>
@@ -74,7 +75,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>hm.binkley.labs</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>layers-kt-lib</artifactId>
                 <version>${project.version}</version>
             </dependency>

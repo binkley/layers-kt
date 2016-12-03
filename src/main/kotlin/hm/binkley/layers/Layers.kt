@@ -12,11 +12,18 @@ class Layers private constructor(
     }
 
     override fun toString(): String {
-        var toString = "All: " + cache.toString()
+        var toString = "All (${layers.size}): ${toDisplay(cache)}"
         layers.withIndex().reversed().
                 map { "" + (it.index + 1) + ": " + it.value }.
                 forEach { toString += "\n" + it }
         return toString
+    }
+
+    private fun simpleClassKey(key: Any): Any {
+        return when (key) {
+            is Class<*> -> "[${key.simpleName}]"
+            else -> key
+        }
     }
 
     fun layers(): List<Map<*, *>> = layers
@@ -54,6 +61,16 @@ class Layers private constructor(
         fun <L : Layer<L>> firstLayer(firstLayer: (LayerSurface) -> L): Return<L> {
             val layers = Layers(ArrayList())
             return Return(layers, firstLayer(layers.LayerSurface()))
+        }
+
+        fun toDisplay(map: Map<Any, Any>): Map<Any, Any> = map.
+                asSequence().
+                map { Pair(simpleClassKey(it.key), it.value) }.
+                toMap()
+
+        private fun simpleClassKey(key: Any): Any = when (key) {
+            is Class<*> -> "[${key.simpleName}]"
+            else -> key
         }
     }
 

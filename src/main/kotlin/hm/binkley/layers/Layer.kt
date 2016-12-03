@@ -1,5 +1,6 @@
 package hm.binkley.layers
 
+import hm.binkley.layers.Layers.Companion.toDisplay
 import hm.binkley.layers.Layers.LayerSurface
 import java.util.*
 
@@ -16,7 +17,7 @@ abstract class Layer<L : Layer<L>>(
         return self()
     }
 
-    override fun toString(): String = name + ": " + map.toString()
+    override fun toString(): String = "$name: ${toDisplay(map)}"
 
     operator fun set(key: Any, value: Any) = map.put(key, value)
 

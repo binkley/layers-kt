@@ -17,13 +17,13 @@ fun main(args: Array<String>) {
             saveAndNext(::ScratchLayer).
             put("A", floor(4)).
             saveAndNext(::ScratchLayer).
-            put("B", mostRecent("Zaphod")).
+            put(String::class.java, mostRecent("Zaphod")).
             saveAndNext(::ScratchLayer).
-            put("B", "Bob").
+            put(String::class.java, "Bob").
             saveAndNext(::ScratchLayer).
-            put("B", "Nancy").
+            put(String::class.java, "Nancy").
             saveAndNext(::ScratchLayer)
     println(layers)
     println(layers["A"])
-    println(layers["B"])
+    println(layers[String::class.java])
 }

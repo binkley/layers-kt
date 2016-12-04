@@ -1,22 +1,10 @@
 package hm.binkley.layers
 
-import hm.binkley.layers.Layers.Companion.firstLayer
 import hm.binkley.layers.Layers.LayerSurface
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-internal class LayersTest {
-    lateinit var layers: Layers
-    lateinit var firstLayer: Layer<*>
-
-    @BeforeEach
-    fun setUpLayers() {
-        val (layers, firstLayer) = firstLayer(::ScratchLayer)
-        this.layers = layers
-        this.firstLayer = firstLayer
-    }
-
+internal class LayersTest : LayersTestSupport<ScratchLayer>(::ScratchLayer) {
     @Test
     fun shouldChainSavingAndAssignToSuperType() {
         @Suppress("UNUSED_VARIABLE")
@@ -34,6 +22,7 @@ internal class LayersTest {
 
     open class SubLayer<L : SubLayer<L>>(layers: LayerSurface, name: String)
         : Layer<L>(layers, name)
+
     class FinalLayer(layers: Layers.LayerSurface)
         : SubLayer<FinalLayer>(layers, "Final")
 }

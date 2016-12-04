@@ -1,25 +1,13 @@
 package hm.binkley.layers.rules
 
-import hm.binkley.layers.Layer
-import hm.binkley.layers.Layers
-import hm.binkley.layers.Layers.Companion.firstLayer
+import hm.binkley.layers.LayersTestSupport
 import hm.binkley.layers.ScratchLayer
 import hm.binkley.layers.rules.Rule.Companion.sumAll
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-internal class SumAllRuleTest {
-    lateinit var layers: Layers
-    lateinit var firstLayer: Layer<*>
-
-    @BeforeEach
-    fun setUpLayers() {
-        val (layers, firstLayer) = firstLayer(::ScratchLayer)
-        this.layers = layers
-        this.firstLayer = firstLayer
-    }
-
+internal class SumAllRuleTest
+    : LayersTestSupport<ScratchLayer>(::ScratchLayer) {
     @Test
     fun shouldSumAllValues() {
         firstLayer.

@@ -26,5 +26,11 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>layers-kt-lib</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>layers-kt-lib</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

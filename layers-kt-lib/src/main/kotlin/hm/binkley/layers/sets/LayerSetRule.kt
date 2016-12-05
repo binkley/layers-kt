@@ -5,7 +5,7 @@ import hm.binkley.layers.Layers.RuleSurface
 import hm.binkley.layers.rules.Rule
 
 internal class LayerSetRule<L : Layer<L>>(private val fullness: FullnessFunction<L>)
-    : Rule<LayerSetCommand<L>, LayerSet<L>>("Set") {
+    : Rule<LayerSet<L>>("Set") {
     override fun invoke(layers: RuleSurface): LayerSet<L> {
         val set = LayerSet(fullness)
         layers.values<LayerSetCommand<L>>().

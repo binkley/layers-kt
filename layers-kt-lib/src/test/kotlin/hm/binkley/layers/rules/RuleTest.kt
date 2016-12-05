@@ -10,7 +10,7 @@ internal class RuleTest {
         assertEquals("Bob", EgRule("Bob").name)
     }
 
-    private class EgRule(name: String) : Rule<Any, Any>(name) {
+    private class EgRule(name: String) : Rule<Any>(name) {
         override fun invoke(layers: RuleSurface) = this
     }
 }

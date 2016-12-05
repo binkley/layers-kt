@@ -19,13 +19,6 @@ class Layers private constructor(
         return toString
     }
 
-    private fun simpleClassKey(key: Any): Any {
-        return when (key) {
-            is Class<*> -> "[${key.simpleName}]"
-            else -> key
-        }
-    }
-
     fun layers(): List<Map<*, *>> = layers
 
     @Suppress("UNCHECKED_CAST")
@@ -49,9 +42,9 @@ class Layers private constructor(
 
     private fun value(key: Any): Any {
         val layer = layers.
-                filter { it[key] is Rule<*, *> }.
+                filter { it[key] is Rule<*> }.
                 last()
-        return (layer.getT<Rule<*, *>>(key)).
+        return (layer.getT<Rule<*>>(key)).
                 invoke(this.RuleSurface(layer, key))!!
     }
 
@@ -86,7 +79,7 @@ class Layers private constructor(
         fun <T> values(): List<T> {
             return layers.
                     filter { it.contains(key) }.
-                    filter { it[key] !is Rule<*, *> }.
+                    filter { it[key] !is Rule<*> }.
                     map {
                         @Suppress("UNCHECKED_CAST")
                         it[key] as T

@@ -1,4 +1,4 @@
-package hm.binkley.layers.dnd
+package hm.binkley.layers.dnd.items
 
 class Weight(numerator: Int, denominator: Int)
     : Fraction<Weight>(::Weight, numerator, denominator) {

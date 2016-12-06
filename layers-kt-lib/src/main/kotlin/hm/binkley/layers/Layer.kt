@@ -12,7 +12,7 @@ abstract class Layer<L : Layer<L>>(
     @Suppress("UNCHECKED_CAST")
     fun <T> getT(key: Any): T = get(key) as T // TODO: Clash with Map.get
 
-    fun put(key: Any, value: Any): L {
+    open fun put(key: Any, value: Any): L {
         map[key] = value
         return self()
     }

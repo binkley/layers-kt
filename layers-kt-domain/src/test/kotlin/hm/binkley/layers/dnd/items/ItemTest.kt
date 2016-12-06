@@ -1,9 +1,9 @@
-package hm.binkley.layers.dnd
+package hm.binkley.layers.dnd.items
 
 import hm.binkley.layers.Layers.LayerSurface
 import hm.binkley.layers.LayersTestSupport
-import hm.binkley.layers.dnd.ItemTest.EgItem
-import hm.binkley.layers.dnd.Weight.Companion.WEIGHTLESS
+import hm.binkley.layers.dnd.items.ItemTest.EgItem
+import hm.binkley.layers.dnd.items.Weight.Companion.WEIGHTLESS
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

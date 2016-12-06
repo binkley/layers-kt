@@ -1,4 +1,4 @@
-package hm.binkley.layers.dnd
+package hm.binkley.layers.dnd.items
 
 import java.lang.Math.abs
 import java.math.BigDecimal

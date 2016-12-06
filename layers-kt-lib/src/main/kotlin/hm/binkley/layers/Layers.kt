@@ -73,6 +73,8 @@ class Layers private constructor(
             save(layer)
             return next(this)
         }
+
+        fun <T> get(key: Any): T = getT(key)
     }
 
     inner class RuleSurface internal constructor(val layer: Layer<*>, val key: Any) {

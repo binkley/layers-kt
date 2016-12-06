@@ -1,4 +1,4 @@
-package hm.binkley.layers.dnd
+package hm.binkley.layers.dnd.items
 
 import hm.binkley.layers.Layer
 import hm.binkley.layers.Layers.LayerSurface

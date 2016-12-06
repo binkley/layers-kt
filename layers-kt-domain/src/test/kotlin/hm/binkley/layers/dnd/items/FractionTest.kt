@@ -1,18 +1,17 @@
-package hm.binkley.layers.dnd
+package hm.binkley.layers.dnd.items
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
 
 internal class FractionTest {
-    @Test
+    @org.junit.jupiter.api.Test
     fun shouldDiplayNicely()
             = assertEquals("0.7", EgFraction(2, 3).toString())
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun shouldDiplayWithoutFractions()
             = assertEquals("1", EgFraction(1, 1).toString())
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun shouldAdd()
             = assertEquals(EgFraction(3, 2), EgFraction(5, 6).
             add(EgFraction(2, 3)))

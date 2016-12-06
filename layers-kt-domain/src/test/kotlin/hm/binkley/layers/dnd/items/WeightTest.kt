@@ -1,4 +1,4 @@
-package hm.binkley.layers.dnd
+package hm.binkley.layers.dnd.items
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

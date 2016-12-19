@@ -36,9 +36,11 @@ internal class MaxFullnessTest
 
     @Test
     fun shouldRemoveAndReadd() {
-        set.add(firstLayer)
-        set.remove(firstLayer)
-        set.add(firstLayer)
+        with(set) {
+            add(firstLayer)
+            remove(firstLayer)
+            add(firstLayer)
+        }
 
         assertEquals(setOf(firstLayer), set)
     }

@@ -9,7 +9,7 @@ import java.util.*
 internal class LayerSetTest {
     @Test
     fun shouldComplainWhenFull() {
-        val (layers, firstLayer) = firstLayer(::ScratchLayer)
+        val (_, firstLayer) = firstLayer(::ScratchLayer)
 
         assertThrows<Exception>(IndexOutOfBoundsException::class.java) {
             LayerSet(AlwaysFull()).add(firstLayer)
@@ -18,7 +18,7 @@ internal class LayerSetTest {
 
     @Test
     fun shouldComplainWhenEmpty() {
-        val (layers, firstLayer) = firstLayer(::ScratchLayer)
+        val (_, firstLayer) = firstLayer(::ScratchLayer)
 
         assertThrows<Exception>(NoSuchElementException::class.java) {
             LayerSet(AlwaysFull()).remove(firstLayer)

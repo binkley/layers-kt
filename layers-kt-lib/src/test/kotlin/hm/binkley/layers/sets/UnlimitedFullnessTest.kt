@@ -26,8 +26,10 @@ internal class UnlimitedFullnessTest
 
     @Test
     fun shouldRemove() {
-        set.add(firstLayer)
-        set.remove(firstLayer)
+        with(set) {
+            add(firstLayer)
+            remove(firstLayer)
+        }
 
         assertTrue(set.isEmpty())
     }

@@ -7,9 +7,8 @@ import hm.binkley.layers.rules.Rule
 import hm.binkley.layers.sets.LayerSet
 
 abstract class AttunementItem<L : AttunementItem<L>>(layers: LayerSurface,
-        name: String,
-        weight: Weight)
-    : MagicItem<L>(layers, name, weight) {
+        name: String, weight: Weight, volume: Volume)
+    : MagicItem<L>(layers, name, weight, volume) {
     fun isAttuned(): Boolean {
         return layers.get<LayerSet<*>>(Attunement::class.java).contains(this)
     }
@@ -17,7 +16,8 @@ abstract class AttunementItem<L : AttunementItem<L>>(layers: LayerSurface,
     fun <R> put(key: Any, value: Rule<R>): L
             = super.put(key, AttunementItemRule(self(), value))
 
-    fun <K : Layer<K>> attuneSaveAndNext(next: (layers: LayerSurface) -> K): K {
+    fun <K : Layer<K>> attuneSaveAndNext(
+            next: (layers: LayerSurface) -> K): K {
         return saveAndNext(attune(self())).
                 saveAndNext(next)
     }

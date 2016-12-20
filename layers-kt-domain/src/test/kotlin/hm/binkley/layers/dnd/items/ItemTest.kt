@@ -12,6 +12,9 @@ internal class ItemTest : LayersTestSupport<EgItem>(::EgItem) {
     @Test
     fun shouldHaveWeight() = assertEquals(WEIGHTLESS, firstLayer.weight)
 
+    @Test
+    fun shouldHaveVolume() = assertEquals(SPACELESS, firstLayer.volume)
+
     internal class EgItem(layers: LayerSurface) : Item<EgItem>(layers,
             "Example", WEIGHTLESS, SPACELESS)
 }

@@ -6,7 +6,7 @@ import java.math.RoundingMode.HALF_UP
 
 abstract class Fraction<F : Fraction<F>>(private val ctor: (Int, Int) -> F,
         numerator: Int, denominator: Int)
-    : Comparable<F> {
+    : Number(), Comparable<F> {
     private val numerator: Int
     private val denominator: Int
 
@@ -17,6 +17,20 @@ abstract class Fraction<F : Fraction<F>>(private val ctor: (Int, Int) -> F,
         this.numerator = abs(numerator / gcm)
         this.denominator = abs(denominator / gcm)
     }
+
+    override final fun toByte() = (numerator / denominator).toByte()
+
+    override final fun toChar() = (numerator / denominator).toChar()
+
+    override final fun toDouble() = numerator.toDouble() / denominator.toDouble()
+
+    override final fun toFloat() = numerator.toFloat() / numerator.toFloat()
+
+    override final fun toInt() = numerator / denominator
+
+    override final fun toLong() = numerator.toLong() / denominator
+
+    override final fun toShort() = (numerator / denominator).toShort()
 
     fun add(that: F): F {
         val numerator = this.numerator * that.denominator + that.numerator * denominator

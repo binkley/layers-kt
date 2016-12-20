@@ -5,7 +5,8 @@ import java.math.BigDecimal
 import java.math.RoundingMode.HALF_UP
 
 abstract class Fraction<F : Fraction<F>>(private val ctor: (Int, Int) -> F,
-        numerator: Int, denominator: Int) {
+        numerator: Int, denominator: Int)
+    : Comparable<F> {
     private val numerator: Int
     private val denominator: Int
 
@@ -21,6 +22,11 @@ abstract class Fraction<F : Fraction<F>>(private val ctor: (Int, Int) -> F,
         val numerator = this.numerator * that.denominator + that.numerator * denominator
         val denominator = this.denominator * that.denominator
         return ctor.invoke(numerator, denominator)
+    }
+
+    override final fun compareTo(other: F): Int {
+        return Integer.compare(numerator * other.denominator,
+                other.numerator * denominator)
     }
 
     override fun toString(): String {

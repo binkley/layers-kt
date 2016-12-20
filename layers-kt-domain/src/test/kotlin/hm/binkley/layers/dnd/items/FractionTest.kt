@@ -14,6 +14,10 @@ internal class FractionTest {
             = assertEquals("1", EgFraction(1, 1).toString())
 
     @Test
+    fun shouldNegate()
+            = assertEquals(EgFraction(-3, 2), EgFraction(3, 2).negate())
+
+    @Test
     fun shouldAdd()
             = assertEquals(EgFraction(3, 2), EgFraction(5, 6).
             add(EgFraction(2, 3)))

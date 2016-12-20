@@ -11,7 +11,7 @@ abstract class Fraction<F : Fraction<F>>(private val ctor: (Int, Int) -> F,
     private val denominator: Int
 
     init {
-        if (numerator < 0 || denominator < 1)
+        if (denominator < 1)
             throw IllegalArgumentException()
         val gcm = gcm(numerator, denominator)
         this.numerator = abs(numerator / gcm)
@@ -31,6 +31,8 @@ abstract class Fraction<F : Fraction<F>>(private val ctor: (Int, Int) -> F,
     override final fun toLong() = numerator.toLong() / denominator
 
     override final fun toShort() = (numerator / denominator).toShort()
+
+    fun negate() = ctor.invoke(-numerator, denominator)
 
     fun add(that: F): F {
         val numerator = this.numerator * that.denominator + that.numerator * denominator

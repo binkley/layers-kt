@@ -60,7 +60,7 @@
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.0.2</maven-dependency-plugin.version>
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
-        <maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <metainf-services.version>1.7</metainf-services.version>
         <minimum-coverage-ratio>0.85</minimum-coverage-ratio>
         <project.build.outputEncoding>${java.charset}</project.build.outputEncoding>

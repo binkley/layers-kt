@@ -24,9 +24,11 @@ internal class LayerTest : LayersTestSupport<ScratchLayer>(::ScratchLayer) {
     fun shouldComplainIfModifyLayerAfterSaved() {
         firstLayer.saveAndNext(::ScratchLayer)
 
-        assertThrows<Exception>(UnsupportedOperationException::class.java)
-        { firstLayer["B"] = 2; }
+        assertThrows(UnsupportedOperationException::class.java) {
+            firstLayer["B"] = 2
+        }
     }
 
-    class EgLayer(layers: LayerSurface, name: String) : Layer<EgLayer>(layers, name)
+    class EgLayer(layers: LayerSurface, name: String) : Layer<EgLayer>(layers,
+            name)
 }

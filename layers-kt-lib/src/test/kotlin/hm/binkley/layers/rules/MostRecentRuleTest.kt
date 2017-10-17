@@ -1,13 +1,9 @@
 package hm.binkley.layers.rules
 
-import hm.binkley.layers.Layer
-import hm.binkley.layers.Layers
-import hm.binkley.layers.Layers.Companion.firstLayer
 import hm.binkley.layers.LayersTestSupport
 import hm.binkley.layers.ScratchLayer
 import hm.binkley.layers.rules.Rule.Companion.mostRecent
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class MostRecentRuleTest

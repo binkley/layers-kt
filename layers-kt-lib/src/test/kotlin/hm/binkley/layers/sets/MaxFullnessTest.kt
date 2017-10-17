@@ -29,7 +29,7 @@ internal class MaxFullnessTest
         set.add(firstLayer)
         val secondLayer = firstLayer.saveAndNext(::ScratchLayer)
 
-        assertThrows<Exception>(IndexOutOfBoundsException::class.java) {
+        assertThrows(IndexOutOfBoundsException::class.java) {
             set.add(secondLayer)
         }
     }

@@ -1,7 +1,9 @@
 package hm.binkley.layers
 
 import hm.binkley.layers.rules.Rule
-import java.util.*
+import java.util.ArrayList
+import java.util.LinkedHashMap
+import java.util.LinkedHashSet
 
 class Layers private constructor(
         private val layers: MutableList<Layer<*>>,
@@ -49,11 +51,10 @@ class Layers private constructor(
     }
 
     companion object {
-        data class Return<L : Layer<L>>(val layers: Layers, val layer: L)
-
-        fun <L : Layer<L>> firstLayer(firstLayer: (LayerSurface) -> L): Return<L> {
+        fun <L : Layer<L>> firstLayer(firstLayer: (LayerSurface) -> L)
+                : Pair<Layers, L> {
             val layers = Layers(ArrayList())
-            return Return(layers, firstLayer(layers.LayerSurface()))
+            return Pair(layers, firstLayer(layers.LayerSurface()))
         }
 
         fun toDisplay(map: Map<Any, Any>): Map<Any, Any> = map.
@@ -77,7 +78,8 @@ class Layers private constructor(
         fun <T> get(key: Any): T = getT(key)
     }
 
-    inner class RuleSurface internal constructor(val layer: Layer<*>, val key: Any) {
+    inner class RuleSurface internal constructor(val layer: Layer<*>,
+            val key: Any) {
         fun <T> values(): List<T> {
             return layers.
                     filter { it.contains(key) }.

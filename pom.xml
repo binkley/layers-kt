@@ -76,7 +76,7 @@
         <repository>
             <id>kotlin-bintray</id>
             <name>Kotlin Bintray</name>
-            <url>https://dl.bintray.com/kotlin/kotlin-eap-1.1</url>
+            <url>https://dl.bintray.com/kotlin/kotlin-eap-1.2</url>
         </repository>
     </repositories>
 
@@ -84,10 +84,9 @@
         <pluginRepository>
             <id>kotlin-bintray</id>
             <name>Kotlin Bintray</name>
-            <url>https://dl.bintray.com/kotlin/kotlin-eap-1.1</url>
+            <url>https://dl.bintray.com/kotlin/kotlin-eap-1.2</url>
         </pluginRepository>
     </pluginRepositories>
-
 
     <dependencyManagement>
         <dependencies>

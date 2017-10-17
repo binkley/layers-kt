@@ -2,7 +2,8 @@ package hm.binkley.layers
 
 import hm.binkley.layers.Layers.Companion.toDisplay
 import hm.binkley.layers.Layers.LayerSurface
-import java.util.*
+import java.util.Collections
+import java.util.LinkedHashMap
 
 abstract class Layer<L : Layer<L>>(
         protected val layers: LayerSurface,
@@ -23,10 +24,13 @@ abstract class Layer<L : Layer<L>>(
 
     fun <K : Layer<K>> saveAndNext(next: (layers: LayerSurface) -> K): K {
         // TODO: Suboptimally throw RTE when modifying after save
-        map = Collections.unmodifiableMap(map)
+        map = map.unmodifiable()
         return layers.saveAndNext(this, next)
     }
 
     @Suppress("UNCHECKED_CAST")
     protected fun self(): L = this as L
+
+    private fun <K, V> MutableMap<K, V>.unmodifiable()
+            = Collections.unmodifiableMap(this)
 }

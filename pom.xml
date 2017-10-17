@@ -53,11 +53,11 @@
         <generateBackupPoms>false</generateBackupPoms>
         <java.charset>UTF-8</java.charset>
         <java.version>8</java.version>
-        <junit.jupiter.version>5.0.0-M3</junit.jupiter.version>
+        <junit.jupiter.version>5.0.0-M4</junit.jupiter.version>
         <junit.platform.version>1.0.0-M3</junit.platform.version>
-        <kotlin.version>1.1-M04</kotlin.version>
-        <maven-clean-plugin.version>2.6.1</maven-clean-plugin.version>
-        <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+        <kotlin.version>1.2.0-beta-31</kotlin.version>
+        <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
+        <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.0.0</maven-dependency-plugin.version>
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
@@ -68,7 +68,8 @@
         <project.reporting.outputEncoding>${java.charset}</project.reporting.outputEncoding>
         <project.reporting.sourceEncoding>${java.charset}</project.reporting.sourceEncoding>
         <!-- TODO: Versions 2.3 downgrades other plugins -->
-        <versions-maven-plugin.version>2.2</versions-maven-plugin.version>
+        <versions-maven-plugin.version>2.3</versions-maven-plugin.version>
+        <versions-maven-plugin.phase>verify</versions-maven-plugin.phase>
         <!-- @formatter:on -->
     </properties>
         
@@ -137,7 +138,7 @@
                 <executions>
                     <execution>
                         <id>update-dependencies</id>
-                        <phase>validate</phase>
+                        <phase>${versions-maven-plugin.phase}</phase>
                         <goals>
                             <goal>update-properties</goal>
                         </goals>

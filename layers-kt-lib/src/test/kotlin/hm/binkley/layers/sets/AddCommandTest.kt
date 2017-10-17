@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 
 internal class AddCommandTest
     : LayersTestSupport<ScratchLayer>(::ScratchLayer) {
-    lateinit var set: LayerSet<ScratchLayer>
+    private lateinit var set: LayerSet<ScratchLayer>
 
     @BeforeEach
     fun setUpSets() {

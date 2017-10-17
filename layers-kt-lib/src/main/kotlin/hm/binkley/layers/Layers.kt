@@ -43,9 +43,7 @@ class Layers private constructor(
     }
 
     private fun value(key: Any): Any {
-        val layer = layers.
-                filter { it[key] is Rule<*> }.
-                last()
+        val layer = layers.last { it[key] is Rule<*> }
         return (layer.getT<Rule<*>>(key)).
                 invoke(this.RuleSurface(layer, key))!!
     }

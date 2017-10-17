@@ -7,6 +7,6 @@ abstract class Item<L : Item<L>>(layers: LayerSurface, name: String,
         val weight: Weight, val volume: Volume)
     : Layer<L>(layers, name) {
     init {
-        put(Weight::class.java, weight)
+        put(Weight::class, weight) // TODO: Think about this
     }
 }

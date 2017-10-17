@@ -3,6 +3,7 @@ package hm.binkley.layers.dnd.items
 import java.lang.Math.abs
 import java.math.BigDecimal
 import java.math.RoundingMode.HALF_UP
+import java.util.Objects
 
 abstract class Fraction<F : Fraction<F>>(private val ctor: (Int, Int) -> F,
         numerator: Int, denominator: Int)
@@ -61,7 +62,7 @@ abstract class Fraction<F : Fraction<F>>(private val ctor: (Int, Int) -> F,
         return true
     }
 
-    override final fun hashCode(): Int = 31 * numerator + denominator
+    override final fun hashCode(): Int = Objects.hash(numerator, denominator)
 
     companion object {
         private fun gcm(numerator: Int, denominator: Int): Int

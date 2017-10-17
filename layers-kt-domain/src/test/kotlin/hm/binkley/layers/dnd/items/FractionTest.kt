@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test
 
 internal class FractionTest {
     @Test
-    fun shouldDiplayNicely()
+    fun shouldDisplayNicely()
             = assertEquals("0.7", EgFraction(2, 3).toString())
 
     @Test
-    fun shouldDiplayWithoutFractions()
+    fun shouldDisplayWithoutFractions()
             = assertEquals("1", EgFraction(1, 1).toString())
 
     @Test

@@ -5,8 +5,6 @@ import hm.binkley.layers.rules.Rule.Companion.floor
 import hm.binkley.layers.rules.Rule.Companion.mostRecent
 import hm.binkley.layers.rules.Rule.Companion.sumAll
 
-class LayersMain
-
 fun main(args: Array<String>) {
     val (layers, firstLayer) = firstLayer(::ScratchLayer)
     firstLayer.put("A", sumAll()).
@@ -17,13 +15,13 @@ fun main(args: Array<String>) {
             saveAndNext(::ScratchLayer).
             put("A", floor(4)).
             saveAndNext(::ScratchLayer).
-            put(String::class.java, mostRecent("Zaphod")).
+            put(String::class, mostRecent("Zaphod")).
             saveAndNext(::ScratchLayer).
-            put(String::class.java, "Bob").
+            put(String::class, "Bob").
             saveAndNext(::ScratchLayer).
-            put(String::class.java, "Nancy").
+            put(String::class, "Nancy").
             saveAndNext(::ScratchLayer)
     println(layers)
     println(layers["A"])
-    println(layers[String::class.java])
+    println(layers[String::class])
 }

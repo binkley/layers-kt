@@ -1,5 +1,6 @@
 #!/bin/bash
 
+unset KOTLIN_HOME
 export MAVEN_OPTS=-Djansi.passthrough=true
 
 (( 0 == $# )) && set -- clean verify

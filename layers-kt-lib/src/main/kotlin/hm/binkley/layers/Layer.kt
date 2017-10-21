@@ -11,7 +11,7 @@ abstract class Layer<L : Layer<L>>(
         private var map: MutableMap<Any, Any> = LinkedHashMap())
     : Map<Any, Any> by map {
     @Suppress("UNCHECKED_CAST")
-    fun <T> getT(key: Any): T = get(key) as T // TODO: Clash with Map.get
+    fun <T> getAs(key: Any): T = get(key) as T // TODO: Clash with Map.get
 
     open fun put(key: Any, value: Any): L {
         map[key] = value

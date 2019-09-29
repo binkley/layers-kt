@@ -5,8 +5,8 @@ import hm.binkley.layers.Layers.LayerSurface
 import hm.binkley.layers.sets.LayerSetCommand.Companion.add
 import hm.binkley.layers.sets.LayerSetCommand.Companion.remove
 
-sealed class Attunement(layers: LayerSurface,
-        name: String) : Layer<Attunement>(layers, name) {
+sealed class Attunement(layers: LayerSurface, name: String)
+    : Layer<Attunement>(layers, name) {
     private class Attune<L : AttunementItem<L>>(layers: LayerSurface, item: L)
         : Attunement(layers, "Attune ${item.name}") {
         init {

@@ -10,8 +10,7 @@ class LayerSet<L : Layer<L>>(private val fullness: FullnessFunction<L>,
     fun add(element: L) {
         if (fullness.invoke(this, element))
             throw IndexOutOfBoundsException(fullness.name)
-        if (!set.add(element))
-            throw IllegalStateException()
+        check(set.add(element))
     }
 
     fun remove(element: L) {

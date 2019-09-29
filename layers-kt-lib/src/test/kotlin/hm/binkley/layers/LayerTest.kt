@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class LayerTest : LayersTestSupport<ScratchLayer>(::ScratchLayer) {
     @Test
     fun shouldKnowName() = assertEquals("Bob",
-            firstLayer.saveAndNext({ layers -> EgLayer(layers, "Bob") }).name)
+            firstLayer.saveAndNext { layers -> EgLayer(layers, "Bob") }.name)
 
     @Test
     fun shouldChainPutting() = assertSame(firstLayer, firstLayer.put("A", 1))

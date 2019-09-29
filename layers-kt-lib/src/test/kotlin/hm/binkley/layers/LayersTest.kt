@@ -22,6 +22,6 @@ internal class LayersTest : LayersTestSupport<ScratchLayer>(::ScratchLayer) {
     open class SubLayer<L : SubLayer<L>>(layers: LayerSurface, name: String)
         : Layer<L>(layers, name)
 
-    class FinalLayer(layers: Layers.LayerSurface)
+    class FinalLayer(layers: LayerSurface)
         : SubLayer<FinalLayer>(layers, "Final")
 }

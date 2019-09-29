@@ -1,9 +1,10 @@
 package hm.binkley.layers.rules
 
 import hm.binkley.layers.Layers.RuleSurface
-import java.lang.Math.max
+import kotlin.math.max
 
-internal class FloorRule(val floor: Int) : Rule<Int>("Floor ($floor)") {
-    override fun invoke(layers: RuleSurface): Int = max(layers.without(),
-            floor)
+internal class FloorRule(private val floor: Int)
+    : Rule<Int>("Floor ($floor)") {
+    override fun invoke(layers: RuleSurface): Int =
+            max(layers.without(), floor)
 }

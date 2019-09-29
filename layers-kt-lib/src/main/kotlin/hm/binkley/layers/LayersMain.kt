@@ -7,7 +7,7 @@ import hm.binkley.layers.rules.Rule.Companion.sumAll
 import lombok.Generated
 
 @Generated
-fun main(args: Array<String>) {
+fun main() {
     val (layers, firstLayer) = firstLayer(::ScratchLayer)
     firstLayer.put("A", sumAll())
             .saveAndNext(::ScratchLayer).put("A", 1)

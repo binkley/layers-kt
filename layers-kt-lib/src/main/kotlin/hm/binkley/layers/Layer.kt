@@ -2,8 +2,8 @@ package hm.binkley.layers
 
 import hm.binkley.layers.Layers.Companion.toDisplay
 import hm.binkley.layers.Layers.LayerSurface
-import java.util.Collections
-import java.util.LinkedHashMap
+import java.util.*
+import javax.annotation.processing.Generated
 
 abstract class Layer<L : Layer<L>>(
         protected val layers: LayerSurface,
@@ -18,6 +18,7 @@ abstract class Layer<L : Layer<L>>(
         return self()
     }
 
+    @Generated // Lie to JaCoCo
     override fun toString(): String = "$name: ${toDisplay(map)}"
 
     operator fun set(key: Any, value: Any) = map.put(key, value)

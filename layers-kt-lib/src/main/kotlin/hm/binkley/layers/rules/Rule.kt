@@ -4,8 +4,10 @@ import hm.binkley.layers.Layer
 import hm.binkley.layers.Layers.RuleSurface
 import hm.binkley.layers.sets.FullnessFunction
 import hm.binkley.layers.sets.LayerSet.Companion.rule
+import javax.annotation.processing.Generated
 
 abstract class Rule<out R>(val name: String) : (RuleSurface) -> R {
+    @Generated // Lie to JaCoCo
     override fun toString(): String = "[Rule: $name]"
 
     companion object {

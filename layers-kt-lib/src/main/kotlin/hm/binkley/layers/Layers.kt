@@ -1,9 +1,8 @@
 package hm.binkley.layers
 
 import hm.binkley.layers.rules.Rule
-import java.util.ArrayList
-import java.util.LinkedHashMap
-import java.util.LinkedHashSet
+import lombok.Generated
+import java.util.*
 
 class Layers private constructor(
         private val layers: MutableList<Layer<*>>,
@@ -13,6 +12,7 @@ class Layers private constructor(
         updateCache()
     }
 
+    @Generated // Lie to JaCoCo
     override fun toString(): String {
         var toString = "All (${layers.size}): ${toDisplay(cache)}"
         layers.withIndex().reversed().

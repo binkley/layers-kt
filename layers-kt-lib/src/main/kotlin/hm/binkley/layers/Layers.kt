@@ -59,6 +59,7 @@ class Layers private constructor(
                 }.toMap()
 
         private fun simpleClassKey(key: Any): Any = when (key) {
+            // TODO: Display strings as their values, not "Class<String>"
             is Class<*> -> "[${key.simpleName}]"
             else -> key
         }
@@ -75,10 +76,13 @@ class Layers private constructor(
     }
 
     inner class RuleSurface internal constructor(val layer: Layer<*>,
-            val key: Any) {
+            private val key: Any) {
         fun <T> values(): List<T> {
-            return layers.filter { it.contains(key) }
-                    .filter { it[key] !is Rule<*> }.map {
+            return layers.filter {
+                it.contains(key)
+            }.filter {
+                it[key] !is Rule<*>
+            }.map {
                 @Suppress("UNCHECKED_CAST")
                 it[key] as T
             }

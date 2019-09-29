@@ -62,7 +62,6 @@
         <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <metainf-services.version>1.8</metainf-services.version>
-        <minimum-coverage-ratio>0.85</minimum-coverage-ratio>
         <mockito-kotlin-kt.version>1.6.0</mockito-kotlin-kt.version>
         <project.build.outputEncoding>${java.charset}</project.build.outputEncoding>
         <project.build.sourceEncoding>${java.charset}</project.build.sourceEncoding>

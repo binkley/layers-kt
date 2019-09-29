@@ -15,9 +15,9 @@ class Layers private constructor(
     @Generated // Lie to JaCoCo
     override fun toString(): String {
         var toString = "All (${layers.size}): ${toDisplay(cache)}"
-        layers.withIndex().reversed().
-                map { "" + (it.index + 1) + ": " + it.value }.
-                forEach { toString += "\n" + it }
+        layers.withIndex().reversed()
+                .map { "" + (it.index + 1) + ": " + it.value }
+                .forEach { toString += "\n" + it }
         return toString
     }
 
@@ -33,19 +33,17 @@ class Layers private constructor(
 
     private fun updateCache() {
         val updated = LinkedHashSet<Any>()
-        layers.flatMap { it.keys }.
-                distinct().
-                forEach {
-                    updated.add(it)
-                    cache[it] = value(it)
-                }
+        layers.flatMap { it.keys }.distinct().forEach {
+            updated.add(it)
+            cache[it] = value(it)
+        }
         cache.keys.retainAll(updated)
     }
 
     private fun value(key: Any): Any {
         val layer = layers.last { it[key] is Rule<*> }
-        return (layer.getAs<Rule<*>>(key)).
-                invoke(this.RuleSurface(layer, key))!!
+        return (layer.getAs<Rule<*>>(key)).invoke(
+                this.RuleSurface(layer, key))!!
     }
 
     companion object {
@@ -55,10 +53,10 @@ class Layers private constructor(
             return Pair(layers, firstLayer(layers.LayerSurface()))
         }
 
-        fun toDisplay(map: Map<Any, Any>): Map<Any, Any> = map.
-                asSequence().
-                map { Pair(simpleClassKey(it.key), it.value) }.
-                toMap()
+        fun toDisplay(map: Map<Any, Any>): Map<Any, Any> =
+                map.asSequence().map {
+                    Pair(simpleClassKey(it.key), it.value)
+                }.toMap()
 
         private fun simpleClassKey(key: Any): Any = when (key) {
             is Class<*> -> "[${key.simpleName}]"
@@ -79,13 +77,11 @@ class Layers private constructor(
     inner class RuleSurface internal constructor(val layer: Layer<*>,
             val key: Any) {
         fun <T> values(): List<T> {
-            return layers.
-                    filter { it.contains(key) }.
-                    filter { it[key] !is Rule<*> }.
-                    map {
-                        @Suppress("UNCHECKED_CAST")
-                        it[key] as T
-                    }
+            return layers.filter { it.contains(key) }
+                    .filter { it[key] !is Rule<*> }.map {
+                @Suppress("UNCHECKED_CAST")
+                it[key] as T
+            }
         }
 
         fun <R> without(): R {

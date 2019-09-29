@@ -9,7 +9,7 @@ class Volume(numerator: Int, denominator: Int)
         val SPACELESS = inCuft(0)
 
         fun inCuft(cuft: Int) = Volume(cuft, 1)
-        fun asFraction(numerator: Int, denominator: Int)
-                = Volume(numerator, denominator)
+        fun asFraction(numerator: Int, denominator: Int) =
+                Volume(numerator, denominator)
     }
 }

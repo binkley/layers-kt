@@ -32,6 +32,6 @@ abstract class Layer<L : Layer<L>>(
     @Suppress("UNCHECKED_CAST")
     protected fun self(): L = this as L
 
-    private fun <K, V> MutableMap<K, V>.unmodifiable()
-            = Collections.unmodifiableMap(this)
+    private fun <K, V> MutableMap<K, V>.unmodifiable() =
+            Collections.unmodifiableMap(this)
 }

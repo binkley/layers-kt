@@ -20,6 +20,8 @@ class LayerSet<L : Layer<L>>(private val fullness: FullnessFunction<L>,
     }
 
     companion object {
-        fun <L : Layer<L>> rule(fullness: FullnessFunction<L>): Rule<LayerSet<L>> = LayerSetRule(fullness)
+        fun <L : Layer<L>> rule(
+                fullness: FullnessFunction<L>): Rule<LayerSet<L>> =
+                LayerSetRule(fullness)
     }
 }

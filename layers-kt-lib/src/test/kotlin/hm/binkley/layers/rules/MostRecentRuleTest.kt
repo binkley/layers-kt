@@ -10,22 +10,16 @@ internal class MostRecentRuleTest
     : LayersTestSupport<ScratchLayer>(::ScratchLayer) {
     @Test
     fun shouldGetMostRecentValue() {
-        firstLayer.
-                put("A", mostRecent(4)).
-                saveAndNext(::ScratchLayer).
-                put("A", 1).
-                saveAndNext(::ScratchLayer).
-                put("A", 2).
-                saveAndNext(::ScratchLayer)
+        firstLayer.put("A", mostRecent(4)).saveAndNext(::ScratchLayer)
+                .put("A", 1).saveAndNext(::ScratchLayer).put("A", 2)
+                .saveAndNext(::ScratchLayer)
 
         assertEquals(2, layers["A"])
     }
 
     @Test
     fun shouldDefaultRecentValue() {
-        firstLayer.
-                put("A", mostRecent(4)).
-                saveAndNext(::ScratchLayer)
+        firstLayer.put("A", mostRecent(4)).saveAndNext(::ScratchLayer)
 
         assertEquals(4, layers["A"])
     }

@@ -8,9 +8,8 @@ internal class LayersTest : LayersTestSupport<ScratchLayer>(::ScratchLayer) {
     @Test
     fun shouldChainSavingAndAssignToSuperType() {
         @Suppress("UNUSED_VARIABLE")
-        val layer: SubLayer<*> = firstLayer.
-                saveAndNext(::ScratchLayer).
-                saveAndNext(::FinalLayer)
+        val layer: SubLayer<*> = firstLayer.saveAndNext(::ScratchLayer)
+                .saveAndNext(::FinalLayer)
     }
 
     @Test

@@ -10,13 +10,9 @@ internal class SumAllRuleTest
     : LayersTestSupport<ScratchLayer>(::ScratchLayer) {
     @Test
     fun shouldSumAllValues() {
-        firstLayer.
-                put("A", sumAll()).
-                saveAndNext(::ScratchLayer).
-                put("A", 1).
-                saveAndNext(::ScratchLayer).
-                put("A", 2).
-                saveAndNext(::ScratchLayer)
+        firstLayer.put("A", sumAll()).saveAndNext(::ScratchLayer).put("A", 1)
+                .saveAndNext(::ScratchLayer).put("A", 2)
+                .saveAndNext(::ScratchLayer)
 
         assertEquals(3, layers["A"])
     }

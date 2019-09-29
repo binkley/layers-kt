@@ -23,7 +23,8 @@ abstract class Fraction<F : Fraction<F>>(private val ctor: (Int, Int) -> F,
 
     final override fun toChar() = (numerator / denominator).toChar()
 
-    final override fun toDouble() = numerator.toDouble() / denominator.toDouble()
+    final override fun toDouble() =
+            numerator.toDouble() / denominator.toDouble()
 
     final override fun toFloat() = numerator.toFloat() / numerator.toFloat()
 
@@ -36,7 +37,8 @@ abstract class Fraction<F : Fraction<F>>(private val ctor: (Int, Int) -> F,
     fun negate() = ctor.invoke(-numerator, denominator)
 
     fun add(that: F): F {
-        val numerator = this.numerator * that.denominator + that.numerator * denominator
+        val numerator =
+                this.numerator * that.denominator + that.numerator * denominator
         val denominator = this.denominator * that.denominator
         return ctor.invoke(numerator, denominator)
     }
@@ -48,10 +50,9 @@ abstract class Fraction<F : Fraction<F>>(private val ctor: (Int, Int) -> F,
 
     @Generated // Lie to JaCoCo
     override fun toString(): String {
-        return BigDecimal.valueOf(numerator.toLong()).
-                divide(BigDecimal.valueOf(denominator.toLong()), 1, HALF_UP).
-                stripTrailingZeros().
-                toString()
+        return BigDecimal.valueOf(numerator.toLong())
+                .divide(BigDecimal.valueOf(denominator.toLong()), 1, HALF_UP)
+                .stripTrailingZeros().toString()
     }
 
     final override fun equals(other: Any?): Boolean {
@@ -66,10 +67,10 @@ abstract class Fraction<F : Fraction<F>>(private val ctor: (Int, Int) -> F,
     final override fun hashCode(): Int = Objects.hash(numerator, denominator)
 
     companion object {
-        private fun gcm(numerator: Int, denominator: Int): Int
-                = when (denominator) {
-            0 -> numerator
-            else -> gcm(denominator, numerator % denominator)
-        }
+        private fun gcm(numerator: Int, denominator: Int): Int =
+                when (denominator) {
+                    0 -> numerator
+                    else -> gcm(denominator, numerator % denominator)
+                }
     }
 }

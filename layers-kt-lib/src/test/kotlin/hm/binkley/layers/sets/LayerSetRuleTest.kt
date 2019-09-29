@@ -14,24 +14,19 @@ internal class LayerSetRuleTest
     : LayersTestSupport<ScratchLayer>(::ScratchLayer) {
     @Test
     fun shouldAdd() {
-        firstLayer.
-                put("A", layerSet<ScratchLayer>(unlimited())).
-                saveAndNext(::ScratchLayer).
-                put("A", add(firstLayer)).
-                saveAndNext(::ScratchLayer)
+        firstLayer.put("A", layerSet<ScratchLayer>(unlimited()))
+                .saveAndNext(::ScratchLayer).put("A", add(firstLayer))
+                .saveAndNext(::ScratchLayer)
 
         assertEquals(setOf(firstLayer), layers["A"])
     }
 
     @Test
     fun shouldRemove() {
-        firstLayer.
-                put("A", layerSet<ScratchLayer>(unlimited())).
-                saveAndNext(::ScratchLayer).
-                put("A", add(firstLayer)).
-                saveAndNext(::ScratchLayer).
-                put("A", remove(firstLayer)).
-                saveAndNext(::ScratchLayer)
+        firstLayer.put("A", layerSet<ScratchLayer>(unlimited()))
+                .saveAndNext(::ScratchLayer).put("A", add(firstLayer))
+                .saveAndNext(::ScratchLayer).put("A", remove(firstLayer))
+                .saveAndNext(::ScratchLayer)
 
         assertTrue(layers.getT<LayerSet<*>>("A").isEmpty())
     }

@@ -9,7 +9,7 @@ class Weight(numerator: Int, denominator: Int)
         val WEIGHTLESS = inPounds(0)
 
         fun inPounds(pounds: Int) = Weight(pounds, 1)
-        fun asFraction(numerator: Int, denominator: Int)
-                = Weight(numerator, denominator)
+        fun asFraction(numerator: Int, denominator: Int) =
+                Weight(numerator, denominator)
     }
 }

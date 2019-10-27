@@ -2,7 +2,8 @@ package hm.binkley.layers
 
 import hm.binkley.layers.Layers.Companion.toDisplay
 import hm.binkley.layers.Layers.LayerSurface
-import java.util.*
+import java.util.Collections
+import java.util.LinkedHashMap
 import javax.annotation.processing.Generated
 
 abstract class Layer<L : Layer<L>>(

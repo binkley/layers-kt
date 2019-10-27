@@ -2,7 +2,9 @@ package hm.binkley.layers
 
 import hm.binkley.layers.rules.Rule
 import lombok.Generated
-import java.util.*
+import java.util.ArrayList
+import java.util.LinkedHashMap
+import java.util.LinkedHashSet
 
 class Layers private constructor(
         private val layers: MutableList<Layer<*>>,

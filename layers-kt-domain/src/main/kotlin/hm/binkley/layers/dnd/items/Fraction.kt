@@ -2,13 +2,14 @@ package hm.binkley.layers.dnd.items
 
 import java.math.BigDecimal
 import java.math.RoundingMode.HALF_UP
-import java.util.*
+import java.util.Objects
 import javax.annotation.processing.Generated
 import kotlin.math.abs
 
 abstract class Fraction<F : Fraction<F>>(private val ctor: (Int, Int) -> F,
         numerator: Int, denominator: Int)
-    : Number(), Comparable<F> {
+    : Number(),
+        Comparable<F> {
     private val numerator: Int
     private val denominator: Int
 

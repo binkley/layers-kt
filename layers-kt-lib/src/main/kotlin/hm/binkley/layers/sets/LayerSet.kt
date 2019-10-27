@@ -2,7 +2,8 @@ package hm.binkley.layers.sets
 
 import hm.binkley.layers.Layer
 import hm.binkley.layers.rules.Rule
-import java.util.*
+import java.util.LinkedHashSet
+import java.util.NoSuchElementException
 
 class LayerSet<L : Layer<L>>(private val fullness: FullnessFunction<L>,
         private val set: MutableSet<L> = LinkedHashSet())

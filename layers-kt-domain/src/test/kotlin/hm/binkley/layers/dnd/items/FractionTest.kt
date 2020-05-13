@@ -7,19 +7,21 @@ import org.junit.jupiter.api.Test
 internal class FractionTest {
     @Test
     fun shouldDisplayNicely() =
-            assertEquals("0.7", EgFraction(2, 3).toString())
+        assertEquals("0.7", EgFraction(2, 3).toString())
 
     @Test
     fun shouldDisplayWithoutFractions() =
-            assertEquals("1", EgFraction(1, 1).toString())
+        assertEquals("1", EgFraction(1, 1).toString())
 
     @Test
     fun shouldNegate() =
-            assertEquals(EgFraction(-3, 2), EgFraction(3, 2).negate())
+        assertEquals(EgFraction(-3, 2), EgFraction(3, 2).negate())
 
     @Test
-    fun shouldAdd() = assertEquals(EgFraction(3, 2),
-            EgFraction(5, 6).add(EgFraction(2, 3)))
+    fun shouldAdd() = assertEquals(
+        EgFraction(3, 2),
+        EgFraction(5, 6).add(EgFraction(2, 3))
+    )
 
     @Test
     fun shouldCompareLessThan() {
@@ -36,6 +38,6 @@ internal class FractionTest {
         assertTrue(EgFraction(4, 3) > EgFraction(2, 3))
     }
 
-    internal class EgFraction(numerator: Int, denominator: Int)
-        : Fraction<EgFraction>(::EgFraction, numerator, denominator)
+    internal class EgFraction(numerator: Int, denominator: Int) :
+        Fraction<EgFraction>(::EgFraction, numerator, denominator)
 }

@@ -7,10 +7,10 @@ import java.util.LinkedHashMap
 import javax.annotation.processing.Generated
 
 abstract class Layer<L : Layer<L>>(
-        protected val layers: LayerSurface,
-        val name: String,
-        private var map: MutableMap<Any, Any> = LinkedHashMap())
-    : Map<Any, Any> by map {
+    protected val layers: LayerSurface,
+    val name: String,
+    private var map: MutableMap<Any, Any> = LinkedHashMap()
+) : Map<Any, Any> by map {
     @Suppress("UNCHECKED_CAST")
     fun <T> getAs(key: Any): T = get(key) as T // TODO: Clash with Map.get
 
@@ -34,5 +34,5 @@ abstract class Layer<L : Layer<L>>(
     protected fun self(): L = this as L
 
     private fun <K, V> MutableMap<K, V>.unmodifiable() =
-            Collections.unmodifiableMap(this)
+        Collections.unmodifiableMap(this)
 }

@@ -7,9 +7,9 @@ import java.util.LinkedHashMap
 import java.util.LinkedHashSet
 
 class Layers private constructor(
-        private val layers: MutableList<Layer<*>>,
-        private val cache: MutableMap<Any, Any> = LinkedHashMap())
-    : Map<Any, Any> by cache {
+    private val layers: MutableList<Layer<*>>,
+    private val cache: MutableMap<Any, Any> = LinkedHashMap()
+) : Map<Any, Any> by cache {
     init {
         updateCache()
     }
@@ -18,8 +18,8 @@ class Layers private constructor(
     override fun toString(): String {
         var toString = "All (${layers.size}): ${toDisplay(cache)}"
         layers.withIndex().reversed()
-                .map { "" + (it.index + 1) + ": " + it.value }
-                .forEach { toString += "\n" + it }
+            .map { "" + (it.index + 1) + ": " + it.value }
+            .forEach { toString += "\n" + it }
         return toString
     }
 
@@ -45,7 +45,8 @@ class Layers private constructor(
     private fun value(key: Any): Any {
         val layer = layers.last { it[key] is Rule<*> }
         return (layer.getAs<Rule<*>>(key)).invoke(
-                this.RuleSurface(layer, key))!!
+            this.RuleSurface(layer, key)
+        )!!
     }
 
     companion object {
@@ -56,9 +57,9 @@ class Layers private constructor(
         }
 
         fun toDisplay(map: Map<Any, Any>): Map<Any, Any> =
-                map.asSequence().map {
-                    Pair(simpleClassKey(it.key), it.value)
-                }.toMap()
+            map.asSequence().map {
+                Pair(simpleClassKey(it.key), it.value)
+            }.toMap()
 
         private fun simpleClassKey(key: Any): Any = when (key) {
             // TODO: Display strings as their values, not "Class<String>"
@@ -68,8 +69,10 @@ class Layers private constructor(
     }
 
     inner class LayerSurface internal constructor() {
-        fun <K : Layer<K>> saveAndNext(layer: Layer<*>,
-                next: (LayerSurface) -> K): K {
+        fun <K : Layer<K>> saveAndNext(
+            layer: Layer<*>,
+            next: (LayerSurface) -> K
+        ): K {
             save(layer)
             return next(this)
         }
@@ -77,8 +80,10 @@ class Layers private constructor(
         fun <T> get(key: Any): T = getT(key)
     }
 
-    inner class RuleSurface internal constructor(val layer: Layer<*>,
-            private val key: Any) {
+    inner class RuleSurface internal constructor(
+        val layer: Layer<*>,
+        private val key: Any
+    ) {
         fun <T> values(): List<T> {
             return layers.filter {
                 it.contains(key)
@@ -91,7 +96,7 @@ class Layers private constructor(
         }
 
         fun <R> without(): R {
-            val without = ArrayList<Layer<*>>(layers)
+            val without = ArrayList(layers)
             without.remove(layer)
             @Suppress("UNCHECKED_CAST")
             return Layers(without)[key] as R

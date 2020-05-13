@@ -26,7 +26,9 @@ internal class LayerSetTest {
     }
 
     class AlwaysFull : FullnessFunction<ScratchLayer>("Always full") {
-        override fun invoke(set: LayerSet<ScratchLayer>,
-                layer: ScratchLayer): Boolean = true
+        override fun invoke(
+            set: LayerSet<ScratchLayer>,
+            layer: ScratchLayer
+        ): Boolean = true
     }
 }

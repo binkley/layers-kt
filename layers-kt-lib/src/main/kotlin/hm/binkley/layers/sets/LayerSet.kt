@@ -5,9 +5,10 @@ import hm.binkley.layers.rules.Rule
 import java.util.LinkedHashSet
 import java.util.NoSuchElementException
 
-class LayerSet<L : Layer<L>>(private val fullness: FullnessFunction<L>,
-        private val set: MutableSet<L> = LinkedHashSet())
-    : Set<L> by set {
+class LayerSet<L : Layer<L>>(
+    private val fullness: FullnessFunction<L>,
+    private val set: MutableSet<L> = LinkedHashSet()
+) : Set<L> by set {
     fun add(element: L) {
         if (fullness.invoke(this, element))
             throw IndexOutOfBoundsException(fullness.name)
@@ -21,7 +22,8 @@ class LayerSet<L : Layer<L>>(private val fullness: FullnessFunction<L>,
 
     companion object {
         fun <L : Layer<L>> rule(
-                fullness: FullnessFunction<L>): Rule<LayerSet<L>> =
-                LayerSetRule(fullness)
+            fullness: FullnessFunction<L>
+        ): Rule<LayerSet<L>> =
+            LayerSetRule(fullness)
     }
 }

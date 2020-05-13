@@ -9,7 +9,7 @@ internal class LayersTest : LayersTestSupport<ScratchLayer>(::ScratchLayer) {
     fun shouldChainSavingAndAssignToSuperType() {
         @Suppress("UNUSED_VARIABLE")
         val layer: SubLayer<*> = firstLayer.saveAndNext(::ScratchLayer)
-                .saveAndNext(::FinalLayer)
+            .saveAndNext(::FinalLayer)
     }
 
     @Test
@@ -19,9 +19,9 @@ internal class LayersTest : LayersTestSupport<ScratchLayer>(::ScratchLayer) {
         assertEquals(listOf(firstLayer), layers.layers())
     }
 
-    open class SubLayer<L : SubLayer<L>>(layers: LayerSurface, name: String)
-        : Layer<L>(layers, name)
+    open class SubLayer<L : SubLayer<L>>(layers: LayerSurface, name: String) :
+        Layer<L>(layers, name)
 
-    class FinalLayer(layers: LayerSurface)
-        : SubLayer<FinalLayer>(layers, "Final")
+    class FinalLayer(layers: LayerSurface) :
+        SubLayer<FinalLayer>(layers, "Final")
 }

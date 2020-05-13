@@ -11,8 +11,8 @@ internal class SumAllRuleTest
     @Test
     fun shouldSumAllValues() {
         firstLayer.put("A", sumAll()).saveAndNext(::ScratchLayer).put("A", 1)
-                .saveAndNext(::ScratchLayer).put("A", 2)
-                .saveAndNext(::ScratchLayer)
+            .saveAndNext(::ScratchLayer).put("A", 2)
+            .saveAndNext(::ScratchLayer)
 
         assertEquals(3, layers["A"])
     }

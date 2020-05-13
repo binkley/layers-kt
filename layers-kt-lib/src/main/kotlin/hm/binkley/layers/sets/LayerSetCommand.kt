@@ -8,9 +8,9 @@ abstract class LayerSetCommand<L : Layer<L>>(val name: String) :
 
     companion object {
         fun <L : Layer<L>> add(layer: L): LayerSetCommand<L> =
-                AddCommand(layer)
+            AddCommand(layer)
 
         fun <L : Layer<L>> remove(layer: L): LayerSetCommand<L> =
-                RemoveCommand(layer)
+            RemoveCommand(layer)
     }
 }

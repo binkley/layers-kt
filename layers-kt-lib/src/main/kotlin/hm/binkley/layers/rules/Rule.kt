@@ -12,11 +12,11 @@ abstract class Rule<out R>(val name: String) : (RuleSurface) -> R {
 
     companion object {
         fun <T> mostRecent(defaultValue: T): Rule<T> =
-                MostRecentRule(defaultValue)
+            MostRecentRule(defaultValue)
 
         fun sumAll(): Rule<Int> = SumAllRule()
         fun floor(floor: Int): Rule<Int> = FloorRule(floor)
         fun <L : Layer<L>> layerSet(fullness: FullnessFunction<L>) =
-                rule(fullness)
+            rule(fullness)
     }
 }

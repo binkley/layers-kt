@@ -11,8 +11,8 @@ internal class MostRecentRuleTest
     @Test
     fun shouldGetMostRecentValue() {
         firstLayer.put("A", mostRecent(4)).saveAndNext(::ScratchLayer)
-                .put("A", 1).saveAndNext(::ScratchLayer).put("A", 2)
-                .saveAndNext(::ScratchLayer)
+            .put("A", 1).saveAndNext(::ScratchLayer).put("A", 2)
+            .saveAndNext(::ScratchLayer)
 
         assertEquals(2, layers["A"])
     }

@@ -14,11 +14,13 @@ fun main() {
         .saveAndNext(::ScratchLayer).put("A", 2)
         .saveAndNext(::ScratchLayer).put("A", atLeast(4))
         .saveAndNext(::ScratchLayer)
-        .put(String::class, mostRecent("Zaphod"))
-        .saveAndNext(::ScratchLayer).put(String::class, "Bob")
-        .saveAndNext(::ScratchLayer).put(String::class, "Nancy")
+        .put(Sample::class, mostRecent("Zaphod"))
+        .saveAndNext(::ScratchLayer).put(Sample::class, "Bob")
+        .saveAndNext(::ScratchLayer).put(Sample::class, "Nancy")
         .saveAndNext(::ScratchLayer)
     println(layers)
     println(layers["A"])
-    println(layers[String::class])
+    println(layers[Sample::class])
 }
+
+private class Sample

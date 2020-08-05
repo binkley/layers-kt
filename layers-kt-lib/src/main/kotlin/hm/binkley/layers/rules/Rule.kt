@@ -15,7 +15,7 @@ abstract class Rule<out R>(val name: String) : (RuleSurface) -> R {
             MostRecentRule(defaultValue)
 
         fun sumAll(): Rule<Int> = SumAllRule()
-        fun floor(floor: Int): Rule<Int> = FloorRule(floor)
+        fun atLeast(floor: Int): Rule<Int> = AtLeastRule(floor)
         fun <L : Layer<L>> layerSet(fullness: FullnessFunction<L>) =
             rule(fullness)
     }

@@ -1,7 +1,7 @@
 package hm.binkley.layers
 
 import hm.binkley.layers.Layers.Companion.firstLayer
-import hm.binkley.layers.rules.Rule.Companion.floor
+import hm.binkley.layers.rules.Rule.Companion.atLeast
 import hm.binkley.layers.rules.Rule.Companion.mostRecent
 import hm.binkley.layers.rules.Rule.Companion.sumAll
 import lombok.Generated
@@ -12,7 +12,7 @@ fun main() {
     firstLayer.put("A", sumAll())
         .saveAndNext(::ScratchLayer).put("A", 1)
         .saveAndNext(::ScratchLayer).put("A", 2)
-        .saveAndNext(::ScratchLayer).put("A", floor(4))
+        .saveAndNext(::ScratchLayer).put("A", atLeast(4))
         .saveAndNext(::ScratchLayer)
         .put(String::class, mostRecent("Zaphod"))
         .saveAndNext(::ScratchLayer).put(String::class, "Bob")

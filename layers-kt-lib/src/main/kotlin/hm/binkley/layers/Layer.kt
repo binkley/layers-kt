@@ -3,13 +3,12 @@ package hm.binkley.layers
 import hm.binkley.layers.Layers.Companion.toDisplay
 import hm.binkley.layers.Layers.LayerSurface
 import java.util.Collections
-import java.util.LinkedHashMap
 import javax.annotation.processing.Generated
 
 abstract class Layer<L : Layer<L>>(
     protected val layers: LayerSurface,
     val name: String,
-    private var map: MutableMap<Any, Any> = LinkedHashMap()
+    private var map: MutableMap<Any, Any> = mutableMapOf(),
 ) : Map<Any, Any> by map {
     @Suppress("UNCHECKED_CAST")
     fun <T> getAs(key: Any): T = get(key) as T // TODO: Clash with Map.get

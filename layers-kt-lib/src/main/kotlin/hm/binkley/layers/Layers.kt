@@ -3,12 +3,10 @@ package hm.binkley.layers
 import hm.binkley.layers.rules.Rule
 import lombok.Generated
 import java.util.ArrayList
-import java.util.LinkedHashMap
-import java.util.LinkedHashSet
 
 class Layers private constructor(
     private val layers: MutableList<Layer<*>>,
-    private val cache: MutableMap<Any, Any> = LinkedHashMap()
+    private val cache: MutableMap<Any, Any> = mutableMapOf(),
 ) : Map<Any, Any> by cache {
     init {
         updateCache()
@@ -18,7 +16,7 @@ class Layers private constructor(
     override fun toString(): String {
         var toString = "All (${layers.size}): ${toDisplay(cache)}"
         layers.withIndex().reversed()
-            .map { "" + (it.index + 1) + ": " + it.value }
+            .map { "${it.index + 1}: ${it.value}" }
             .forEach { toString += "\n" + it }
         return toString
     }
@@ -34,9 +32,9 @@ class Layers private constructor(
     }
 
     private fun updateCache() {
-        val updated = LinkedHashSet<Any>()
+        val updated: MutableSet<Any> = mutableSetOf()
         layers.flatMap { it.keys }.distinct().forEach {
-            updated.add(it)
+            updated += it
             cache[it] = value(it)
         }
         cache.keys.retainAll(updated)
@@ -71,7 +69,7 @@ class Layers private constructor(
     inner class LayerSurface internal constructor() {
         fun <K : Layer<K>> saveAndNext(
             layer: Layer<*>,
-            next: (LayerSurface) -> K
+            next: (LayerSurface) -> K,
         ): K {
             save(layer)
             return next(this)
@@ -82,7 +80,7 @@ class Layers private constructor(
 
     inner class RuleSurface internal constructor(
         val layer: Layer<*>,
-        private val key: Any
+        private val key: Any,
     ) {
         fun <T> values(): List<T> {
             return layers.filter {

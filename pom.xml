@@ -50,7 +50,7 @@
         <jacoco.minimum>0.00</jacoco.minimum>
         <jacoco.version>0.8.5</jacoco.version>
         <java.charset>UTF-8</java.charset>
-        <java.version>8</java.version>
+        <java.version>11</java.version>
         <junit.jupiter.version>5.7.0-M1</junit.jupiter.version>
         <kotlin.version>1.4.0-rc</kotlin.version>
         <kotlin-serialization.version>1.0-M1-1.4.0-rc</kotlin-serialization.version>
@@ -191,6 +191,7 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
                 <configuration>
+                    <jvmTarget>${java.version}</jvmTarget>
                     <compilerPlugins>
                         <plugin>kotlinx-serialization</plugin>
                     </compilerPlugins>

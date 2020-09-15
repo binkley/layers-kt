@@ -51,7 +51,7 @@
         <jacoco.version>0.8.5</jacoco.version>
         <java.charset>UTF-8</java.charset>
         <java.version>11</java.version>
-        <junit.jupiter.version>5.7.0-RC1</junit.jupiter.version>
+        <junit.jupiter.version>5.7.0</junit.jupiter.version>
         <kotlin.version>1.4.10</kotlin.version>
         <kotlin-serialization.version>1.0-M1-1.4.0-rc</kotlin-serialization.version>
         <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
@@ -60,14 +60,14 @@
         <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
         <maven-failsafe-plugin.version>${maven-surefire-plugin.version}</maven-failsafe-plugin.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <metainf-services.version>1.8</metainf-services.version>
         <mockito-kotlin-kt.version>1.6.0</mockito-kotlin-kt.version>
         <project.build.outputEncoding>${java.charset}</project.build.outputEncoding>
         <project.build.sourceEncoding>${java.charset}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${java.charset}</project.reporting.outputEncoding>
         <project.reporting.sourceEncoding>${java.charset}</project.reporting.sourceEncoding>
-        <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
+        <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
         <versions-maven-plugin.phase>none</versions-maven-plugin.phase>
         <!-- @formatter:on -->
     </properties>

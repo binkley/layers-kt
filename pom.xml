@@ -52,7 +52,7 @@
         <java.charset>UTF-8</java.charset>
         <java.version>11</java.version>
         <junit.jupiter.version>5.7.0-RC1</junit.jupiter.version>
-        <kotlin.version>1.4.0</kotlin.version>
+        <kotlin.version>1.4.10</kotlin.version>
         <kotlin-serialization.version>1.0-M1-1.4.0-rc</kotlin-serialization.version>
         <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>

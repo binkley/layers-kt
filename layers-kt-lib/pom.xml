@@ -13,7 +13,7 @@
 
     <parent>
         <groupId>hm.binkley</groupId>
-        <artifactId>layers-kt-pom</artifactId>
+        <artifactId>layers-kt-parent</artifactId>
         <version>0-SNAPSHOT</version>
     </parent>
 

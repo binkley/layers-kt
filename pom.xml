@@ -11,82 +11,63 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>hm.binkley</groupId>
-    <artifactId>layers-kt-pom</artifactId>
+    <artifactId>layers-kt-parent</artifactId>
     <version>0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Layers KT</name>
+    <name>Layers KT Parent</name>
 
     <modules>
         <module>layers-kt-lib</module>
         <module>layers-kt-domain</module>
     </modules>
 
+    <url>https://github.com/binkley/layers-kt</url>
     <licenses>
         <license>
             <name>Public Domain</name>
-            <url>http://unlicense.org/</url>
+            <url>https://unlicense.org/</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
-
-    <developers>
-        <developer>
-            <id>binkley</id>
-            <name>B. K. Oxley (binkley)</name>
-            <email>binkley@alumni.rice.edu</email>
-            <organization>The Oxley Family</organization>
-            <roles>
-                <role>architect</role>
-                <role>developer</role>
-            </roles>
-        </developer>
-    </developers>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/binkley/layers-kt/issues</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:git:git://github.com/binkley/layers-kt
+        </connection>
+        <url>https://github.com/binkley/layers-kt</url>
+    </scm>
 
     <properties>
         <!-- @formatter:off -->
-        <generateBackupPoms>false</generateBackupPoms>
-        <jacoco.haltOnFailure>true</jacoco.haltOnFailure>
-        <jacoco.minimum>0.00</jacoco.minimum>
-        <jacoco.version>0.8.5</jacoco.version>
+        <dependency-check-maven.version>6.0.2</dependency-check-maven.version>
+        <detekt-maven-plugin.version>1.11.0</detekt-maven-plugin.version>
+        <dokka.version>1.4.10</dokka.version>
+        <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
         <java.charset>UTF-8</java.charset>
         <java.version>11</java.version>
-        <junit.jupiter.version>5.7.0</junit.jupiter.version>
+        <junit.version>5.7.0</junit.version>
+        <kotest.version>4.3.0</kotest.version>
+        <kotlin.compiler.jvmTarget>${java.version}</kotlin.compiler.jvmTarget>
         <kotlin.version>1.4.10</kotlin.version>
-        <kotlin-serialization.version>1.0-M1-1.4.0-rc</kotlin-serialization.version>
-        <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
-        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
-        <maven-failsafe-plugin.version>${maven-surefire-plugin.version}</maven-failsafe-plugin.version>
+        <ktlint-maven-plugin.version>1.6.1</ktlint-maven-plugin.version>
+        <lombok.version>1.18.16</lombok.version>
+        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+        <maven-project-info-reports-plugin.version>3.1.1</maven-project-info-reports-plugin.version>
+        <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
+        <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-        <metainf-services.version>1.8</metainf-services.version>
-        <mockito-kotlin-kt.version>1.6.0</mockito-kotlin-kt.version>
-        <project.build.outputEncoding>${java.charset}</project.build.outputEncoding>
+        <maven-versions-plugin.version>2.8.1</maven-versions-plugin.version>
+        <pitest-junit5-plugin.version>0.12</pitest-junit5-plugin.version>
+        <pitest-maven.version>1.5.2</pitest-maven.version>
         <project.build.sourceEncoding>${java.charset}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${java.charset}</project.reporting.outputEncoding>
-        <project.reporting.sourceEncoding>${java.charset}</project.reporting.sourceEncoding>
-        <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
-        <versions-maven-plugin.phase>none</versions-maven-plugin.phase>
         <!-- @formatter:on -->
     </properties>
-
-    <repositories>
-        <repository>
-            <id>bintray-kotlin-kotlinx</id>
-            <name>bintray</name>
-            <url>https://kotlin.bintray.com/kotlinx</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>bintray-kotlin-kotlinx</id>
-            <name>bintray-plugins</name>
-            <url>https://kotlin.bintray.com/kotlinx</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <dependencyManagement>
         <dependencies>
@@ -106,114 +87,94 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-reflect</artifactId>
-            <version>${kotlin.version}</version>
-            <scope>runtime</scope>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.jetbrains.kotlinx</groupId>
-            <artifactId>kotlinx-serialization-runtime</artifactId>
-            <version>${kotlin-serialization.version}</version>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+            <version>${kotlin.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.kohsuke.metainf-services</groupId>
-            <artifactId>metainf-services</artifactId>
-            <version>${metainf-services.version}</version>
-            <scope>provided</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.jupiter.version}</version>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.nhaarman</groupId>
-            <artifactId>mockito-kotlin-kt1.1</artifactId>
-            <version>${mockito-kotlin-kt.version}</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.kotest</groupId>
+            <artifactId>kotest-runner-junit5-jvm</artifactId>
+            <version>${kotest.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.kotest</groupId>
+            <artifactId>kotest-assertions-core-jvm</artifactId>
+            <version>${kotest.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
+        <defaultGoal>verify</defaultGoal>
+
+        <!-- @formatter:off -->
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/test/kotlin
-        </testSourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+        <!-- @formatter:on -->
+
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>${versions-maven-plugin.version}</version>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven-enforcer-plugin.version}</version>
+                <configuration>
+                    <rules>
+                        <requireMavenVersion>
+                            <version>3.6.3</version>
+                        </requireMavenVersion>
+                    </rules>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>update-dependencies</id>
-                        <phase>${versions-maven-plugin.phase}</phase>
                         <goals>
-                            <goal>update-properties</goal>
+                            <goal>enforce</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>${maven-clean-plugin.version}</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${maven-versions-plugin.version}</version>
             </plugin>
             <plugin>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>${maven-dependency-plugin.version}</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <compilerArgs>
-                        <arg>-Werror</arg>
-                        <arg>-Xdiags:verbose</arg>
-                        <arg>-Xlint:all</arg>
-                        <arg>-Xlint:-processing</arg>
-                        <arg>-Xlint:-serial</arg>
-                    </compilerArgs>
-                    <debug>true</debug>
-                    <showDeprecation>true</showDeprecation>
-                    <showWarnings>true</showWarnings>
-                    <source>1.${java.version}</source>
-                    <target>1.${java.version}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
+                <groupId>org.jetbrains.kotlin</groupId>
                 <version>${kotlin.version}</version>
-                <configuration>
-                    <jvmTarget>${java.version}</jvmTarget>
-                    <compilerPlugins>
-                        <plugin>kotlinx-serialization</plugin>
-                    </compilerPlugins>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jetbrains.kotlin</groupId>
-                        <artifactId>kotlin-maven-serialization</artifactId>
-                        <version>${kotlin.version}</version>
-                    </dependency>
-                </dependencies>
                 <executions>
                     <execution>
-                        <id>compile-kotlin</id>
-                        <phase>compile</phase>
+                        <id>compile</id>
                         <goals>
                             <goal>compile</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>test-compile-kotlin</id>
-                        <phase>test-compile</phase>
+                        <id>test-compile</id>
                         <goals>
                             <goal>test-compile</goal>
                         </goals>
@@ -221,52 +182,132 @@
                 </executions>
             </plugin>
             <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-            </plugin>
-            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
-                <configuration>
-                    <rules>
-                        <rule>
-                            <element>CLASS</element>
-                            <excludes>
-                                <exclude>*Test</exclude>
-                            </excludes>
-                            <limits>
-                                <limit>
-                                    <counter>LINE</counter>
-                                    <value>COVEREDRATIO</value>
-                                    <minimum>${jacoco.minimum}</minimum>
-                                </limit>
-                            </limits>
-                        </rule>
-                    </rules>
-                </configuration>
+                <version>${jacoco-maven-plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>jacoco-prepare-agent</id>
+                        <id>prepare-coverage</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>jacoco-report</id>
+                        <id>coverage-report</id>
                         <phase>post-integration-test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>jacoco-check</id>
+                        <id>check-coverage</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <limits>
+                                        <limit>
+                                            <minimum>100%</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest-maven.version}</version>
+                <configuration>
+                    <coverageThreshold>100</coverageThreshold>
+                    <mutationThreshold>50</mutationThreshold>
+                    <timestampedReports>false</timestampedReports>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>mutation-testing</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>${pitest-junit5-plugin.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>com.github.gantsign.maven</groupId>
+                <artifactId>ktlint-maven-plugin</artifactId>
+                <version>${ktlint-maven-plugin.version}</version>
+                <configuration>
+                    <verbose>true</verbose>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>format</goal>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.ozsie</groupId>
+                <artifactId>detekt-maven-plugin</artifactId>
+                <version>${detekt-maven-plugin.version}</version>
+                <configuration>
+                    <config>config/detekt.yml</config>
+                    <report>
+                        <report>
+                            html:${basedir}/target/site/detekt/index.html
+                        </report>
+                    </report>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependency-check-maven.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- TODO: How to get Dokka working?!
+                        <plugin>
+                            <groupId>org.jetbrains.dokka</groupId>
+                            <artifactId>dokka-maven-plugin</artifactId>
+                            <version>${dokka.version}</version>
+                            <executions>
+                                <execution>
+                                    <phase>pre-site</phase>
+                                    <goals>
+                                        <goal>dokka</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+            -->
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>${maven-jar-plugin.version}</version>
@@ -281,6 +322,71 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin.version}</version>
+            </plugin>
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>${maven-project-info-reports-plugin.version}
+                    </version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${maven-site-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>com.github.gantsign.maven</groupId>
+                <artifactId>ktlint-maven-plugin</artifactId>
+                <version>${ktlint-maven-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest-maven.version}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>JCenter</name>
+            <url>https://jcenter.bintray.com/</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

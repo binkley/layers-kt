@@ -224,6 +224,7 @@
                 <version>${pitest-maven.version}</version>
                 <configuration>
                     <coverageThreshold>100</coverageThreshold>
+                    <!-- TODO: Raise as code improves -->
                     <mutationThreshold>50</mutationThreshold>
                     <timestampedReports>false</timestampedReports>
                 </configuration>

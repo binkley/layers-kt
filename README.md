@@ -43,3 +43,14 @@ Docker container.
 
 This shares Maven plugin and dependency downloads with the Docker container
 run by Batect.
+
+## API
+
+### Layers library
+
+#### Properties
+
+- `layers` &mdash; an immutable list of layers, ordered from most recent to
+  oldest. The top-most in the list is the current layer
+
+### Layers domain

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 internal class LayersTest {
     @Test
-    fun `should test`() {
-        Layers(true).fakeForMutation shouldBe true
+    fun `should construct de novo`() {
+        Layers().layers shouldBe listOf(mapOf())
     }
 }

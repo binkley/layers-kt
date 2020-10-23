@@ -7,5 +7,6 @@ internal class DomainTest {
     @Test
     fun `should test`() {
         Domain(true).fakeForMutation shouldBe true
+        Domain(true).layers shouldBe listOf(mapOf())
     }
 }

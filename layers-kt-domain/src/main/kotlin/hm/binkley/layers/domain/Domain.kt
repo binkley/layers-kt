@@ -1,3 +1,5 @@
 package hm.binkley.layers.domain
 
-class Domain(val fakeForMutation: Boolean)
+import hm.binkley.layers.Layers
+
+class Domain(val fakeForMutation: Boolean) : Layers()

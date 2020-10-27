@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 internal class LayersTest {
     @Test
-    fun `should construct de novo`() {
+    fun `should construct blank layers`() {
         Layers().layers shouldBe listOf(mapOf())
     }
 }

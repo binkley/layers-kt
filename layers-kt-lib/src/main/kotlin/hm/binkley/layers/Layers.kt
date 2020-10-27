@@ -1,8 +1,8 @@
 package hm.binkley.layers
 
 open class Layers {
-    private val savedLayers = mutableListOf<Map<String, Any>>()
-    private var currentLayer = mutableMapOf<String, Any>()
+    private val savedLayers = mutableListOf<Layer>()
+    private var currentLayer = MutableLayer()
 
     /**
      * An immutable view of all layers, including the current layer (editable)

@@ -1,5 +1,11 @@
 package hm.binkley.layers
 
+/**
+ * Creates a new list of editable layers, with an initial blank editable
+ * layer.
+ *
+ * @todo Pass in block to update the initial current layer
+ */
 open class Layers(
     private val layers: MutableList<EditableLayer> =
         mutableListOf(EditableLayer()),

@@ -1,5 +1,6 @@
 package hm.binkley.layers
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeInstanceOf
@@ -76,5 +77,46 @@ internal class LayersTest {
         }
 
         layers.current shouldBe newCurrent
+    }
+
+    @Test
+    fun `should read latest computed values`() {
+        val layers = Layers.new {
+            this["bob"] = object : Rule<Int>() {
+                override fun invoke(values: List<Int>) =
+                    values.last() * 1
+
+                override fun description() = "Test Original Rule"
+            }
+        }
+        layers.saveAndNew {
+            this["bob"] = 4.asEntry
+            this["mary"] = "Something else".asEntry
+        }
+        layers.saveAndNew {
+            this["bob"] = object : Rule<Int>() {
+                override fun invoke(values: List<Int>) =
+                    values.last() * 2
+
+                override fun description() = "Test Replacement Rule"
+            }
+        }
+
+        layers["bob"] as Int shouldBe 8
+    }
+
+    /** This test increases coverage. */
+    @Test
+    fun `should complain on a missing rule`() {
+        val layers = Layers.new {
+            this["mary"] = object : Rule<String>() {
+                override fun invoke(values: List<String>) = values.last()
+                override fun description() = "Inapplicable Rule"
+            }
+        }
+
+        shouldThrow<IllegalArgumentException> {
+            layers["bob"] as Int shouldBe 16
+        }
     }
 }

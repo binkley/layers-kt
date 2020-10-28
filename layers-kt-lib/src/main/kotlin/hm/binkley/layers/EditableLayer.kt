@@ -6,4 +6,6 @@ open class EditableLayer(
     fun edit(block: MutableMap<String, Entry<*>>.() -> Unit) = apply {
         map.block()
     }
+
+    override operator fun get(key: String): Entry<*>? = map[key]
 }

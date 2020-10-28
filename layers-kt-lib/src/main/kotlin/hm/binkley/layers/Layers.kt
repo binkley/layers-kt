@@ -12,6 +12,8 @@ class Layers(
     val layers: List<Layer> get() = _layers
     val current get() = _layers.first()
 
+    operator fun get(key: String) = calculateValue<Any>(key)
+
     fun saveAndNew(block: MutableMap<String, Entry<*>>.() -> Unit = {}):
         EditableLayer {
             val new = EditableLayer()
@@ -23,6 +25,27 @@ class Layers(
     override fun toString() = layers.mapIndexed { index, layer ->
         "$index: (${layer::class.simpleName}) $layer"
     }.joinToString("\n")
+
+    private fun <T> calculateValue(key: String) =
+        findRule<T>(key)(findValues(key))
+
+    private fun <T> findRule(key: String): Rule<T> {
+        try {
+            return _layers
+                .mapNotNull { it[key] }
+                .filterIsInstance<Rule<T>>()
+                .first()
+        } catch (e: NoSuchElementException) {
+            val x = IllegalArgumentException("No rule: $key")
+            x.stackTrace = e.stackTrace
+            throw x
+        }
+    }
+
+    private fun <T> findValues(key: String): List<T> = _layers
+        .mapNotNull { it[key] }
+        .filterIsInstance<Value<T>>()
+        .map { it.value }
 
     companion object {
         fun new() = Layers(mutableListOf(EditableLayer()))

@@ -227,7 +227,7 @@
                 <configuration>
                     <coverageThreshold>100</coverageThreshold>
                     <!-- TODO: PITest does not grok Kotlin well -->
-                    <mutationThreshold>43</mutationThreshold>
+                    <mutationThreshold>50</mutationThreshold>
                     <timestampedReports>false</timestampedReports>
                 </configuration>
                 <executions>

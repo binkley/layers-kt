@@ -7,15 +7,16 @@ package hm.binkley.layers
  * @todo Pass in block to update the initial current layer
  */
 class Layers(
-    private val layers: MutableList<EditableLayer>,
-) : List<Layer> by layers {
-    val current get() = layers.first()
+    private val _layers: MutableList<EditableLayer>,
+) {
+    val layers: List<Layer> get() = _layers
+    val current get() = _layers.first()
 
     fun saveAndNew(block: MutableMap<String, Entry<*>>.() -> Unit = {}):
         EditableLayer {
             val new = EditableLayer()
             new.edit(block)
-            layers.add(0, new)
+            _layers.add(0, new)
             return new
         }
 

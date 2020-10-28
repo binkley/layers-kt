@@ -15,7 +15,7 @@ internal class LayersTest {
     fun `should start with a blank editable layer`() {
         val newLayers = Layers.new()
 
-        newLayers shouldBe listOf(Layer())
+        newLayers.layers shouldBe listOf(Layer())
         newLayers.current.shouldBeInstanceOf<EditableLayer>()
     }
 
@@ -31,7 +31,7 @@ internal class LayersTest {
         )
         val newLayers = Layers.new(layers)
 
-        newLayers shouldBe layers
+        newLayers.layers shouldBe layers
     }
 
     @Test
@@ -40,7 +40,7 @@ internal class LayersTest {
             this["bob"] = 4.asEntry
         }
 
-        newLayers shouldBe listOf(
+        newLayers.layers shouldBe listOf(
             EditableLayer().edit {
                 this["bob"] = 4.asEntry
             }
@@ -59,7 +59,7 @@ internal class LayersTest {
             this["bob"] = 4.asEntry
         }
 
-        layers shouldBe listOf(newCurrent, originalCurrent)
+        layers.layers shouldBe listOf(newCurrent, originalCurrent)
         layers.current shouldBe newCurrent
         newCurrent shouldNotBe originalCurrent
     }

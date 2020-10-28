@@ -1,5 +1,5 @@
 package hm.binkley.layers.domain
 
-import hm.binkley.layers.Layers
+import hm.binkley.layers.EditableLayer
 
-class Domain(val fakeForMutation: Boolean) : Layers()
+class Domain(val fakeForMutation: Boolean) : EditableLayer()

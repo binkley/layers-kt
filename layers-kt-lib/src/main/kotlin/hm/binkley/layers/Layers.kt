@@ -6,9 +6,8 @@ package hm.binkley.layers
  *
  * @todo Pass in block to update the initial current layer
  */
-open class Layers(
-    private val layers: MutableList<EditableLayer> =
-        mutableListOf(EditableLayer()),
+class Layers(
+    private val layers: MutableList<EditableLayer>,
 ) : List<Layer> by layers {
     val current get() = layers.first()
 
@@ -23,4 +22,12 @@ open class Layers(
     override fun toString() = layers.mapIndexed { index, layer ->
         "$index: (${layer::class.simpleName}) $layer"
     }.joinToString("\n")
+
+    companion object {
+        fun new() = Layers(mutableListOf(EditableLayer()))
+        fun new(layers: List<EditableLayer>) = Layers(layers.toMutableList())
+        fun new(
+            block: MutableMap<String, Entry<*>>.() -> Unit,
+        ) = Layers(mutableListOf(EditableLayer().edit(block)))
+    }
 }

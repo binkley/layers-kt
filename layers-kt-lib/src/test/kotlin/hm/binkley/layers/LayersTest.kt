@@ -81,8 +81,9 @@ internal class LayersTest {
 
     @Test
     fun `should read latest computed values`() {
+        val knownKey = "bob"
         val layers = Layers.new {
-            this["bob"] = object : Rule<Int>() {
+            this[knownKey] = object : Rule<Int>() {
                 override fun invoke(values: List<Int>) =
                     values.last() * 1
 
@@ -90,11 +91,11 @@ internal class LayersTest {
             }
         }
         layers.saveAndNew {
-            this["bob"] = 4.asEntry
+            this[knownKey] = 4.asEntry
             this["mary"] = "Something else".asEntry
         }
         layers.saveAndNew {
-            this["bob"] = object : Rule<Int>() {
+            this[knownKey] = object : Rule<Int>() {
                 override fun invoke(values: List<Int>) =
                     values.last() * 2
 
@@ -105,18 +106,41 @@ internal class LayersTest {
         layers["bob"] as Int shouldBe 8
     }
 
-    /** This test increases coverage. */
     @Test
     fun `should complain on a missing rule`() {
         val layers = Layers.new {
             this["mary"] = object : Rule<String>() {
-                override fun invoke(values: List<String>) = values.last()
-                override fun description() = "Inapplicable Rule"
+                override fun invoke(values: List<String>) =
+                    throw NullPointerException()
+
+                override fun description() = "Impossible Rule"
             }
+        }
+
+        layers.saveAndNew {
+            this["mary"] = "Unknown value".asEntry
         }
 
         shouldThrow<IllegalArgumentException> {
             layers["bob"] as Int shouldBe 16
         }
+    }
+
+    @Test
+    fun `should read value from current (editable) layer`() {
+        val knownKey = "bob"
+        val layers = Layers.new {
+            this[knownKey] = object : Rule<Int>() {
+                override fun invoke(values: List<Int>) =
+                    values.last() * 2
+
+                override fun description() = "Test Rule"
+            }
+        }
+        layers.saveAndNew {
+            this[knownKey] = 4.asEntry
+        }
+
+        layers["bob"] shouldBe 8
     }
 }

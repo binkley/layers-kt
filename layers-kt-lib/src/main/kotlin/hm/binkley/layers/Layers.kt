@@ -10,9 +10,9 @@ class Layers(
     private val _layers: MutableList<EditableLayer>,
 ) {
     val layers: List<Layer> get() = _layers
-    val current get() = _layers.first()
+    val current get(): EditableLayer = _layers.first()
 
-    operator fun get(key: String) = calculateValue<Any>(key)
+    operator fun get(key: String) = calculateValue(key)
 
     fun saveAndNew(block: MutableMap<String, Entry<*>>.() -> Unit = {}):
         EditableLayer {
@@ -26,14 +26,13 @@ class Layers(
         "$index: (${layer::class.simpleName}) $layer"
     }.joinToString("\n")
 
-    private fun <T> calculateValue(key: String) =
-        findRule<T>(key)(findValues(key))
+    private fun calculateValue(key: String) = findRule(key)(findValues(key))
 
-    private fun <T> findRule(key: String): Rule<T> {
+    private fun findRule(key: String): Rule<*> {
         try {
             return _layers
                 .mapNotNull { it[key] }
-                .filterIsInstance<Rule<T>>()
+                .filterIsInstance<Rule<*>>()
                 .first()
         } catch (e: NoSuchElementException) {
             val x = IllegalArgumentException("No rule: $key")

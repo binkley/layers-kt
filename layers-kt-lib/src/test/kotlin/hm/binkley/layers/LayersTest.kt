@@ -2,8 +2,8 @@ package hm.binkley.layers
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeInstanceOf
+import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import org.junit.jupiter.api.Test
 
 internal class LayersTest {
@@ -21,14 +21,11 @@ internal class LayersTest {
     }
 
     @Test
-    fun `should start with an initialized editable layer`() {
+    fun `should start from a list of layers`() {
         val layers = listOf(
             EditableLayer().edit {
-                this["bob"] = 4.asEntry
+                this[bobKey] = bobRule
             },
-            EditableLayer().edit {
-                this["bob"] = 3.asEntry
-            }
         )
         val newLayers = Layers.new(layers)
 
@@ -36,111 +33,112 @@ internal class LayersTest {
     }
 
     @Test
-    fun `should start with a pre-initialized editable layer`() {
+    fun `should start from a block`() {
         val newLayers = Layers.new {
-            this["bob"] = 4.asEntry
+            this[bobKey] = bobRule
         }
 
         newLayers.layers shouldBe listOf(
-            EditableLayer().edit {
-                this["bob"] = 4.asEntry
-            }
+            EditableLayer(mutableMapOf(bobKey to bobRule))
         )
     }
 
     @Test
-    fun `should save current layer and create new layer`() {
-        val layers = Layers.new()
-        val originalCurrent = layers.current
-        originalCurrent.edit {
-            this["bob"] = 3.asEntry
+    fun `should save current layer and create a new layer`() {
+        val ruleLayer = EditableLayer().edit {
+            this[bobKey] = bobRule
         }
-        val newCurrent = layers.saveAndNew()
-        newCurrent.edit {
-            this["bob"] = 4.asEntry
+        val layers = Layers.new(listOf(ruleLayer))
+        val firstValueLayer = layers.saveAndNew {
+            this[bobKey] = 4.asEntry
         }
 
-        layers.layers shouldBe listOf(newCurrent, originalCurrent)
-        layers.current shouldBe newCurrent
-        newCurrent shouldNotBe originalCurrent
+        layers.layers shouldBe listOf(firstValueLayer, ruleLayer)
+        layers.current shouldBe firstValueLayer
+        firstValueLayer shouldNotBeSameInstanceAs ruleLayer
     }
 
     @Test
     fun `should edit while creating new layer`() {
-        val layers = Layers.new()
-        val originalCurrent = layers.current
-        originalCurrent.edit {
-            this["bob"] = 3.asEntry
+        val ruleLayer = EditableLayer().edit {
+            this[bobKey] = bobRule
         }
-        val newCurrent = layers.saveAndNew {
-            this["bob"] = 4.asEntry
+        val layers = Layers.new(listOf(ruleLayer))
+        layers.saveAndNew {
+            this[bobKey] = 4.asEntry
         }
 
-        layers.current shouldBe newCurrent
+        layers.current.edit {
+            this[bobKey] = 3.asEntry
+        }
+
+        layers.current shouldBe EditableLayer(
+            mutableMapOf(bobKey to 3.asEntry)
+        )
     }
 
     @Test
     fun `should read latest computed values`() {
-        val knownKey = "bob"
         val layers = Layers.new {
-            this[knownKey] = object : Rule<Int>() {
+            this[bobKey] = object : Rule<Int>() {
                 override fun invoke(values: List<Int>) =
                     values.last() * 1
 
-                override fun description() = "Test Original Rule"
+                override fun description() = "Original Bob Rule"
             }
         }
         layers.saveAndNew {
-            this[knownKey] = 4.asEntry
+            this[bobKey] = 4.asEntry
             this["mary"] = "Something else".asEntry
         }
         layers.saveAndNew {
-            this[knownKey] = object : Rule<Int>() {
-                override fun invoke(values: List<Int>) =
-                    values.last() * 2
-
-                override fun description() = "Test Replacement Rule"
-            }
+            this[bobKey] = bobRule
         }
 
-        layers["bob"] as Int shouldBe 8
+        layers[bobKey] as Int shouldBe 8
     }
 
     @Test
     fun `should complain on a missing rule`() {
         val layers = Layers.new {
-            this["mary"] = object : Rule<String>() {
-                override fun invoke(values: List<String>) =
-                    throw NullPointerException()
-
-                override fun description() = "Impossible Rule"
-            }
+            this[maryKey] = maryRule
         }
 
         layers.saveAndNew {
-            this["mary"] = "Unknown value".asEntry
+            this[maryKey] = "Unknown value".asEntry
         }
 
         shouldThrow<IllegalArgumentException> {
-            layers["bob"] as Int shouldBe 16
+            layers[bobKey] as Int shouldBe 16
         }
     }
 
     @Test
-    fun `should read value from current (editable) layer`() {
-        val knownKey = "bob"
+    fun `should lookup value based on rule`() {
         val layers = Layers.new {
-            this[knownKey] = object : Rule<Int>() {
-                override fun invoke(values: List<Int>) =
-                    values.last() * 2
-
-                override fun description() = "Test Rule"
-            }
+            this[bobKey] = bobRule
         }
         layers.saveAndNew {
-            this[knownKey] = 4.asEntry
+            this[bobKey] = 4.asEntry
         }
 
-        layers["bob"] shouldBe 8
+        layers[bobKey] shouldBe 8
     }
+}
+
+private const val bobKey = "bob"
+private const val maryKey = "mary"
+
+private val bobRule = object : Rule<Int>() {
+    override fun invoke(values: List<Int>) =
+        values.last() * 2
+
+    override fun description() = "Test Bob Rule"
+}
+
+private val maryRule = object : Rule<String>() {
+    override fun invoke(values: List<String>) =
+        throw NullPointerException()
+
+    override fun description() = "Impossible Rule"
 }

@@ -5,11 +5,39 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import org.junit.jupiter.api.Test
+import java.util.AbstractMap.SimpleImmutableEntry
 
 internal class LayersTest {
     @Test
     fun `should have a debuggable presentation`() {
         Layers.new().toString() shouldBe "0: (EditableLayer) {}"
+    }
+
+    @Test
+    fun `should be a virtual map`() {
+        val fredKey = "fred"
+        val layers = Layers.new(
+            bobKey to bobRule,
+            fredKey to object : Rule<String>() {
+                override fun invoke(values: List<String>) =
+                    values.first()
+
+                override fun description() =
+                    "Test Rule which does not explode"
+            }
+        )
+        layers.saveAndNew {
+            this[bobKey] = 4.toEntry()
+        }
+        layers.saveAndNew {
+            this[fredKey] = "Happy clam".toEntry()
+        }
+        val entries = layers.entries
+
+        entries shouldBe setOf(
+            SimpleImmutableEntry(bobKey, 8),
+            SimpleImmutableEntry(fredKey, "Happy clam"),
+        )
     }
 
     @Test
@@ -118,6 +146,23 @@ internal class LayersTest {
     fun `should lookup value based on rule`() {
         val layers = Layers.new {
             this[bobKey] = bobRule
+        }
+        layers.saveAndNew {
+            this[bobKey] = 4.toEntry()
+        }
+
+        layers[bobKey] shouldBe 8
+    }
+
+    @Test
+    fun `should ignore layers with no relevant entries`() {
+        val layers = Layers.new(
+            bobKey to bobRule,
+            maryKey to maryRule
+        )
+
+        layers.saveAndNew {
+            this[maryKey] = "Inconceivable".toEntry()
         }
         layers.saveAndNew {
             this[bobKey] = 4.toEntry()

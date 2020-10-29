@@ -11,33 +11,18 @@ import java.util.AbstractMap.SimpleEntry
  */
 class Layers(
     private val _layers: MutableList<EditableLayer>,
-) : Map<String, Any> {
+) : AbstractMap<String, Any>() {
     val layers: List<Layer> get() = _layers
     val current get(): EditableLayer = _layers[0]
 
     override operator fun get(key: String) = calculateValue(key)
 
     override val entries: Set<Map.Entry<String, Any>>
-        get() = keys.map {
-            // TODO: Consistency on asking for unknown keys
-            SimpleEntry(
-                it,
-                calculateValue(it)
-            )
+        get() = _layers.flatMap {
+            it.keys
+        }.distinct().map {
+            SimpleEntry(it, calculateValue(it))
         }.toSet()
-
-    override val keys get() = _layers.flatMap { it.keys }.toSet()
-    override val size get() = keys.size
-
-    /** The current _computed_ values. */
-    override val values: Collection<Any>
-        get() = entries.map {
-            it.value
-        }
-
-    override fun containsKey(key: String) = keys.contains(key)
-    override fun containsValue(value: Any) = values.contains(value)
-    override fun isEmpty() = keys.isEmpty()
 
     fun saveAndNew(block: MutableMap<String, Entry<*>>.() -> Unit = {}):
         EditableLayer {
@@ -71,7 +56,9 @@ class Layers(
         .map { it.value }
 
     companion object {
-        fun new() = Layers(mutableListOf(EditableLayer()))
+        fun new(vararg firstLayer: Pair<String, Entry<*>>) =
+            new(mutableListOf(EditableLayer(mutableMapOf(*firstLayer))))
+
         fun new(layers: List<EditableLayer>) = Layers(layers.toMutableList())
 
         /** @todo Enforce that first layer must have rules, not values */

@@ -17,7 +17,7 @@ class Layers(
 
     override operator fun get(key: String) = calculateValue(key)
 
-    override val entries: Set<Map.Entry<String, Any>>
+    override val entries
         get() = _layers.flatMap {
             it.keys
         }.distinct().map {

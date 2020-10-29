@@ -7,7 +7,7 @@ sealed class Entry<T> {
 data class Value<T>(
     val value: T,
 ) : Entry<T>() {
-    override fun toString() = "$value"
+    override fun toString() = "Value: $value"
 }
 
 abstract class Rule<T> : Entry<T>() {

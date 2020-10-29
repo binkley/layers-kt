@@ -11,7 +11,7 @@ internal class EntryTest {
 
     @Test
     fun `should have a debuggable presentation`() {
-        "${Value(3)}" shouldBe "3"
+        "${Value(3)}" shouldBe "Value: 3"
         "$TestRule" shouldBe "Rule: Test Fooby"
     }
 }

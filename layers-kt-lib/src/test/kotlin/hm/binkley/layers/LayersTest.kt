@@ -50,7 +50,7 @@ internal class LayersTest {
         }
         val layers = Layers.new(listOf(ruleLayer))
         val firstValueLayer = layers.saveAndNew {
-            this[bobKey] = 4.asEntry
+            this[bobKey] = 4.toEntry()
         }
 
         layers.layers shouldBe listOf(firstValueLayer, ruleLayer)
@@ -65,15 +65,15 @@ internal class LayersTest {
         }
         val layers = Layers.new(listOf(ruleLayer))
         layers.saveAndNew {
-            this[bobKey] = 4.asEntry
+            this[bobKey] = 4.toEntry()
         }
 
         layers.current.edit {
-            this[bobKey] = 3.asEntry
+            this[bobKey] = 3.toEntry()
         }
 
         layers.current shouldBe EditableLayer(
-            mutableMapOf(bobKey to 3.asEntry)
+            mutableMapOf(bobKey to 3.toEntry())
         )
     }
 
@@ -84,12 +84,13 @@ internal class LayersTest {
                 override fun invoke(values: List<Int>) =
                     values.last() * 1
 
-                override fun description() = "Original Bob Rule"
+                override fun description() = "Broken Bob Rule"
             }
+            this[maryKey] = maryRule
         }
         layers.saveAndNew {
-            this[bobKey] = 4.asEntry
-            this["mary"] = "Something else".asEntry
+            this[bobKey] = 4.toEntry()
+            this[maryKey] = "Something else".toEntry()
         }
         layers.saveAndNew {
             this[bobKey] = bobRule
@@ -105,7 +106,7 @@ internal class LayersTest {
         }
 
         layers.saveAndNew {
-            this[maryKey] = "Unknown value".asEntry
+            this[maryKey] = "Unknown value".toEntry()
         }
 
         shouldThrow<IllegalArgumentException> {
@@ -119,7 +120,7 @@ internal class LayersTest {
             this[bobKey] = bobRule
         }
         layers.saveAndNew {
-            this[bobKey] = 4.asEntry
+            this[bobKey] = 4.toEntry()
         }
 
         layers[bobKey] shouldBe 8

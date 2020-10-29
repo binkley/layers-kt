@@ -17,4 +17,4 @@ abstract class Rule<T> : Entry<T>() {
     final override fun toString() = "Rule: ${description()}"
 }
 
-val <T> T.asEntry: Entry<T> get() = Value(this)
+fun <T> T.toEntry(): Entry<T> = Value(this)

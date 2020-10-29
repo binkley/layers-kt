@@ -8,16 +8,16 @@ internal class EditableLayerTest {
     fun `should edit blank layer`() {
         val layer = EditableLayer()
         layer.edit {
-            this["bob"] = 3.asEntry
+            this["bob"] = 3.toEntry()
         }
 
-        layer shouldBe mapOf("bob" to 3.asEntry)
+        layer shouldBe mapOf("bob" to 3.toEntry())
     }
 
     @Test
     fun `should start layer with data`() {
-        val layer = EditableLayer(mutableMapOf("bob" to 4.asEntry))
+        val layer = EditableLayer(mutableMapOf("bob" to 4.toEntry()))
 
-        layer shouldBe mapOf("bob" to 4.asEntry)
+        layer shouldBe mapOf("bob" to 4.toEntry())
     }
 }

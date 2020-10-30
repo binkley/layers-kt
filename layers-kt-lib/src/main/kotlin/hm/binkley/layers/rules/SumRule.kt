@@ -7,6 +7,8 @@ class SumRule : Rule<Int>() {
     override fun description() = "Sum"
 
     companion object {
-        fun sumOf(values: List<Int>) = SumRule()(values)
+        fun sumOf(values: List<Int>): Int {
+            return if (values.isEmpty()) 0 else SumRule()(values)
+        }
     }
 }

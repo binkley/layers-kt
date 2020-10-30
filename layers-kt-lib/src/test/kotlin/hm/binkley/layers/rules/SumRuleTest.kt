@@ -10,5 +10,8 @@ internal class SumRuleTest {
         "${SumRule()}" shouldBe "Rule: Sum"
 
     @Test
+    fun `should provide a default`() = sumOf(listOf()) shouldBe 0
+
+    @Test
     fun `should calculate rule`() = sumOf(listOf(1, 2, 3)) shouldBe 6
 }

@@ -1,6 +1,20 @@
 package hm.binkley.layers
 
-/** @todo Unify with Entry and/or Pair */
+/**
+ * A layer map entry, distinct from a
+ * [`Map.Entry`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/-entry/)
+ * or [`Pair`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/) in
+ * that:
+ * * The "key" is only sometimes applicable
+ * * The "value" might not be computed until provided an argument
+ *
+ * Note that `Pair` is a data class, and requires fixed key/value arguments in
+ * its constructor; `Map.Entry` is an interface, and more flexible in this
+ * context.
+ *
+ * @see Rule which computes "value" from arguments, and makes use of "key"
+ * @see Value which has a fixed value for "value", and ignores "key
+ */
 sealed class Entry<T> {
     abstract override fun toString(): String
 }

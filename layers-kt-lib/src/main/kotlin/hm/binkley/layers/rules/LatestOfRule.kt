@@ -2,7 +2,7 @@ package hm.binkley.layers.rules
 
 import hm.binkley.layers.Rule
 
-class LatestRule<T>(
+class LatestOfRule<T>(
     key: String,
     private val default: T,
 ) : Rule<T>(key) {
@@ -13,6 +13,6 @@ class LatestRule<T>(
 
     companion object {
         fun <T> latestOfRule(key: String, default: T) =
-            LatestRule(key, default)
+            LatestOfRule(key, default)
     }
 }

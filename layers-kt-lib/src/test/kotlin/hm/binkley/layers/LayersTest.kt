@@ -1,6 +1,7 @@
 package hm.binkley.layers
 
-import hm.binkley.layers.rules.SumRule.Companion.sumOfRule
+import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
+import hm.binkley.layers.rules.SumOfRule.Companion.sumOfRule
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
@@ -16,16 +17,9 @@ internal class LayersTest {
 
     @Test
     fun `should be a virtual map`() {
-        val fredKey = "fred"
         val layers = Layers.new(
             bobKey to bobRule,
-            fredKey to object : Rule<String>(fredKey) {
-                override fun invoke(values: List<String>) =
-                    if (values.isEmpty()) "" else values.first()
-
-                override fun description() =
-                    "Test Rule which does not explode"
-            }
+            fredKey to fredRule
         )
         layers.saveAndNew {
             this[bobKey] = 4.toEntry()
@@ -188,6 +182,7 @@ internal class LayersTest {
 
 private const val bobKey = "bob"
 private const val maryKey = "mary"
+private const val fredKey = "fred"
 
 private val bobRule = object : Rule<Int>(bobKey) {
     override fun invoke(values: List<Int>) = 2 * values.last()
@@ -200,3 +195,5 @@ private val maryRule = object : Rule<String>(maryKey) {
 
     override fun description() = "Impossible Rule"
 }
+
+private val fredRule = latestOfRule(fredKey, "MISSING")

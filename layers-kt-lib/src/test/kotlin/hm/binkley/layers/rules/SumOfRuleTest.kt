@@ -1,13 +1,13 @@
 package hm.binkley.layers.rules
 
-import hm.binkley.layers.rules.SumRule.Companion.sumOfRule
+import hm.binkley.layers.rules.SumOfRule.Companion.sumOfRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-internal class SumRuleTest {
+internal class SumOfRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${SumRule("bob", 0)}" shouldBe "<Rule>[bob]: Sum[Int]"
+        "${SumOfRule("bob", 0)}" shouldBe "<Rule>[bob]: Sum[Int]"
 
     @Test
     fun `should provide a default`() =

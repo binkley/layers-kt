@@ -2,13 +2,16 @@ package hm.binkley.layers.rules
 
 import hm.binkley.layers.Rule
 
-class SumRule : Rule<Int>() {
-    override fun invoke(values: List<Int>) = values.sum()
-    override fun description() = "Sum"
+class SumRule(
+    key: String,
+    private val default: Int,
+) : Rule<Int>(key) {
+    override fun invoke(values: List<Int>) =
+        if (values.isEmpty()) default else values.sum()
+
+    override fun description() = "Sum[Int]"
 
     companion object {
-        fun sumOf(values: List<Int>): Int {
-            return if (values.isEmpty()) 0 else SumRule()(values)
-        }
+        fun sumOfRule(key: String, default: Int) = SumRule(key, default)
     }
 }

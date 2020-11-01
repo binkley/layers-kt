@@ -10,11 +10,13 @@ data class Value<T>(
     override fun toString() = "Value: $value"
 }
 
-abstract class Rule<T> : Entry<T>() {
+abstract class Rule<T>(
+    protected val key: String,
+) : Entry<T>() {
     abstract operator fun invoke(values: List<T>): T
     abstract fun description(): String
 
-    final override fun toString() = "Rule: ${description()}"
+    final override fun toString() = "<Rule>[$key]: ${description()}"
 }
 
 fun <T> T.toEntry(): Entry<T> = Value(this)

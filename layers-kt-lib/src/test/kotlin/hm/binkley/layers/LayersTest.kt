@@ -1,5 +1,6 @@
 package hm.binkley.layers
 
+import hm.binkley.layers.rules.SumRule.Companion.sumOfRule
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
@@ -18,9 +19,9 @@ internal class LayersTest {
         val fredKey = "fred"
         val layers = Layers.new(
             bobKey to bobRule,
-            fredKey to object : Rule<String>() {
+            fredKey to object : Rule<String>(fredKey) {
                 override fun invoke(values: List<String>) =
-                    values.first()
+                    if (values.isEmpty()) "" else values.first()
 
                 override fun description() =
                     "Test Rule which does not explode"
@@ -108,7 +109,7 @@ internal class LayersTest {
     @Test
     fun `should read latest computed values`() {
         val layers = Layers.new {
-            this[bobKey] = object : Rule<Int>() {
+            this[bobKey] = object : Rule<Int>(bobKey) {
                 override fun invoke(values: List<Int>) =
                     values.last() * 1
 
@@ -129,16 +130,8 @@ internal class LayersTest {
 
     @Test
     fun `should complain on a missing rule`() {
-        val layers = Layers.new {
-            this[maryKey] = maryRule
-        }
-
-        layers.saveAndNew {
-            this[maryKey] = "Unknown value".toEntry()
-        }
-
-        shouldThrow<IllegalArgumentException> {
-            layers[bobKey] as Int shouldBe 16
+        shouldThrow<IllegalStateException> {
+            Layers.new()[bobKey]
         }
     }
 
@@ -170,19 +163,38 @@ internal class LayersTest {
 
         layers[bobKey] shouldBe 8
     }
+
+    @Test
+    fun `should ignore ordering of rules vs values`() {
+        val layers = Layers.new(
+            bobKey to bobRule
+        )
+
+        layers.saveAndNew {
+            this[bobKey] = 1.toEntry()
+        }
+
+        layers.saveAndNew {
+            this[bobKey] = sumOfRule(bobKey, 0)
+        }
+
+        layers.saveAndNew {
+            this[bobKey] = 2.toEntry()
+        }
+
+        layers[bobKey] shouldBe 3
+    }
 }
 
 private const val bobKey = "bob"
 private const val maryKey = "mary"
 
-private val bobRule = object : Rule<Int>() {
-    override fun invoke(values: List<Int>) =
-        values.last() * 2
-
-    override fun description() = "Test Bob Rule"
+private val bobRule = object : Rule<Int>(bobKey) {
+    override fun invoke(values: List<Int>) = 2 * values.last()
+    override fun description() = "Test rule for doubling last"
 }
 
-private val maryRule = object : Rule<String>() {
+private val maryRule = object : Rule<String>(maryKey) {
     override fun invoke(values: List<String>) =
         throw NullPointerException()
 

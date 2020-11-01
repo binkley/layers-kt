@@ -1,5 +1,6 @@
 package hm.binkley.layers
 
+import hm.binkley.layers.Column.Companion.lookingForRule
 import java.util.AbstractMap.SimpleEntry
 
 /**
@@ -15,13 +16,13 @@ class Layers(
     val layers: List<Layer> get() = _layers
     val current get(): EditableLayer = _layers[0]
 
-    override operator fun get(key: String) = calculateValue(key)
+    override operator fun get(key: String) = calculate<Any>(key)
 
     override val entries
         get() = _layers.flatMap {
             it.keys
         }.distinct().map {
-            SimpleEntry(it, calculateValue(it))
+            SimpleEntry(it, calculate<Any>(it))
         }.toSet()
 
     fun saveAndNew(block: MutableMap<String, Entry<*>>.() -> Unit = {}):
@@ -35,25 +36,14 @@ class Layers(
         "$index: (${layer::class.simpleName}) $layer"
     }.joinToString("\n")
 
-    private fun calculateValue(key: String) = findRule(key)(findValues(key))
-
-    private fun findRule(key: String): Rule<Any> {
-        try {
-            return _layers
-                .mapNotNull { it[key] }
-                .filterIsInstance<Rule<Any>>()
-                .first()
-        } catch (e: NoSuchElementException) {
-            val x = IllegalArgumentException("No rule for key: $key")
-            x.stackTrace = e.stackTrace
-            throw x
+    private fun <T> calculate(key: String) = _layers
+        .mapNotNull {
+            it[key]
         }
-    }
-
-    private fun <T> findValues(key: String): List<T> = _layers
-        .mapNotNull { it[key] }
-        .filterIsInstance<Value<T>>()
-        .map { it.value }
+        .fold<Entry<*>, Column<T>>(lookingForRule(key)) { acc, e ->
+            acc.add(e as Entry<T>)
+        }
+        .calculate()
 
     companion object {
         fun new(vararg firstLayer: Pair<String, Entry<*>>) =
@@ -66,4 +56,46 @@ class Layers(
             block: MutableMap<String, Entry<*>>.() -> Unit,
         ) = Layers(mutableListOf(EditableLayer().edit(block)))
     }
+}
+
+private sealed class Column<T> {
+    abstract fun add(entry: Entry<T>): Column<T>
+    abstract fun calculate(): T
+
+    companion object {
+        fun <T> lookingForRule(key: String): Column<T> =
+            LookingForRule(key, mutableListOf())
+    }
+}
+
+private class LookingForRule<T>(
+    private val key: String,
+    private val values: MutableList<T>,
+) : Column<T>() {
+    override fun add(entry: Entry<T>) =
+        when (entry) {
+            is Rule -> HasRule(entry, values) // Switch modes
+            is Value -> {
+                values.add(entry.value)
+                this
+            }
+        }
+
+    override fun calculate() =
+        throw IllegalStateException("No rule for key: $key")
+}
+
+private class HasRule<T>(
+    private val rule: Rule<T>,
+    private val values: MutableList<T>,
+) : Column<T>() {
+    override fun add(entry: Entry<T>): Column<T> = when (entry) {
+        is Rule -> this // First rule found wins; ignore the rest
+        is Value -> {
+            values.add(entry.value)
+            this
+        }
+    }
+
+    override fun calculate() = rule(values)
 }

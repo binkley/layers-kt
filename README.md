@@ -22,7 +22,7 @@ in Java.)
 
 ## Build and try
 
-To build, use `./mvnw clean verify`.
+To build, use `./mvnw verify` or `./batect build` (for a CI-like experience).
 
 There are no run-time dependencies.
 

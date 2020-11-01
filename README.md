@@ -11,6 +11,12 @@
 
 _An experiment in style and technique in Kotlin_.
 
+`Layers` is a list of maps that appears as a single map. It uses _rules_
+to provide a single value for each key, based on all values for that key in
+the list of maps. For example, if the key "bob" has values 1, 2, and 3 in
+different layers, and the rule were to sum these, then the value of the
+"bob" key in a layers would be 6.
+
 (See [Layers Java](https://github.com/binkley/layers-java) for an equivalent
 in Java.)
 

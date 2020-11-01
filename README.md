@@ -46,11 +46,56 @@ run by Batect.
 
 ## API
 
-### Layers library
+### Layers
+
+[`Layers`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/Layers.kt) is a
+subtype of
+[`Map`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/)
+.
 
 #### Properties
 
 - `layers` &mdash; an immutable list of layers, ordered from most recent to
   oldest. The top-most in the list is the current layer
+- `current` &mdash; the current, _editable_ layer. Make updates against the _
+  current_ layer
 
-### Layers domain
+### Layer
+
+[`Layer`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/Layer.kt) is a
+subtype of
+[`Map`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/)
+.
+
+### Editable layer
+
+[`EditableLayer`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/EditableLayer.kt)
+is a subtype of
+[`Layer`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/Layer.kt).
+
+#### Methods
+
+- `edit` &mdash; edits with a block. All `Map` methods apply. A sample:
+  ```kotlin
+        editableLayer.edit {
+            this["bob"] = 3.toEntry()
+        }
+
+  ```
+
+### Standard rule: Latest
+
+A layers rule which returns the latest value (the value in the most recently
+layer to a `Layers`).
+
+[`LatestOfRule`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/rules/LatestOfRule.kt)
+is a subtype of
+[`Rule`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/Entry.kt).
+
+### Standard rule: Sum
+
+A layers rule which sums all values added to a `Layers`.
+
+[`SumOfRule`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/rules/SumOfRule.kt)
+is a subtype of
+[`Rule`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/Entry.kt).

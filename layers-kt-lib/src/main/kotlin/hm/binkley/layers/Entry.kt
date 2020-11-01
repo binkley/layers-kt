@@ -1,5 +1,6 @@
 package hm.binkley.layers
 
+/** @todo Unify with Entry and/or Pair */
 sealed class Entry<T> {
     abstract override fun toString(): String
 }

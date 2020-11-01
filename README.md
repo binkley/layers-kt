@@ -17,8 +17,8 @@ the list of maps. For example, if the key "bob" has values 1, 2, and 3 in
 different layers, and the rule were to sum these, then the value of the
 "bob" key in a layers would be 6.
 
-(See [Layers Java](https://github.com/binkley/layers-java) for an equivalent
-in Java.)
+(See [Layers Java](https://github.com/binkley/layers-java) for an older
+approach in Java.)
 
 ## Build and try
 

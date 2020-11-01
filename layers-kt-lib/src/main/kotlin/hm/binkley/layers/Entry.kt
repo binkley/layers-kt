@@ -26,7 +26,7 @@ sealed class Entry<T> {
 data class Value<T>(
     val value: T,
 ) : Entry<T>() {
-    override fun toString() = "Value: $value"
+    override fun toString() = "<Value>: $value"
 }
 
 /**

@@ -34,10 +34,10 @@
         <!-- @formatter:off -->
         <!-- TODO: JaCoCo lies: Layers.saveAndNew used throughout tests -->
         <!-- TODO: JaCoCo poorly groks Kotlin -->
-        <coverage.jacoco>88</coverage.jacoco>
+        <coverage.jacoco>89</coverage.jacoco>
         <!-- TODO: PITest poorly groks Kotlin -->
         <coverage.pitest.line>93</coverage.pitest.line>
-        <coverage.pitest.mutation>41</coverage.pitest.mutation>
+        <coverage.pitest.mutation>43</coverage.pitest.mutation>
         <dependency-check-maven.version>6.0.2</dependency-check-maven.version>
         <detekt-maven-plugin.version>1.11.0</detekt-maven-plugin.version>
         <dokka.version>1.4.10</dokka.version>

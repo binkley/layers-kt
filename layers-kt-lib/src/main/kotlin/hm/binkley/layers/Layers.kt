@@ -1,6 +1,6 @@
 package hm.binkley.layers
 
-import hm.binkley.layers.Column.Companion.lookingForRule
+import hm.binkley.layers.RuleCalculation.Companion.lookingForRule
 import java.util.AbstractMap.SimpleEntry
 
 /**
@@ -37,10 +37,9 @@ class Layers(
     }.joinToString("\n")
 
     private fun <T> calculate(key: String) = _layers
-        .mapNotNull {
-            it[key]
-        }
-        .fold<Entry<*>, Column<T>>(lookingForRule(key)) { acc, e ->
+        .mapNotNull { it[key] }
+        .fold<Entry<*>, RuleCalculation<T>>(lookingForRule(key)) { acc, e ->
+            @Suppress("UNCHECKED_CAST")
             acc.add(e as Entry<T>)
         }
         .calculate()
@@ -56,46 +55,4 @@ class Layers(
             block: MutableMap<String, Entry<*>>.() -> Unit,
         ) = Layers(mutableListOf(EditableLayer().edit(block)))
     }
-}
-
-private sealed class Column<T> {
-    abstract fun add(entry: Entry<T>): Column<T>
-    abstract fun calculate(): T
-
-    companion object {
-        fun <T> lookingForRule(key: String): Column<T> =
-            LookingForRule(key, mutableListOf())
-    }
-}
-
-private class LookingForRule<T>(
-    private val key: String,
-    private val values: MutableList<T>,
-) : Column<T>() {
-    override fun add(entry: Entry<T>) =
-        when (entry) {
-            is Rule -> HasRule(entry, values) // Switch modes
-            is Value -> {
-                values.add(entry.value)
-                this
-            }
-        }
-
-    override fun calculate() =
-        throw IllegalStateException("No rule for key: $key")
-}
-
-private class HasRule<T>(
-    private val rule: Rule<T>,
-    private val values: MutableList<T>,
-) : Column<T>() {
-    override fun add(entry: Entry<T>): Column<T> = when (entry) {
-        is Rule -> this // First rule found wins; ignore the rest
-        is Value -> {
-            values.add(entry.value)
-            this
-        }
-    }
-
-    override fun calculate() = rule(values)
 }

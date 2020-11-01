@@ -187,6 +187,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <args>
+                        -Werror
+                    </args>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>

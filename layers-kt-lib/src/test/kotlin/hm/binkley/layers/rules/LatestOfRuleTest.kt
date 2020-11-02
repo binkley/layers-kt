@@ -4,6 +4,7 @@ import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import java.util.Collections.emptyList
+import java.util.Collections.emptyMap
 
 internal class LatestOfRuleTest {
     @Test
@@ -12,10 +13,12 @@ internal class LatestOfRuleTest {
 
     @Test
     fun `should provide a default`() {
-        latestOfRule("bob", "MISSING")(emptyList()) shouldBe "MISSING"
+        val default = "MISSING"
+
+        latestOfRule("bob", default)(emptyList(), emptyMap()) shouldBe default
     }
 
     @Test
     fun `should calculate rule`() =
-        latestOfRule("bob", 0)(listOf(1, 2, 3)) shouldBe 1
+        latestOfRule("bob", 0)(listOf(1, 2, 3), emptyMap()) shouldBe 1
 }

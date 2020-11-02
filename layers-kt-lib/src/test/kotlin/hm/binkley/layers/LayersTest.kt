@@ -104,7 +104,10 @@ internal class LayersTest {
     fun `should read latest computed values`() {
         val layers = Layers.new {
             this[bobKey] = object : Rule<Int>(bobKey) {
-                override fun invoke(values: List<Int>) =
+                override fun invoke(
+                    values: List<Int>,
+                    allValues: Map<String, Any>,
+                ) =
                     values.last() * 1
 
                 override fun description() = "Broken Bob Rule"
@@ -185,12 +188,14 @@ private const val maryKey = "mary"
 private const val fredKey = "fred"
 
 private val bobRule = object : Rule<Int>(bobKey) {
-    override fun invoke(values: List<Int>) = 2 * values.last()
+    override fun invoke(values: List<Int>, allValues: Map<String, Any>) =
+        2 * values.last()
+
     override fun description() = "Test rule for doubling last"
 }
 
 private val maryRule = object : Rule<String>(maryKey) {
-    override fun invoke(values: List<String>) =
+    override fun invoke(values: List<String>, allValues: Map<String, Any>) =
         throw NullPointerException()
 
     override fun description() = "Impossible Rule"

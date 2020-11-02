@@ -37,7 +37,11 @@ data class Value<T>(
 abstract class Rule<T>(
     protected val key: String,
 ) : Entry<T>() {
-    abstract operator fun invoke(values: List<T>): T
+    abstract operator fun invoke(
+        values: List<T>,
+        allValues: Map<String, Any>,
+    ): T
+
     abstract fun description(): String
 
     final override fun toString() = "<Rule>[$key]: ${description()}"

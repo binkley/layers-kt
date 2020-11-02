@@ -6,7 +6,7 @@ class LatestOfRule<T>(
     key: String,
     private val default: T,
 ) : Rule<T>(key) {
-    override fun invoke(values: List<T>) =
+    override fun invoke(values: List<T>, allValues: Map<String, Any>) =
         if (values.isEmpty()) default else values.first()
 
     override fun description() = "Latest"

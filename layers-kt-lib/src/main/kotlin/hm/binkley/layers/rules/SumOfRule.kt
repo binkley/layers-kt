@@ -6,7 +6,7 @@ class SumOfRule(
     key: String,
     private val default: Int,
 ) : Rule<Int>(key) {
-    override fun invoke(values: List<Int>) =
+    override fun invoke(values: List<Int>, allValues: Map<String, Any>) =
         if (values.isEmpty()) default else values.sum()
 
     override fun description() = "Sum[Int]"

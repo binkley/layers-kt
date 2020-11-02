@@ -38,7 +38,10 @@ class Layers(
 
     private fun <T> calculate(key: String) = _layers
         .mapNotNull { it[key] }
-        .fold<Entry<*>, RuleCalculation<T>>(lookingForRule(key)) { acc, e ->
+        .fold<Entry<*>, RuleCalculation<T>>(lookingForRule(key, this)) {
+            acc,
+            e,
+            ->
             @Suppress("UNCHECKED_CAST")
             acc.add(e as Entry<T>)
         }

@@ -3,6 +3,7 @@ package hm.binkley.layers.rules
 import hm.binkley.layers.rules.SumOfRule.Companion.sumOfRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import java.util.Collections.emptyMap
 
 internal class SumOfRuleTest {
     @Test
@@ -11,9 +12,9 @@ internal class SumOfRuleTest {
 
     @Test
     fun `should provide a default`() =
-        sumOfRule("bob", 13)(listOf()) shouldBe 13
+        sumOfRule("bob", 13)(listOf(), emptyMap()) shouldBe 13
 
     @Test
     fun `should calculate rule`() =
-        sumOfRule("bob", 0)(listOf(1, 2, 3)) shouldBe 6
+        sumOfRule("bob", 0)(listOf(1, 2, 3), emptyMap()) shouldBe 6
 }

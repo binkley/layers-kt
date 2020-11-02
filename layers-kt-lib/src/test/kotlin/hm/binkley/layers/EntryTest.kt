@@ -21,6 +21,11 @@ internal class EntryTest {
         KeyBasedRule(aliceKey)(listOf(), emptyMap()) shouldBe "good"
         KeyBasedRule(bobKey)(listOf(), emptyMap()) shouldBe "bad"
     }
+
+    @Test
+    fun `should support rules dependent on other map values`() {
+        DependentRule(fredRule)(listOf(), mapOf(bobKey to 12)) shouldBe 1
+    }
 }
 
 private object TestRule : Rule<String>(bobKey) {
@@ -31,8 +36,8 @@ private object TestRule : Rule<String>(bobKey) {
 }
 
 private class KeyBasedRule(key: String) : Rule<String>(key) {
-    override fun invoke(values: List<String>, allValues: Map<String, Any>):
-        String = when (key) {
+    override fun invoke(values: List<String>, allValues: Map<String, Any>) =
+        when (key) {
             aliceKey -> "good"
             else -> "bad"
         }
@@ -40,5 +45,14 @@ private class KeyBasedRule(key: String) : Rule<String>(key) {
     override fun description() = "Test key-based"
 }
 
+private class DependentRule(key: String) : Rule<Int>(key) {
+    override fun invoke(values: List<Int>, allValues: Map<String, Any>): Int {
+        return ((allValues[bobKey] as Int) - 10) / 2
+    }
+
+    override fun description() = "Depends on Bob's value"
+}
+
 private const val aliceKey = "alice"
 private const val bobKey = "bob"
+private const val fredRule = "fred"

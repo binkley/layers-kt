@@ -23,8 +23,8 @@ internal class EntryTest {
     }
 
     @Test
-    fun `should support rules dependent on other map values`() {
-        DependentRule(fredRule)(listOf(), mapOf(bobKey to 12)) shouldBe 1
+    fun `should support rules dependent on another layer value`() {
+        DependentRule(fredRule)(listOf(), mapOf(bobKey to 13)) shouldBe 6
     }
 }
 
@@ -47,7 +47,7 @@ private class KeyBasedRule(key: String) : Rule<String>(key) {
 
 private class DependentRule(key: String) : Rule<Int>(key) {
     override fun invoke(values: List<Int>, allValues: Map<String, Any>): Int {
-        return ((allValues[bobKey] as Int) - 10) / 2
+        return (allValues[bobKey] as Int) / 2
     }
 
     override fun description() = "Depends on Bob's value"

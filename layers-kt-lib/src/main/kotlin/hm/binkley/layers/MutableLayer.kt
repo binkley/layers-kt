@@ -1,6 +1,6 @@
 package hm.binkley.layers
 
-open class EditableLayer(
+open class MutableLayer(
     map: MutableMap<String, Entry<*>> = mutableMapOf(),
 ) : Layer(map), MutableMap<String, Entry<*>> {
     fun edit(block: MutableMap<String, Entry<*>>.() -> Unit) = apply {

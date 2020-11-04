@@ -12,7 +12,7 @@ import java.util.AbstractMap.SimpleImmutableEntry
 internal class LayersTest {
     @Test
     fun `should have a debuggable presentation`() {
-        Layers.new().toString() shouldBe "0: (EditableLayer) {}"
+        Layers.new().toString() shouldBe "0: (MutableLayer) {}"
     }
 
     @Test
@@ -36,17 +36,17 @@ internal class LayersTest {
     }
 
     @Test
-    fun `should start with a blank editable layer`() {
+    fun `should start with a blank, mutable layer`() {
         val newLayers = Layers.new()
 
         newLayers.layers shouldBe listOf(Layer())
-        newLayers.current.shouldBeInstanceOf<EditableLayer>()
+        newLayers.current.shouldBeInstanceOf<MutableLayer>()
     }
 
     @Test
     fun `should start from a list of layers`() {
         val layers = listOf(
-            EditableLayer().edit {
+            MutableLayer().edit {
                 this[bobKey] = bobRule
             },
         )
@@ -62,13 +62,13 @@ internal class LayersTest {
         }
 
         newLayers.layers shouldBe listOf(
-            EditableLayer(mutableMapOf(bobKey to bobRule))
+            MutableLayer(mutableMapOf(bobKey to bobRule))
         )
     }
 
     @Test
     fun `should save current layer and create a new layer`() {
-        val ruleLayer = EditableLayer().edit {
+        val ruleLayer = MutableLayer().edit {
             this[bobKey] = bobRule
         }
         val layers = Layers.new(listOf(ruleLayer))
@@ -83,7 +83,7 @@ internal class LayersTest {
 
     @Test
     fun `should edit while creating new layer`() {
-        val ruleLayer = EditableLayer().edit {
+        val ruleLayer = MutableLayer().edit {
             this[bobKey] = bobRule
         }
         val layers = Layers.new(listOf(ruleLayer))
@@ -95,7 +95,7 @@ internal class LayersTest {
             this[bobKey] = 3.toEntry()
         }
 
-        layers.current shouldBe EditableLayer(
+        layers.current shouldBe MutableLayer(
             mutableMapOf(bobKey to 3.toEntry())
         )
     }

@@ -10,4 +10,9 @@ class StatBonusRule(
         ((allValues[dependsOn] as Int) - 10) / 2
 
     override fun description() = "Bonus from $dependsOn"
+
+    companion object {
+        fun statBonusRule(key: String, dependsOn: String) =
+            StatBonusRule(key, dependsOn)
+    }
 }

@@ -11,10 +11,10 @@ import java.util.AbstractMap.SimpleEntry
  * @todo Be a mutable map, where changed edit the top layer
  */
 class Layers(
-    private val _layers: MutableList<EditableLayer>,
+    private val _layers: MutableList<MutableLayer>,
 ) : AbstractMap<String, Any>() {
     val layers: List<Layer> get() = _layers
-    val current get(): EditableLayer = _layers[0]
+    val current get(): MutableLayer = _layers[0]
 
     override operator fun get(key: String) = calculate<Any>(key)
 
@@ -26,8 +26,8 @@ class Layers(
         }.toSet()
 
     fun saveAndNew(block: MutableMap<String, Entry<*>>.() -> Unit = {}):
-        EditableLayer {
-            val new = EditableLayer().edit(block)
+        MutableLayer {
+            val new = MutableLayer().edit(block)
             _layers.add(0, new)
             return new
         }
@@ -49,13 +49,13 @@ class Layers(
 
     companion object {
         fun new(vararg firstLayer: Pair<String, Entry<*>>) =
-            new(mutableListOf(EditableLayer(mutableMapOf(*firstLayer))))
+            new(mutableListOf(MutableLayer(mutableMapOf(*firstLayer))))
 
-        fun new(layers: List<EditableLayer>) = Layers(layers.toMutableList())
+        fun new(layers: List<MutableLayer>) = Layers(layers.toMutableList())
 
         /** @todo Enforce that first layer must have rules, not values */
         fun new(
             block: MutableMap<String, Entry<*>>.() -> Unit,
-        ) = Layers(mutableListOf(EditableLayer().edit(block)))
+        ) = Layers(mutableListOf(MutableLayer().edit(block)))
     }
 }

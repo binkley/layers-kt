@@ -19,6 +19,22 @@ internal class StatBonusRuleTest {
             this[statBonusKey] = statBonusRule(statBonusKey, statKey)
         }
         layers.saveAndNew {
+            this[statKey] = 12.toEntry()
+        }
+
+        layers[statBonusKey] shouldBe 1
+    }
+
+    @Test
+    fun `should round bonus from a stat`() {
+        // TODO: Use an enum for stats
+        val statKey = "MIGHT"
+        val statBonusKey = "$statKey-bonus"
+        val layers = Layers.new {
+            this[statKey] = latestOfRule(statKey, 8)
+            this[statBonusKey] = statBonusRule(statBonusKey, statKey)
+        }
+        layers.saveAndNew {
             this[statKey] = 13.toEntry()
         }
 
@@ -31,11 +47,11 @@ internal class StatBonusRuleTest {
             val statKey = "DORK"
             val statBonusKey = "$statKey-bonus"
             val layers = Layers.new {
-                this[statKey] = latestOfRule("BOB", 33_333_333)
+                this[statKey] = latestOfRule("BOB", "not an integer")
                 this[statBonusKey] = statBonusRule(statBonusKey, statKey)
             }
             layers.saveAndNew {
-                this[statKey] = "I am not an integer".toEntry()
+                this[statKey] = "also not an integer".toEntry()
             }
 
             layers[statBonusKey] shouldBe 1

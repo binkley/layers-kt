@@ -1,19 +1,5 @@
 package hm.binkley.layers
 
-open class MutableLayer(
-    map: MutableMap<String, Entry<*>> = mutableMapOf(),
-) : Layer(map), MutableMap<String, Entry<*>> {
-    fun edit(block: MutableMap<String, Entry<*>>.() -> Unit) = apply {
-        map.block()
-    }
-
-    // TODO: How to avoid all the overrides
-    override operator fun get(key: String) = map[key]
-    override val entries get() = map.entries
-    override val keys get() = map.keys
-    override val values get() = map.values
-    override fun clear() = map.clear()
-    override fun put(key: String, value: Entry<*>) = map.put(key, value)
-    override fun putAll(from: Map<out String, Entry<*>>) = map.putAll(from)
-    override fun remove(key: String) = map.remove(key)
+interface MutableLayer : Layer, MutableMap<String, Entry<*>> {
+    fun edit(block: MutableMap<String, Entry<*>>.() -> Unit): MutableLayer
 }

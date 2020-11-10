@@ -27,7 +27,7 @@ class Layers(
 
     fun saveAndNew(block: MutableMap<String, Entry<*>>.() -> Unit = {}):
         MutableLayer {
-            val new = MutableLayer().edit(block)
+            val new = MutablePlainLayer().edit(block)
             _layers.add(0, new)
             return new
         }
@@ -49,13 +49,14 @@ class Layers(
 
     companion object {
         fun new(vararg firstLayer: Pair<String, Entry<*>>) =
-            new(mutableListOf(MutableLayer(mutableMapOf(*firstLayer))))
+            new(mutableListOf(MutablePlainLayer(mutableMapOf(*firstLayer))))
 
-        fun new(layers: List<MutableLayer>) = Layers(layers.toMutableList())
+        fun new(layers: List<MutableLayer>) =
+            Layers(layers.toMutableList())
 
         /** @todo Enforce that first layer must have rules, not values */
         fun new(
             block: MutableMap<String, Entry<*>>.() -> Unit,
-        ) = Layers(mutableListOf(MutableLayer().edit(block)))
+        ) = Layers(mutableListOf(MutablePlainLayer().edit(block)))
     }
 }

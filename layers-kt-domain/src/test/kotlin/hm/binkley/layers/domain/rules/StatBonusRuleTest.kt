@@ -18,7 +18,7 @@ internal class StatBonusRuleTest {
             this[statKey] = latestOfRule(statKey, 8)
             this[statBonusKey] = statBonusRule(statBonusKey, statKey)
         }
-        layers.saveAndNew {
+        layers.saveAndNew(statKey) {
             this[statKey] = 12.toEntry()
         }
 
@@ -34,7 +34,7 @@ internal class StatBonusRuleTest {
             this[statKey] = latestOfRule(statKey, 8)
             this[statBonusKey] = statBonusRule(statBonusKey, statKey)
         }
-        layers.saveAndNew {
+        layers.saveAndNew(statKey) {
             this[statKey] = 13.toEntry()
         }
 
@@ -50,7 +50,7 @@ internal class StatBonusRuleTest {
                 this[statKey] = latestOfRule("BOB", "not an integer")
                 this[statBonusKey] = statBonusRule(statBonusKey, statKey)
             }
-            layers.saveAndNew {
+            layers.saveAndNew(statKey) {
                 this[statKey] = "also not an integer".toEntry()
             }
 

@@ -12,7 +12,7 @@ import java.util.AbstractMap.SimpleImmutableEntry
 internal class LayersTest {
     @Test
     fun `should have a debuggable presentation`() {
-        Layers.new().toString() shouldBe "0: (MutablePlainLayer) {}"
+        Layers.new().toString() shouldBe "0: (MutablePlainLayer) <INIT>: {}"
     }
 
     @Test
@@ -21,10 +21,10 @@ internal class LayersTest {
             bobKey to bobRule,
             fredKey to fredRule
         )
-        layers.saveAndNew {
+        layers.saveAndNew("BOB") {
             this[bobKey] = 4.toEntry()
         }
-        layers.saveAndNew {
+        layers.saveAndNew("FRED") {
             this[fredKey] = "Happy clam".toEntry()
         }
         val entries = layers.entries
@@ -39,14 +39,14 @@ internal class LayersTest {
     fun `should start with a blank, mutable layer`() {
         val newLayers = Layers.new()
 
-        newLayers.layers shouldBe listOf(PlainLayer())
+        newLayers.layers shouldBe listOf(PlainLayer("<INIT>"))
         newLayers.current.shouldBeInstanceOf<MutableLayer>()
     }
 
     @Test
     fun `should start from a list of layers`() {
         val layers = listOf(
-            MutablePlainLayer().edit {
+            MutablePlainLayer("<INIT>").edit {
                 this[bobKey] = bobRule
             },
         )
@@ -62,17 +62,17 @@ internal class LayersTest {
         }
 
         newLayers.layers shouldBe listOf(
-            MutablePlainLayer(mutableMapOf(bobKey to bobRule))
+            MutablePlainLayer("<INIT>", mutableMapOf(bobKey to bobRule))
         )
     }
 
     @Test
     fun `should save current layer and create a new layer`() {
-        val ruleLayer = MutablePlainLayer().edit {
+        val ruleLayer = MutablePlainLayer("BOB RULE").edit {
             this[bobKey] = bobRule
         }
         val layers = Layers.new(listOf(ruleLayer))
-        val firstValueLayer = layers.saveAndNew {
+        val firstValueLayer = layers.saveAndNew("BOB") {
             this[bobKey] = 4.toEntry()
         }
 
@@ -83,11 +83,11 @@ internal class LayersTest {
 
     @Test
     fun `should edit while creating new layer`() {
-        val ruleLayer = MutablePlainLayer().edit {
+        val ruleLayer = MutablePlainLayer("BOB RULE").edit {
             this[bobKey] = bobRule
         }
         val layers = Layers.new(listOf(ruleLayer))
-        layers.saveAndNew {
+        layers.saveAndNew("BOB") {
             this[bobKey] = 4.toEntry()
         }
 
@@ -96,6 +96,7 @@ internal class LayersTest {
         }
 
         layers.current shouldBe MutablePlainLayer(
+            "BOB",
             mutableMapOf(bobKey to 3.toEntry())
         )
     }
@@ -114,11 +115,11 @@ internal class LayersTest {
             }
             this[maryKey] = maryRule
         }
-        layers.saveAndNew {
+        layers.saveAndNew("BOB AND MARY") {
             this[bobKey] = 4.toEntry()
             this[maryKey] = "Something else".toEntry()
         }
-        layers.saveAndNew {
+        layers.saveAndNew("BOB") {
             this[bobKey] = bobRule
         }
 
@@ -137,7 +138,7 @@ internal class LayersTest {
         val layers = Layers.new {
             this[bobKey] = bobRule
         }
-        layers.saveAndNew {
+        layers.saveAndNew("BOB") {
             this[bobKey] = 4.toEntry()
         }
 
@@ -151,10 +152,10 @@ internal class LayersTest {
             maryKey to maryRule
         )
 
-        layers.saveAndNew {
+        layers.saveAndNew("MARY") {
             this[maryKey] = "Inconceivable".toEntry()
         }
-        layers.saveAndNew {
+        layers.saveAndNew("BOB") {
             this[bobKey] = 4.toEntry()
         }
 
@@ -167,15 +168,15 @@ internal class LayersTest {
             bobKey to bobRule
         )
 
-        layers.saveAndNew {
+        layers.saveAndNew("BOB") {
             this[bobKey] = 1.toEntry()
         }
 
-        layers.saveAndNew {
+        layers.saveAndNew("NEW BOB RULE") {
             this[bobKey] = sumOfRule(bobKey, 0)
         }
 
-        layers.saveAndNew {
+        layers.saveAndNew("BOB") {
             this[bobKey] = 2.toEntry()
         }
 

@@ -36,7 +36,8 @@
         <!-- TODO: JaCoCo poorly groks Kotlin -->
         <coverage.jacoco>89</coverage.jacoco>
         <!-- TODO: PITest poorly groks Kotlin -->
-        <coverage.pitest.line>93</coverage.pitest.line>
+        <!-- TODO: Minimums per-subproject -->
+        <coverage.pitest.line>92</coverage.pitest.line>
         <coverage.pitest.mutation>43</coverage.pitest.mutation>
         <dependency-check-maven.version>6.0.2</dependency-check-maven.version>
         <detekt-maven-plugin.version>1.11.0</detekt-maven-plugin.version>

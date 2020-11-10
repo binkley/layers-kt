@@ -1,8 +1,9 @@
 package hm.binkley.layers
 
 open class MutablePlainLayer(
+    name: String,
     map: MutableMap<String, Entry<*>> = mutableMapOf(),
-) : PlainLayer(map), MutableLayer, MutableMap<String, Entry<*>> {
+) : PlainLayer(name, map), MutableLayer, MutableMap<String, Entry<*>> {
     @Suppress("UNCHECKED_CAST")
     override fun edit(
         block: MutableMap<String, Entry<*>>.() -> Unit,

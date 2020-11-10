@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 internal class MutablePlainLayerTest {
     @Test
     fun `should edit blank layer`() {
-        val layer = MutablePlainLayer()
+        val layer = MutablePlainLayer("BOB")
         layer.edit {
             this["bob"] = 3.toEntry()
         }
@@ -16,7 +16,10 @@ internal class MutablePlainLayerTest {
 
     @Test
     fun `should start layer with data`() {
-        val layer = MutablePlainLayer(mutableMapOf("bob" to 4.toEntry()))
+        val layer = MutablePlainLayer(
+            "BOB",
+            mutableMapOf("bob" to 4.toEntry())
+        )
 
         layer shouldBe mapOf("bob" to 4.toEntry())
     }

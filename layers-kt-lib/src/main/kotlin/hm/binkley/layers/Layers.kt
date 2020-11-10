@@ -25,12 +25,14 @@ class Layers(
             SimpleEntry(it, calculate<Any>(it))
         }.toSet()
 
-    fun saveAndNew(block: MutableMap<String, Entry<*>>.() -> Unit = {}):
-        MutableLayer {
-            val new = MutablePlainLayer().edit(block)
-            _layers.add(0, new)
-            return new
-        }
+    fun saveAndNew(
+        name: String,
+        block: MutableMap<String, Entry<*>>.() -> Unit = {},
+    ): MutableLayer {
+        val new = MutablePlainLayer(name).edit(block)
+        _layers.add(0, new)
+        return new
+    }
 
     override fun toString() = layers.mapIndexed { index, layer ->
         "$index: (${layer::class.simpleName}) $layer"
@@ -48,15 +50,21 @@ class Layers(
         .calculate()
 
     companion object {
-        fun new(vararg firstLayer: Pair<String, Entry<*>>) =
-            new(mutableListOf(MutablePlainLayer(mutableMapOf(*firstLayer))))
+        fun new(
+            vararg firstLayer: Pair<String, Entry<*>>,
+        ) = new {
+            firstLayer.forEach {
+                this[it.first] = it.second
+            }
+        }
 
         fun new(layers: List<MutableLayer>) =
             Layers(layers.toMutableList())
 
         /** @todo Enforce that first layer must have rules, not values */
         fun new(
+            name: String = "<INIT>",
             block: MutableMap<String, Entry<*>>.() -> Unit,
-        ) = Layers(mutableListOf(MutablePlainLayer().edit(block)))
+        ) = Layers(mutableListOf(MutablePlainLayer(name).edit(block)))
     }
 }

@@ -10,6 +10,7 @@ import java.util.AbstractMap.SimpleEntry
  *
  * @todo Pass in block to update the initial current layer
  * @todo Be a mutable map, where changed edit the top layer
+ * @todo History, metadata, what-if calculations
  */
 class Layers(
     private val _layers: MutableList<MutableLayer>,
@@ -20,6 +21,10 @@ class Layers(
     override operator fun get(key: String) = calculate<Any>(key)
     override val entries get() = entries()
 
+    /**
+     * Commits the current layer (it will no longer be editable), and pushes
+     * on a new, blank layer.
+     */
     fun saveAndNew(
         name: String,
         block: MutableMap<String, Entry<*>>.() -> Unit = {},

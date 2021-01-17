@@ -1,5 +1,6 @@
 package hm.binkley.layers
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import hm.binkley.layers.RuleCalculation.Companion.lookingForRule
 import java.util.AbstractMap.SimpleEntry
 
@@ -17,13 +18,7 @@ class Layers(
     val current get(): MutableLayer = _layers[0]
 
     override operator fun get(key: String) = calculate<Any>(key)
-
-    override val entries
-        get() = _layers.flatMap {
-            it.keys
-        }.distinct().map {
-            SimpleEntry(it, calculate<Any>(it))
-        }.toSet()
+    override val entries get() = entries()
 
     fun saveAndNew(
         name: String,
@@ -34,10 +29,12 @@ class Layers(
         return new
     }
 
+    @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
     override fun toString() = layers.mapIndexed { index, layer ->
         "$index: [${layer::class.simpleName}] $layer"
     }.joinToString("\n")
 
+    @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
     private fun <T> calculate(key: String) = _layers
         .mapNotNull { it[key] }
         .fold<Entry<*>, RuleCalculation<T>>(
@@ -47,6 +44,14 @@ class Layers(
             acc.add(e as Entry<T>)
         }
         .calculate()
+
+    // TODO: Inline refactor once SpotBugs is sorted out
+    @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
+    private fun entries() = _layers.flatMap {
+        it.keys
+    }.distinct().map {
+        SimpleEntry(it, calculate<Any>(it))
+    }.toSet()
 
     companion object {
         fun new(

@@ -1,5 +1,6 @@
 package hm.binkley.layers
 
+import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
@@ -21,7 +22,7 @@ internal class PlainLayerTest {
 
     @Test
     fun `should treat layers with different names as different`() {
-        (PlainLayer("A") == PlainLayer("B")) shouldBe false
+        (PlainLayer("A") == PlainLayer("B")).shouldBeFalse()
         PlainLayer("A").hashCode() shouldNotBe PlainLayer("B").hashCode()
     }
 }

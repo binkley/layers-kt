@@ -3,7 +3,9 @@ package hm.binkley.layers
 open class MutablePlainLayer(
     name: String,
     map: MutableMap<String, Entry<*>> = mutableMapOf(),
-) : PlainLayer(name, map), MutableLayer, MutableMap<String, Entry<*>> {
+) : PlainLayer(name, map),
+    MutableLayer,
+    MutableMap<String, Entry<*>> {
     override fun edit(
         block: MutableMap<String, Entry<*>>.() -> Unit,
     ): MutableLayer = apply {

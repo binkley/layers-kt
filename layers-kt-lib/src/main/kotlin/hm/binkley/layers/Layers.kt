@@ -35,7 +35,7 @@ class Layers(
     }
 
     override fun toString() = layers.mapIndexed { index, layer ->
-        "$index: (${layer::class.simpleName}) $layer"
+        "$index: [${layer::class.simpleName}] $layer"
     }.joinToString("\n")
 
     private fun <T> calculate(key: String) = _layers

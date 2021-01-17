@@ -4,7 +4,7 @@ import hm.binkley.layers.Layers
 import hm.binkley.layers.domain.rules.StatBonusRule.Companion.statBonusRule
 import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
 import hm.binkley.layers.toEntry
-import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -43,7 +43,7 @@ internal class StatBonusRuleTest {
 
     @Test
     fun `should complain if dependency is not an integer`() {
-        shouldThrow<ClassCastException> {
+        shouldThrowExactly<ClassCastException> {
             val statKey = "DORK"
             val statBonusKey = "$statKey-bonus"
             val layers = Layers.new {

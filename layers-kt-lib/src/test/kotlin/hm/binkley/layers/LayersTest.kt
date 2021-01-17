@@ -2,7 +2,7 @@ package hm.binkley.layers
 
 import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
 import hm.binkley.layers.rules.SumOfRule.Companion.sumOfRule
-import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
@@ -12,7 +12,7 @@ import java.util.AbstractMap.SimpleImmutableEntry
 internal class LayersTest {
     @Test
     fun `should have a debuggable presentation`() {
-        Layers.new().toString() shouldBe "0: (MutablePlainLayer) <INIT>: {}"
+        Layers.new().toString() shouldBe "0: [MutablePlainLayer] <INIT>: {}"
     }
 
     @Test
@@ -128,7 +128,7 @@ internal class LayersTest {
 
     @Test
     fun `should complain on a missing rule`() {
-        shouldThrow<IllegalStateException> {
+        shouldThrowExactly<Bug> {
             Layers.new()[bobKey]
         }
     }

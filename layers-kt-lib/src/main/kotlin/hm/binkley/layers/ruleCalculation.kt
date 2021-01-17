@@ -31,7 +31,7 @@ private class LookingForRule<T>(
         }
 
     override fun calculate() =
-        throw IllegalStateException("No rule for key: $key")
+        throw Bug("Missing override: no rule for key: $key")
 }
 
 private class HasRule<T>(

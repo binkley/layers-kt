@@ -4,13 +4,11 @@ open class MutablePlainLayer(
     name: String,
     map: MutableMap<String, Entry<*>> = mutableMapOf(),
 ) : PlainLayer(name, map), MutableLayer, MutableMap<String, Entry<*>> {
-    @Suppress("UNCHECKED_CAST")
     override fun edit(
         block: MutableMap<String, Entry<*>>.() -> Unit,
-    ): MutableLayer =
-        apply {
-            map.block()
-        }
+    ): MutableLayer = apply {
+        map.block()
+    }
 
     // TODO: How to avoid all the overrides
     override operator fun get(key: String) = map[key]

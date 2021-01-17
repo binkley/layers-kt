@@ -39,16 +39,16 @@
         <!-- TODO: Minimums per-subproject -->
         <coverage.pitest.line>92</coverage.pitest.line>
         <coverage.pitest.mutation>43</coverage.pitest.mutation>
-        <dependency-check-maven.version>6.0.2</dependency-check-maven.version>
+        <dependency-check-maven.version>6.0.5</dependency-check-maven.version>
         <detekt-maven-plugin.version>1.11.0</detekt-maven-plugin.version>
         <dokka.version>1.4.10</dokka.version>
         <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
         <java.charset>UTF-8</java.charset>
-        <java.version>11</java.version>
+        <jdk.version>11</jdk.version>
         <junit.version>5.7.0</junit.version>
-        <kotest.version>4.3.1</kotest.version>
-        <kotlin.compiler.jvmTarget>${java.version}</kotlin.compiler.jvmTarget>
-        <kotlin.version>1.4.10</kotlin.version>
+        <kotest.version>4.3.2</kotest.version>
+        <kotlin.compiler.jvmTarget>${jdk.version}</kotlin.compiler.jvmTarget>
+        <kotlin.version>1.4.21</kotlin.version>
         <ktlint-maven-plugin.version>1.7.0</ktlint-maven-plugin.version>
         <lombok.version>1.18.16</lombok.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>

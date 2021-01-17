@@ -33,13 +33,6 @@
     <properties>
         <!-- @formatter:off -->
         <buildplan-maven-plugin.version>1.4</buildplan-maven-plugin.version>
-        <!-- TODO: JaCoCo lies: Layers.saveAndNew used throughout tests -->
-        <!-- TODO: JaCoCo poorly groks Kotlin -->
-        <coverage.jacoco>89</coverage.jacoco>
-        <!-- TODO: PITest poorly groks Kotlin -->
-        <!-- TODO: Minimums per-subproject -->
-        <coverage.pitest.line>92</coverage.pitest.line>
-        <coverage.pitest.mutation>43</coverage.pitest.mutation>
         <dependency-check-maven.version>6.0.5</dependency-check-maven.version>
         <detekt-maven-plugin.version>1.11.0</detekt-maven-plugin.version>
         <dokka.version>1.4.10</dokka.version>
@@ -271,9 +264,7 @@
                                 <rule>
                                     <limits>
                                         <limit>
-                                            <minimum>
-                                                ${coverage.jacoco}%
-                                            </minimum>
+                                            <minimum>90%</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -287,12 +278,8 @@
                 <artifactId>pitest-maven</artifactId>
                 <version>${pitest-maven.version}</version>
                 <configuration>
-                    <coverageThreshold>
-                        ${coverage.pitest.line}
-                    </coverageThreshold>
-                    <mutationThreshold>
-                        ${coverage.pitest.mutation}
-                    </mutationThreshold>
+                    <coverageThreshold>94</coverageThreshold>
+                    <mutationThreshold>51</mutationThreshold>
                     <timestampedReports>false</timestampedReports>
                 </configuration>
                 <executions>

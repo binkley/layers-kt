@@ -89,19 +89,27 @@ is a subtype of
 
   ```
 
+### Standard rule: Constant
+
+A layers rule which returns a constant value.
+
+See
+[`ConstantRule`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/rules/ConstantRule.kt)
+.
+
 ### Standard rule: Latest
 
 A layers rule which returns the latest value (the value in the most recently
 layer to a `Layers`).
 
+See
 [`LatestOfRule`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/rules/LatestOfRule.kt)
-is a subtype of
-[`Rule`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/Entry.kt).
+.
 
 ### Standard rule: Sum
 
 A layers rule which sums all values added to a `Layers`.
 
+See
 [`SumOfRule`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/rules/SumOfRule.kt)
-is a subtype of
-[`Rule`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/Entry.kt).
+.

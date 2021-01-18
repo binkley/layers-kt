@@ -35,7 +35,7 @@
         <buildplan-maven-plugin.version>1.4</buildplan-maven-plugin.version>
         <dependency-check-maven.version>6.0.5</dependency-check-maven.version>
         <detekt-maven-plugin.version>1.11.0</detekt-maven-plugin.version>
-        <dokka.version>1.4.10</dokka.version>
+        <dokka.version>1.4.20</dokka.version>
         <findsecbugs-plugin.version>1.11.0</findsecbugs-plugin.version>
         <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
         <java.charset>UTF-8</java.charset>
@@ -52,7 +52,6 @@
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-project-info-reports-plugin.version>3.1.1</maven-project-info-reports-plugin.version>
-        <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
         <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
@@ -380,21 +379,19 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- TODO: How to get Dokka working?!
-                        <plugin>
-                            <groupId>org.jetbrains.dokka</groupId>
-                            <artifactId>dokka-maven-plugin</artifactId>
-                            <version>${dokka.version}</version>
-                            <executions>
-                                <execution>
-                                    <phase>pre-site</phase>
-                                    <goals>
-                                        <goal>dokka</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-            -->
+            <plugin>
+                <groupId>org.jetbrains.dokka</groupId>
+                <artifactId>dokka-maven-plugin</artifactId>
+                <version>${dokka.version}</version>
+                <executions>
+                    <execution>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>dokka</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>${maven-jar-plugin.version}</version>
@@ -421,10 +418,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>${maven-release-plugin.version}</version>
             </plugin>
         </plugins>
 

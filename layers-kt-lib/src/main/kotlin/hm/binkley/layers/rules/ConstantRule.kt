@@ -9,7 +9,7 @@ class ConstantRule<T>(
     override fun invoke(values: List<T>, allValues: Map<String, Any>) =
         constant
 
-    override fun description() = "Constant = $constant"
+    override fun description() = "Constant: $constant"
 
     companion object {
         fun <T> constantRule(key: String, constant: T) =

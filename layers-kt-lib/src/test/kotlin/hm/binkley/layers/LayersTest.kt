@@ -6,6 +6,7 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.AbstractMap.SimpleImmutableEntry
 
@@ -22,10 +23,10 @@ internal class LayersTest {
             fredKey to fredRule
         )
         layers.saveAndNew("BOB") {
-            this[bobKey] = 4.toEntry()
+            this[bobKey] = 4.toValue()
         }
         layers.saveAndNew("FRED") {
-            this[fredKey] = "Happy clam".toEntry()
+            this[fredKey] = "Happy clam".toValue()
         }
         val entries = layers.entries
 
@@ -73,7 +74,7 @@ internal class LayersTest {
         }
         val layers = Layers.new(listOf(ruleLayer))
         val firstValueLayer = layers.saveAndNew("BOB") {
-            this[bobKey] = 4.toEntry()
+            this[bobKey] = 4.toValue()
         }
 
         layers.layers shouldBe listOf(firstValueLayer, ruleLayer)
@@ -88,36 +89,30 @@ internal class LayersTest {
         }
         val layers = Layers.new(listOf(ruleLayer))
         layers.saveAndNew("BOB") {
-            this[bobKey] = 4.toEntry()
+            this[bobKey] = 4.toValue()
         }
 
         layers.current.edit {
-            this[bobKey] = 3.toEntry()
+            this[bobKey] = 3.toValue()
         }
 
         layers.current shouldBe MutablePlainLayer(
             "BOB",
-            mutableMapOf(bobKey to 3.toEntry())
+            mutableMapOf(bobKey to 3.toValue())
         )
     }
 
     @Test
     fun `should read latest computed values`() {
         val layers = Layers.new {
-            this[bobKey] = object : Rule<Int>(bobKey) {
-                override fun invoke(
-                    values: List<Int>,
-                    allValues: Map<String, Any>,
-                ) =
-                    values.last() * 1
-
-                override fun description() = "Broken Bob Rule"
+            this[bobKey] = ruleFor<Int>(bobKey) { values, _ ->
+                values.last() * 1
             }
             this[maryKey] = maryRule
         }
         layers.saveAndNew("BOB AND MARY") {
-            this[bobKey] = 4.toEntry()
-            this[maryKey] = "Something else".toEntry()
+            this[bobKey] = 4.toValue()
+            this[maryKey] = "Something else".toValue()
         }
         layers.saveAndNew("BOB") {
             this[bobKey] = bobRule
@@ -133,13 +128,30 @@ internal class LayersTest {
         }
     }
 
+    @Disabled("TODO: How to do this sensibly?")
+    @Test
+    fun `should complain on a value before a rule`() {
+        shouldThrowExactly<Bug> {
+            Layers.new(
+                listOf(
+                    MutablePlainLayer("VALUE FIRST").edit {
+                        this[bobKey] = 4.toValue()
+                    },
+                    MutablePlainLayer("RULE SECOND").edit {
+                        this[bobKey] = bobRule
+                    },
+                )
+            )
+        }
+    }
+
     @Test
     fun `should lookup value based on rule`() {
         val layers = Layers.new {
             this[bobKey] = bobRule
         }
         layers.saveAndNew("BOB") {
-            this[bobKey] = 4.toEntry()
+            this[bobKey] = 4.toValue()
         }
 
         layers[bobKey] shouldBe 8
@@ -153,23 +165,23 @@ internal class LayersTest {
         )
 
         layers.saveAndNew("MARY") {
-            this[maryKey] = "Inconceivable".toEntry()
+            this[maryKey] = "Inconceivable".toValue()
         }
         layers.saveAndNew("BOB") {
-            this[bobKey] = 4.toEntry()
+            this[bobKey] = 4.toValue()
         }
 
         layers[bobKey] shouldBe 8
     }
 
     @Test
-    fun `should ignore ordering of rules vs values`() {
+    fun `should use most recent rule for a key`() {
         val layers = Layers.new(
             bobKey to bobRule
         )
 
         layers.saveAndNew("BOB") {
-            this[bobKey] = 1.toEntry()
+            this[bobKey] = 1.toValue()
         }
 
         layers.saveAndNew("NEW BOB RULE") {
@@ -177,7 +189,7 @@ internal class LayersTest {
         }
 
         layers.saveAndNew("BOB") {
-            this[bobKey] = 2.toEntry()
+            this[bobKey] = 2.toValue()
         }
 
         layers[bobKey] shouldBe 3

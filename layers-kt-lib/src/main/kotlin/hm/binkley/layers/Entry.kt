@@ -37,6 +37,11 @@ data class Value<T>(
 abstract class Rule<T>(
     protected val key: String,
 ) : Entry<T>() {
+    /**
+     * Computes a value for [key] based on a "vertical" view of all [values]
+     * from each layer for the key in order from oldest to latest, and a
+     * "horizontal" view of [allValues] as currently computed for all keys.
+     */
     abstract operator fun invoke(
         values: List<T>,
         allValues: Map<String, Any>,
@@ -47,4 +52,16 @@ abstract class Rule<T>(
     final override fun toString() = "<Rule>[$key]: ${description()}"
 }
 
-fun <T> T.toEntry(): Entry<T> = Value(this)
+fun <T> T.toValue(): Entry<T> = Value(this)
+
+fun <T> ruleFor(
+    key: String,
+    block: (List<T>, Map<String, Any>) -> T,
+) = object : Rule<T>(key) {
+    override fun invoke(
+        values: List<T>,
+        allValues: Map<String, Any>,
+    ) = block(values, allValues)
+
+    override fun description() = "<Anonymous>"
+}

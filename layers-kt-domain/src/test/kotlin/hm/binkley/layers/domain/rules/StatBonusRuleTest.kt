@@ -3,7 +3,7 @@ package hm.binkley.layers.domain.rules
 import hm.binkley.layers.Layers
 import hm.binkley.layers.domain.rules.StatBonusRule.Companion.statBonusRule
 import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
-import hm.binkley.layers.toEntry
+import hm.binkley.layers.toValue
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -19,7 +19,7 @@ internal class StatBonusRuleTest {
             this[statBonusKey] = statBonusRule(statBonusKey, statKey)
         }
         layers.saveAndNew(statKey) {
-            this[statKey] = 12.toEntry()
+            this[statKey] = 12.toValue()
         }
 
         layers[statBonusKey] shouldBe 1
@@ -35,7 +35,7 @@ internal class StatBonusRuleTest {
             this[statBonusKey] = statBonusRule(statBonusKey, statKey)
         }
         layers.saveAndNew(statKey) {
-            this[statKey] = 13.toEntry()
+            this[statKey] = 13.toValue()
         }
 
         layers[statBonusKey] shouldBe 1
@@ -51,7 +51,7 @@ internal class StatBonusRuleTest {
                 this[statBonusKey] = statBonusRule(statBonusKey, statKey)
             }
             layers.saveAndNew(statKey) {
-                this[statKey] = "also not an integer".toEntry()
+                this[statKey] = "also not an integer".toValue()
             }
 
             layers[statBonusKey] shouldBe 1

@@ -15,9 +15,9 @@ internal class PlainLayerTest {
 
     @Test
     fun `should start layer with data`() {
-        val layer = PlainLayer("<INIT>", mutableMapOf("bob" to 4.toEntry()))
+        val layer = PlainLayer("<INIT>", mutableMapOf("bob" to 4.toValue()))
 
-        layer shouldBe mapOf("bob" to 4.toEntry())
+        layer shouldBe mapOf("bob" to 4.toValue())
     }
 
     @Test

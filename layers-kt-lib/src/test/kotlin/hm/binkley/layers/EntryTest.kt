@@ -14,6 +14,8 @@ internal class EntryTest {
     fun `should have a debuggable presentation`() {
         "${Value(3)}" shouldBe "<Value>: 3"
         "$TestRule" shouldBe "<Rule>[$bobKey]: Test Fooby"
+        "${ruleFor<Int>(bobKey) { _, _ -> 3 }}" shouldBe
+            "<Rule>[bob]: <Anonymous>"
     }
 
     @Test

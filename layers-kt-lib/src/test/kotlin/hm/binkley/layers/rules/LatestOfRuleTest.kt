@@ -9,13 +9,13 @@ import java.util.Collections.emptyMap
 internal class LatestOfRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${LatestOfRule("bob", "")}" shouldBe "<Rule>[bob]: Latest"
+        "${LatestOfRule("bob", "?")}" shouldBe "<Rule>[bob]: Latest(default=?)"
 
     @Test
     fun `should provide a default`() {
-        val default = "MISSING"
-
-        latestOfRule("bob", default)(emptyList(), emptyMap()) shouldBe default
+        latestOfRule("bob", "MISSING")(
+            emptyList(), emptyMap()
+        ) shouldBe "MISSING"
     }
 
     @Test

@@ -1,15 +1,16 @@
 package hm.binkley.layers.rules
 
 import hm.binkley.layers.Rule
+import hm.binkley.layers.defaultValue
 
-class LatestOfRule<T>(
+open class LatestOfRule<T>(
     key: String,
     private val default: T,
 ) : Rule<T>(key) {
     override fun invoke(values: List<T>, allValues: Map<String, Any>) =
-        if (values.isEmpty()) default else values.first()
+        values.firstOrNull() ?: default
 
-    override fun description() = "Latest"
+    override fun description() = "Latest(default=${defaultValue()})"
 
     companion object {
         fun <T> latestOfRule(key: String, default: T) =

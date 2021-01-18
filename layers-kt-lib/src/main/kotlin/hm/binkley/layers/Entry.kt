@@ -39,7 +39,7 @@ abstract class Rule<T>(
 ) : Entry<T>() {
     /**
      * Computes a value for [key] based on a "vertical" view of all [values]
-     * from each layer for the key in order from oldest to latest, and a
+     * from each layer for the key in order from latest to oldest, and a
      * "horizontal" view of [allValues] as currently computed for all keys.
      */
     abstract operator fun invoke(
@@ -51,6 +51,8 @@ abstract class Rule<T>(
 
     final override fun toString() = "<Rule>[$key]: ${description()}"
 }
+
+fun <T> Rule<T>.defaultValue() = this(emptyList(), emptyMap())
 
 fun <T> T.toValue(): Entry<T> = Value(this)
 

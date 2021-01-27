@@ -50,6 +50,27 @@ class Layers(
         }
         .calculate()
 
+    /*
+    // TODO: Fewer traversals through same data multiple times
+    @Suppress("UNCHECKED_CAST")
+    private fun calculate(key: String, _layers: List<Map<String, Entry<*>>>): Any {
+        var rule: Rule<Any>? = null
+        val values = ArrayList<Any>(top.size)
+
+        for (layer in _layers) {
+            val Entry = layer[key] ?: continue
+            when (Entry) {
+                is Rule<*> -> rule = (Entry as Rule<Any>)
+                else -> values.add((Entry as Value<Any>).value)
+            }
+        }
+
+        if (null == rule) error("No rule for key: $key")
+
+        return rule(key, values.asReversed(), _layers)
+    }
+    */
+
     // TODO: Inline refactor once SpotBugs is sorted out
     @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
     private fun entries() = _layers.flatMap {

@@ -2,7 +2,7 @@ package hm.binkley.layers
 
 import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
 import hm.binkley.layers.rules.SumOfRule.Companion.sumOfRule
-import io.kotest.assertions.throwables.shouldThrowExactly
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
@@ -91,11 +91,9 @@ internal class LayersTest {
         layers.saveAndNew("BOB") {
             this[bobKey] = 4.toValue()
         }
-
         layers.current.edit {
             this[bobKey] = 3.toValue()
         }
-
         layers.current shouldBe MutablePlainLayer(
             "BOB",
             mutableMapOf(bobKey to 3.toValue())
@@ -123,7 +121,7 @@ internal class LayersTest {
 
     @Test
     fun `should complain on a missing rule`() {
-        shouldThrowExactly<Bug> {
+        shouldThrow<Bug> {
             Layers.new()[bobKey]
         }
     }
@@ -131,17 +129,10 @@ internal class LayersTest {
     @Disabled("TODO: How to do this sensibly?")
     @Test
     fun `should complain on a value before a rule`() {
-        shouldThrowExactly<Bug> {
-            Layers.new(
-                listOf(
-                    MutablePlainLayer("VALUE FIRST").edit {
-                        this[bobKey] = 4.toValue()
-                    },
-                    MutablePlainLayer("RULE SECOND").edit {
-                        this[bobKey] = bobRule
-                    },
-                )
-            )
+        shouldThrow<Bug> {
+            Layers.new {
+                this[bobKey] = 4.toValue()
+            }
         }
     }
 
@@ -153,6 +144,21 @@ internal class LayersTest {
         layers.saveAndNew("BOB") {
             this[bobKey] = 4.toValue()
         }
+
+        layers[bobKey] shouldBe 8
+    }
+
+    @Test
+    fun `should ignore empty layers`() {
+        val layers = Layers.new(
+            bobKey to bobRule,
+            maryKey to maryRule
+        )
+
+        layers.saveAndNew("BOB") {
+            this[bobKey] = 4.toValue()
+        }
+        layers.saveAndNew("<THIS LAYER INTENTIONALLY LEFT EMPTY>")
 
         layers[bobKey] shouldBe 8
     }
@@ -183,11 +189,9 @@ internal class LayersTest {
         layers.saveAndNew("BOB") {
             this[bobKey] = 1.toValue()
         }
-
         layers.saveAndNew("NEW BOB RULE") {
             this[bobKey] = sumOfRule(bobKey, 0)
         }
-
         layers.saveAndNew("BOB") {
             this[bobKey] = 2.toValue()
         }

@@ -11,6 +11,10 @@ internal class FloorRuleTest {
         "${FloorRule("bob", 19)}" shouldBe "<Rule>[bob]: Floor: 19"
 
     @Test
+    fun `should calculate rule with floor defaulted`() =
+        floorRule("bob", 19)(listOf(), emptyMap()) shouldBe 19
+
+    @Test
     fun `should calculate rule with floor used`() =
         floorRule("bob", 19)(listOf(1, 2, 3), emptyMap()) shouldBe 19
 

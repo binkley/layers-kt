@@ -1,7 +1,6 @@
 package hm.binkley.layers
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
-import hm.binkley.layers.RuleCalculation.Companion.lookingForRule
 import java.util.AbstractMap.SimpleEntry
 
 /**
@@ -39,38 +38,6 @@ class Layers(
         "$index: [${layer::class.simpleName}] $layer"
     }.joinToString("\n")
 
-    @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
-    private fun <T> calculate(key: String) = _layers
-        .mapNotNull { it[key] }
-        .fold<Entry<*>, RuleCalculation<T>>(
-            lookingForRule(key, this)
-        ) { acc, e ->
-            @Suppress("UNCHECKED_CAST")
-            acc.add(e as Entry<T>)
-        }
-        .calculate()
-
-    /*
-    // TODO: Fewer traversals through same data multiple times
-    @Suppress("UNCHECKED_CAST")
-    private fun calculate(key: String, _layers: List<Map<String, Entry<*>>>): Any {
-        var rule: Rule<Any>? = null
-        val values = ArrayList<Any>(top.size)
-
-        for (layer in _layers) {
-            val Entry = layer[key] ?: continue
-            when (Entry) {
-                is Rule<*> -> rule = (Entry as Rule<Any>)
-                else -> values.add((Entry as Value<Any>).value)
-            }
-        }
-
-        if (null == rule) error("No rule for key: $key")
-
-        return rule(key, values.asReversed(), _layers)
-    }
-    */
-
     // TODO: Inline refactor once SpotBugs is sorted out
     @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
     private fun entries() = _layers.flatMap {
@@ -78,6 +45,24 @@ class Layers(
     }.distinct().map {
         SimpleEntry(it, calculate<Any>(it))
     }.toSet()
+
+    @Suppress("UNCHECKED_CAST")
+    private fun <T> calculate(key: String): T {
+        var rule: Rule<T>? = null
+        val values = ArrayList<T>(_layers.size)
+
+        for (layer in _layers) {
+            val entry = layer[key] ?: continue
+            when (entry) {
+                is Rule<*> -> if (null == rule) rule = (entry as Rule<T>)
+                else -> values.add((entry as Value<T>).value)
+            }
+        }
+
+        if (null == rule) throw Bug("No rule for key: $key")
+
+        return rule(values, this)
+    }
 
     companion object {
         fun new(
@@ -88,8 +73,7 @@ class Layers(
             }
         }
 
-        fun new(layers: List<MutableLayer>) =
-            Layers(layers.toMutableList())
+        fun new(layers: List<MutableLayer>) = Layers(layers.toMutableList())
 
         /** @todo Enforce that first layer must have rules, not values */
         fun new(

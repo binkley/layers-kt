@@ -256,7 +256,8 @@
                                 <rule>
                                     <limits>
                                         <limit>
-                                            <minimum>90%</minimum>
+                                            <!-- Domain is limiting this -->
+                                            <minimum>94%</minimum>
                                         </limit>
                                     </limits>
                                 </rule>

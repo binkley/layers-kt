@@ -4,7 +4,7 @@ import hm.binkley.layers.Layers
 import hm.binkley.layers.domain.rules.StatBonusRule.Companion.statBonusRule
 import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
 import hm.binkley.layers.toValue
-import io.kotest.assertions.throwables.shouldThrowExactly
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -13,10 +13,10 @@ internal class StatBonusRuleTest {
     fun `should calculate the bonus from a stat`() {
         // TODO: Use an enum for stats
         val statKey = "MIGHT"
-        val statBonusKey = "$statKey-bonus"
+        val statBonusKey = "$statKey-BONUS"
         val layers = Layers.new {
             this[statKey] = latestOfRule(statKey, 8)
-            this[statBonusKey] = statBonusRule(statBonusKey, statKey)
+            this[statBonusKey] = statBonusRule(statKey)
         }
         layers.saveAndNew(statKey) {
             this[statKey] = 12.toValue()
@@ -29,10 +29,10 @@ internal class StatBonusRuleTest {
     fun `should round bonus from a stat`() {
         // TODO: Use an enum for stats
         val statKey = "MIGHT"
-        val statBonusKey = "$statKey-bonus"
+        val statBonusKey = "$statKey-BONUS"
         val layers = Layers.new {
             this[statKey] = latestOfRule(statKey, 8)
-            this[statBonusKey] = statBonusRule(statBonusKey, statKey)
+            this[statBonusKey] = statBonusRule(statKey)
         }
         layers.saveAndNew(statKey) {
             this[statKey] = 13.toValue()
@@ -43,24 +43,21 @@ internal class StatBonusRuleTest {
 
     @Test
     fun `should complain if dependency is not an integer`() {
-        shouldThrowExactly<ClassCastException> {
+        shouldThrow<ClassCastException> {
             val statKey = "DORK"
-            val statBonusKey = "$statKey-bonus"
+            val statBonusKey = "$statKey-BONUS"
             val layers = Layers.new {
                 this[statKey] = latestOfRule("BOB", "not an integer")
-                this[statBonusKey] = statBonusRule(statBonusKey, statKey)
-            }
-            layers.saveAndNew(statKey) {
-                this[statKey] = "also not an integer".toValue()
+                this[statBonusKey] = statBonusRule(statKey)
             }
 
-            layers[statBonusKey] shouldBe 1
+            layers[statBonusKey]
         }
     }
 
     @Test
     fun `should have a description`() {
-        statBonusRule("BOB", "FRED").toString() shouldBe
-            "<Rule>[BOB]: Bonus from FRED"
+        statBonusRule("FRED").toString() shouldBe
+            "<Rule>[FRED-BONUS]: Bonus from FRED"
     }
 }

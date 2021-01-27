@@ -3,16 +3,14 @@ package hm.binkley.layers.domain.rules
 import hm.binkley.layers.Rule
 
 class StatBonusRule(
-    key: String,
-    private val dependsOn: String,
-) : Rule<Int>(key) {
+    private val stat: String,
+) : Rule<Int>("$stat-BONUS") {
     override fun invoke(values: List<Int>, allValues: Map<String, Any>) =
-        ((allValues[dependsOn] as Int) - 10) / 2
+        ((allValues[stat] as Int) - 10) / 2
 
-    override fun description() = "Bonus from $dependsOn"
+    override fun description() = "Bonus from $stat"
 
     companion object {
-        fun statBonusRule(key: String, dependsOn: String) =
-            StatBonusRule(key, dependsOn)
+        fun statBonusRule(stat: String) = StatBonusRule(stat)
     }
 }

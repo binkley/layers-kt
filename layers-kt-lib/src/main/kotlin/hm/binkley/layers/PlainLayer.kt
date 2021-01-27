@@ -1,11 +1,13 @@
 package hm.binkley.layers
 
+import lombok.Generated
 import java.util.Objects.hash
 
 open class PlainLayer(
     override val name: String,
     protected val map: MutableMap<String, Entry<*>> = mutableMapOf(),
 ) : Layer, Map<String, Entry<*>> by map {
+    @Generated
     override fun equals(other: Any?) = this === other ||
         other is PlainLayer &&
         name == other.name &&

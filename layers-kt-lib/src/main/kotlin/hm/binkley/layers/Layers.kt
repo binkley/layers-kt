@@ -17,6 +17,17 @@ class Layers(
     val layers: List<Layer> get() = _layers
     val current get(): MutableLayer = _layers[0]
 
+    init {
+        check(layers.isNotEmpty()) {
+            "Layers must begin with an editable layer"
+        }
+        current.entries.forEach {
+            check(it.value is Rule<*>) {
+                "Rules must proceed values for key: ${it.key}"
+            }
+        }
+    }
+
     override operator fun get(key: String) = calculate<Any>(key)
     override val entries get() = entries()
 
@@ -59,7 +70,7 @@ class Layers(
             }
         }
 
-        if (null == rule) throw Bug("No rule for key: $key")
+        if (null == rule) throw IllegalStateException("No rule for key: $key")
 
         return rule(values, this)
     }

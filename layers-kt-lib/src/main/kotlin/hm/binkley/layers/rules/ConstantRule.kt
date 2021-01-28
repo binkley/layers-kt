@@ -4,15 +4,12 @@ import hm.binkley.layers.Rule
 
 class ConstantRule<T>(
     key: String,
-    private val constant: T,
+    private val value: T,
 ) : Rule<T>(key) {
-    override fun invoke(values: List<T>, allValues: Map<String, Any>) =
-        constant
-
-    override fun description() = "Constant: $constant"
+    override fun invoke(values: List<T>, allValues: Map<String, Any>) = value
+    override fun description() = "Constant(value=$value)"
 
     companion object {
-        fun <T> constantRule(key: String, constant: T) =
-            ConstantRule(key, constant)
+        fun <T> constantRule(key: String, value: T) = ConstantRule(key, value)
     }
 }

@@ -8,7 +8,7 @@ class StatBonusRule(
     override fun invoke(values: List<Int>, allValues: Map<String, Any>) =
         ((allValues[stat] as Int) - 10) / 2
 
-    override fun description() = "Bonus from $stat"
+    override fun description() = "Stat-Bonus(stat=$stat)"
 
     companion object {
         fun statBonusRule(stat: String) = StatBonusRule(stat)

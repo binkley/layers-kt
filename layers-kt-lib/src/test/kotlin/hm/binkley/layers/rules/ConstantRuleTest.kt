@@ -8,7 +8,8 @@ import java.util.Collections.emptyMap
 internal class ConstantRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${ConstantRule("bob", 10)}" shouldBe "<Rule>[bob]: Constant: 10"
+        "${ConstantRule("bob", 10)}" shouldBe
+            "<Rule>[bob]: Constant(value=10)"
 
     @Test
     fun `should calculate rule`() =

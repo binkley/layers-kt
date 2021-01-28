@@ -8,7 +8,8 @@ import java.util.Collections.emptyMap
 internal class FloorRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${FloorRule("bob", 19)}" shouldBe "<Rule>[bob]: Floor: 19"
+        "${FloorRule("bob", 19)}" shouldBe
+            "<Rule>[bob]: Floor(min=19)"
 
     @Test
     fun `should calculate rule with floor defaulted`() =

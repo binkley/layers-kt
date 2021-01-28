@@ -53,7 +53,6 @@ abstract class Rule<T>(
 }
 
 fun <T> Rule<T>.defaultValue() = this(emptyList(), emptyMap())
-
 fun <T> T.toValue(): Entry<T> = Value(this)
 
 fun <T> ruleFor(

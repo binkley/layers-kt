@@ -10,6 +10,11 @@ import org.junit.jupiter.api.Test
 
 internal class StatBonusRuleTest {
     @Test
+    fun `should have a debuggable presentation`() =
+        "${statBonusRule("FRED")}" shouldBe
+            "<Rule>[FRED-BONUS]: Stat-Bonus(stat=FRED)"
+
+    @Test
     fun `should calculate the bonus from a stat`() {
         // TODO: Use an enum for stats
         val statKey = "MIGHT"
@@ -53,11 +58,5 @@ internal class StatBonusRuleTest {
 
             layers[statBonusKey]
         }
-    }
-
-    @Test
-    fun `should have a description`() {
-        statBonusRule("FRED").toString() shouldBe
-            "<Rule>[FRED-BONUS]: Bonus from FRED"
     }
 }

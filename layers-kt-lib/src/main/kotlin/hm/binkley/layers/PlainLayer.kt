@@ -14,6 +14,5 @@ open class PlainLayer(
         map == other.map
 
     override fun hashCode() = hash(name, map)
-
     override fun toString() = "$name: $map"
 }

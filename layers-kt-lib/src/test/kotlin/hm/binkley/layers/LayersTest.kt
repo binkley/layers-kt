@@ -6,6 +6,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.AbstractMap.SimpleImmutableEntry
 
@@ -136,6 +137,16 @@ internal class LayersTest {
     fun `should complain on a value before a rule`() {
         shouldThrow<IllegalStateException> {
             Layers.new {
+                this[bobKey] = 4.toValue()
+            }
+        }
+    }
+
+    @Disabled("TODO: IMPLEMENT")
+    @Test
+    fun `should complain on a value before a rule in a later layer`() {
+        shouldThrow<IllegalStateException> {
+            Layers.new().saveAndNew("NEXT") {
                 this[bobKey] = 4.toValue()
             }
         }

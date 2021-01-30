@@ -1,4 +1,4 @@
-package hm.binkley.layers.domain.rules
+package hm.binkley.layers.dnd.rules
 
 import hm.binkley.layers.Rule
 

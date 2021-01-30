@@ -1,7 +1,7 @@
-package hm.binkley.layers.domain.rules
+package hm.binkley.layers.dnd.rules
 
 import hm.binkley.layers.Layers
-import hm.binkley.layers.domain.rules.StatBonusRule.Companion.statBonusRule
+import hm.binkley.layers.dnd.rules.StatBonusRule.Companion.statBonusRule
 import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
 import hm.binkley.layers.toValue
 import io.kotest.assertions.throwables.shouldThrow

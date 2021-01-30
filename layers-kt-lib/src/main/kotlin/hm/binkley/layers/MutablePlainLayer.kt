@@ -9,7 +9,8 @@ open class MutablePlainLayer(
     MutableMap<String, Entry<*>> by map {
     override fun edit(
         block: MutableMap<String, Entry<*>>.() -> Unit,
-    ): MutableLayer = apply {
-        map.block()
+    ): MutableLayer {
+        block()
+        return this
     }
 }

@@ -3,10 +3,10 @@ package hm.binkley.layers
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-internal class MutablePlainLayerTest {
+internal class MutableLayerTest {
     @Test
     fun `should be very mappish`() {
-        val layer = MutablePlainLayer("BOB")
+        val layer = MutableLayer("BOB")
         // Passing this test really means these funs/props compile
         layer.clear()
         layer.entries
@@ -20,7 +20,7 @@ internal class MutablePlainLayerTest {
 
     @Test
     fun `should edit blank layer`() {
-        val layer = MutablePlainLayer("BOB")
+        val layer = MutableLayer("BOB")
         layer.edit {
             this[bobKey] = 3.toValue()
         }
@@ -30,7 +30,7 @@ internal class MutablePlainLayerTest {
 
     @Test
     fun `should start layer with data`() {
-        val layer = MutablePlainLayer(
+        val layer = MutableLayer(
             "BOB",
             mutableMapOf(bobKey to 4.toValue())
         )

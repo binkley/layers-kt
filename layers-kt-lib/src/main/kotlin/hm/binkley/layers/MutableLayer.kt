@@ -1,5 +1,12 @@
 package hm.binkley.layers
 
-interface MutableLayer : Layer, MutableMap<String, Entry<*>> {
-    fun edit(block: MutableMap<String, Entry<*>>.() -> Unit): MutableLayer
+@Suppress("DELEGATED_MEMBER_HIDES_SUPERTYPE_OVERRIDE")
+open class MutableLayer(
+    name: String,
+    map: MutableMap<String, Entry<*>> = mutableMapOf(),
+) : Layer(name, map), MutableMap<String, Entry<*>> by map {
+    fun edit(block: MutableMap<String, Entry<*>>.() -> Unit): MutableLayer {
+        block()
+        return this
+    }
 }

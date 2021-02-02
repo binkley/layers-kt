@@ -13,7 +13,7 @@ import java.util.AbstractMap.SimpleImmutableEntry
 internal class LayersTest {
     @Test
     fun `should have a debuggable presentation`() {
-        Layers.new().toString() shouldBe "0: [MutableLayer] <INIT>: {}"
+        Layers.new().toString() shouldBe "0: [MutablePlainLayer] <INIT>: {}"
     }
 
     @Test
@@ -40,14 +40,14 @@ internal class LayersTest {
     fun `should start with a blank, mutable layer`() {
         val newLayers = Layers.new()
 
-        newLayers.layers shouldBe listOf(Layer("<INIT>"))
+        newLayers.layers shouldBe listOf(PlainLayer("<INIT>"))
         newLayers.current.shouldBeInstanceOf<MutableLayer>()
     }
 
     @Test
     fun `should start from a list of layers`() {
         val layers = listOf(
-            MutableLayer("<INIT>").edit {
+            MutablePlainLayer("<INIT>").edit {
                 this[bobKey] = bobRule
             },
         )
@@ -70,13 +70,13 @@ internal class LayersTest {
         }
 
         newLayers.layers shouldBe listOf(
-            MutableLayer("<INIT>", mutableMapOf(bobKey to bobRule))
+            MutablePlainLayer("<INIT>", mutableMapOf(bobKey to bobRule))
         )
     }
 
     @Test
     fun `should save current layer and create a new layer`() {
-        val ruleLayer = MutableLayer("BOB RULE").edit {
+        val ruleLayer = MutablePlainLayer("BOB RULE").edit {
             this[bobKey] = bobRule
         }
         val layers = Layers.new(listOf(ruleLayer))
@@ -91,7 +91,7 @@ internal class LayersTest {
 
     @Test
     fun `should edit while creating new layer`() {
-        val ruleLayer = MutableLayer("BOB RULE").edit {
+        val ruleLayer = MutablePlainLayer("BOB RULE").edit {
             this[bobKey] = bobRule
         }
         val layers = Layers.new(listOf(ruleLayer))
@@ -101,7 +101,7 @@ internal class LayersTest {
         layers.current.edit {
             this[bobKey] = 3.toValue()
         }
-        layers.current shouldBe MutableLayer(
+        layers.current shouldBe MutablePlainLayer(
             "BOB",
             mutableMapOf(bobKey to 3.toValue())
         )

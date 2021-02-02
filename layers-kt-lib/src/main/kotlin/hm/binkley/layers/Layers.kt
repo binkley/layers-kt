@@ -39,7 +39,7 @@ class Layers(
         name: String,
         block: MutableMap<String, Entry<*>>.() -> Unit = {},
     ): MutableLayer {
-        val new = MutableLayer(name).edit(block)
+        val new = MutablePlainLayer(name).edit(block)
         _layers.add(0, new)
         return new
     }
@@ -90,6 +90,6 @@ class Layers(
         fun new(
             name: String = "<INIT>",
             block: MutableMap<String, Entry<*>>.() -> Unit,
-        ) = Layers(mutableListOf(MutableLayer(name).edit(block)))
+        ) = Layers(mutableListOf(MutablePlainLayer(name).edit(block)))
     }
 }

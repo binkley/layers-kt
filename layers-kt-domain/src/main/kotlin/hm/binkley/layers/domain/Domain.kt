@@ -1,17 +1,17 @@
-package hm.binkley.layers.dnd
+package hm.binkley.layers.domain
 
 import hm.binkley.layers.MutableLayer
 import lombok.Generated
 import java.util.Objects.hash
 
-class DndLayer(
+class Domain(
     name: String,
     val fakeForMutation: Boolean,
 ) : MutableLayer(name) {
     @Generated
     override fun equals(other: Any?) = this === other ||
         super.equals(other) &&
-        other is DndLayer &&
+        other is Domain &&
         fakeForMutation == other.fakeForMutation
 
     override fun hashCode() = 31 * super.hashCode() + hash(fakeForMutation)

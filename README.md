@@ -72,6 +72,11 @@ x = x.foo {
 }
 ```
 
+Actual declarations take advantage of these type aliases:
+- `EntryMap = Map<String, Entry<*>>`
+- `EditMap = MutableMap<String, Entry<*>>`
+- `EditBlock = EditMap.() -> Unit`
+
 ### Layers
 
 [`Layers`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/Layers.kt) is a

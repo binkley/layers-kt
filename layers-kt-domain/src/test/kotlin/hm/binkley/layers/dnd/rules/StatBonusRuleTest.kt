@@ -23,7 +23,7 @@ internal class StatBonusRuleTest {
             this[statKey] = latestOfRule(statKey, 8)
             this[statBonusKey] = statBonusRule(statKey)
         }
-        layers.saveAndNew(statKey) {
+        layers.commitAndNext(statKey) {
             this[statKey] = 12.toValue()
         }
 
@@ -39,7 +39,7 @@ internal class StatBonusRuleTest {
             this[statKey] = latestOfRule(statKey, 8)
             this[statBonusKey] = statBonusRule(statKey)
         }
-        layers.saveAndNew(statKey) {
+        layers.commitAndNext(statKey) {
             this[statKey] = 13.toValue()
         }
 

@@ -33,9 +33,9 @@ class Layers(
 
     /**
      * Commits the current layer (it will no longer be editable), and pushes
-     * on a new, blank layer.
+     * on a new, blank layer possibly modified by [block] (default no-op).
      */
-    fun saveAndNew(
+    fun commitAndNext(
         name: String,
         block: MutableMap<String, Entry<*>>.() -> Unit = {},
     ): MutableLayer {

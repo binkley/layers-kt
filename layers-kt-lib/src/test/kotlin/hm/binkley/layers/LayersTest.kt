@@ -22,10 +22,10 @@ internal class LayersTest {
             bobKey to bobRule,
             fredKey to fredRule
         )
-        layers.saveAndNew("BOB") {
+        layers.commitAndNext("BOB") {
             this[bobKey] = 4.toValue()
         }
-        layers.saveAndNew("FRED") {
+        layers.commitAndNext("FRED") {
             this[fredKey] = "Happy clam".toValue()
         }
         val entries = layers.entries
@@ -80,7 +80,7 @@ internal class LayersTest {
             this[bobKey] = bobRule
         }
         val layers = Layers.new(listOf(ruleLayer))
-        val firstValueLayer = layers.saveAndNew("BOB") {
+        val firstValueLayer = layers.commitAndNext("BOB") {
             this[bobKey] = 4.toValue()
         }
 
@@ -95,7 +95,7 @@ internal class LayersTest {
             this[bobKey] = bobRule
         }
         val layers = Layers.new(listOf(ruleLayer))
-        layers.saveAndNew("BOB") {
+        layers.commitAndNext("BOB") {
             this[bobKey] = 4.toValue()
         }
         layers.current.edit {
@@ -115,11 +115,11 @@ internal class LayersTest {
             }
             this[maryKey] = maryRule
         }
-        layers.saveAndNew("BOB AND MARY") {
+        layers.commitAndNext("BOB AND MARY") {
             this[bobKey] = 4.toValue()
             this[maryKey] = "Something else".toValue()
         }
-        layers.saveAndNew("BOB") {
+        layers.commitAndNext("BOB") {
             this[bobKey] = bobRule
         }
 
@@ -146,7 +146,7 @@ internal class LayersTest {
     @Test
     fun `should complain on a value before a rule in a later layer`() {
         shouldThrow<IllegalStateException> {
-            Layers.new().saveAndNew("NEXT") {
+            Layers.new().commitAndNext("NEXT") {
                 this[bobKey] = 4.toValue()
             }
         }
@@ -157,7 +157,7 @@ internal class LayersTest {
         val layers = Layers.new {
             this[bobKey] = bobRule
         }
-        layers.saveAndNew("BOB") {
+        layers.commitAndNext("BOB") {
             this[bobKey] = 4.toValue()
         }
 
@@ -171,10 +171,10 @@ internal class LayersTest {
             maryKey to maryRule
         )
 
-        layers.saveAndNew("BOB") {
+        layers.commitAndNext("BOB") {
             this[bobKey] = 4.toValue()
         }
-        layers.saveAndNew("<THIS LAYER INTENTIONALLY LEFT EMPTY>")
+        layers.commitAndNext("<THIS LAYER INTENTIONALLY LEFT EMPTY>")
 
         layers[bobKey] shouldBe 8
     }
@@ -186,10 +186,10 @@ internal class LayersTest {
             maryKey to maryRule
         )
 
-        layers.saveAndNew("MARY") {
+        layers.commitAndNext("MARY") {
             this[maryKey] = "Inconceivable".toValue()
         }
-        layers.saveAndNew("BOB") {
+        layers.commitAndNext("BOB") {
             this[bobKey] = 4.toValue()
         }
 
@@ -202,13 +202,13 @@ internal class LayersTest {
             bobKey to bobRule
         )
 
-        layers.saveAndNew("BOB") {
+        layers.commitAndNext("BOB") {
             this[bobKey] = 1.toValue()
         }
-        layers.saveAndNew("NEW BOB RULE") {
+        layers.commitAndNext("NEW BOB RULE") {
             this[bobKey] = sumOfRule(bobKey, 0)
         }
-        layers.saveAndNew("BOB") {
+        layers.commitAndNext("BOB") {
             this[bobKey] = 2.toValue()
         }
 

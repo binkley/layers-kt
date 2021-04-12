@@ -58,7 +58,7 @@ internal class LayersTest {
 
     @Test
     fun `should not start from an empty list of layers`() {
-        shouldThrow<IllegalStateException> {
+        shouldThrow<java.lang.IllegalArgumentException> {
             Layers.new(listOf())
         }
     }
@@ -135,7 +135,7 @@ internal class LayersTest {
 
     @Test
     fun `should complain on a value before a rule`() {
-        shouldThrow<IllegalStateException> {
+        shouldThrow<IllegalArgumentException> {
             Layers.new {
                 this[bobKey] = 4.toValue()
             }
@@ -214,6 +214,23 @@ internal class LayersTest {
 
         layers[bobKey] shouldBe 3
     }
+
+    @Test
+    fun `should not alter original in what-if scenarios`() {
+        val layers = Layers.new(
+            bobKey to bobRule
+        )
+
+        layers.commitAndNext("BOB") {
+            this[bobKey] = 1.toValue()
+        }
+        val whatIf = layers.whatIf {
+            this[bobKey] = 2.toValue()
+        }
+
+        layers[bobKey] shouldBe 2
+        whatIf[bobKey] shouldBe 4
+    }
 }
 
 private const val bobKey = "bob"
@@ -222,9 +239,9 @@ private const val fredKey = "fred"
 
 private val bobRule = object : Rule<Int>(bobKey) {
     override fun invoke(values: List<Int>, allValues: Map<String, Any>) =
-        2 * values.last()
+        2 * values.first()
 
-    override fun description() = "Test rule for doubling last"
+    override fun description() = "Test rule to double the most recent value"
 }
 
 private val maryRule = object : Rule<String>(maryKey) {

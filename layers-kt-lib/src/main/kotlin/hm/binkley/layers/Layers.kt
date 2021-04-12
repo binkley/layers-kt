@@ -18,14 +18,17 @@ class Layers(
     val current get(): MutableLayer = _layers[0]
 
     init {
-        check(layers.isNotEmpty()) {
+        require(layers.isNotEmpty()) {
             "Layers must begin with an editable layer"
         }
-        current.entries.forEach {
-            check(it.value is Rule<*>) {
-                "Rules must proceed values for key: ${it.key}"
-            }
-        }
+
+        val keysAndRules = mutableMapOf<String, Entry<*>>()
+        layers.forEach { keysAndRules += it }
+        for ((key, entry) in keysAndRules)
+            if (entry !is Rule<*>)
+                throw IllegalArgumentException(
+                    "A rule must proceed values for key: $key"
+                )
     }
 
     override operator fun get(key: String) = calculate<Any>(key)
@@ -43,6 +46,21 @@ class Layers(
         _layers.add(0, new)
         return new
     }
+
+    /** Poses a "what-if" [scenario]. */
+    fun whatIf(scenario: MutableLayer): Layers {
+        val _layers = ArrayList(_layers)
+        _layers.add(0, scenario)
+        return Layers(_layers)
+    }
+
+    /**
+     * Poses a "what-if" scenario named "<WHAT-IF>".
+     *
+     * @see [whatIf]
+     */
+    fun whatIf(block: MutableMap<String, Entry<*>>.() -> Unit): Layers =
+        whatIf(MutablePlainLayer("<WHAT-IF>").edit(block))
 
     @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
     override fun toString() = layers.mapIndexed { index, layer ->

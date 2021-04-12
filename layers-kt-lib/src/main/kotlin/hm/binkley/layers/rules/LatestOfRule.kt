@@ -15,5 +15,8 @@ open class LatestOfRule<T>(
     companion object {
         fun <T> latestOfRule(key: String, default: T) =
             LatestOfRule(key, default)
+
+        fun <T> initLatestOfRule(key: String, default: T) =
+            key to latestOfRule(key, default)
     }
 }

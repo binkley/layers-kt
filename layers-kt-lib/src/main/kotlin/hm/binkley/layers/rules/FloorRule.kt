@@ -15,5 +15,8 @@ class FloorRule(
 
     companion object {
         fun floorRule(key: String, min: Int) = FloorRule(key, min)
+
+        fun initFloorRule(key: String, min: Int) =
+            key to floorRule(key, min)
     }
 }

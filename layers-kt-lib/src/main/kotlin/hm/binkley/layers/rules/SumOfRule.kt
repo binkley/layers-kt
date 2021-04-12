@@ -13,5 +13,8 @@ class SumOfRule(
 
     companion object {
         fun sumOfRule(key: String, default: Int) = SumOfRule(key, default)
+
+        fun initSumOfRule(key: String, default: Int) =
+            key to sumOfRule(key, default)
     }
 }

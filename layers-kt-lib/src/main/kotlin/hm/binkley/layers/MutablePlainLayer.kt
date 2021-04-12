@@ -6,4 +6,4 @@ open class MutablePlainLayer(
     map: Map<String, Entry<*>> = mapOf(),
 ) : PlainLayer(name, map),
     MutableLayer,
-    EditMap by map.toMutableMap()
+    EditMap by map.toMutableMap() // TODO: ?? use PlainLayer?

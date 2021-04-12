@@ -8,8 +8,7 @@ import java.util.AbstractMap.SimpleEntry
  * layer.
  *
  * @todo Pass in block to update the initial current layer
- * @todo Be a mutable map, where changed edit the top layer
- * @todo History, metadata, what-if calculations
+ * @todo History, metadata
  */
 class Layers(
     private val _layers: MutableList<MutableLayer>,

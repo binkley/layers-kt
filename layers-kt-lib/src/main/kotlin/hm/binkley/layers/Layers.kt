@@ -23,7 +23,7 @@ class Layers(
     override val entries get() = entries()
 
     /** Edits the current layer. */
-    fun edit(vararg changes: Pair<String, Entry<*>>): Layers {
+    fun edit(vararg changes: EntryPair): Layers {
         current.edit(*changes)
         validate()
         return this
@@ -37,7 +37,7 @@ class Layers(
     }
 
     /** Edits the current layer. */
-    fun edit(block: EditBlock): Layers {
+    fun edit(block: EditingBlock): Layers {
         current.edit(block)
         validate()
         return this
@@ -47,7 +47,7 @@ class Layers(
      * Commits the current layer (it will no longer be editable), and pushes
      * on a new, blank layer possibly modified by [block] (default no-op).
      */
-    fun commitAndNext(name: String, block: EditBlock = {}): MutableLayer {
+    fun commitAndNext(name: String, block: EditingBlock = {}): MutableLayer {
         val new = MutablePlainLayer(name).edit(block)
         _layers.add(0, new)
 
@@ -57,8 +57,7 @@ class Layers(
     }
 
     /** Poses a "what-if" scenario. */
-    fun whatIf(vararg scenario: Pair<String, Entry<*>>): Layers =
-        whatIf(scenario.toMap())
+    fun whatIf(vararg scenario: EntryPair): Layers = whatIf(scenario.toMap())
 
     /** Poses a "what-if" [scenario]. */
     fun whatIf(scenario: EntryMap): Layers {
@@ -68,7 +67,7 @@ class Layers(
     }
 
     /** Poses a "what-if" scenario. */
-    fun whatIf(block: EditBlock): Layers =
+    fun whatIf(block: EditingBlock): Layers =
         whatIf(MutablePlainLayer("<WHAT-IF>").edit(block))
 
     @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
@@ -112,7 +111,7 @@ class Layers(
     }
 
     companion object {
-        fun new(vararg firstLayer: Pair<String, Entry<*>>) = new {
+        fun new(vararg firstLayer: EntryPair) = new {
             firstLayer.forEach {
                 this[it.first] = it.second
             }
@@ -120,7 +119,7 @@ class Layers(
 
         fun new(layers: List<MutableLayer>) = Layers(layers.toMutableList())
 
-        fun new(name: String = "<INIT>", block: EditBlock) =
+        fun new(name: String = "<INIT>", block: EditingBlock) =
             Layers(mutableListOf(MutablePlainLayer(name).edit(block)))
     }
 }

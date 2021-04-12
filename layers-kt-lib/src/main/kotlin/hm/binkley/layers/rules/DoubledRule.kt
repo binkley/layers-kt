@@ -1,12 +1,13 @@
 package hm.binkley.layers.rules
 
+import hm.binkley.layers.ValueMap
 import hm.binkley.layers.defaultValue
 
 class DoubledRule(
     key: String,
     default: Int,
 ) : LatestOfRule<Int>(key, default) {
-    override fun invoke(values: List<Int>, allValues: Map<String, Any>) =
+    override fun invoke(values: List<Int>, allValues: ValueMap) =
         2 * super.invoke(values, allValues)
 
     override fun description() = "Doubled(default=${defaultValue()})"

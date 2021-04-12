@@ -6,7 +6,7 @@ import java.util.Objects.hash
 open class PlainLayer(
     override val name: String,
     map: EntryMap = emptyMap(),
-    protected val editMap: EditMap = map.toMutableMap(),
+    protected val editMap: EditableMap = map.toMutableMap(),
 ) : Layer, EntryMap by editMap {
     @Generated
     override fun equals(other: Any?) = this === other ||

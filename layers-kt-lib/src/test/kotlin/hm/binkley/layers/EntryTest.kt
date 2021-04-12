@@ -31,14 +31,14 @@ internal class EntryTest {
 }
 
 private object TestRule : Rule<String>(bobKey) {
-    override fun invoke(values: List<String>, allValues: Map<String, Any>) =
+    override fun invoke(values: List<String>, allValues: ValueMap) =
         "Fooby"
 
     override fun description() = "Test Fooby"
 }
 
 private class KeyBasedRule(key: String) : Rule<String>(key) {
-    override fun invoke(values: List<String>, allValues: Map<String, Any>) =
+    override fun invoke(values: List<String>, allValues: ValueMap) =
         when (key) {
             aliceKey -> "good"
             else -> "bad"
@@ -48,7 +48,7 @@ private class KeyBasedRule(key: String) : Rule<String>(key) {
 }
 
 private class DependentRule(key: String) : Rule<Int>(key) {
-    override fun invoke(values: List<Int>, allValues: Map<String, Any>): Int {
+    override fun invoke(values: List<Int>, allValues: ValueMap): Int {
         return (allValues[bobKey] as Int) / 2
     }
 

@@ -53,26 +53,35 @@ run by Batect.
 
 ### General patterns
 
-It is difficult to express in Kotlin with types (meta-programming may be 
-required), but for all functions which express map state (construction or 
-mutation), functions come in three styles:
+It is difficult to express in Kotlin the _structure_ of functions without
+providing their _names_ (think interfaces; meta-programming may be required),
+but for all functions which express map state (construction or mutation),
+functions come in three styles:
 
 - `foo(vararg state: Pair<String, Entry<*>>): T`
+
 ```kotlin
-x = x.foo("a" to 3.toValue()) // Merged into existing mutable map
+x = x.foo("a" to 3.toValue()) // Merge into existing mutable map
 ```
-- `foo(state: Map<String, Entry<*>>): T`
+
+- `foo(state: EntryMap): T`
+
 ```kotlin
-x = x.foo(mapOf("a" to 3.toValue())) // Merged into existing mutable map
+x = x.foo(mapOf("a" to 3.toValue())) // Merge into existing mutable map
 ```
+
 - `foo(state: MutableMap<String, Entry<*>>.() -> Unit): T`
+
 ```kotlin
 x = x.foo {
-    this["a"] = 3.toValue() // Mutates existing mutable map
+    this["a"] = 3.toValue() // Mutate existing mutable map
 }
 ```
 
+Example functions following these patterns include `new` and `edit`.
+
 Actual declarations take advantage of these type aliases:
+
 - `EntryMap = Map<String, Entry<*>>`
 - `EditMap = MutableMap<String, Entry<*>>`
 - `EditBlock = EditMap.() -> Unit`
@@ -141,5 +150,5 @@ See
 
 ## TODO
 
-* Rationalize uses of `Map` as input _vs_ `MutableMap` reused as a 
-  property or delegated argument
+* Rationalize uses of `Map` as input _vs_ `MutableMap` reused as a property or
+  delegated argument

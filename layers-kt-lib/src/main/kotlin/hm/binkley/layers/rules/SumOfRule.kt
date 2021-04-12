@@ -1,12 +1,13 @@
 package hm.binkley.layers.rules
 
 import hm.binkley.layers.Rule
+import hm.binkley.layers.ValueMap
 
 class SumOfRule(
     key: String,
     private val default: Int,
 ) : Rule<Int>(key) {
-    override fun invoke(values: List<Int>, allValues: Map<String, Any>) =
+    override fun invoke(values: List<Int>, allValues: ValueMap) =
         if (values.isEmpty()) default else values.sum()
 
     override fun description() = "Sum[Int]"

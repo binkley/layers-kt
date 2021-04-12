@@ -282,14 +282,14 @@ private const val maryKey = "mary"
 private const val fredKey = "fred"
 
 private val bobRule = object : Rule<Int>(bobKey) {
-    override fun invoke(values: List<Int>, allValues: Map<String, Any>) =
+    override fun invoke(values: List<Int>, allValues: ValueMap) =
         2 * (if (values.isEmpty()) 0 else values.first())
 
     override fun description() = "Test rule to double the most recent value"
 }
 
 private val maryRule = object : Rule<String>(maryKey) {
-    override fun invoke(values: List<String>, allValues: Map<String, Any>) =
+    override fun invoke(values: List<String>, allValues: ValueMap) =
         throw NullPointerException()
 
     override fun description() = "Impossible Rule"

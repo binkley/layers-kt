@@ -42,10 +42,7 @@ abstract class Rule<T>(
      * from each layer for the key in order from latest to oldest, and a
      * "horizontal" view of [allValues] as currently computed for all keys.
      */
-    abstract operator fun invoke(
-        values: List<T>,
-        allValues: Map<String, Any>,
-    ): T
+    abstract operator fun invoke(values: List<T>, allValues: ValueMap): T
 
     abstract fun description(): String
 
@@ -57,12 +54,10 @@ fun <T> T.toValue(): Entry<T> = Value(this)
 
 fun <T> ruleFor(
     key: String,
-    block: (List<T>, Map<String, Any>) -> T,
+    block: (List<T>, ValueMap) -> T,
 ) = object : Rule<T>(key) {
-    override fun invoke(
-        values: List<T>,
-        allValues: Map<String, Any>,
-    ) = block(values, allValues)
+    override fun invoke(values: List<T>, allValues: ValueMap) =
+        block(values, allValues)
 
     override fun description() = "<Anonymous>"
 }

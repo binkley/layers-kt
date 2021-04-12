@@ -73,7 +73,21 @@ internal class LayersTest {
     }
 
     @Test
-    fun `should edit the current layer`() {
+    fun `should edit the current layer with varargs`() {
+        val layers = Layers.new().edit(bobKey to bobRule)
+
+        layers shouldBe Layers.new(bobKey to bobRule)
+    }
+
+    @Test
+    fun `should edit the current layer with a map`() {
+        val layers = Layers.new().edit(mapOf(bobKey to bobRule))
+
+        layers shouldBe Layers.new(bobKey to bobRule)
+    }
+
+    @Test
+    fun `should edit the current layer with a block`() {
         val layers = Layers.new().edit {
             this[bobKey] = bobRule
         }

@@ -23,6 +23,20 @@ class Layers(
     override val entries get() = entries()
 
     /** Edits the current layer. */
+    fun edit(vararg changes: Pair<String, Entry<*>>): Layers {
+        current.edit(*changes)
+        validate()
+        return this
+    }
+
+    /** Edits the current layer. */
+    fun edit(changes: Map<String, Entry<*>>): Layers {
+        current.edit(changes)
+        validate()
+        return this
+    }
+
+    /** Edits the current layer. */
     fun edit(block: MutableMap<String, Entry<*>>.() -> Unit): Layers {
         current.edit(block)
         validate()

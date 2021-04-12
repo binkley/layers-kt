@@ -281,18 +281,15 @@ private const val bobKey = "bob"
 private const val maryKey = "mary"
 private const val fredKey = "fred"
 
-private val bobRule = object : Rule<Int>(bobKey) {
+private val bobRule = object : NamedRule<Int>("<Anonymous>", bobKey) {
     override fun invoke(values: List<Int>, allValues: ValueMap) =
         2 * (if (values.isEmpty()) 0 else values.first())
-
-    override fun description() = "Test rule to double the most recent value"
 }
 
-private val maryRule = object : Rule<String>(maryKey) {
-    override fun invoke(values: List<String>, allValues: ValueMap) =
-        throw NullPointerException()
-
-    override fun description() = "Impossible Rule"
-}
+private val maryRule =
+    object : NamedRule<String>("Impossible Rule", maryKey) {
+        override fun invoke(values: List<String>, allValues: ValueMap) =
+            throw NullPointerException()
+    }
 
 private val fredRule = latestOfRule(fredKey, "MISSING")

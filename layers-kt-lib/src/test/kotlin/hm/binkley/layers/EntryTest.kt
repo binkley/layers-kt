@@ -30,29 +30,25 @@ internal class EntryTest {
     }
 }
 
-private object TestRule : Rule<String>(bobKey) {
+private object TestRule : NamedRule<String>("Test Fooby", bobKey) {
     override fun invoke(values: List<String>, allValues: ValueMap) =
         "Fooby"
-
-    override fun description() = "Test Fooby"
 }
 
-private class KeyBasedRule(key: String) : Rule<String>(key) {
+private class KeyBasedRule(key: String) :
+    NamedRule<String>("Test key-based", key) {
     override fun invoke(values: List<String>, allValues: ValueMap) =
         when (key) {
             aliceKey -> "good"
             else -> "bad"
         }
-
-    override fun description() = "Test key-based"
 }
 
-private class DependentRule(key: String) : Rule<Int>(key) {
+private class DependentRule(key: String) :
+    NamedRule<Int>("Depends on Bob's value", key) {
     override fun invoke(values: List<Int>, allValues: ValueMap): Int {
         return (allValues[bobKey] as Int) / 2
     }
-
-    override fun description() = "Depends on Bob's value"
 }
 
 private const val aliceKey = "alice"

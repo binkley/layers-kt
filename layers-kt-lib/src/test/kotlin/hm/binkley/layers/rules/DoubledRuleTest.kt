@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test
 internal class DoubledRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${DoubledRule("bob", 2)}" shouldBe "<Rule>[bob]: Doubled(default=4)"
+        "${DoubledRule("bob", 2)}" shouldBe
+            "<Rule>[bob]: Doubled[Int](default=4)"
 
     @Test
     fun `should provide a default`() {

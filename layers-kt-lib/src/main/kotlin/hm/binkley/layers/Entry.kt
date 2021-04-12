@@ -49,15 +49,21 @@ abstract class Rule<T>(
     final override fun toString() = "<Rule>[$key]: ${description()}"
 }
 
+/** A convenience class. */
+abstract class NamedRule<T>(
+    private val name: String,
+    key: String,
+) : Rule<T>(key) {
+    final override fun description(): String = name
+}
+
 fun <T> Rule<T>.defaultValue() = this(emptyList(), emptyMap())
 fun <T> T.toValue(): Entry<T> = Value(this)
 
 fun <T> ruleFor(
     key: String,
     block: (List<T>, ValueMap) -> T,
-) = object : Rule<T>(key) {
+) = object : NamedRule<T>("<Anonymous>", key) {
     override fun invoke(values: List<T>, allValues: ValueMap) =
         block(values, allValues)
-
-    override fun description() = "<Anonymous>"
 }

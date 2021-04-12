@@ -12,7 +12,7 @@ internal class StatBonusRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
         "${statBonusRule("FRED")}" shouldBe
-            "<Rule>[FRED-BONUS]: Stat-Bonus(stat=FRED)"
+            "<Rule>[FRED-BONUS]: Stat-Bonus[Int](stat=FRED)"
 
     @Test
     fun `should calculate the bonus from a stat`() {

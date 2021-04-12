@@ -10,7 +10,7 @@ class DoubledRule(
     override fun invoke(values: List<Int>, allValues: ValueMap) =
         2 * super.invoke(values, allValues)
 
-    override fun description() = "Doubled(default=${defaultValue()})"
+    override fun description() = "Doubled[Int](default=${defaultValue()})"
 
     companion object {
         fun doubledRule(key: String, default: Int) =

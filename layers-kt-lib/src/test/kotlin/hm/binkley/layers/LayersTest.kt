@@ -245,7 +245,22 @@ internal class LayersTest {
     }
 
     @Test
-    fun `should not alter original in what-if scenarios`() {
+    fun `should not alter original in what-if scenarios with varargs`() {
+        val layers = Layers.new(
+            bobKey to bobRule
+        )
+
+        layers.commitAndNext("BOB") {
+            this[bobKey] = 1.toValue()
+        }
+        val whatIf = layers.whatIf(bobKey to 2.toValue())
+
+        layers[bobKey] shouldBe 2
+        whatIf[bobKey] shouldBe 4
+    }
+
+    @Test
+    fun `should not alter original in what-if scenarios with blocks`() {
         val layers = Layers.new(
             bobKey to bobRule
         )

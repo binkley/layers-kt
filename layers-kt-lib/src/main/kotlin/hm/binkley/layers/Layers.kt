@@ -37,7 +37,7 @@ class Layers(
     }
 
     /** Edits the current layer. */
-    fun edit(block: MutableMap<String, Entry<*>>.() -> Unit): Layers {
+    fun edit(block: EditBlock): Layers {
         current.edit(block)
         validate()
         return this
@@ -47,10 +47,7 @@ class Layers(
      * Commits the current layer (it will no longer be editable), and pushes
      * on a new, blank layer possibly modified by [block] (default no-op).
      */
-    fun commitAndNext(
-        name: String,
-        block: MutableMap<String, Entry<*>>.() -> Unit = {},
-    ): MutableLayer {
+    fun commitAndNext(name: String, block: EditBlock = {}): MutableLayer {
         val new = MutablePlainLayer(name).edit(block)
         _layers.add(0, new)
 
@@ -59,19 +56,19 @@ class Layers(
         return new
     }
 
+    /** Poses a "what-if" scenario. */
+    fun whatIf(vararg scenario: Pair<String, Entry<*>>): Layers =
+        whatIf(scenario.toMap())
+
     /** Poses a "what-if" [scenario]. */
-    fun whatIf(scenario: MutableLayer): Layers {
+    fun whatIf(scenario: Map<String, Entry<*>>): Layers {
         val _layers = ArrayList(_layers)
-        _layers.add(0, scenario)
+        _layers.add(0, MutablePlainLayer("<WHAT-IF>", scenario))
         return Layers(_layers)
     }
 
-    /**
-     * Poses a "what-if" scenario named "<WHAT-IF>".
-     *
-     * @see [whatIf]
-     */
-    fun whatIf(block: MutableMap<String, Entry<*>>.() -> Unit): Layers =
+    /** Poses a "what-if" scenario. */
+    fun whatIf(block: EditBlock): Layers =
         whatIf(MutablePlainLayer("<WHAT-IF>").edit(block))
 
     @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
@@ -115,9 +112,7 @@ class Layers(
     }
 
     companion object {
-        fun new(
-            vararg firstLayer: Pair<String, Entry<*>>,
-        ) = new {
+        fun new(vararg firstLayer: Pair<String, Entry<*>>) = new {
             firstLayer.forEach {
                 this[it.first] = it.second
             }
@@ -125,9 +120,7 @@ class Layers(
 
         fun new(layers: List<MutableLayer>) = Layers(layers.toMutableList())
 
-        fun new(
-            name: String = "<INIT>",
-            block: MutableMap<String, Entry<*>>.() -> Unit,
-        ) = Layers(mutableListOf(MutablePlainLayer(name).edit(block)))
+        fun new(name: String = "<INIT>", block: EditBlock) =
+            Layers(mutableListOf(MutablePlainLayer(name).edit(block)))
     }
 }

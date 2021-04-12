@@ -51,6 +51,27 @@ run by Batect.
 
 ## API
 
+### General patterns
+
+It is difficult to express in Kotlin with types (meta-programming may be 
+required), but for all functions which express map state (construction or 
+mutation), functions come in three styles:
+
+- `foo(vararg state: Pair<String, Entry<*>>): T`
+```kotlin
+x = x.foo("a" to 3.toValue()) // Merged into existing mutable map
+```
+- `foo(state: Map<String, Entry<*>>): T`
+```kotlin
+x = x.foo(mapOf("a" to 3.toValue())) // Merged into existing mutable map
+```
+- `foo(state: MutableMap<String, Entry<*>>.() -> Unit): T`
+```kotlin
+x = x.foo {
+    this["a"] = 3.toValue() // Mutates existing mutable map
+}
+```
+
 ### Layers
 
 [`Layers`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/Layers.kt) is a
@@ -112,3 +133,8 @@ A layers rule which sums all values added to a `Layers`.
 See
 [`SumOfRule`](./layers-kt-lib/src/main/kotlin/hm/binkley/layers/rules/SumOfRule.kt)
 .
+
+## TODO
+
+* Rationalize uses of `Map` as input _vs_ `MutableMap` reused as a 
+  property or delegated argument

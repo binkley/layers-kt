@@ -10,7 +10,7 @@ internal class ConstantRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
         "${ConstantRule("bob", 10)}" shouldBe
-                "<Rule>[bob]: Constant(constant=10)"
+            "<Rule>[bob]: Constant(constant=10)"
 
     @Test
     fun `should provide a default`() {

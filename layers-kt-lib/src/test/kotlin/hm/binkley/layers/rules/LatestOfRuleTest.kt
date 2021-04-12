@@ -12,10 +12,10 @@ internal class LatestOfRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
         "${
-            LatestOfRule(
-                "bob",
-                "?"
-            )
+        LatestOfRule(
+            "bob",
+            "?"
+        )
         }" shouldBe "<Rule>[bob]: Latest(default=?)"
 
     @Test

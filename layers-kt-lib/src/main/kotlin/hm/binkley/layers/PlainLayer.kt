@@ -5,14 +5,15 @@ import java.util.Objects.hash
 
 open class PlainLayer(
     override val name: String,
-    protected val map: MutableMap<String, Entry<*>> = mutableMapOf(),
-) : Layer, Map<String, Entry<*>> by map {
+    map: Map<String, Entry<*>> = emptyMap(),
+    protected val editMap: EditMap = map.toMutableMap(),
+) : Layer, Map<String, Entry<*>> by editMap {
     @Generated
     override fun equals(other: Any?) = this === other ||
         other is PlainLayer &&
         name == other.name &&
-        map == other.map
+        editMap == other.editMap
 
-    override fun hashCode() = hash(name, map)
-    override fun toString() = "$name: $map"
+    override fun hashCode() = hash(name, editMap)
+    override fun toString() = "$name: $editMap"
 }

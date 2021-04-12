@@ -6,7 +6,6 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.AbstractMap.SimpleImmutableEntry
 
@@ -58,7 +57,7 @@ internal class LayersTest {
 
     @Test
     fun `should not start from an empty list of layers`() {
-        shouldThrow<java.lang.IllegalArgumentException> {
+        shouldThrow<IllegalArgumentException> {
             Layers.new(listOf())
         }
     }
@@ -128,7 +127,7 @@ internal class LayersTest {
 
     @Test
     fun `should complain on a missing rule`() {
-        shouldThrow<IllegalStateException> {
+        shouldThrow<IllegalArgumentException> {
             Layers.new()[bobKey]
         }
     }
@@ -142,10 +141,9 @@ internal class LayersTest {
         }
     }
 
-    @Disabled("TODO: IMPLEMENT")
     @Test
     fun `should complain on a value before a rule in a later layer`() {
-        shouldThrow<IllegalStateException> {
+        shouldThrow<IllegalArgumentException> {
             Layers.new().commitAndNext("NEXT") {
                 this[bobKey] = 4.toValue()
             }

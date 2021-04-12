@@ -18,17 +18,7 @@ class Layers(
     val current get(): MutableLayer = _layers[0]
 
     init {
-        require(layers.isNotEmpty()) {
-            "Layers must begin with an editable layer"
-        }
-
-        val keysAndRules = mutableMapOf<String, Entry<*>>()
-        layers.forEach { keysAndRules += it }
-        for ((key, entry) in keysAndRules)
-            if (entry !is Rule<*>)
-                throw IllegalArgumentException(
-                    "A rule must proceed values for key: $key"
-                )
+        validate()
     }
 
     override operator fun get(key: String) = calculate<Any>(key)
@@ -44,6 +34,9 @@ class Layers(
     ): MutableLayer {
         val new = MutablePlainLayer(name).edit(block)
         _layers.add(0, new)
+
+        validate()
+
         return new
     }
 
@@ -88,9 +81,22 @@ class Layers(
             }
         }
 
-        if (null == rule) throw IllegalStateException("No rule for key: $key")
+        requireNotNull(rule) { "No rule for key: $key" }
 
         return rule(values, this)
+    }
+
+    private fun validate() {
+        require(_layers.isNotEmpty()) {
+            "Layers must begin with an editable layer"
+        }
+
+        val keysAndRules = mutableMapOf<String, Entry<*>>()
+        _layers.forEach { keysAndRules += it }
+        for ((key, entry) in keysAndRules)
+            require(entry is Rule<*>) {
+                "A rule must proceed values for key: $key"
+            }
     }
 
     companion object {

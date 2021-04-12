@@ -1,4 +1,4 @@
-package hm.binkley.layers.dnd.rules
+package hm.binkley.layers.rpg.rules
 
 import hm.binkley.layers.Rule
 

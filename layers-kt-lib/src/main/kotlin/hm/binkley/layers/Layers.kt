@@ -30,7 +30,7 @@ class Layers(
     }
 
     /** Edits the current layer. */
-    fun edit(changes: Map<String, Entry<*>>): Layers {
+    fun edit(changes: EntryMap): Layers {
         current.edit(changes)
         validate()
         return this
@@ -61,7 +61,7 @@ class Layers(
         whatIf(scenario.toMap())
 
     /** Poses a "what-if" [scenario]. */
-    fun whatIf(scenario: Map<String, Entry<*>>): Layers {
+    fun whatIf(scenario: EntryMap): Layers {
         val _layers = ArrayList(_layers)
         _layers.add(0, MutablePlainLayer("<WHAT-IF>", scenario))
         return Layers(_layers)

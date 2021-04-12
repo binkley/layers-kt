@@ -1,5 +1,5 @@
 package hm.binkley.layers
 
-interface Layer : Map<String, Entry<*>> {
+interface Layer : EntryMap {
     val name: String
 }

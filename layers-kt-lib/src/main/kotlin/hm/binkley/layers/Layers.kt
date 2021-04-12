@@ -7,7 +7,6 @@ import java.util.AbstractMap.SimpleEntry
  * Creates a new list of editable layers, with an initial blank editable
  * layer.
  *
- * @todo Pass in block to update the initial current layer
  * @todo History, metadata
  */
 class Layers(
@@ -22,6 +21,13 @@ class Layers(
 
     override operator fun get(key: String) = calculate<Any>(key)
     override val entries get() = entries()
+
+    /** Edits the current layer. */
+    fun edit(block: MutableMap<String, Entry<*>>.() -> Unit): Layers {
+        current.edit(block)
+        validate()
+        return this
+    }
 
     /**
      * Commits the current layer (it will no longer be editable), and pushes
@@ -86,10 +92,6 @@ class Layers(
     }
 
     private fun validate() {
-        require(_layers.isNotEmpty()) {
-            "Layers must begin with an editable layer"
-        }
-
         val keysAndRules = mutableMapOf<String, Entry<*>>()
         _layers.forEach { keysAndRules += it }
         for ((key, entry) in keysAndRules)
@@ -109,7 +111,6 @@ class Layers(
 
         fun new(layers: List<MutableLayer>) = Layers(layers.toMutableList())
 
-        /** @todo Enforce that first layer must have rules, not values */
         fun new(
             name: String = "<INIT>",
             block: MutableMap<String, Entry<*>>.() -> Unit,

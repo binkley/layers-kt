@@ -56,10 +56,9 @@ internal class LayersTest {
     }
 
     @Test
-    fun `should not start from an empty list of layers`() {
-        shouldThrow<IllegalArgumentException> {
-            Layers.new(listOf())
-        }
+    fun `should start from an empty list of layers`() {
+        Layers.new()
+        Layers.new(listOf())
     }
 
     @Test
@@ -74,7 +73,25 @@ internal class LayersTest {
     }
 
     @Test
-    fun `should save current layer and create a new layer`() {
+    fun `should edit the current layer`() {
+        val layers = Layers.new().edit {
+            this[bobKey] = bobRule
+        }
+
+        layers shouldBe Layers.new(bobKey to bobRule)
+    }
+
+    @Test
+    fun `should complain when editing a key without a rule`() {
+        shouldThrow<IllegalArgumentException> {
+            Layers.new().edit {
+                this[bobKey] = 1.toValue()
+            }
+        }
+    }
+
+    @Test
+    fun `should commit the current layer and create a new layer`() {
         val ruleLayer = MutablePlainLayer("BOB RULE").edit {
             this[bobKey] = bobRule
         }
@@ -237,7 +254,7 @@ private const val fredKey = "fred"
 
 private val bobRule = object : Rule<Int>(bobKey) {
     override fun invoke(values: List<Int>, allValues: Map<String, Any>) =
-        2 * values.first()
+        2 * (if (values.isEmpty()) 0 else values.first())
 
     override fun description() = "Test rule to double the most recent value"
 }

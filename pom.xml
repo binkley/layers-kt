@@ -30,6 +30,16 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/binkley/layers-kt/issues</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:git:git://github.com/binkley/layers-kt
+        </connection>
+        <url>https://github.com/binkley/layers-kt</url>
+    </scm>
+
     <properties>
         <!-- @formatter:off -->
         <buildplan-maven-plugin.version>1.4</buildplan-maven-plugin.version>
@@ -64,17 +74,6 @@
         <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
         <!-- @formatter:on -->
     </properties>
-
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/binkley/layers-kt/issues</url>
-    </issueManagement>
-
-    <scm>
-        <connection>scm:git:git://github.com/binkley/layers-kt
-        </connection>
-        <url>https://github.com/binkley/layers-kt</url>
-    </scm>
 
     <dependencyManagement>
         <dependencies>

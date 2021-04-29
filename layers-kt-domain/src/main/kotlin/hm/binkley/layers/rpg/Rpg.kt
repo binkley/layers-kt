@@ -1,18 +1,21 @@
 package hm.binkley.layers.rpg
 
+import hm.binkley.layers.Layers
 import hm.binkley.layers.MutablePlainLayer
-import lombok.Generated
-import java.util.Objects.hash
+import hm.binkley.layers.rpg.rules.StatBonusRule.Companion.statBonusRule
+import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
 
 class Rpg(
     name: String,
-    val fakeForMutation: Boolean,
 ) : MutablePlainLayer(name) {
-    @Generated
-    override fun equals(other: Any?) = this === other ||
-        super.equals(other) &&
-        other is Rpg &&
-        fakeForMutation == other.fakeForMutation
+    init {
+        edit {
+            this["MIGHT"] = latestOfRule("MIGHT", 8)
+            this["MIGHT-BONUS"] = statBonusRule("MIGHT")
+        }
+    }
 
-    override fun hashCode() = hash(super.hashCode(), fakeForMutation)
+    companion object {
+        fun newCharacter() = Layers.new(listOf(Rpg("<INIT>")))
+    }
 }

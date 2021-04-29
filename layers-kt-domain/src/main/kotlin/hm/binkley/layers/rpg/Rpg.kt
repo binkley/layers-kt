@@ -14,5 +14,5 @@ class Rpg(
         other is Rpg &&
         fakeForMutation == other.fakeForMutation
 
-    override fun hashCode() = 31 * super.hashCode() + hash(fakeForMutation)
+    override fun hashCode() = hash(super.hashCode(), fakeForMutation)
 }

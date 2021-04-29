@@ -12,8 +12,6 @@ package hm.binkley.layers
  *
  * @see Rule which computes "value" from arguments, and makes use of "key"
  * @see Value which has a fixed value for "value", and ignores "key
- *
- * @todo Merge/encapsulate via `ruleCalculation.kt`?
  */
 sealed class Entry<T> {
     abstract override fun toString(): String
@@ -40,7 +38,8 @@ abstract class Rule<T>(
     /**
      * Computes a value for [key] based on a "vertical" view of all [values]
      * from each layer for the key in order from latest to oldest, and a
-     * "horizontal" view of [allValues] as currently computed for all keys.
+     * "horizontal" view of [allValues] as currently computed for all other
+     * keys.
      */
     abstract operator fun invoke(values: List<T>, allValues: ValueMap): T
 
@@ -57,6 +56,7 @@ abstract class NamedRule<T>(
     final override fun description(): String = name
 }
 
+/** @todo This only works for certain types of rule, and is generally bogus */
 fun <T> Rule<T>.defaultValue() = this(emptyList(), emptyMap())
 fun <T> T.toValue(): Entry<T> = Value(this)
 

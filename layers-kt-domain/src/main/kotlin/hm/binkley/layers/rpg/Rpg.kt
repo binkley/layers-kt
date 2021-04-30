@@ -8,16 +8,12 @@ import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
 class Rpg(
     name: String,
 ) : MutablePlainLayer(name) {
-    init {
-        edit {
+    companion object {
+        fun newCharacter() = Layers.new(listOf(Rpg("<INIT>"))).edit {
             this["PLAYER-NAME"] = latestOfRule("PLAYER-NAME", "")
             this["CHARACTER-NAME"] = latestOfRule("CHARACTER-NAME", "")
             this["MIGHT"] = latestOfRule("MIGHT", 8)
             this["MIGHT-BONUS"] = statBonusRule("MIGHT")
         }
-    }
-
-    companion object {
-        fun newCharacter() = Layers.new(listOf(Rpg("<INIT>")))
     }
 }

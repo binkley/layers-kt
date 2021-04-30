@@ -10,6 +10,8 @@ class Rpg(
 ) : MutablePlainLayer(name) {
     init {
         edit {
+            this["PLAYER-NAME"] = latestOfRule("PLAYER-NAME", "")
+            this["CHARACTER-NAME"] = latestOfRule("CHARACTER-NAME", "")
             this["MIGHT"] = latestOfRule("MIGHT", 8)
             this["MIGHT-BONUS"] = statBonusRule("MIGHT")
         }

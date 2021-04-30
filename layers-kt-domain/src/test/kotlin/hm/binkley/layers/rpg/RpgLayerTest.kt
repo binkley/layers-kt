@@ -1,6 +1,5 @@
 package hm.binkley.layers.rpg
 
-import hm.binkley.layers.rpg.RpgLayer.Companion.newCharacter
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe

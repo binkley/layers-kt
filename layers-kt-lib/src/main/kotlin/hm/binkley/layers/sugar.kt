@@ -1,7 +1,7 @@
 package hm.binkley.layers
 
 /* public */ typealias ValueMap = Map<String, Any>
-internal typealias EntryPair = Pair<String, Entry<*>>
-internal typealias EntryMap = Map<String, Entry<*>>
-internal typealias EditableMap = MutableMap<String, Entry<*>>
-internal typealias EditingBlock = EditableMap.() -> Unit
+typealias EntryPair = Pair<String, Entry<*>>
+typealias EntryMap = Map<String, Entry<*>>
+typealias EditableMap = MutableMap<String, Entry<*>>
+typealias EditingBlock = EditableMap.() -> Unit

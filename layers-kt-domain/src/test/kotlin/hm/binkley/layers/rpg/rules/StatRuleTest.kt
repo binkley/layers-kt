@@ -8,16 +8,15 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-internal class StatBonusRuleTest {
+internal class StatRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
         "${statBonusRule("FRED")}" shouldBe
-            "<Rule>[FRED-BONUS]: Stat-Bonus[Int](stat=FRED)"
+                "<Rule>[FRED-BONUS]: Stat-Bonus[Int](stat=FRED)"
 
     @Test
     fun `should calculate the bonus from a stat`() {
-        // TODO: Use an enum for stats
-        val statKey = "MIGHT"
+        val statKey = "BOXITUDE"
         val statBonusKey = "$statKey-BONUS"
         val layers = Layers.new {
             this[statKey] = latestOfRule(statKey, 8)
@@ -32,12 +31,10 @@ internal class StatBonusRuleTest {
 
     @Test
     fun `should round bonus from a stat`() {
-        // TODO: Use an enum for stats
-        val statKey = "MIGHT"
+        val statKey = "FRUBNESS"
         val statBonusKey = "$statKey-BONUS"
         val layers = Layers.new {
-            this[statKey] = latestOfRule(statKey, 8)
-            this[statBonusKey] = statBonusRule(statKey)
+            installStat(statKey)
         }
         layers.commitAndNext(statKey) {
             this[statKey] = 13.toValue()
@@ -49,7 +46,7 @@ internal class StatBonusRuleTest {
     @Test
     fun `should complain if dependency is not an integer`() {
         shouldThrow<ClassCastException> {
-            val statKey = "DORK"
+            val statKey = "DORKMENT"
             val statBonusKey = "$statKey-BONUS"
             val layers = Layers.new {
                 this[statKey] = latestOfRule("BOB", "not an integer")

@@ -1,17 +1,17 @@
 package hm.binkley.layers.rpg
 
-import hm.binkley.layers.rpg.Rpg.Companion.newCharacter
+import hm.binkley.layers.rpg.RpgLayer.Companion.newCharacter
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
 
-internal class RpgTest {
+internal class RpgLayerTest {
     @Test
     fun `should treat domains with different names as different`() {
-        Rpg("A").equals(3).shouldBeFalse()
-        (Rpg("A") == Rpg("B")).shouldBeFalse()
-        Rpg("A").hashCode() shouldNotBe Rpg("B").hashCode()
+        RpgLayer("A").equals(3).shouldBeFalse()
+        (RpgLayer("A") == RpgLayer("B")).shouldBeFalse()
+        RpgLayer("A").hashCode() shouldNotBe RpgLayer("B").hashCode()
     }
 
     @Test

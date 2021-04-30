@@ -5,11 +5,11 @@ import hm.binkley.layers.MutablePlainLayer
 import hm.binkley.layers.rpg.rules.StatBonusRule.Companion.statBonusRule
 import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
 
-class Rpg(
+class RpgLayer(
     name: String,
 ) : MutablePlainLayer(name) {
     companion object {
-        fun newCharacter() = Layers.new(listOf(Rpg("<INIT>"))).edit {
+        fun newCharacter() = Layers.new(listOf(RpgLayer("<INIT>"))).edit {
             this["PLAYER-NAME"] = latestOfRule("PLAYER-NAME", "")
             this["CHARACTER-NAME"] = latestOfRule("CHARACTER-NAME", "")
             this["MIGHT"] = latestOfRule("MIGHT", 8)

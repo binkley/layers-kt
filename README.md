@@ -6,7 +6,8 @@
 
 [![build](https://github.com/binkley/layers-kt/workflows/build/badge.svg)](https://github.com/binkley/layers-kt/actions)
 [![issues](https://img.shields.io/github/issues/binkley/layers-kt.svg)](https://github.com/binkley/layers-kt/issues/)
-[![Public Domain](https://img.shields.io/badge/license-Public%20Domain-blue.svg)](http://unlicense.org/)
+[![vulnerabilities](https://snyk.io/test/github/binkley/layers-kt/badge.svg)](https://snyk.io/test/github/binkley/layers-kt)
+[![license](https://img.shields.io/badge/license-Public%20Domain-blue.svg)](http://unlicense.org/)
 
 _An experiment in style and technique in Kotlin_.
 

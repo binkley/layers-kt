@@ -12,7 +12,7 @@ import java.util.AbstractMap.SimpleImmutableEntry
 internal class LayersTest {
     @Test
     fun `should have a debuggable presentation`() {
-        Layers.new().toString() shouldBe "0: [MutablePlainLayer] <INIT>: {}"
+        Layers.new().toString() shouldBe "0: [DefaultMutableLayer] <INIT>: {}"
     }
 
     @Test
@@ -39,14 +39,14 @@ internal class LayersTest {
     fun `should start with a blank, mutable layer`() {
         val newLayers = Layers.new()
 
-        newLayers.layers shouldBe listOf(PlainLayer("<INIT>"))
-        newLayers.current.shouldBeInstanceOf<MutableLayer>()
+        newLayers.layers shouldBe listOf(DefaultLayer("<INIT>"))
+        newLayers.current.shouldBeInstanceOf<MutableLayer<*>>()
     }
 
     @Test
     fun `should start from a list of layers`() {
         val layers = listOf(
-            MutablePlainLayer("<INIT>").edit {
+            DefaultMutableLayer("<INIT>").edit {
                 this[bobKey] = bobRule
             },
         )
@@ -68,7 +68,7 @@ internal class LayersTest {
         }
 
         newLayers.layers shouldBe listOf(
-            MutablePlainLayer("<INIT>", mutableMapOf(bobKey to bobRule))
+            DefaultMutableLayer("<INIT>", mutableMapOf(bobKey to bobRule))
         )
     }
 
@@ -106,7 +106,7 @@ internal class LayersTest {
 
     @Test
     fun `should commit the current layer and create a new layer`() {
-        val ruleLayer = MutablePlainLayer("BOB RULE").edit {
+        val ruleLayer = DefaultMutableLayer("BOB RULE").edit {
             this[bobKey] = bobRule
         }
         val layers = Layers.new(listOf(ruleLayer))
@@ -121,7 +121,7 @@ internal class LayersTest {
 
     @Test
     fun `should edit while creating new layer`() {
-        val ruleLayer = MutablePlainLayer("BOB RULE").edit {
+        val ruleLayer = DefaultMutableLayer("BOB RULE").edit {
             this[bobKey] = bobRule
         }
         val layers = Layers.new(listOf(ruleLayer))
@@ -131,7 +131,7 @@ internal class LayersTest {
         layers.current.edit {
             this[bobKey] = 3.toValue()
         }
-        layers.current shouldBe MutablePlainLayer(
+        layers.current shouldBe DefaultMutableLayer(
             "BOB",
             mutableMapOf(bobKey to 3.toValue())
         )

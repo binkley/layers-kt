@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 internal class RpgLayerTest {
     @Test
     fun `should treat domains with different names as different`() {
-        RpgLayer("A").equals(3).shouldBeFalse()
-        (RpgLayer("A") == RpgLayer("B")).shouldBeFalse()
-        RpgLayer("A").hashCode() shouldNotBe RpgLayer("B").hashCode()
+        CharacterLayer("A").equals(3).shouldBeFalse()
+        (CharacterLayer("A") == CharacterLayer("B")).shouldBeFalse()
+        CharacterLayer("A").hashCode() shouldNotBe CharacterLayer("B").hashCode()
     }
 
     @Test

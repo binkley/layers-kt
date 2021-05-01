@@ -5,7 +5,7 @@ import hm.binkley.layers.rpg.RpgLayer
 import hm.binkley.layers.rules.ConstantRule.Companion.constantRule
 
 class GirdleOfHillGiantMight :
-    RpgLayer("Girdle of Might of the Hill Giant") {
+    RpgLayer<GirdleOfHillGiantMight>("Girdle of Might of the Hill Giant") {
     init {
         edit {
             this[MIGHT.name] = constantRule(MIGHT.name, 20)

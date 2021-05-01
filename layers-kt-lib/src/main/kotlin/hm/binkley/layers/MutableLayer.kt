@@ -1,15 +1,15 @@
 package hm.binkley.layers
 
-interface MutableLayer : Layer, EditableMap {
-    fun edit(vararg changes: EntryPair): MutableLayer = edit(changes.toMap())
+interface MutableLayer<L : MutableLayer<L>> : Layer<L>, EditableMap {
+    fun edit(vararg changes: EntryPair): L = edit(changes.toMap())
 
-    fun edit(changes: EntryMap): MutableLayer {
+    fun edit(changes: EntryMap): L {
         this += changes
-        return this
+        return self
     }
 
-    fun edit(block: EditingBlock): MutableLayer {
+    fun edit(block: EditingBlock): L {
         block()
-        return this
+        return self
     }
 }

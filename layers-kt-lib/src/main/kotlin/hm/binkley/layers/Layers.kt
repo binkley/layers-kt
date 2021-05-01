@@ -10,10 +10,10 @@ import java.util.AbstractMap.SimpleEntry
  * @todo History, metadata
  */
 class Layers(
-    private val _layers: MutableList<MutableLayer>,
+    private val _layers: MutableList<MutableLayer<*>>,
 ) : AbstractMap<String, Any>() {
-    val layers: List<Layer> get() = _layers
-    val current get(): MutableLayer = _layers[0]
+    val layers: List<Layer<*>> get() = _layers
+    val current get(): MutableLayer<*> = _layers[0]
 
     init {
         validate()
@@ -47,8 +47,11 @@ class Layers(
      * Commits the current layer (it will no longer be editable), and pushes
      * on a new, blank layer possibly modified by [block] (default no-op).
      */
-    fun commitAndNext(name: String, block: EditingBlock = {}): MutableLayer {
-        val new = MutablePlainLayer(name).edit(block)
+    fun commitAndNext(
+        name: String,
+        block: EditingBlock = {},
+    ): MutableLayer<*> {
+        val new = DefaultMutableLayer(name).edit(block)
         _layers.add(0, new)
 
         validate()
@@ -58,9 +61,9 @@ class Layers(
 
     /**
      * Commits the current layer (it will no longer be editable), and pushes
-     * on a new, blank layer possibly modified by [block] (default no-op).
+     * on [layer].
      */
-    fun commitAndNext(layer: MutableLayer): MutableLayer {
+    fun <L : MutableLayer<L>> commitAndNext(layer: L): L {
         _layers.add(0, layer)
 
         validate()
@@ -69,18 +72,19 @@ class Layers(
     }
 
     /** Poses a "what-if" scenario. */
-    fun whatIf(vararg scenario: EntryPair): Layers = whatIf(scenario.toMap())
+    fun whatIf(vararg scenario: EntryPair): Layers =
+        whatIf(scenario.toMap())
 
     /** Poses a "what-if" [scenario]. */
     fun whatIf(scenario: EntryMap): Layers {
-        val _layers = ArrayList(_layers)
-        _layers.add(0, MutablePlainLayer("<WHAT-IF>", scenario))
-        return Layers(_layers)
+        val layers = ArrayList(_layers)
+        layers.add(0, DefaultMutableLayer("<WHAT-IF>", scenario))
+        return Layers(layers)
     }
 
     /** Poses a "what-if" scenario. */
     fun whatIf(block: EditingBlock): Layers =
-        whatIf(MutablePlainLayer("<WHAT-IF>").edit(block))
+        whatIf(DefaultMutableLayer("<WHAT-IF>").edit(block))
 
     @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
     override fun toString() = layers.mapIndexed { index, layer ->
@@ -129,9 +133,10 @@ class Layers(
             }
         }
 
-        fun new(layers: List<MutableLayer>) = Layers(layers.toMutableList())
+        fun new(layers: List<MutableLayer<*>>) =
+            Layers(layers.toMutableList())
 
         fun new(name: String = "<INIT>", block: EditingBlock) =
-            Layers(mutableListOf(MutablePlainLayer(name).edit(block)))
+            Layers(mutableListOf(DefaultMutableLayer(name).edit(block)))
     }
 }

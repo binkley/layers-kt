@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 internal class MutablePlainLayerTest {
     @Test
     fun `should be very mappish`() {
-        val layer = MutablePlainLayer("BOB")
+        val layer = DefaultMutableLayer("BOB")
         // Passing this test really means these funs/props compile
         layer.clear()
         layer.entries
@@ -20,7 +20,7 @@ internal class MutablePlainLayerTest {
 
     @Test
     fun `should edit blank layer`() {
-        val layer = MutablePlainLayer("BOB")
+        val layer = DefaultMutableLayer("BOB")
         layer.edit {
             this[bobKey] = 3.toValue()
         }
@@ -30,7 +30,7 @@ internal class MutablePlainLayerTest {
 
     @Test
     fun `should start layer with data`() {
-        val layer = MutablePlainLayer(
+        val layer = DefaultMutableLayer(
             "BOB",
             mutableMapOf(bobKey to 4.toValue())
         )

@@ -2,6 +2,6 @@ package hm.binkley.layers.rpg
 
 import hm.binkley.layers.MutablePlainLayer
 
-class RpgLayer(
+open class RpgLayer(
     name: String,
 ) : MutablePlainLayer(name)

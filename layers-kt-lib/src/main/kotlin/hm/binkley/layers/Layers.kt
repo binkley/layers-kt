@@ -56,6 +56,18 @@ class Layers(
         return new
     }
 
+    /**
+     * Commits the current layer (it will no longer be editable), and pushes
+     * on a new, blank layer possibly modified by [block] (default no-op).
+     */
+    fun commitAndNext(layer: MutableLayer): MutableLayer {
+        _layers.add(0, layer)
+
+        validate()
+
+        return layer
+    }
+
     /** Poses a "what-if" scenario. */
     fun whatIf(vararg scenario: EntryPair): Layers = whatIf(scenario.toMap())
 

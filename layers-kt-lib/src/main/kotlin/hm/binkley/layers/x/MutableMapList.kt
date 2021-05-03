@@ -19,9 +19,7 @@ class MutableMapList<K, V>(
             get() = computeEntries()
     }
 
-    fun edit(block: MutableMap<K, ValueOrRule<V>>.() -> Unit) = current.block()
-
-    internal fun computeEntries(): Set<Entry<K, V>> {
+    private fun computeEntries(): Set<Entry<K, V>> {
         @Suppress("UNCHECKED_CAST")
         fun computeEntry(key: K): Entry<K, V> {
             var rule: Rule<K, V>? = null

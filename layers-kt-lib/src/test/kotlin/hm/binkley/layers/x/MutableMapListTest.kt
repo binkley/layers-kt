@@ -19,16 +19,20 @@ internal class MutableMapListTest {
     }
 
     @Test
+    fun `should put key-value to current map`() {
+        val maps = MutableMapList<String, Any>()
+        maps["BOB"] = testRule
+
+        maps.size shouldBe 1
+    }
+
+    @Test
     fun `should clear current`() {
         val maps = MutableMapList<String, Any>()
-        maps.edit {
-            this["BOB"] = testRule
-        }
+        maps["BOB"] = testRule
 
         maps.add(mutableMapOf())
-        maps.edit {
-            this["NANCY"] = testRule
-        }
+        maps["NANCY"] = testRule
 
         maps.clear()
 
@@ -41,19 +45,13 @@ internal class MutableMapListTest {
         val testKey = "BOB"
 
         val maps = MutableMapList<String, Any>()
-        maps.edit {
-            this[testKey] = testRule
-        }
+        maps[testKey] = testRule
 
         maps.add(mutableMapOf())
-        maps.edit {
-            this[testKey] = Value(1)
-        }
+        maps[testKey] = Value(1)
 
         maps.add(mutableMapOf())
-        maps.edit {
-            this[testKey] = Value(2)
-        }
+        maps[testKey] = Value(2)
 
         maps.view()[testKey] shouldBe 3
     }

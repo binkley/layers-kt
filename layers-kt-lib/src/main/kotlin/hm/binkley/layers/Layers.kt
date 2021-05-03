@@ -118,7 +118,7 @@ class Layers(
     }
 
     private fun validate() {
-        val keysAndRules = mutableMapOf<String, Entry<*>>()
+        val keysAndRules = mutableMapOf<String, ValueOrRule<*>>()
         _layers.forEach { keysAndRules += it }
         for ((key, entry) in keysAndRules)
             require(entry is Rule<*>) {

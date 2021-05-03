@@ -4,7 +4,7 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import java.util.Collections.emptyMap
 
-internal class EntryTest {
+internal class ValueOrRuleTest {
     @Test
     fun `should retain value`() {
         Value(3).value shouldBe 3

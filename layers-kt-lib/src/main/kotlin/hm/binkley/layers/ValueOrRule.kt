@@ -32,9 +32,7 @@ data class Value<V>(
  * individual layer. The computation may consider the "key" for the value
  * requested.
  */
-abstract class Rule<V>(
-    val key: String,
-) : ValueOrRule<V>(), (String, List<V>, ValueMap) -> V {
+abstract class Rule<V> : ValueOrRule<V>(), (String, List<V>, ValueMap) -> V {
     abstract fun description(): String
 
     final override fun toString() = "<Rule>: ${description()}"
@@ -43,19 +41,17 @@ abstract class Rule<V>(
 /** A convenience class. */
 abstract class NamedRule<V>(
     private val name: String,
-    key: String,
-) : Rule<V>(key) {
+) : Rule<V>() {
     final override fun description(): String = name
 }
 
 /** @todo This only works for certain types of rule, and is generally bogus */
-fun <V> Rule<V>.defaultValue() = this(key, emptyList(), emptyMap())
+fun <V> Rule<V>.defaultValue(key: String) = this(key, emptyList(), emptyMap())
 fun <V> V.toValue(): ValueOrRule<V> = Value(this)
 
 fun <V> ruleFor(
-    key: String,
     block: (key: String, List<V>, ValueMap) -> V,
-) = object : NamedRule<V>("<Anonymous>", key) {
+): NamedRule<V> = object : NamedRule<V>("<Anonymous>") {
     override fun invoke(key: String, values: List<V>, allValues: ValueMap) =
         block(key, values, allValues)
 }

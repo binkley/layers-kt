@@ -34,6 +34,6 @@ internal class DoubledRuleTest {
         val (key, rule) = initDoubledRule("BOB", 10)
 
         key shouldBe "BOB"
-        rule.defaultValue() shouldBe 20
+        rule.defaultValue("BOB") shouldBe 20
     }
 }

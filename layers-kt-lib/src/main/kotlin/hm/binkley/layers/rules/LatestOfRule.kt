@@ -5,13 +5,13 @@ import hm.binkley.layers.ValueMap
 import hm.binkley.layers.defaultValue
 
 open class LatestOfRule<T>(
-    key: String,
+    private val key: String,
     private val default: T,
-) : Rule<T>(key) {
+) : Rule<T>() {
     override fun invoke(key: String, values: List<T>, allValues: ValueMap) =
         values.firstOrNull() ?: default
 
-    override fun description() = "Latest(default=${defaultValue()})"
+    override fun description() = "Latest(default=${defaultValue(key)})"
 
     companion object {
         fun <T> latestOfRule(key: String, default: T) =

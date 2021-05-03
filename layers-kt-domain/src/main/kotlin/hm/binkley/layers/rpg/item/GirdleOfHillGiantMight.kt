@@ -8,7 +8,7 @@ class GirdleOfHillGiantMight :
     RpgLayer<GirdleOfHillGiantMight>("Girdle of Might of the Hill Giant") {
     init {
         edit {
-            this[MIGHT.name] = constantRule(MIGHT.name, 20)
+            this[MIGHT.name] = constantRule(20)
         }
     }
 }

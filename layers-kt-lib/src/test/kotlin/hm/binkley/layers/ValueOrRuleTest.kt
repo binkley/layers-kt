@@ -2,7 +2,6 @@ package hm.binkley.layers
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
-import java.util.Collections.emptyMap
 
 internal class ValueOrRuleTest {
     @Test
@@ -14,19 +13,13 @@ internal class ValueOrRuleTest {
     fun `should have a debuggable presentation`() {
         "${Value(3)}" shouldBe "<Value>: 3"
         "$TestRule" shouldBe "<Rule>: Test Fooby"
-        "${ruleFor<Int>(bobKey) { _, _, _ -> 3 }}" shouldBe
-            "<Rule>: <Anonymous>"
-    }
-
-    @Test
-    fun `should have value based on key`() {
-        KeyBasedRule(aliceKey)(aliceKey, listOf(), emptyMap()) shouldBe "good"
-        KeyBasedRule(bobKey)(bobKey, listOf(), emptyMap()) shouldBe "bad"
+        "${ruleFor<Int> { _, _, _ -> 3 }}" shouldBe
+                "<Rule>: <Anonymous>"
     }
 
     @Test
     fun `should support rules dependent on another layer value`() {
-        DependentRule(fredRule)(
+        DependentRule()(
             fredRule,
             listOf(),
             mapOf(bobKey to 13)
@@ -34,7 +27,7 @@ internal class ValueOrRuleTest {
     }
 }
 
-private object TestRule : NamedRule<String>("Test Fooby", bobKey) {
+private object TestRule : NamedRule<String>("Test Fooby") {
     override fun invoke(
         key: String,
         values: List<String>,
@@ -42,20 +35,8 @@ private object TestRule : NamedRule<String>("Test Fooby", bobKey) {
     ) = "Fooby"
 }
 
-private class KeyBasedRule(key: String) :
-    NamedRule<String>("Test key-based", key) {
-    override fun invoke(
-        key: String,
-        values: List<String>,
-        allValues: ValueMap,
-    ) = when (key) {
-        aliceKey -> "good"
-        else -> "bad"
-    }
-}
-
-private class DependentRule(key: String) :
-    NamedRule<Int>("Depends on Bob's value", key) {
+private class DependentRule :
+    NamedRule<Int>("Depends on $bobKey's value") {
     override fun invoke(
         key: String,
         values: List<Int>,

@@ -40,6 +40,6 @@ internal class LatestOfRuleTest {
         val (key, rule) = initLatestOfRule("BOB", "apple")
 
         key shouldBe "BOB"
-        rule.defaultValue() shouldBe "apple"
+        rule.defaultValue("BOB") shouldBe "apple"
     }
 }

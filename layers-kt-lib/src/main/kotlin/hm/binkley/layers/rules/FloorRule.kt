@@ -6,16 +6,15 @@ import kotlin.Int.Companion.MIN_VALUE
 import kotlin.math.max
 
 class FloorRule(
-    key: String,
     private val min: Int,
-) : NamedRule<Int>("Floor[Int](min=$min)", key) {
+) : NamedRule<Int>("Floor[Int](min=$min)") {
     override fun invoke(key: String, values: List<Int>, allValues: ValueMap) =
         max(values.maxOrNull() ?: MIN_VALUE, min)
 
     companion object {
-        fun floorRule(key: String, min: Int) = FloorRule(key, min)
+        fun floorRule(min: Int) = FloorRule(min)
 
         fun initFloorRule(key: String, min: Int) =
-            key to floorRule(key, min)
+            key to floorRule(min)
     }
 }

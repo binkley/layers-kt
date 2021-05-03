@@ -9,7 +9,7 @@ import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
 
 class StatRule(
     stat: String,
-) : NamedRule<Int>(stat, stat) {
+) : NamedRule<Int>(stat) {
     private val impl = latestOfRule(stat, 8)
 
     override fun invoke(key: String, values: List<Int>, allValues: ValueMap): Int =
@@ -22,7 +22,7 @@ class StatRule(
 
 class StatBonusRule(
     private val stat: String,
-) : NamedRule<Int>("Stat-Bonus[Int](stat=$stat)", "$stat-BONUS") {
+) : NamedRule<Int>("Stat-Bonus[Int](stat=$stat)") {
     override fun invoke(key: String, values: List<Int>, allValues: ValueMap) =
         ((allValues[stat] as Int) - 10) / 2
 

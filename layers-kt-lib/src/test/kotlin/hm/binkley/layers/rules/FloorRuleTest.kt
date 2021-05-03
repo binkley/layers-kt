@@ -10,12 +10,12 @@ import java.util.Collections.emptyMap
 internal class FloorRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${FloorRule("BOB", 19)}" shouldBe
+        "${FloorRule(19)}" shouldBe
             "<Rule>: Floor[Int](min=19)"
 
     @Test
     fun `should calculate rule with floor defaulted`() =
-        floorRule("BOB", 19)(
+        floorRule(19)(
             "BOB",
             listOf(),
             emptyMap(),
@@ -23,7 +23,7 @@ internal class FloorRuleTest {
 
     @Test
     fun `should calculate rule with floor used`() =
-        floorRule("BOB", 19)(
+        floorRule(19)(
             "BOB",
             listOf(1, 2, 3),
             emptyMap(),
@@ -31,7 +31,7 @@ internal class FloorRuleTest {
 
     @Test
     fun `should calculate rule with floor not used`() =
-        floorRule("BOB", 19)(
+        floorRule(19)(
             "BOB",
             listOf(11, 21, 31),
             emptyMap(),
@@ -42,6 +42,6 @@ internal class FloorRuleTest {
         val (key, rule) = initFloorRule("BOB", 10)
 
         key shouldBe "BOB"
-        rule.defaultValue() shouldBe 10
+        rule.defaultValue("BOB") shouldBe 10
     }
 }

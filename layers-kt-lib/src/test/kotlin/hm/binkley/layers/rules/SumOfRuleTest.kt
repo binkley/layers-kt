@@ -10,11 +10,11 @@ import java.util.Collections.emptyMap
 internal class SumOfRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${SumOfRule("BOB", 0)}" shouldBe "<Rule>: Sum[Int]"
+        "${SumOfRule(0)}" shouldBe "<Rule>: Sum[Int]"
 
     @Test
     fun `should provide a default`() =
-        sumOfRule("BOB", 13)(
+        sumOfRule(13)(
             "BOB",
             listOf(),
             emptyMap(),
@@ -22,7 +22,7 @@ internal class SumOfRuleTest {
 
     @Test
     fun `should calculate rule`() =
-        sumOfRule("BOB", 0)(
+        sumOfRule(0)(
             "BOB",
             listOf(1, 2, 3),
             emptyMap(),
@@ -33,6 +33,6 @@ internal class SumOfRuleTest {
         val (key, rule) = initSumOfRule("BOB", 10)
 
         key shouldBe "BOB"
-        rule.defaultValue() shouldBe 10
+        rule.defaultValue("BOB") shouldBe 10
     }
 }

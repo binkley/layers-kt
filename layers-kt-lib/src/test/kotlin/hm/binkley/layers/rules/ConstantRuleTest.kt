@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test
 internal class ConstantRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${ConstantRule("BOB", 10)}" shouldBe "<Rule>: Constant(constant=10)"
+        "${ConstantRule(10)}" shouldBe "<Rule>: Constant(constant=10)"
 
     @Test
     fun `should provide a default`() {
-        constantRule("BOB", "apple")(
+        constantRule("apple")(
             "BOB",
             emptyList(),
             emptyMap(),
@@ -22,7 +22,7 @@ internal class ConstantRuleTest {
 
     @Test
     fun `should calculate rule`() =
-        constantRule("BOB", 10)(
+        constantRule(10)(
             "BOB",
             listOf(1, 2, 3),
             emptyMap(),
@@ -33,6 +33,6 @@ internal class ConstantRuleTest {
         val (key, rule) = initConstantRule("BOB", 10)
 
         key shouldBe "BOB"
-        rule.defaultValue() shouldBe 10
+        rule.defaultValue("BOB") shouldBe 10
     }
 }

@@ -4,16 +4,15 @@ import hm.binkley.layers.NamedRule
 import hm.binkley.layers.ValueMap
 
 class SumOfRule(
-    key: String,
     private val default: Int,
-) : NamedRule<Int>("Sum[Int]", key) {
+) : NamedRule<Int>("Sum[Int]") {
     override fun invoke(key: String, values: List<Int>, allValues: ValueMap) =
         if (values.isEmpty()) default else values.sum()
 
     companion object {
-        fun sumOfRule(key: String, default: Int) = SumOfRule(key, default)
+        fun sumOfRule(default: Int) = SumOfRule(default)
 
         fun initSumOfRule(key: String, default: Int) =
-            key to sumOfRule(key, default)
+            key to sumOfRule(default)
     }
 }

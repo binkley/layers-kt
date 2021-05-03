@@ -186,7 +186,7 @@ internal class LayersTest {
     @Test
     fun `should read latest computed values`() {
         val layers = Layers.new {
-            this[bobKey] = ruleFor<Int>(bobKey) { _, values, _ ->
+            this[bobKey] = ruleFor<Int> { _, values, _ ->
                 values.last() * 1
             }
             this[maryKey] = maryRule
@@ -281,7 +281,7 @@ internal class LayersTest {
             this[bobKey] = 1.toValue()
         }
         layers.commitAndNext("NEW BOB RULE") {
-            this[bobKey] = sumOfRule(bobKey, 0)
+            this[bobKey] = sumOfRule(0)
         }
         layers.commitAndNext("BOB") {
             this[bobKey] = 2.toValue()
@@ -327,13 +327,13 @@ private const val bobKey = "bob"
 private const val maryKey = "mary"
 private const val fredKey = "fred"
 
-private val bobRule = object : NamedRule<Int>("<Anonymous>", bobKey) {
+private val bobRule = object : NamedRule<Int>("<Anonymous>") {
     override fun invoke(key: String, values: List<Int>, allValues: ValueMap) =
         2 * (if (values.isEmpty()) 0 else values.first())
 }
 
 private val maryRule =
-    object : NamedRule<String>("Impossible Rule", maryKey) {
+    object : NamedRule<String>("Impossible Rule") {
         override fun invoke(
             key: String,
             values: List<String>,

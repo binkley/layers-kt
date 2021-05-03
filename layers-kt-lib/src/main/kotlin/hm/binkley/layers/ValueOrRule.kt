@@ -45,8 +45,6 @@ abstract class NamedRule<V>(
     final override fun description(): String = name
 }
 
-/** @todo This only works for certain types of rule, and is generally bogus */
-fun <V> Rule<V>.defaultValue(key: String) = this(key, emptyList(), emptyMap())
 fun <V> V.toValue(): ValueOrRule<V> = Value(this)
 
 fun <V> ruleFor(

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 internal class MutableMapListTest {
     @Test
-    fun `should be debuggable`() {
+    fun `should have a debuggable presentation`() {
         val maps = MutableMapList<String, Any>()
 
         maps.toString() shouldBe "0: {}"
@@ -26,6 +26,14 @@ internal class MutableMapListTest {
         maps.entries.size shouldBe 0
         maps.keys.size shouldBe 0
         maps.values.size shouldBe 0
+
+        maps.history.size shouldBe 1
+    }
+
+    @Test
+    fun `should start with provided history`() {
+        val maps =
+            MutableMapList(mutableListOf(mutableMapOf("BOB" to testRule)))
 
         maps.history.size shouldBe 1
     }

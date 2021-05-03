@@ -1,5 +1,6 @@
 package hm.binkley.layers.x
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import kotlin.collections.Map.Entry
 import kotlin.collections.MutableMap.MutableEntry
 
@@ -57,6 +58,7 @@ class MutableMapList<K, V>(
 
     override fun clear() = current.clear()
 
+    @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
     override fun toString() = history.mapIndexed { i, it ->
         "$i: $it"
     }.joinToString("\n")

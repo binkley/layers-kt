@@ -73,6 +73,15 @@ internal class LayersTest {
     }
 
     @Test
+    fun `should complain if not started with rules`() {
+        shouldThrow<IllegalArgumentException> {
+            Layers.new {
+                this[bobKey] = 1.toValue()
+            }
+        }
+    }
+
+    @Test
     fun `should edit the current layer with varargs`() {
         val layers = Layers.new().edit(bobKey to bobRule)
 
@@ -80,10 +89,24 @@ internal class LayersTest {
     }
 
     @Test
+    fun `should complain when editing varargs without rules`() {
+        shouldThrow<IllegalArgumentException> {
+            Layers.new().edit(bobKey to 1.toValue())
+        }
+    }
+
+    @Test
     fun `should edit the current layer with a map`() {
         val layers = Layers.new().edit(mapOf(bobKey to bobRule))
 
         layers shouldBe Layers.new(bobKey to bobRule)
+    }
+
+    @Test
+    fun `should complain when editing the a map without rules`() {
+        shouldThrow<IllegalArgumentException> {
+            Layers.new().edit(mapOf(bobKey to 1.toValue()))
+        }
     }
 
     @Test
@@ -105,7 +128,7 @@ internal class LayersTest {
     }
 
     @Test
-    fun `should commit the current layer and create a new layer`() {
+    fun `should commit the current layer and edit a new layer`() {
         val ruleLayer = DefaultMutableLayer("BOB RULE").edit {
             this[bobKey] = bobRule
         }
@@ -120,7 +143,18 @@ internal class LayersTest {
     }
 
     @Test
-    fun `should edit while creating new layer`() {
+    fun `should complain when adding a new invalid edit`() {
+        val layers = Layers.new()
+
+        shouldThrow<IllegalArgumentException> {
+            layers.commitAndNext("NOT-BOB") {
+                this["NOT-BOB"] = 4.toValue()
+            }
+        }
+    }
+
+    @Test
+    fun `should edit while adding new layer`() {
         val ruleLayer = DefaultMutableLayer("BOB RULE").edit {
             this[bobKey] = bobRule
         }
@@ -135,6 +169,18 @@ internal class LayersTest {
             "BOB",
             mutableMapOf(bobKey to 3.toValue())
         )
+    }
+
+    @Test
+    fun `should complain when adding a new invalid layer`() {
+        val layers = Layers.new()
+        val invalidLayer = DefaultMutableLayer("NOT-BOB").edit {
+            this["NOT-BOB"] = 4.toValue()
+        }
+
+        shouldThrow<IllegalArgumentException> {
+            layers.commitAndNext(invalidLayer)
+        }
     }
 
     @Test

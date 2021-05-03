@@ -34,19 +34,7 @@ data class Value<V>(
  */
 abstract class Rule<V>(
     val key: String,
-) : ValueOrRule<V>() {
-    /**
-     * Computes a value for [key] based on a "vertical" view of all [values]
-     * from each layer for the key in order from latest to oldest, and a
-     * "horizontal" view of [allValues] as currently computed for all other
-     * keys.
-     */
-    abstract operator fun invoke(
-        key: String,
-        values: List<V>,
-        allValues: ValueMap,
-    ): V
-
+) : ValueOrRule<V>(), (String, List<V>, ValueMap) -> V {
     abstract fun description(): String
 
     final override fun toString() = "<Rule>[$key]: ${description()}"

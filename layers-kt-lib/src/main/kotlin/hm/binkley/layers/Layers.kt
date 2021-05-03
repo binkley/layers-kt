@@ -10,10 +10,10 @@ import java.util.AbstractMap.SimpleEntry
  * @todo History, metadata
  */
 class Layers(
-    private val _layers: MutableList<MutableLayer<*>>,
+    private val history: MutableList<MutableLayer<*>>,
 ) : AbstractMap<String, Any>() {
-    val layers: List<Layer<*>> get() = _layers
-    val current get(): MutableLayer<*> = _layers[0]
+    val layers: List<Layer<*>> get() = history
+    val current get(): MutableLayer<*> = history[0]
 
     init {
         validate()
@@ -52,7 +52,7 @@ class Layers(
         block: EditingBlock = {},
     ): MutableLayer<*> {
         val new = DefaultMutableLayer(name).edit(block)
-        _layers.add(0, new)
+        history.add(0, new)
 
         validate()
 
@@ -64,7 +64,7 @@ class Layers(
      * on [layer].
      */
     fun <L : MutableLayer<L>> commitAndNext(layer: L): L {
-        _layers.add(0, layer)
+        history.add(0, layer)
 
         validate()
 
@@ -77,7 +77,7 @@ class Layers(
 
     /** Poses a "what-if" [scenario]. */
     fun whatIf(scenario: EntryMap): Layers {
-        val layers = ArrayList(_layers)
+        val layers = ArrayList(history)
         layers.add(0, DefaultMutableLayer("<WHAT-IF>", scenario))
         return Layers(layers)
     }
@@ -93,7 +93,7 @@ class Layers(
 
     // TODO: Inline refactor once SpotBugs is sorted out
     @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
-    private fun entries() = _layers.flatMap {
+    private fun entries() = history.flatMap {
         it.keys
     }.distinct().map {
         SimpleEntry(it, calculate<Any>(it))
@@ -102,9 +102,9 @@ class Layers(
     @Suppress("UNCHECKED_CAST")
     private fun <T> calculate(key: String): T {
         var rule: Rule<T>? = null
-        val values = ArrayList<T>(_layers.size)
+        val values = ArrayList<T>(history.size)
 
-        for (layer in _layers) {
+        for (layer in history) {
             val entry = layer[key] ?: continue
             when (entry) {
                 is Rule<*> -> if (null == rule) rule = (entry as Rule<T>)
@@ -119,7 +119,7 @@ class Layers(
 
     private fun validate() {
         val keysAndRules = mutableMapOf<String, ValueOrRule<*>>()
-        _layers.forEach { keysAndRules += it }
+        history.forEach { keysAndRules += it }
         for ((key, entry) in keysAndRules)
             require(entry is Rule<*>) {
                 "A rule must proceed values for key: $key"

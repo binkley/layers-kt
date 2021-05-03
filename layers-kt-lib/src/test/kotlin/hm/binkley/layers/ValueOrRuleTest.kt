@@ -13,9 +13,9 @@ internal class ValueOrRuleTest {
     @Test
     fun `should have a debuggable presentation`() {
         "${Value(3)}" shouldBe "<Value>: 3"
-        "$TestRule" shouldBe "<Rule>[$bobKey]: Test Fooby"
+        "$TestRule" shouldBe "<Rule>: Test Fooby"
         "${ruleFor<Int>(bobKey) { _, _, _ -> 3 }}" shouldBe
-            "<Rule>[bob]: <Anonymous>"
+            "<Rule>: <Anonymous>"
     }
 
     @Test
@@ -64,5 +64,5 @@ private class DependentRule(key: String) :
 }
 
 private const val aliceKey = "alice"
-private const val bobKey = "bob"
+private const val bobKey = "BOB"
 private const val fredRule = "fred"

@@ -16,7 +16,7 @@ internal class LatestOfRuleTest {
             "BOB",
             "?"
         )
-        }" shouldBe "<Rule>[BOB]: Latest(default=?)"
+        }" shouldBe "<Rule>: Latest(default=?)"
 
     @Test
     fun `should provide a default`() {

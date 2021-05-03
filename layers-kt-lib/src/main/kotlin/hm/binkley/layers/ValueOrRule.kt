@@ -37,7 +37,7 @@ abstract class Rule<V>(
 ) : ValueOrRule<V>(), (String, List<V>, ValueMap) -> V {
     abstract fun description(): String
 
-    final override fun toString() = "<Rule>[$key]: ${description()}"
+    final override fun toString() = "<Rule>: ${description()}"
 }
 
 /** A convenience class. */

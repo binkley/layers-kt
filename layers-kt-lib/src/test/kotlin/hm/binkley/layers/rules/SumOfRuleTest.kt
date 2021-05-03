@@ -10,7 +10,7 @@ import java.util.Collections.emptyMap
 internal class SumOfRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${SumOfRule("BOB", 0)}" shouldBe "<Rule>[BOB]: Sum[Int]"
+        "${SumOfRule("BOB", 0)}" shouldBe "<Rule>: Sum[Int]"
 
     @Test
     fun `should provide a default`() =

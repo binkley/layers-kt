@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test
 internal class ConstantRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${ConstantRule("BOB", 10)}" shouldBe
-            "<Rule>[BOB]: Constant(constant=10)"
+        "${ConstantRule("BOB", 10)}" shouldBe "<Rule>: Constant(constant=10)"
 
     @Test
     fun `should provide a default`() {

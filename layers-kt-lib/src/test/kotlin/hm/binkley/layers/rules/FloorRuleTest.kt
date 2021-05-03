@@ -11,7 +11,7 @@ internal class FloorRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
         "${FloorRule("BOB", 19)}" shouldBe
-            "<Rule>[BOB]: Floor[Int](min=19)"
+            "<Rule>: Floor[Int](min=19)"
 
     @Test
     fun `should calculate rule with floor defaulted`() =

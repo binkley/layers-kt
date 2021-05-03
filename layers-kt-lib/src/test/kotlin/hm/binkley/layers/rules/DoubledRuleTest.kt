@@ -10,7 +10,7 @@ internal class DoubledRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
         "${DoubledRule("BOB", 2)}" shouldBe
-            "<Rule>[BOB]: Doubled[Int](default=4)"
+            "<Rule>: Doubled[Int](default=4)"
 
     @Test
     fun `should provide a default`() {

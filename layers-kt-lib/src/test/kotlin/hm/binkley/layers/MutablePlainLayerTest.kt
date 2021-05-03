@@ -32,7 +32,7 @@ internal class MutablePlainLayerTest {
     fun `should start layer with data`() {
         val layer = DefaultMutableLayer(
             "BOB",
-            mutableMapOf(bobKey to 4.toValue())
+            mapOf(bobKey to 4.toValue())
         )
 
         layer shouldBe mapOf(bobKey to 4.toValue())

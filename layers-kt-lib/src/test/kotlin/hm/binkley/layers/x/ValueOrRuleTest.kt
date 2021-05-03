@@ -7,7 +7,7 @@ internal class ValueOrRuleTest {
     @Test
     fun `should have a debuggable representation`() {
         Value(3).toString() shouldBe "<Value>: 3"
-        object : Rule<String, Int>("BOB") {
+        object : Rule<String, Int>() {
             override fun invoke(
                 values: List<Int>,
                 history: MutableMapList<String, Int>,

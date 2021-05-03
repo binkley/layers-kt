@@ -31,7 +31,7 @@ internal class MutableMapListTest {
     @Test
     fun `should start with provided history`() {
         val maps =
-            MutableMapList(mutableListOf(mutableMapOf("BOB" to testRule("BOB"))))
+            MutableMapList(mutableListOf(mutableMapOf("BOB" to testRule)))
 
         maps.history.size shouldBe 1
     }
@@ -39,7 +39,7 @@ internal class MutableMapListTest {
     @Test
     fun `should put key-value to current map`() {
         val maps = MutableMapList<String, Any>()
-        maps["BOB"] = testRule("BOB")
+        maps["BOB"] = testRule
 
         maps.size shouldBe 1
     }
@@ -47,10 +47,10 @@ internal class MutableMapListTest {
     @Test
     fun `should clear current`() {
         val maps = MutableMapList<String, Any>()
-        maps["BOB"] = testRule("BOB")
+        maps["BOB"] = testRule
 
         maps.add(0, mutableMapOf())
-        maps["NANCY"] = testRule("NANCY")
+        maps["NANCY"] = testRule
 
         maps.clear()
 
@@ -80,7 +80,7 @@ internal class MutableMapListTest {
         val testKey = "BOB"
 
         val maps = MutableMapList<String, Any>()
-        maps[testKey] = testRule("BOB")
+        maps[testKey] = testRule
 
         maps.add(0, mutableMapOf())
         maps[testKey] = Value(1)
@@ -92,7 +92,7 @@ internal class MutableMapListTest {
     }
 }
 
-fun testRule(key: String) = object : Rule<String, Any>(key) {
+val testRule = object : Rule<String, Any>() {
     override fun invoke(
         values: List<Any>,
         history: MutableMapList<String, Any>,

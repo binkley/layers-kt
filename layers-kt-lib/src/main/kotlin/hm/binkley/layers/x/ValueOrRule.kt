@@ -11,9 +11,8 @@ data class Value<V>(val value: V) : ValueOrRule<V>() {
 }
 
 /** @todo Replace with [hm.binkley.layers.Rule] once typing is sorted out */
-abstract class Rule<K, V>(
-    val key: K,
-) : ValueOrRule<V>(), (List<V>, MutableMapList<K, V>) -> V {
+abstract class Rule<K, V> :
+    ValueOrRule<V>(), (List<V>, MutableMapList<K, V>) -> V {
     abstract fun description(): String
 
     final override fun toString() = "<Rule>: ${description()}"

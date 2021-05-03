@@ -1,10 +1,22 @@
 package hm.binkley.layers.x
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 internal class MutableMapListTest {
+    @Test
+    fun `should be debuggable`() {
+        val maps = MutableMapList<String, Any>()
+
+        maps.toString() shouldBe "0: {}"
+
+        maps.add(mutableMapOf())
+
+        maps.toString() shouldBe "0: {}\n1: {}"
+    }
+
     @Test
     fun `should start empty but usable`() {
         val maps = MutableMapList<String, Any>()
@@ -38,6 +50,23 @@ internal class MutableMapListTest {
 
         maps.size shouldBe 0
         maps.view().size shouldBe 1
+    }
+
+    @Test
+    fun `should handle missing keys`() {
+        val maps = MutableMapList<String, Any>()
+
+        maps.view()["BOB"] shouldBe null
+    }
+
+    @Test
+    fun `should complain when missing a rule`() {
+        val maps = MutableMapList<String, Any>()
+        maps["BOB"] = Value(3)
+
+        shouldThrow<IllegalStateException> {
+            maps.view()["BOB"]
+        }
     }
 
     @Test

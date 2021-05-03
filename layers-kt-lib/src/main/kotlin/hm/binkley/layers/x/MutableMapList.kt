@@ -34,10 +34,9 @@ class MutableMapList<K, V>(
             }
 
             if (null == rule) throw IllegalStateException("No rule found for '$key'")
-            val value =
-                rule(key, values, this) ?: throw IllegalStateException()
+            val value = rule(key, values, this)
 
-            return SimpleEntry<K, V>(key, value)
+            return SimpleEntry(key, value)
         }
 
         val unseenKeys = mutableSetOf<K>()
@@ -66,4 +65,4 @@ class MutableMapList<K, V>(
 interface ValueOrRule<V>
 data class Value<V>(val value: V) : ValueOrRule<V>
 abstract class Rule<K, V> :
-    ValueOrRule<V>, (K, List<V>, MutableMapList<K, V>) -> V?
+    ValueOrRule<V>, (K, List<V>, MutableMapList<K, V>) -> V

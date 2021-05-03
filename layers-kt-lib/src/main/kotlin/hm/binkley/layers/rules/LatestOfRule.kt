@@ -8,7 +8,7 @@ open class LatestOfRule<T>(
     key: String,
     private val default: T,
 ) : Rule<T>(key) {
-    override fun invoke(values: List<T>, allValues: ValueMap) =
+    override fun invoke(key: String, values: List<T>, allValues: ValueMap) =
         values.firstOrNull() ?: default
 
     override fun description() = "Latest(default=${defaultValue()})"

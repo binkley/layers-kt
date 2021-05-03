@@ -7,8 +7,8 @@ class DoubledRule(
     key: String,
     default: Int,
 ) : LatestOfRule<Int>(key, default) {
-    override fun invoke(values: List<Int>, allValues: ValueMap) =
-        2 * super.invoke(values, allValues)
+    override fun invoke(key: String, values: List<Int>, allValues: ValueMap) =
+        2 * super.invoke(key, values, allValues)
 
     override fun description() = "Doubled[Int](default=${defaultValue()})"
 

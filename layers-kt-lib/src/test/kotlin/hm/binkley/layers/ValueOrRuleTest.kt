@@ -14,41 +14,53 @@ internal class ValueOrRuleTest {
     fun `should have a debuggable presentation`() {
         "${Value(3)}" shouldBe "<Value>: 3"
         "$TestRule" shouldBe "<Rule>[$bobKey]: Test Fooby"
-        "${ruleFor<Int>(bobKey) { _, _ -> 3 }}" shouldBe
+        "${ruleFor<Int>(bobKey) { _, _, _ -> 3 }}" shouldBe
             "<Rule>[bob]: <Anonymous>"
     }
 
     @Test
     fun `should have value based on key`() {
-        KeyBasedRule(aliceKey)(listOf(), emptyMap()) shouldBe "good"
-        KeyBasedRule(bobKey)(listOf(), emptyMap()) shouldBe "bad"
+        KeyBasedRule(aliceKey)(aliceKey, listOf(), emptyMap()) shouldBe "good"
+        KeyBasedRule(bobKey)(bobKey, listOf(), emptyMap()) shouldBe "bad"
     }
 
     @Test
     fun `should support rules dependent on another layer value`() {
-        DependentRule(fredRule)(listOf(), mapOf(bobKey to 13)) shouldBe 6
+        DependentRule(fredRule)(
+            fredRule,
+            listOf(),
+            mapOf(bobKey to 13)
+        ) shouldBe 6
     }
 }
 
 private object TestRule : NamedRule<String>("Test Fooby", bobKey) {
-    override fun invoke(values: List<String>, allValues: ValueMap) =
-        "Fooby"
+    override fun invoke(
+        key: String,
+        values: List<String>,
+        allValues: ValueMap,
+    ) = "Fooby"
 }
 
 private class KeyBasedRule(key: String) :
     NamedRule<String>("Test key-based", key) {
-    override fun invoke(values: List<String>, allValues: ValueMap) =
-        when (key) {
-            aliceKey -> "good"
-            else -> "bad"
-        }
+    override fun invoke(
+        key: String,
+        values: List<String>,
+        allValues: ValueMap,
+    ) = when (key) {
+        aliceKey -> "good"
+        else -> "bad"
+    }
 }
 
 private class DependentRule(key: String) :
     NamedRule<Int>("Depends on Bob's value", key) {
-    override fun invoke(values: List<Int>, allValues: ValueMap): Int {
-        return (allValues[bobKey] as Int) / 2
-    }
+    override fun invoke(
+        key: String,
+        values: List<Int>,
+        allValues: ValueMap,
+    ) = (allValues[bobKey] as Int) / 2
 }
 
 private const val aliceKey = "alice"

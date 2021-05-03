@@ -114,7 +114,7 @@ class Layers(
 
         requireNotNull(rule) { "No rule for key: $key" }
 
-        return rule(values, this)
+        return rule(key, values, this)
     }
 
     private fun validate() {

@@ -10,21 +10,29 @@ import java.util.Collections.emptyMap
 internal class SumOfRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${SumOfRule("bob", 0)}" shouldBe "<Rule>[bob]: Sum[Int]"
+        "${SumOfRule("BOB", 0)}" shouldBe "<Rule>[BOB]: Sum[Int]"
 
     @Test
     fun `should provide a default`() =
-        sumOfRule("bob", 13)(listOf(), emptyMap()) shouldBe 13
+        sumOfRule("BOB", 13)(
+            "BOB",
+            listOf(),
+            emptyMap(),
+        ) shouldBe 13
 
     @Test
     fun `should calculate rule`() =
-        sumOfRule("bob", 0)(listOf(1, 2, 3), emptyMap()) shouldBe 6
+        sumOfRule("BOB", 0)(
+            "BOB",
+            listOf(1, 2, 3),
+            emptyMap(),
+        ) shouldBe 6
 
     @Test
     fun `should be usable for initializing layers`() {
-        val (key, rule) = initSumOfRule("bob", 10)
+        val (key, rule) = initSumOfRule("BOB", 10)
 
-        key shouldBe "bob"
+        key shouldBe "BOB"
         rule.defaultValue() shouldBe 10
     }
 }

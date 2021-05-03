@@ -10,26 +10,38 @@ import java.util.Collections.emptyMap
 internal class FloorRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${FloorRule("bob", 19)}" shouldBe
-            "<Rule>[bob]: Floor[Int](min=19)"
+        "${FloorRule("BOB", 19)}" shouldBe
+            "<Rule>[BOB]: Floor[Int](min=19)"
 
     @Test
     fun `should calculate rule with floor defaulted`() =
-        floorRule("bob", 19)(listOf(), emptyMap()) shouldBe 19
+        floorRule("BOB", 19)(
+            "BOB",
+            listOf(),
+            emptyMap(),
+        ) shouldBe 19
 
     @Test
     fun `should calculate rule with floor used`() =
-        floorRule("bob", 19)(listOf(1, 2, 3), emptyMap()) shouldBe 19
+        floorRule("BOB", 19)(
+            "BOB",
+            listOf(1, 2, 3),
+            emptyMap(),
+        ) shouldBe 19
 
     @Test
     fun `should calculate rule with floor not used`() =
-        floorRule("bob", 19)(listOf(11, 21, 31), emptyMap()) shouldBe 31
+        floorRule("BOB", 19)(
+            "BOB",
+            listOf(11, 21, 31),
+            emptyMap(),
+        ) shouldBe 31
 
     @Test
     fun `should be usable for initializing layers`() {
-        val (key, rule) = initFloorRule("bob", 10)
+        val (key, rule) = initFloorRule("BOB", 10)
 
-        key shouldBe "bob"
+        key shouldBe "BOB"
         rule.defaultValue() shouldBe 10
     }
 }

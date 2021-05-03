@@ -9,7 +9,7 @@ class FloorRule(
     key: String,
     private val min: Int,
 ) : NamedRule<Int>("Floor[Int](min=$min)", key) {
-    override fun invoke(values: List<Int>, allValues: ValueMap) =
+    override fun invoke(key: String, values: List<Int>, allValues: ValueMap) =
         max(values.maxOrNull() ?: MIN_VALUE, min)
 
     companion object {

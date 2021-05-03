@@ -7,7 +7,8 @@ class ConstantRule<T>(
     key: String,
     private val value: T,
 ) : NamedRule<T>("Constant(constant=$value)", key) {
-    override fun invoke(values: List<T>, allValues: ValueMap) = value
+    override fun invoke(key: String, values: List<T>, allValues: ValueMap) =
+        value
 
     companion object {
         fun <T> constantRule(key: String, constant: T) =

@@ -13,7 +13,7 @@ package hm.binkley.layers
  * @see Rule which computes "value" from arguments, and makes use of "key"
  * @see Value which has a fixed value for "value", and ignores "key
  */
-sealed class ValueOrRule<T> {
+sealed class ValueOrRule<V> {
     abstract override fun toString(): String
 }
 
@@ -21,9 +21,9 @@ sealed class ValueOrRule<T> {
  * A direct value in an individual layer entry without regard to the key
  * used to lookup this value.
  */
-data class Value<T>(
-    val value: T,
-) : ValueOrRule<T>() {
+data class Value<V>(
+    val value: V,
+) : ValueOrRule<V>() {
     override fun toString() = "<Value>: $value"
 }
 
@@ -32,16 +32,20 @@ data class Value<T>(
  * individual layer. The computation may consider the "key" for the value
  * requested.
  */
-abstract class Rule<T>(
-    protected val key: String,
-) : ValueOrRule<T>() {
+abstract class Rule<V>(
+    val key: String,
+) : ValueOrRule<V>() {
     /**
      * Computes a value for [key] based on a "vertical" view of all [values]
      * from each layer for the key in order from latest to oldest, and a
      * "horizontal" view of [allValues] as currently computed for all other
      * keys.
      */
-    abstract operator fun invoke(values: List<T>, allValues: ValueMap): T
+    abstract operator fun invoke(
+        key: String,
+        values: List<V>,
+        allValues: ValueMap,
+    ): V
 
     abstract fun description(): String
 
@@ -49,21 +53,21 @@ abstract class Rule<T>(
 }
 
 /** A convenience class. */
-abstract class NamedRule<T>(
+abstract class NamedRule<V>(
     private val name: String,
     key: String,
-) : Rule<T>(key) {
+) : Rule<V>(key) {
     final override fun description(): String = name
 }
 
 /** @todo This only works for certain types of rule, and is generally bogus */
-fun <T> Rule<T>.defaultValue() = this(emptyList(), emptyMap())
-fun <T> T.toValue(): ValueOrRule<T> = Value(this)
+fun <V> Rule<V>.defaultValue() = this(key, emptyList(), emptyMap())
+fun <V> V.toValue(): ValueOrRule<V> = Value(this)
 
-fun <T> ruleFor(
+fun <V> ruleFor(
     key: String,
-    block: (List<T>, ValueMap) -> T,
-) = object : NamedRule<T>("<Anonymous>", key) {
-    override fun invoke(values: List<T>, allValues: ValueMap) =
-        block(values, allValues)
+    block: (key: String, List<V>, ValueMap) -> V,
+) = object : NamedRule<V>("<Anonymous>", key) {
+    override fun invoke(key: String, values: List<V>, allValues: ValueMap) =
+        block(key, values, allValues)
 }

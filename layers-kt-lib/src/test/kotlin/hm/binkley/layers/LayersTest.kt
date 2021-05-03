@@ -186,7 +186,7 @@ internal class LayersTest {
     @Test
     fun `should read latest computed values`() {
         val layers = Layers.new {
-            this[bobKey] = ruleFor<Int>(bobKey) { values, _ ->
+            this[bobKey] = ruleFor<Int>(bobKey) { _, values, _ ->
                 values.last() * 1
             }
             this[maryKey] = maryRule
@@ -328,14 +328,17 @@ private const val maryKey = "mary"
 private const val fredKey = "fred"
 
 private val bobRule = object : NamedRule<Int>("<Anonymous>", bobKey) {
-    override fun invoke(values: List<Int>, allValues: ValueMap) =
+    override fun invoke(key: String, values: List<Int>, allValues: ValueMap) =
         2 * (if (values.isEmpty()) 0 else values.first())
 }
 
 private val maryRule =
     object : NamedRule<String>("Impossible Rule", maryKey) {
-        override fun invoke(values: List<String>, allValues: ValueMap) =
-            throw NullPointerException()
+        override fun invoke(
+            key: String,
+            values: List<String>,
+            allValues: ValueMap,
+        ) = throw NullPointerException()
     }
 
 private val fredRule = latestOfRule(fredKey, "MISSING")

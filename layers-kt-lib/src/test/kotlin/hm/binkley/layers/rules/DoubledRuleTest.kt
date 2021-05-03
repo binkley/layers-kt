@@ -9,23 +9,31 @@ import org.junit.jupiter.api.Test
 internal class DoubledRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${DoubledRule("bob", 2)}" shouldBe
-            "<Rule>[bob]: Doubled[Int](default=4)"
+        "${DoubledRule("BOB", 2)}" shouldBe
+            "<Rule>[BOB]: Doubled[Int](default=4)"
 
     @Test
     fun `should provide a default`() {
-        doubledRule("bob", 13)(emptyList(), emptyMap()) shouldBe 26
+        doubledRule("BOB", 13)(
+            "BOB",
+            emptyList(),
+            emptyMap(),
+        ) shouldBe 26
     }
 
     @Test
     fun `should calculate rule`() =
-        doubledRule("bob", 0)(listOf(1, 2, 3), emptyMap()) shouldBe 2
+        doubledRule("BOB", 0)(
+            "BOB",
+            listOf(1, 2, 3),
+            emptyMap(),
+        ) shouldBe 2
 
     @Test
     fun `should be usable for initializing layers`() {
-        val (key, rule) = initDoubledRule("bob", 10)
+        val (key, rule) = initDoubledRule("BOB", 10)
 
-        key shouldBe "bob"
+        key shouldBe "BOB"
         rule.defaultValue() shouldBe 20
     }
 }

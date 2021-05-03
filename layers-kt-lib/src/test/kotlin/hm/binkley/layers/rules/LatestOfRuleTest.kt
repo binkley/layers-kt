@@ -13,27 +13,33 @@ internal class LatestOfRuleTest {
     fun `should have a debuggable presentation`() =
         "${
         LatestOfRule(
-            "bob",
+            "BOB",
             "?"
         )
-        }" shouldBe "<Rule>[bob]: Latest(default=?)"
+        }" shouldBe "<Rule>[BOB]: Latest(default=?)"
 
     @Test
     fun `should provide a default`() {
-        latestOfRule("bob", "MISSING")(
-            emptyList(), emptyMap()
+        latestOfRule("BOB", "MISSING")(
+            "BOB",
+            emptyList(),
+            emptyMap(),
         ) shouldBe "MISSING"
     }
 
     @Test
     fun `should calculate rule`() =
-        latestOfRule("bob", 0)(listOf(1, 2, 3), emptyMap()) shouldBe 1
+        latestOfRule("BOB", 0)(
+            "BOB",
+            listOf(1, 2, 3),
+            emptyMap(),
+        ) shouldBe 1
 
     @Test
     fun `should be usable for initializing layers`() {
-        val (key, rule) = initLatestOfRule("bob", "apple")
+        val (key, rule) = initLatestOfRule("BOB", "apple")
 
-        key shouldBe "bob"
+        key shouldBe "BOB"
         rule.defaultValue() shouldBe "apple"
     }
 }

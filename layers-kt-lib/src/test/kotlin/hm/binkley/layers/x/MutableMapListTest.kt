@@ -9,12 +9,10 @@ internal class MutableMapListTest {
     @Test
     fun `should have a debuggable presentation`() {
         val maps = MutableMapList<String, Any>()
-
         maps.toString() shouldBe "0: {}"
 
-        maps.add(mutableMapOf())
-
-        maps.toString() shouldBe "0: {}\n1: {}"
+        maps.add(0, mutableMapOf("BOB" to Value(1)))
+        maps.toString() shouldBe "0: {}\n1: {BOB=<Value>: 1}"
     }
 
     @Test
@@ -51,7 +49,7 @@ internal class MutableMapListTest {
         val maps = MutableMapList<String, Any>()
         maps["BOB"] = testRule("BOB")
 
-        maps.add(mutableMapOf())
+        maps.add(0, mutableMapOf())
         maps["NANCY"] = testRule("NANCY")
 
         maps.clear()
@@ -84,10 +82,10 @@ internal class MutableMapListTest {
         val maps = MutableMapList<String, Any>()
         maps[testKey] = testRule("BOB")
 
-        maps.add(mutableMapOf())
+        maps.add(0, mutableMapOf())
         maps[testKey] = Value(1)
 
-        maps.add(mutableMapOf())
+        maps.add(0, mutableMapOf())
         maps[testKey] = Value(2)
 
         maps.view()[testKey] shouldBe 3

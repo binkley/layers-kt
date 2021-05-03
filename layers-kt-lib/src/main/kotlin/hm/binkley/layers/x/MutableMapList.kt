@@ -10,10 +10,10 @@ open class MutableMapList<K, V>(
     MutableList<MutableMap<K, ValueOrRule<V>>> by history {
     init {
         // TODO: Always start with 1 map?
-        if (history.isEmpty()) history.add(mutableMapOf())
+        if (history.isEmpty()) history.add(0, mutableMapOf())
     }
 
-    private val current: MutableMap<K, ValueOrRule<V>> get() = history.last()
+    private val current: MutableMap<K, ValueOrRule<V>> get() = history[0]
 
     fun view() = object : AbstractMap<K, V>() {
         override val entries: Set<Entry<K, V>>
@@ -26,7 +26,7 @@ open class MutableMapList<K, V>(
             var rule: Rule<K, V>? = null
             val values: MutableList<V> = mutableListOf()
 
-            for (map in history.reversed()) {
+            for (map in history) {
                 when (val curr: ValueOrRule<V>? = map[key]) {
                     null -> continue
                     is Value<*> -> values += (curr as Value<V>).value
@@ -59,7 +59,7 @@ open class MutableMapList<K, V>(
     override fun clear() = current.clear()
 
     @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
-    override fun toString() = history.mapIndexed { i, it ->
+    override fun toString() = history.reversed().mapIndexed { i, it ->
         "$i: $it"
     }.joinToString("\n")
 }

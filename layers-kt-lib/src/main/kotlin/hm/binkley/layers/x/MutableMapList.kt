@@ -4,13 +4,13 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import kotlin.collections.Map.Entry
 import kotlin.collections.MutableMap.MutableEntry
 
-class MutableMapList<K, V>(
+open class MutableMapList<K, V>(
     val history: MutableList<MutableMap<K, ValueOrRule<V>>> = mutableListOf(),
 ) : AbstractMutableMap<K, ValueOrRule<V>>(),
     MutableList<MutableMap<K, ValueOrRule<V>>> by history {
     init {
         // TODO: Always start with 1 map?
-        if (history.isEmpty()) add(mutableMapOf())
+        if (history.isEmpty()) history.add(mutableMapOf())
     }
 
     private val current: MutableMap<K, ValueOrRule<V>> get() = history.last()

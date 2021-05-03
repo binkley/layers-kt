@@ -64,7 +64,12 @@ class MutableMapList<K, V>(
     }.joinToString("\n")
 }
 
+/** @todo Replace with [hm.binkley.layers.ValueOrRule] once typing is sorted out */
 interface ValueOrRule<V>
+
+/** @todo Replace with [hm.binkley.layers.Value] once typing is sorted out */
 data class Value<V>(val value: V) : ValueOrRule<V>
+
+/** @todo Replace with [hm.binkley.layers.Rule] once typing is sorted out */
 abstract class Rule<K, V> :
     ValueOrRule<V>, (List<V>, MutableMapList<K, V>) -> V

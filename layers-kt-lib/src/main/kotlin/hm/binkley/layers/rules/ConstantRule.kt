@@ -11,8 +11,5 @@ class ConstantRule<T>(
 
     companion object {
         fun <T> constantRule(constant: T) = ConstantRule(constant)
-
-        fun <T> initConstantRule(key: String, constant: T) =
-            key to constantRule(constant)
     }
 }

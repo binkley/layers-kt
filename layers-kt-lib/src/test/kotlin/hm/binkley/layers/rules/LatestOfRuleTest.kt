@@ -1,7 +1,5 @@
 package hm.binkley.layers.rules
 
-import hm.binkley.layers.defaultValue
-import hm.binkley.layers.rules.LatestOfRule.Companion.initLatestOfRule
 import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -34,12 +32,4 @@ internal class LatestOfRuleTest {
             listOf(1, 2, 3),
             emptyMap(),
         ) shouldBe 1
-
-    @Test
-    fun `should be usable for initializing layers`() {
-        val (key, rule) = initLatestOfRule("BOB", "apple")
-
-        key shouldBe "BOB"
-        rule.defaultValue("BOB") shouldBe "apple"
-    }
 }

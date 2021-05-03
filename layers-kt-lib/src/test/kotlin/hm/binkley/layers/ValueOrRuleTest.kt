@@ -14,7 +14,7 @@ internal class ValueOrRuleTest {
         "${Value(3)}" shouldBe "<Value>: 3"
         "$TestRule" shouldBe "<Rule>: Test Fooby"
         "${ruleFor<Int> { _, _, _ -> 3 }}" shouldBe
-                "<Rule>: <Anonymous>"
+            "<Rule>: <Anonymous>"
     }
 
     @Test

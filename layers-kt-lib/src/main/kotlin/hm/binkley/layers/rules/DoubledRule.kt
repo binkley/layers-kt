@@ -15,8 +15,5 @@ class DoubledRule(
     companion object {
         fun doubledRule(key: String, default: Int) =
             DoubledRule(key, default)
-
-        fun initDoubledRule(key: String, default: Int) =
-            key to doubledRule(key, default)
     }
 }

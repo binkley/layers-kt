@@ -1,8 +1,6 @@
 package hm.binkley.layers.rules
 
-import hm.binkley.layers.defaultValue
 import hm.binkley.layers.rules.DoubledRule.Companion.doubledRule
-import hm.binkley.layers.rules.DoubledRule.Companion.initDoubledRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -28,12 +26,4 @@ internal class DoubledRuleTest {
             listOf(1, 2, 3),
             emptyMap(),
         ) shouldBe 2
-
-    @Test
-    fun `should be usable for initializing layers`() {
-        val (key, rule) = initDoubledRule("BOB", 10)
-
-        key shouldBe "BOB"
-        rule.defaultValue("BOB") shouldBe 20
-    }
 }

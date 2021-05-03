@@ -1,8 +1,6 @@
 package hm.binkley.layers.rules
 
-import hm.binkley.layers.defaultValue
 import hm.binkley.layers.rules.FloorRule.Companion.floorRule
-import hm.binkley.layers.rules.FloorRule.Companion.initFloorRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import java.util.Collections.emptyMap
@@ -36,12 +34,4 @@ internal class FloorRuleTest {
             listOf(11, 21, 31),
             emptyMap(),
         ) shouldBe 31
-
-    @Test
-    fun `should be usable for initializing layers`() {
-        val (key, rule) = initFloorRule("BOB", 10)
-
-        key shouldBe "BOB"
-        rule.defaultValue("BOB") shouldBe 10
-    }
 }

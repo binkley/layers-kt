@@ -1,7 +1,5 @@
 package hm.binkley.layers.rules
 
-import hm.binkley.layers.defaultValue
-import hm.binkley.layers.rules.SumOfRule.Companion.initSumOfRule
 import hm.binkley.layers.rules.SumOfRule.Companion.sumOfRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -27,12 +25,4 @@ internal class SumOfRuleTest {
             listOf(1, 2, 3),
             emptyMap(),
         ) shouldBe 6
-
-    @Test
-    fun `should be usable for initializing layers`() {
-        val (key, rule) = initSumOfRule("BOB", 10)
-
-        key shouldBe "BOB"
-        rule.defaultValue("BOB") shouldBe 10
-    }
 }

@@ -1,4 +1,4 @@
-package hm.binkley.layers.x
+package hm.binkley.layers.util
 
 /** @todo Replace with [hm.binkley.layers.ValueOrRule] once typing is sorted out */
 sealed class ValueOrRule<V> {

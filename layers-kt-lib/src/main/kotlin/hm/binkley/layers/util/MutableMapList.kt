@@ -1,4 +1,4 @@
-package hm.binkley.layers.x
+package hm.binkley.layers.util
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import kotlin.collections.Map.Entry
@@ -18,7 +18,7 @@ open class MutableMapList<K, V>(
 
     private val current: Layer<K, V> get() = history.last()
 
-    fun view() = object : AbstractMap<K, V>() {
+    fun toComputedMap() = object : AbstractMap<K, V>() {
         override val entries: Set<Entry<K, V>>
             get() = computeEntries()
     }

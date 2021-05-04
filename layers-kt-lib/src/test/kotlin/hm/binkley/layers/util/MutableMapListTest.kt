@@ -1,4 +1,4 @@
-package hm.binkley.layers.x
+package hm.binkley.layers.util
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -56,14 +56,14 @@ internal class MutableMapListTest {
         maps.clear()
 
         maps.size shouldBe 0
-        maps.view().size shouldBe 1
+        maps.toComputedMap().size shouldBe 1
     }
 
     @Test
     fun `should handle missing keys`() {
         val maps = TestLayers()
 
-        maps.view()["BOB"] shouldBe null
+        maps.toComputedMap()["BOB"] shouldBe null
     }
 
     @Test
@@ -72,7 +72,7 @@ internal class MutableMapListTest {
         maps["BOB"] = Value(3)
 
         shouldThrow<IllegalStateException> {
-            maps.view()["BOB"]
+            maps.toComputedMap()["BOB"]
         }
     }
 
@@ -89,7 +89,7 @@ internal class MutableMapListTest {
         maps.add(mutableMapOf())
         maps[testKey] = Value(2)
 
-        maps.view()[testKey] shouldBe 3
+        maps.toComputedMap()[testKey] shouldBe 3
     }
 }
 

@@ -1,6 +1,7 @@
 package hm.binkley.layers.util
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
+import java.util.AbstractMap.SimpleEntry
 import kotlin.collections.Map.Entry
 import kotlin.collections.MutableMap.MutableEntry
 
@@ -18,12 +19,23 @@ open class MutableMapList<K, V>(
 
     private val current: Layer<K, V> get() = history.last()
 
-    fun toComputedMap() = object : AbstractMap<K, V>() {
-        override val entries: Set<Entry<K, V>>
-            get() = computeEntries()
-    }
+    override val size: Int get() = current.size
+    override fun isEmpty(): Boolean = current.isEmpty()
+    override val entries: MutableSet<LayerEntry<K, V>> = current.entries
 
-    private fun computeEntries(): Set<Entry<K, V>> {
+    override fun put(key: K, value: ValueOrRule<V>): ValueOrRule<V>? =
+        current.put(key, value)
+
+    override fun clear() = current.clear()
+
+    @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
+    override fun toString() = history.mapIndexed { i, it ->
+        "$i: $it"
+    }.joinToString("\n")
+}
+
+fun <K, V> MutableMapList<K, V>.toComputedMap(): Map<K, V> {
+    fun computeEntries(): Set<Entry<K, V>> {
         @Suppress("UNCHECKED_CAST")
         fun computeEntry(key: K): Entry<K, V> {
             var rule: Rule<K, V>? = null
@@ -51,17 +63,8 @@ open class MutableMapList<K, V>(
         return entries
     }
 
-    override val size: Int get() = current.size
-    override fun isEmpty(): Boolean = current.isEmpty()
-    override val entries: MutableSet<LayerEntry<K, V>> = current.entries
-
-    override fun put(key: K, value: ValueOrRule<V>): ValueOrRule<V>? =
-        current.put(key, value)
-
-    override fun clear() = current.clear()
-
-    @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
-    override fun toString() = history.mapIndexed { i, it ->
-        "$i: $it"
-    }.joinToString("\n")
+    return object : AbstractMap<K, V>() {
+        override val entries: Set<Entry<K, V>>
+            get() = computeEntries()
+    }
 }

@@ -50,7 +50,7 @@ fun <K, V> MutableMapList<K, V>.toComputedMap(): Map<K, V> {
             }
 
             if (null == rule) throw IllegalStateException("No rule found for '$key'")
-            val value = rule(values, this)
+            val value = rule(key, values, this)
 
             return SimpleEntry(key, value)
         }

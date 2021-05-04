@@ -9,6 +9,7 @@ internal class ValueOrRuleTest {
         Value(3).toString() shouldBe "<Value>: 3"
         object : Rule<String, Int>() {
             override fun invoke(
+                key: String,
                 values: List<Int>,
                 history: MutableMapList<String, Int>,
             ): Int = values.sum()

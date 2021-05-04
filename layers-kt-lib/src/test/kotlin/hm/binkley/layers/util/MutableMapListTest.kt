@@ -95,6 +95,7 @@ internal class MutableMapListTest {
 
 val testRule = object : Rule<String, Any>() {
     override fun invoke(
+        key: String,
         values: List<Any>,
         history: TestLayers,
     ): Int = values.sumOf { it as Int }

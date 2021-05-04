@@ -13,7 +13,7 @@ internal class MutableMapListTest {
         val maps = TestLayers()
         maps.toString() shouldBe "0: {}"
 
-        maps.add(0, mutableMapOf("BOB" to Value(1)))
+        maps.add(mutableMapOf("BOB" to Value(1)))
         maps.toString() shouldBe "0: {}\n1: {BOB=<Value>: 1}"
     }
 
@@ -50,7 +50,7 @@ internal class MutableMapListTest {
         val maps = TestLayers()
         maps["BOB"] = testRule
 
-        maps.add(0, mutableMapOf())
+        maps.add(mutableMapOf())
         maps["NANCY"] = testRule
 
         maps.clear()
@@ -83,10 +83,10 @@ internal class MutableMapListTest {
         val maps = TestLayers()
         maps[testKey] = testRule
 
-        maps.add(0, mutableMapOf())
+        maps.add(mutableMapOf())
         maps[testKey] = Value(1)
 
-        maps.add(0, mutableMapOf())
+        maps.add(mutableMapOf())
         maps[testKey] = Value(2)
 
         maps.view()[testKey] shouldBe 3

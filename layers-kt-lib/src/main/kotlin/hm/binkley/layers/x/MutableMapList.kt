@@ -13,10 +13,10 @@ open class MutableMapList<K, V>(
     MutableList<Layer<K, V>> by history {
     init {
         // TODO: Always start with 1 map?
-        if (history.isEmpty()) history.add(0, mutableMapOf())
+        if (history.isEmpty()) history.add(mutableMapOf())
     }
 
-    private val current: Layer<K, V> get() = history[0]
+    private val current: Layer<K, V> get() = history.last()
 
     fun view() = object : AbstractMap<K, V>() {
         override val entries: Set<Entry<K, V>>
@@ -29,7 +29,7 @@ open class MutableMapList<K, V>(
             var rule: Rule<K, V>? = null
             val values: MutableList<V> = mutableListOf()
 
-            for (map in history) {
+            for (map in history.reversed()) {
                 when (val curr: ValueOrRule<V>? = map[key]) {
                     null -> continue
                     is Value<*> -> values += (curr as Value<V>).value
@@ -45,7 +45,7 @@ open class MutableMapList<K, V>(
 
         val unseenKeys = mutableSetOf<K>()
         val entries = mutableSetOf<Entry<K, V>>()
-        for (map in history)
+        for (map in history.reversed())
             for (key in map.keys)
                 if (unseenKeys.add(key)) entries.add(computeEntry(key))
         return entries
@@ -61,7 +61,7 @@ open class MutableMapList<K, V>(
     override fun clear() = current.clear()
 
     @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
-    override fun toString() = history.reversed().mapIndexed { i, it ->
+    override fun toString() = history.mapIndexed { i, it ->
         "$i: $it"
     }.joinToString("\n")
 }

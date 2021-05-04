@@ -5,10 +5,12 @@ import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
+private typealias TestLayers = MutableMapList<String, Any>
+
 internal class MutableMapListTest {
     @Test
     fun `should have a debuggable presentation`() {
-        val maps = MutableMapList<String, Any>()
+        val maps = TestLayers()
         maps.toString() shouldBe "0: {}"
 
         maps.add(0, mutableMapOf("BOB" to Value(1)))
@@ -17,7 +19,7 @@ internal class MutableMapListTest {
 
     @Test
     fun `should start empty but usable`() {
-        val maps = MutableMapList<String, Any>()
+        val maps = TestLayers()
 
         maps.size shouldBe 0
         maps.isEmpty().shouldBeTrue()
@@ -30,15 +32,14 @@ internal class MutableMapListTest {
 
     @Test
     fun `should start with provided history`() {
-        val maps =
-            MutableMapList(mutableListOf(mutableMapOf("BOB" to testRule)))
+        val maps = TestLayers(mutableListOf(mutableMapOf("BOB" to testRule)))
 
         maps.history.size shouldBe 1
     }
 
     @Test
     fun `should put key-value to current map`() {
-        val maps = MutableMapList<String, Any>()
+        val maps = TestLayers()
         maps["BOB"] = testRule
 
         maps.size shouldBe 1
@@ -46,7 +47,7 @@ internal class MutableMapListTest {
 
     @Test
     fun `should clear current`() {
-        val maps = MutableMapList<String, Any>()
+        val maps = TestLayers()
         maps["BOB"] = testRule
 
         maps.add(0, mutableMapOf())
@@ -60,14 +61,14 @@ internal class MutableMapListTest {
 
     @Test
     fun `should handle missing keys`() {
-        val maps = MutableMapList<String, Any>()
+        val maps = TestLayers()
 
         maps.view()["BOB"] shouldBe null
     }
 
     @Test
     fun `should complain when missing a rule`() {
-        val maps = MutableMapList<String, Any>()
+        val maps = TestLayers()
         maps["BOB"] = Value(3)
 
         shouldThrow<IllegalStateException> {
@@ -79,7 +80,7 @@ internal class MutableMapListTest {
     fun `should follow a rule`() {
         val testKey = "BOB"
 
-        val maps = MutableMapList<String, Any>()
+        val maps = TestLayers()
         maps[testKey] = testRule
 
         maps.add(0, mutableMapOf())
@@ -95,7 +96,7 @@ internal class MutableMapListTest {
 val testRule = object : Rule<String, Any>() {
     override fun invoke(
         values: List<Any>,
-        history: MutableMapList<String, Any>,
+        history: TestLayers,
     ): Int = values.sumOf { it as Int }
 
     override fun description() = "Sum[Int]"

@@ -4,16 +4,19 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import kotlin.collections.Map.Entry
 import kotlin.collections.MutableMap.MutableEntry
 
+private typealias Layer<K, V> = MutableMap<K, ValueOrRule<V>>
+private typealias LayerEntry<K, V> = MutableEntry<K, ValueOrRule<V>>
+
 open class MutableMapList<K, V>(
-    val history: MutableList<MutableMap<K, ValueOrRule<V>>> = mutableListOf(),
+    val history: MutableList<Layer<K, V>> = mutableListOf(),
 ) : AbstractMutableMap<K, ValueOrRule<V>>(),
-    MutableList<MutableMap<K, ValueOrRule<V>>> by history {
+    MutableList<Layer<K, V>> by history {
     init {
         // TODO: Always start with 1 map?
         if (history.isEmpty()) history.add(0, mutableMapOf())
     }
 
-    private val current: MutableMap<K, ValueOrRule<V>> get() = history[0]
+    private val current: Layer<K, V> get() = history[0]
 
     fun view() = object : AbstractMap<K, V>() {
         override val entries: Set<Entry<K, V>>
@@ -50,8 +53,7 @@ open class MutableMapList<K, V>(
 
     override val size: Int get() = current.size
     override fun isEmpty(): Boolean = current.isEmpty()
-    override val entries: MutableSet<MutableEntry<K, ValueOrRule<V>>> =
-        current.entries
+    override val entries: MutableSet<LayerEntry<K, V>> = current.entries
 
     override fun put(key: K, value: ValueOrRule<V>): ValueOrRule<V>? =
         current.put(key, value)

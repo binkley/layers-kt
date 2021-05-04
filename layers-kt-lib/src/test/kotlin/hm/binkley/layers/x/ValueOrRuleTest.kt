@@ -16,4 +16,9 @@ internal class ValueOrRuleTest {
             override fun description() = "Sum[Int]"
         }.toString() shouldBe "<Rule>: Sum[Int]"
     }
+
+    @Test
+    fun `should retain value`() {
+        Value(3).value shouldBe 3
+    }
 }

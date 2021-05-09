@@ -37,4 +37,21 @@ internal class PlainLayerTest {
 
         layer shouldBe mapOf("bob" to 4.toValue())
     }
+
+    @Test
+    fun `should remember who self is`() {
+        val layer = TestSubLayer()
+        layer.example().subExample()
+        // Compiling is passing test
+    }
+}
+
+private open class TestLayer<L : TestLayer<L>>(
+    name: String = "Test",
+) : PlainLayer<L>(name) {
+    fun example(): L = self
+}
+
+private class TestSubLayer : TestLayer<TestSubLayer>("SubTest") {
+    fun subExample() = this
 }

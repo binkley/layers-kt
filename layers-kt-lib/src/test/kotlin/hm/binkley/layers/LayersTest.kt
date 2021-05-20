@@ -281,7 +281,7 @@ internal class LayersTest {
             this[bobKey] = 1.toValue()
         }
         layers.commitAndNext("NEW BOB RULE") {
-            this[bobKey] = sumOfRule(0)
+            this[bobKey] = sumOfRule()
         }
         layers.commitAndNext("BOB") {
             this[bobKey] = 2.toValue()

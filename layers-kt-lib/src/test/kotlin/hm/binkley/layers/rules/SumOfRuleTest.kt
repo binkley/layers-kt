@@ -8,19 +8,19 @@ import java.util.Collections.emptyMap
 internal class SumOfRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
-        "${SumOfRule(0)}" shouldBe "<Rule>: Sum[Int]"
+        "${sumOfRule()}" shouldBe "<Rule>: Sum[Int]"
 
     @Test
     fun `should provide a default`() =
-        sumOfRule(13)(
+        sumOfRule()(
             "BOB",
             listOf(),
             emptyMap(),
-        ) shouldBe 13
+        ) shouldBe 0
 
     @Test
     fun `should calculate rule`() =
-        sumOfRule(0)(
+        sumOfRule()(
             "BOB",
             listOf(1, 2, 3),
             emptyMap(),

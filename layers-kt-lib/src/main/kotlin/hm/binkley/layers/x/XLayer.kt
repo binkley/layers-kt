@@ -104,8 +104,7 @@ open class DefaultMutableLayer(
     name: String,
 ) : DefaultLayer<DefaultMutableLayer>(name),
     XMutableLayer<String, Any, DefaultMutableLayer> {
-    override fun edit(block: MutableMap<String, XValueOrRule<Any>>.() -> Unit)
-            : DefaultMutableLayer {
+    override fun edit(block: MutableMap<String, XValueOrRule<Any>>.() -> Unit): DefaultMutableLayer {
         block(map)
         return self
     }

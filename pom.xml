@@ -200,7 +200,6 @@
                     <apiVersion>1.5</apiVersion>
                     <args>
                         <arg>-Werror</arg>
-                        <arg>-Xjvm-enable-preview</arg>
                     </args>
                     <jvmTarget>${jdk.version}</jvmTarget>
                     <languageVersion>1.5</languageVersion>
@@ -443,9 +442,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <argLine>--enable-preview</argLine>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

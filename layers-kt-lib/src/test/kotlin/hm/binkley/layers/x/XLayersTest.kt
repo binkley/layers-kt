@@ -1,19 +1,22 @@
 package hm.binkley.layers.x
 
+import hm.binkley.layers.x.DefaultMutableLayer.Companion.defaultMutableLayer
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+
+private val simpleMutableLayer = defaultMutableLayer<String, Any>()
 
 internal class XLayersTest {
     @Test
     fun `should start fresh`() {
-        val layers = XLayers(defaultLayer = ::DefaultMutableLayer)
+        val layers = XLayers(defaultLayer = simpleMutableLayer)
 
         layers shouldBe emptyMap()
     }
 
     @Test
     fun `should commit and continue`() {
-        val layers = XLayers(defaultLayer = ::DefaultMutableLayer)
+        val layers = XLayers(defaultLayer = simpleMutableLayer)
         layers.commitAndNext("BOB")
 
         layers shouldBe emptyMap()
@@ -24,7 +27,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
         val layers = XLayers(
             firstLayerName = "AND #1",
-            defaultLayer = ::DefaultMutableLayer
+            defaultLayer = simpleMutableLayer
         )
         layers.edit {
             this[testKey] = XLatestOfRule(0)
@@ -48,7 +51,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
         val layers = XLayers(
             firstLayerName = "AND #1",
-            defaultLayer = ::DefaultMutableLayer
+            defaultLayer = simpleMutableLayer
         )
         layers.edit {
             this[testKey] = XSumOfRule()

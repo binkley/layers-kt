@@ -93,20 +93,27 @@ open class XLayers<K, V, M : XMutableLayer<K, V, M>>(
         _layers.mapNotNull { it[key] }
 }
 
-open class DefaultLayer<L : DefaultLayer<L>>(
+open class DefaultLayer<K, V, L : DefaultLayer<K, V, L>>(
     override val name: String,
-    protected val map: MutableMap<String, XValueOrRule<Any>> = mutableMapOf(),
-) : XLayer<String, Any>,
-    Map<String, XValueOrRule<Any>> by map {
+    protected val map: MutableMap<K, XValueOrRule<V>> = mutableMapOf(),
+) : XLayer<K, V>,
+    Map<K, XValueOrRule<V>> by map {
     override fun toString(): String = "$name: $map"
 }
 
-open class DefaultMutableLayer(
+open class DefaultMutableLayer<K, V, M : DefaultMutableLayer<K, V, M>>(
     name: String,
-) : DefaultLayer<DefaultMutableLayer>(name),
-    XMutableLayer<String, Any, DefaultMutableLayer> {
-    override fun edit(block: XEditBlock<String, Any>): DefaultMutableLayer {
+) : DefaultLayer<K, V, M>(name),
+    XMutableLayer<K, V, M> {
+    override fun edit(block: XEditBlock<K, V>): M {
         block(map)
         return self
+    }
+
+    companion object {
+        fun <K, V> defaultMutableLayer(): (String) -> DefaultMutableLayer<K, V, *> =
+            { name: String ->
+                DefaultMutableLayer<K, V, DefaultMutableLayer<K, V, *>>(name)
+            }
     }
 }

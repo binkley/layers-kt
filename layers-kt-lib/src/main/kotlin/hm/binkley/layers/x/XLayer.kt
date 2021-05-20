@@ -4,6 +4,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import java.util.AbstractMap.SimpleEntry
 import kotlin.collections.Map.Entry
 
+typealias XEditBlock<K, V> = MutableMap<K, XValueOrRule<V>>.() -> Unit
+
 sealed interface XValueOrRule<V>
 
 data class XValue<V>(val value: V) : XValueOrRule<V> {
@@ -27,7 +29,7 @@ interface XMutableLayer<K, V, M : XMutableLayer<K, V, M>> :
     val self: M
         get() = this as M
 
-    fun edit(block: MutableMap<K, XValueOrRule<V>>.() -> Unit): M
+    fun edit(block: XEditBlock<K, V>): M
 }
 
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
@@ -40,8 +42,7 @@ open class XLayers<K, V, M : XMutableLayer<K, V, M>>(
 
     val layers: List<XLayer<K, V>> get() = _layers
 
-    fun edit(block: MutableMap<K, XValueOrRule<V>>.() -> Unit): M =
-        _layers.first().edit(block)
+    fun edit(block: XEditBlock<K, V>): M = _layers.first().edit(block)
 
     fun commitAndNext(name: String): M = commitAndNext(name, defaultLayer)
 
@@ -104,7 +105,7 @@ open class DefaultMutableLayer(
     name: String,
 ) : DefaultLayer<DefaultMutableLayer>(name),
     XMutableLayer<String, Any, DefaultMutableLayer> {
-    override fun edit(block: MutableMap<String, XValueOrRule<Any>>.() -> Unit): DefaultMutableLayer {
+    override fun edit(block: XEditBlock<String, Any>): DefaultMutableLayer {
         block(map)
         return self
     }

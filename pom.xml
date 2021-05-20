@@ -47,7 +47,7 @@
         <detekt-maven-plugin.version>1.16.0</detekt-maven-plugin.version>
         <dokka.version>1.4.32</dokka.version>
         <findsecbugs-plugin.version>1.11.0</findsecbugs-plugin.version>
-        <jacoco-maven-plugin.version>0.8.7-SNAPSHOT</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <java.charset>UTF-8</java.charset>
         <jdk.version>11</jdk.version>
         <junit.version>5.8.0-M1</junit.version>
@@ -196,6 +196,15 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <version>${kotlin.version}</version>
+                <configuration>
+                    <apiVersion>1.5</apiVersion>
+                    <args>
+                        <arg>-Werror</arg>
+                        <arg>-Xjvm-enable-preview</arg>
+                    </args>
+                    <jvmTarget>${jdk.version}</jvmTarget>
+                    <languageVersion>1.5</languageVersion>
+                </configuration>
                 <executions>
                     <execution>
                         <id>compile</id>
@@ -210,11 +219,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <args>
-                        -Werror
-                    </args>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -425,17 +429,23 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>${maven-project-info-reports-plugin.version}
                     </version>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>${maven-site-plugin.version}</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <argLine>--enable-preview</argLine>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -462,17 +472,4 @@
             </plugin>
         </plugins>
     </reporting>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>Sonatype SNAPSHOT</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 </project>

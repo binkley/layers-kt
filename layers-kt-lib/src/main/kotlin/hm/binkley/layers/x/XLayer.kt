@@ -6,24 +6,12 @@ import kotlin.collections.Map.Entry
 
 typealias XEditBlock<K, V> = MutableMap<K, XValueOrRule<V>>.() -> Unit
 
-sealed interface XValueOrRule<V>
-
-data class XValue<V>(val value: V) : XValueOrRule<V> {
-    override fun toString() = "<Value>: $value"
-}
-
-abstract class XRule<V, T : V>(
-    val name: String,
-) : XValueOrRule<V>, (List<T>, XLayers<*, V, *>) -> V {
-    final override fun toString() = "<Rule>: $name"
-}
-
-interface XLayer<K, V> : Map<K, XValueOrRule<V>> {
+interface XLayer<K, V : Any> : Map<K, XValueOrRule<V>> {
     val name: String
 }
 
 /** @todo How for M to extends L, and also be a MutableLayer? */
-interface XMutableLayer<K, V, M : XMutableLayer<K, V, M>> :
+interface XMutableLayer<K, V : Any, M : XMutableLayer<K, V, M>> :
     XLayer<K, V> {
     @Suppress("UNCHECKED_CAST")
     val self: M
@@ -33,18 +21,19 @@ interface XMutableLayer<K, V, M : XMutableLayer<K, V, M>> :
 }
 
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
-open class XLayers<K, V, M : XMutableLayer<K, V, M>>(
+open class XLayers<K, V : Any, M : XMutableLayer<K, V, M>>(
     firstLayerName: String = "<INIT>",
-    private val defaultLayer: (String) -> M,
+    private val defaultMutableLayer: (String) -> M,
 ) : AbstractMap<K, V>() {
     private val _layers: MutableList<M> =
-        mutableListOf(defaultLayer(firstLayerName))
+        mutableListOf(defaultMutableLayer(firstLayerName))
 
     val layers: List<XLayer<K, V>> get() = _layers
 
     fun edit(block: XEditBlock<K, V>): M = _layers.first().edit(block)
 
-    fun commitAndNext(name: String): M = commitAndNext(name, defaultLayer)
+    fun commitAndNext(name: String): M =
+        commitAndNext(name, defaultMutableLayer)
 
     /** @todo Provide `defaultLayer` as default argument for `nextLayer` */
     fun <N : M> commitAndNext(name: String, nextLayer: (String) -> N): N {
@@ -93,15 +82,15 @@ open class XLayers<K, V, M : XMutableLayer<K, V, M>>(
         _layers.mapNotNull { it[key] }
 }
 
-open class DefaultLayer<K, V, L : DefaultLayer<K, V, L>>(
+open class DefaultLayer<K, V : Any, L : DefaultLayer<K, V, L>>(
     override val name: String,
     protected val map: MutableMap<K, XValueOrRule<V>> = mutableMapOf(),
 ) : XLayer<K, V>,
     Map<K, XValueOrRule<V>> by map {
-    override fun toString(): String = "$name: $map"
+    override fun toString(): String = "${this::class.simpleName}[$name]: $map"
 }
 
-open class DefaultMutableLayer<K, V, M : DefaultMutableLayer<K, V, M>>(
+open class DefaultMutableLayer<K, V : Any, M : DefaultMutableLayer<K, V, M>>(
     name: String,
 ) : DefaultLayer<K, V, M>(name),
     XMutableLayer<K, V, M> {
@@ -111,7 +100,7 @@ open class DefaultMutableLayer<K, V, M : DefaultMutableLayer<K, V, M>>(
     }
 
     companion object {
-        fun <K, V> defaultMutableLayer(): (String) -> DefaultMutableLayer<K, V, *> =
+        fun <K, V : Any> defaultMutableLayer(): (String) -> DefaultMutableLayer<K, V, *> =
             { name: String ->
                 DefaultMutableLayer<K, V, DefaultMutableLayer<K, V, *>>(name)
             }

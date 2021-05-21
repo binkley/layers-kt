@@ -19,12 +19,15 @@ open class XLayers<K, V : Any, M : XMutableLayer<K, V, M>>(
     fun commitAndNext(name: String): M =
         commitAndNext(name, defaultMutableLayer)
 
-    /** @todo Provide `defaultLayer` as default argument for `nextLayer` */
-    fun <N : M> commitAndNext(name: String, nextLayer: (String) -> N): N {
-        val next = nextLayer(name)
+    fun <N : M> commitAndNext(nextLayer: () -> N): N {
+        val next = nextLayer()
         _layers.add(0, next)
         return next
     }
+
+    /** @todo Provide `defaultLayer` as default argument for `nextLayer` */
+    fun <N : M> commitAndNext(name: String, nextLayer: (String) -> N): N =
+        commitAndNext { nextLayer(name) }
 
     override val entries: Set<Entry<K, V>>
         get() = object : AbstractSet<Entry<K, V>>() {

@@ -52,12 +52,12 @@ internal class XLayersTest {
 
         layers.commitAndNext("AND #2")
         layers.edit {
-            this[testKey] = 3.asValue()
+            this[testKey] = 3.toValue()
         }
 
         layers.commitAndNext("AND #3")
         layers.edit {
-            this[testKey] = 4.asValue()
+            this[testKey] = 4.toValue()
         }
 
         layers shouldBe mapOf(testKey to 4)
@@ -76,7 +76,7 @@ internal class XLayersTest {
 
         layers.commitAndNext("AND #2")
         layers.edit {
-            this[testKey] = 3.asValue()
+            this[testKey] = 3.toValue()
         }
 
         layers.commitAndNext("AND #2")
@@ -86,7 +86,7 @@ internal class XLayersTest {
 
         layers.commitAndNext("AND #3")
         layers.edit {
-            this[testKey] = 4.asValue()
+            this[testKey] = 4.toValue()
         }
 
         layers shouldBe mapOf(testKey to 7)
@@ -108,10 +108,28 @@ internal class XLayersTest {
 
         layers.commitAndNext("AND #3")
         layers.edit {
-            this[testKey] = 4.asValue()
+            this[testKey] = 4.toValue()
         }
 
         layers shouldBe mapOf(testKey to 4)
+    }
+
+    @Test
+    fun `should support what-if scenarios`() {
+        val testKey = "SALLY"
+        val layers = XLayers(
+            firstLayerName = "AND #1",
+            defaultMutableLayer = simpleMutableLayer
+        )
+        layers.edit {
+            this[testKey] = XLatestOfRule(0)
+        }
+        val whatIf = layers.whatIf {
+            this[testKey] = 1.toValue()
+        }
+
+        layers shouldBe mapOf(testKey to 0)
+        whatIf shouldBe mapOf(testKey to 1)
     }
 }
 

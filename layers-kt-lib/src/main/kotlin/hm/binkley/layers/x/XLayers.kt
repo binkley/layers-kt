@@ -8,13 +8,22 @@ import kotlin.collections.Map.Entry
 open class XLayers<K, V : Any, M : XMutableLayer<K, V, M>>(
     firstLayerName: String = "<INIT>",
     private val defaultMutableLayer: (String) -> M,
+    private val _layers: MutableList<M> = mutableListOf(
+        defaultMutableLayer(firstLayerName)
+    ),
 ) : AbstractMap<K, V>() {
-    private val _layers: MutableList<M> =
-        mutableListOf(defaultMutableLayer(firstLayerName))
-
     val layers: List<XLayer<K, V>> get() = _layers
 
     fun edit(block: XEditBlock<K, V>): M = _layers.first().edit(block)
+
+    fun whatIf(block: XEditBlock<K, V>): Map<K, V> {
+        val layers = XLayers(
+            defaultMutableLayer = defaultMutableLayer,
+            _layers = ArrayList(_layers),
+        )
+        layers.commitAndNext("<WHAT-IF>").edit(block)
+        return layers
+    }
 
     fun commitAndNext(name: String): M =
         commitAndNext(name, defaultMutableLayer)

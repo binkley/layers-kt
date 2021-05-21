@@ -5,3 +5,5 @@ typealias LayerPair = Pair<String, ValueOrRule<*>>
 typealias LayerMap = Map<String, ValueOrRule<*>>
 typealias LayerMutableMap = MutableMap<String, ValueOrRule<*>>
 typealias EditBlock = LayerMutableMap.() -> Unit
+
+fun <V> V.toValue(): ValueOrRule<V> = Value(this)

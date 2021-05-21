@@ -4,6 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import java.util.AbstractMap.SimpleEntry
 import kotlin.collections.Map.Entry
 
+/** @todo Make Spotbugs happy about foo.collectionOp().toCollectionType() */
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
 open class XLayers<K, V : Any, M : XMutableLayer<K, V, M>>(
     firstLayerName: String = "<INIT>",
@@ -25,18 +26,17 @@ open class XLayers<K, V : Any, M : XMutableLayer<K, V, M>>(
         return layers
     }
 
-    fun commitAndNext(name: String): M =
-        commitAndNext(name, defaultMutableLayer)
-
     fun <N : M> commitAndNext(nextLayer: () -> N): N {
         val next = nextLayer()
         _layers.add(0, next)
         return next
     }
 
-    /** @todo Provide `defaultLayer` as default argument for `nextLayer` */
     fun <N : M> commitAndNext(name: String, nextLayer: (String) -> N): N =
         commitAndNext { nextLayer(name) }
+
+    fun commitAndNext(name: String): M =
+        commitAndNext(name, defaultMutableLayer)
 
     override val entries: Set<Entry<K, V>>
         get() = object : AbstractSet<Entry<K, V>>() {
@@ -70,9 +70,7 @@ open class XLayers<K, V : Any, M : XMutableLayer<K, V, M>>(
         valuesOrRules(key).filterIsInstance<XRule<V, T>>().first()
 
     private fun <T : V> currentValuesFor(key: K): List<T> =
-        valuesOrRules(key)
-            .filterIsInstance<XValue<T>>()
-            .map { it.value }
+        valuesOrRules(key).filterIsInstance<XValue<T>>().map { it.value }
 
     private fun valuesOrRules(key: K): List<XValueOrRule<V>> =
         _layers.mapNotNull { it[key] }

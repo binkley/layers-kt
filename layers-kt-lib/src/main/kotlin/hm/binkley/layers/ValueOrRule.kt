@@ -45,8 +45,6 @@ abstract class NamedRule<V>(
     final override fun description(): String = name
 }
 
-fun <V> V.toValue(): ValueOrRule<V> = Value(this)
-
 fun <V> ruleFor(
     block: (key: String, List<V>, ValueMap) -> V,
 ): NamedRule<V> = object : NamedRule<V>("<Anonymous>") {

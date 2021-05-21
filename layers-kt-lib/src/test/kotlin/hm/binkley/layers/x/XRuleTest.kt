@@ -15,6 +15,6 @@ private class Bar : Foo {
 }
 
 private val testRule = object : XRule<Foo, Bar>("Test Rule") {
-    override fun invoke(values: List<Bar>, layers: XLayers<*, Foo, *>) =
-        object : Foo {}
+    override fun invoke(values: List<Bar>, layers: XLayers<*, Foo, *>): Bar =
+        Bar()
 }

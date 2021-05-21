@@ -52,12 +52,12 @@ internal class XLayersTest {
 
         layers.commitAndNext("AND #2")
         layers.edit {
-            this[testKey] = XValue(3)
+            this[testKey] = 3.asValue()
         }
 
         layers.commitAndNext("AND #3")
         layers.edit {
-            this[testKey] = XValue(4)
+            this[testKey] = 4.asValue()
         }
 
         layers shouldBe mapOf(testKey to 4)
@@ -76,7 +76,7 @@ internal class XLayersTest {
 
         layers.commitAndNext("AND #2")
         layers.edit {
-            this[testKey] = XValue(3)
+            this[testKey] = 3.asValue()
         }
 
         layers.commitAndNext("AND #2")
@@ -86,7 +86,7 @@ internal class XLayersTest {
 
         layers.commitAndNext("AND #3")
         layers.edit {
-            this[testKey] = XValue(4)
+            this[testKey] = 4.asValue()
         }
 
         layers shouldBe mapOf(testKey to 7)
@@ -108,7 +108,7 @@ internal class XLayersTest {
 
         layers.commitAndNext("AND #3")
         layers.edit {
-            this[testKey] = XValue(4)
+            this[testKey] = 4.asValue()
         }
 
         layers shouldBe mapOf(testKey to 4)

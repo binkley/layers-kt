@@ -5,9 +5,9 @@ import java.util.Objects.hash
 
 open class PlainLayer<L : Layer<L>>(
     override val name: String,
-    map: EntryMap = emptyMap(),
-    protected val editMap: EditableMap = map.toMutableMap(),
-) : Layer<L>, EntryMap by editMap {
+    map: LayerMap = emptyMap(),
+    protected val editMap: LayerMutableMap = map.toMutableMap(),
+) : Layer<L>, LayerMap by editMap {
     @Generated
     override fun equals(other: Any?) = this === other ||
         other is PlainLayer<*> &&
@@ -20,5 +20,5 @@ open class PlainLayer<L : Layer<L>>(
 
 class DefaultLayer(
     name: String,
-    map: EntryMap = emptyMap(),
+    map: LayerMap = emptyMap(),
 ) : PlainLayer<DefaultLayer>(name, map)

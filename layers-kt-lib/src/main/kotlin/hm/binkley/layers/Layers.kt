@@ -23,21 +23,21 @@ class Layers(
     override val entries get() = entries()
 
     /** Edits the current layer. */
-    fun edit(vararg changes: EntryPair): Layers {
+    fun edit(vararg changes: LayerPair): Layers {
         current.edit(*changes)
         validate()
         return this
     }
 
     /** Edits the current layer. */
-    fun edit(changes: EntryMap): Layers {
+    fun edit(changes: LayerMap): Layers {
         current.edit(changes)
         validate()
         return this
     }
 
     /** Edits the current layer. */
-    fun edit(block: EditingBlock): Layers {
+    fun edit(block: EditBlock): Layers {
         current.edit(block)
         validate()
         return this
@@ -49,7 +49,7 @@ class Layers(
      */
     fun commitAndNext(
         name: String,
-        block: EditingBlock = {},
+        block: EditBlock = {},
     ): MutableLayer<*> {
         val new = DefaultMutableLayer(name).edit(block)
         history.add(0, new)
@@ -72,18 +72,18 @@ class Layers(
     }
 
     /** Poses a "what-if" scenario. */
-    fun whatIf(vararg scenario: EntryPair): Layers =
+    fun whatIf(vararg scenario: LayerPair): Layers =
         whatIf(scenario.toMap())
 
     /** Poses a "what-if" [scenario]. */
-    fun whatIf(scenario: EntryMap): Layers {
+    fun whatIf(scenario: LayerMap): Layers {
         val layers = ArrayList(history)
         layers.add(0, DefaultMutableLayer("<WHAT-IF>", scenario))
         return Layers(layers)
     }
 
     /** Poses a "what-if" scenario. */
-    fun whatIf(block: EditingBlock): Layers =
+    fun whatIf(block: EditBlock): Layers =
         whatIf(DefaultMutableLayer("<WHAT-IF>").edit(block))
 
     @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
@@ -127,7 +127,7 @@ class Layers(
     }
 
     companion object {
-        fun new(vararg firstLayer: EntryPair) = new {
+        fun new(vararg firstLayer: LayerPair) = new {
             firstLayer.forEach {
                 this[it.first] = it.second
             }
@@ -136,7 +136,7 @@ class Layers(
         fun new(layers: List<MutableLayer<*>>) =
             Layers(layers.toMutableList())
 
-        fun new(name: String = "<INIT>", block: EditingBlock) =
+        fun new(name: String = "<INIT>", block: EditBlock) =
             Layers(mutableListOf(DefaultMutableLayer(name).edit(block)))
     }
 }

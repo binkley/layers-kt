@@ -1,6 +1,6 @@
 package hm.binkley.layers.rpg.rules
 
-import hm.binkley.layers.EditableMap
+import hm.binkley.layers.LayerMutableMap
 import hm.binkley.layers.NamedRule
 import hm.binkley.layers.ValueMap
 import hm.binkley.layers.rpg.rules.StatBonusRule.Companion.statBonusRule
@@ -31,7 +31,7 @@ class StatBonusRule(
     }
 }
 
-fun EditableMap.installStat(stat: String) {
+fun LayerMutableMap.installStat(stat: String) {
     this[stat] = statRule(stat)
     this["$stat-BONUS"] = statBonusRule(stat)
 }

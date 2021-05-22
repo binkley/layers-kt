@@ -57,6 +57,10 @@ open class XLayers<K, V : Any, M : XMutableLayer<K, V, M>>(
                 }
         }
 
+    override fun toString() = layers.mapIndexed { index, layer ->
+        "$index: $layer"
+    }.joinToString("\n")
+
     private fun allKeys() = _layers.flatMap { it.keys }.toSet()
 
     private fun computeValue(key: K): V {

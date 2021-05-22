@@ -6,7 +6,7 @@ import kotlin.collections.Map.Entry
 
 /** @todo Make Spotbugs happy about foo.collectionOp().toCollectionType() */
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
-open class XLayers<K, V : Any, M : XMutableLayer<K, V, M>>(
+open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     firstLayerName: String = "<INIT>",
     private val defaultMutableLayer: (String) -> M,
     private val _layers: MutableList<M> = mutableListOf(

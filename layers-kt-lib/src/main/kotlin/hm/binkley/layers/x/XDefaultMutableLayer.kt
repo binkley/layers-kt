@@ -1,6 +1,6 @@
 package hm.binkley.layers.x
 
-open class XDefaultMutableLayer<K, V : Any, M : XDefaultMutableLayer<K, V, M>>(
+open class XDefaultMutableLayer<K : Any, V : Any, M : XDefaultMutableLayer<K, V, M>>(
     name: String,
 ) : XDefaultLayer<K, V, M>(name),
     XMutableLayer<K, V, M> {
@@ -10,7 +10,7 @@ open class XDefaultMutableLayer<K, V : Any, M : XDefaultMutableLayer<K, V, M>>(
     }
 
     companion object {
-        fun <K, V : Any> defaultMutableLayer(): (String) -> XDefaultMutableLayer<K, V, *> =
+        fun <K : Any, V : Any> defaultMutableLayer(): (String) -> XDefaultMutableLayer<K, V, *> =
             { name: String ->
                 XDefaultMutableLayer<K, V, XDefaultMutableLayer<K, V, *>>(name)
             }

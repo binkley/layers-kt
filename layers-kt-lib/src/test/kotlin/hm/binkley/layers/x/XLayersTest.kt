@@ -8,33 +8,33 @@ internal class XLayersTest {
     fun `should have a debuggable representation`() {
         val testKey = "SALLY"
         val layers = XLayers(
-            firstLayerName = "AND #1",
+            firstLayerName = "AND #0",
             defaultMutableLayer = simpleMutableLayer
         )
         layers.edit {
             this[testKey] = XLatestOfRule(0)
         }
 
-        layers.commitAndNext("AND #2")
+        layers.commitAndNext("AND #1")
         layers.edit {
             this[testKey] = 3.toValue()
         }
 
-        layers.commitAndNext("AND #3")
+        layers.commitAndNext("AND #2")
         layers.edit {
             this[testKey] = XSumOfRule()
         }
 
-        layers.commitAndNext("AND #4")
+        layers.commitAndNext("AND #3")
         layers.edit {
             this[testKey] = 4.toValue()
         }
 
         "$layers" shouldBe """
-0: XDefaultMutableLayer[AND #4]: {SALLY=<Value[Int]>: 4}
-1: XDefaultMutableLayer[AND #3]: {SALLY=<Rule>: Sum}
-2: XDefaultMutableLayer[AND #2]: {SALLY=<Value[Int]>: 3}
-3: XDefaultMutableLayer[AND #1]: {SALLY=<Rule>: Latest[default=0]}
+0: XDefaultMutableLayer[AND #3]: {SALLY=<Value[Int]>: 4}
+1: XDefaultMutableLayer[AND #2]: {SALLY=<Rule>: Sum}
+2: XDefaultMutableLayer[AND #1]: {SALLY=<Value[Int]>: 3}
+3: XDefaultMutableLayer[AND #0]: {SALLY=<Rule>: Latest[default=0]}
         """.trimIndent()
     }
 
@@ -68,19 +68,19 @@ internal class XLayersTest {
     fun `should apply rule`() {
         val testKey = "SALLY"
         val layers = XLayers(
-            firstLayerName = "AND #1",
+            firstLayerName = "AND #0",
             defaultMutableLayer = simpleMutableLayer
         )
         layers.edit {
             this[testKey] = XLatestOfRule(0)
         }
 
-        layers.commitAndNext("AND #2")
+        layers.commitAndNext("AND #1")
         layers.edit {
             this[testKey] = 3.toValue()
         }
 
-        layers.commitAndNext("AND #3")
+        layers.commitAndNext("AND #2")
         layers.edit {
             this[testKey] = 4.toValue()
         }
@@ -92,14 +92,14 @@ internal class XLayersTest {
     fun `should use latest rule`() {
         val testKey = "SALLY"
         val layers = XLayers(
-            firstLayerName = "AND #1",
+            firstLayerName = "AND #0",
             defaultMutableLayer = simpleMutableLayer
         )
         layers.edit {
             this[testKey] = XLatestOfRule(0)
         }
 
-        layers.commitAndNext("AND #2")
+        layers.commitAndNext("AND #1")
         layers.edit {
             this[testKey] = 3.toValue()
         }
@@ -121,7 +121,7 @@ internal class XLayersTest {
     fun `should skip unassigned keys in layers for rules`() {
         val testKey = "SALLY"
         val layers = XLayers(
-            firstLayerName = "AND #1",
+            firstLayerName = "AND #0",
             defaultMutableLayer = simpleMutableLayer
         )
         layers.edit {
@@ -129,9 +129,9 @@ internal class XLayersTest {
         }
 
         // No changes for SALLY
-        layers.commitAndNext("AND #2")
+        layers.commitAndNext("AND #1")
 
-        layers.commitAndNext("AND #3")
+        layers.commitAndNext("AND #2")
         layers.edit {
             this[testKey] = 4.toValue()
         }
@@ -143,7 +143,7 @@ internal class XLayersTest {
     fun `should support what-if scenarios`() {
         val testKey = "SALLY"
         val layers = XLayers(
-            firstLayerName = "AND #1",
+            firstLayerName = "AND #0",
             defaultMutableLayer = simpleMutableLayer
         )
         layers.edit {

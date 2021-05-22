@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 internal class XRuleTest {
     @Test
-    fun `should have debuggable representation`() =
+    fun `should have a debuggable representation`() =
         "$testRule" shouldBe "<Rule>: Test Rule"
 }
 

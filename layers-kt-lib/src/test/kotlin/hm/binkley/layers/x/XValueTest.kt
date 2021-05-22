@@ -5,6 +5,6 @@ import org.junit.jupiter.api.Test
 
 internal class XValueTest {
     @Test
-    fun `should have debuggable representation`() =
+    fun `should have a debuggable representation`() =
         "${XValue(3)}" shouldBe "<Value[Int]>: 3"
 }

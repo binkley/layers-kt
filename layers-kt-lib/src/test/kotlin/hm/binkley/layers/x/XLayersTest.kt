@@ -1,5 +1,7 @@
 package hm.binkley.layers.x
 
+import hm.binkley.layers.x.rules.XLatestOfRule.Companion.latestOfRule
+import hm.binkley.layers.x.rules.XSumOfRule.Companion.sumOfRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -12,7 +14,7 @@ internal class XLayersTest {
             defaultMutableLayer = simpleMutableLayer
         )
         layers.edit {
-            this[testKey] = XLatestOfRule(0)
+            this[testKey] = latestOfRule(0)
         }
 
         layers.commitAndNext("AND #1")
@@ -22,7 +24,7 @@ internal class XLayersTest {
 
         layers.commitAndNext("AND #2")
         layers.edit {
-            this[testKey] = XSumOfRule()
+            this[testKey] = sumOfRule()
         }
 
         layers.commitAndNext("AND #3")
@@ -72,7 +74,7 @@ internal class XLayersTest {
             defaultMutableLayer = simpleMutableLayer
         )
         layers.edit {
-            this[testKey] = XLatestOfRule(0)
+            this[testKey] = latestOfRule(0)
         }
 
         layers.commitAndNext("AND #1")
@@ -96,7 +98,7 @@ internal class XLayersTest {
             defaultMutableLayer = simpleMutableLayer
         )
         layers.edit {
-            this[testKey] = XLatestOfRule(0)
+            this[testKey] = latestOfRule(0)
         }
 
         layers.commitAndNext("AND #1")
@@ -106,7 +108,7 @@ internal class XLayersTest {
 
         layers.commitAndNext("AND #2")
         layers.edit {
-            this[testKey] = XSumOfRule()
+            this[testKey] = sumOfRule()
         }
 
         layers.commitAndNext("AND #3")
@@ -125,7 +127,7 @@ internal class XLayersTest {
             defaultMutableLayer = simpleMutableLayer
         )
         layers.edit {
-            this[testKey] = XLatestOfRule(0)
+            this[testKey] = latestOfRule(0)
         }
 
         // No changes for SALLY
@@ -147,7 +149,7 @@ internal class XLayersTest {
             defaultMutableLayer = simpleMutableLayer
         )
         layers.edit {
-            this[testKey] = XLatestOfRule(0)
+            this[testKey] = latestOfRule(0)
         }
         val whatIf = layers.whatIf {
             this[testKey] = 1.toValue()

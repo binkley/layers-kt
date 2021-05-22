@@ -1,4 +1,4 @@
-package hm.binkley.layers.x
+package hm.binkley.layers.x.util
 
 interface XStack<out T> : List<T>, RandomAccess {
     fun peek() = last()

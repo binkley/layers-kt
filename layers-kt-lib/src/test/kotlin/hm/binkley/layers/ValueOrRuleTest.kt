@@ -25,6 +25,14 @@ internal class ValueOrRuleTest {
             mapOf(bobKey to 13)
         ) shouldBe 6
     }
+
+    @Test
+    fun `should invoke the rule for anonymous convenience function`() {
+        // TODO: How to make this easier, avoid specifying `Int`?
+        val x = ruleFor<Int> { _, _, _ -> -1 }
+
+        x("BOB", listOf(), mutableMapOf()) shouldBe -1
+    }
 }
 
 private object TestRule : NamedRule<String>("Test Fooby") {

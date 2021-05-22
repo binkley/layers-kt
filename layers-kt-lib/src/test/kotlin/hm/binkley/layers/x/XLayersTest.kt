@@ -1,14 +1,11 @@
 package hm.binkley.layers.x
 
-import hm.binkley.layers.x.XDefaultMutableLayer.Companion.defaultMutableLayer
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-private val simpleMutableLayer = defaultMutableLayer<String, Any>()
-
 internal class XLayersTest {
     @Test
-    fun `should have debuggable representation`() {
+    fun `should have a debuggable representation`() {
         val testKey = "SALLY"
         val layers = XLayers(
             firstLayerName = "AND #1",
@@ -39,12 +36,6 @@ internal class XLayersTest {
 2: XDefaultMutableLayer[AND #2]: {SALLY=<Value[Int]>: 3}
 3: XDefaultMutableLayer[AND #1]: {SALLY=<Rule>: Latest[default=0]}
         """.trimIndent()
-    }
-
-    /** @todo Move to a test for layer, not layers */
-    @Test
-    fun `should have a debuggable representation`() {
-        "${simpleMutableLayer("<INIT>")}" shouldBe "XDefaultMutableLayer[<INIT>]: {}"
     }
 
     @Test
@@ -166,22 +157,3 @@ internal class XLayersTest {
         whatIf shouldBe mapOf(testKey to 1)
     }
 }
-
-private class XLatestOfRule<V : Any, T : V>(
-    private val default: T,
-) : XRule<V, T>("Latest[default=$default]") {
-    override fun invoke(
-        values: List<T>,
-        layers: XLayers<*, V, *>,
-    ) = values.firstOrNull() ?: default
-}
-
-private class XSumOfRule : XRule<Any, Int>("Sum") {
-    override fun invoke(
-        values: List<Int>,
-        layers: XLayers<*, Any, *>,
-    ) = values.sum()
-}
-
-private class TestNamedLayer :
-    XDefaultMutableLayer<String, Any, TestNamedLayer>("FRED")

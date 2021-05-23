@@ -11,7 +11,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
         val layers = XLayers(
             firstLayerName = "AND #0",
-            defaultMutableLayer = simpleMutableLayer
+            defaultMutableLayer = testMutableLayer
         )
         layers.edit {
             this[testKey] = latestOfRule(0)
@@ -42,14 +42,14 @@ internal class XLayersTest {
 
     @Test
     fun `should start fresh`() {
-        val layers = XLayers(defaultMutableLayer = simpleMutableLayer)
+        val layers = XLayers(defaultMutableLayer = testMutableLayer)
 
         layers shouldBe emptyMap()
     }
 
     @Test
     fun `should commit and continue with new default layer`() {
-        val layers = XLayers(defaultMutableLayer = simpleMutableLayer)
+        val layers = XLayers(defaultMutableLayer = testMutableLayer)
         layers.commitAndNext("BOB")
 
         layers shouldBe emptyMap()
@@ -57,7 +57,7 @@ internal class XLayersTest {
 
     @Test
     fun `should commit and continue with named layer`() {
-        val layers = XLayers(defaultMutableLayer = simpleMutableLayer)
+        val layers = XLayers(defaultMutableLayer = testMutableLayer)
         layers.commitAndNext(::TestNamedLayer)
 
         layers.layers shouldBe listOf<Map<String, XValueOrRule<Any>>>(
@@ -71,7 +71,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
         val layers = XLayers(
             firstLayerName = "AND #0",
-            defaultMutableLayer = simpleMutableLayer
+            defaultMutableLayer = testMutableLayer
         )
         layers.edit {
             this[testKey] = latestOfRule(0)
@@ -95,7 +95,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
         val layers = XLayers(
             firstLayerName = "AND #0",
-            defaultMutableLayer = simpleMutableLayer
+            defaultMutableLayer = testMutableLayer
         )
         layers.edit {
             this[testKey] = latestOfRule(0)
@@ -124,7 +124,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
         val layers = XLayers(
             firstLayerName = "AND #0",
-            defaultMutableLayer = simpleMutableLayer
+            defaultMutableLayer = testMutableLayer
         )
         layers.edit {
             this[testKey] = latestOfRule(0)
@@ -146,7 +146,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
         val layers = XLayers(
             firstLayerName = "AND #0",
-            defaultMutableLayer = simpleMutableLayer
+            defaultMutableLayer = testMutableLayer
         )
         layers.edit {
             this[testKey] = latestOfRule(0)

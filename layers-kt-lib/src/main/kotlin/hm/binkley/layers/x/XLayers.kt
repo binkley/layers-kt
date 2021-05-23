@@ -29,22 +29,32 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
 
     fun <T : V> newRule(
         name: String,
-        compute: () -> T,
+        computeValue: () -> T,
     ): XRule<V, T> = object : XRule<V, T>(name) {
         override fun invoke(
             values: List<T>,
             layers: XLayers<*, V, *>,
-        ) = compute()
+        ) = computeValue()
     }
 
     fun <T : V> newRule(
         name: String,
-        compute: (List<T>) -> T,
+        computeValue: (List<T>) -> T,
     ): XRule<V, T> = object : XRule<V, T>(name) {
         override fun invoke(
             values: List<T>,
             layers: XLayers<*, V, *>,
-        ) = compute(values)
+        ) = computeValue(values)
+    }
+
+    fun <T : V> newRule(
+        name: String,
+        computeValue: (List<T>, XLayers<*, V, *>) -> T,
+    ): XRule<V, T> = object : XRule<V, T>(name) {
+        override fun invoke(
+            values: List<T>,
+            layers: XLayers<*, V, *>,
+        ) = computeValue(values, layers)
     }
 
     /**
@@ -100,6 +110,9 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         layers.commitAndNext(name).edit(block)
         return layers
     }
+
+    // Short-circuit computing all keys to avoid circular calls for rules
+    override fun get(key: K) = computeValue(key)
 
     override val entries: Set<Entry<K, V>>
         get() = object : AbstractSet<Entry<K, V>>() {

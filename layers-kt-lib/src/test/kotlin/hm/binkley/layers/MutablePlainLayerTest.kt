@@ -20,7 +20,7 @@ internal class MutablePlainLayerTest {
     }
 
     @Test
-    fun `should contruct from existing data`() {
+    fun `should construct from existing data`() {
         val layer = DefaultMutableLayer("BOB", mapOf("SALLY" to sumOfRule()))
 
         layer shouldBe mapOf("SALLY" to 0)

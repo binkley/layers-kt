@@ -12,42 +12,53 @@ import kotlin.collections.Map.Entry
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
 open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     firstLayerName: String = "<INIT>",
-    private val defaultMutableLayer: (String) -> M,
-    private val _layers: XMutableStack<M> = mutableStackOf(
-        defaultMutableLayer(firstLayerName)
+    private val defaultLayer: (String) -> M,
+    private val layers: XMutableStack<M> = mutableStackOf(
+        defaultLayer(firstLayerName)
     ),
 ) : AbstractMap<K, V>() {
-    val layers: XStack<XLayer<K, V>> get() = _layers
+    val history: XStack<XLayer<K, V>> get() = layers
 
-    fun edit(block: XEditBlock<K, V>): M = _layers.last().edit(block)
+    /** Convenience function for editing the current layer. */
+    fun edit(block: XEditBlock<K, V>): M = layers.last().edit(block)
 
+    /** Try "what-if" scenarios without mutating Layers. */
     fun whatIf(
         name: String = "<WHAT-IF>",
         block: XEditBlock<K, V>,
     ): Map<K, V> {
         val layers = XLayers(
-            defaultMutableLayer = defaultMutableLayer,
-            _layers = XArrayMutableStack(_layers),
+            defaultLayer = defaultLayer,
+            layers = XArrayMutableStack(layers),
         )
         layers.commitAndNext(name).edit(block)
         return layers
     }
 
+    /** Commit the current layer, and begin a new one with [defaultLayer]. */
     fun <N : M> commitAndNext(nextLayer: () -> N): N {
         val next = nextLayer()
-        _layers.push(next)
+        layers.push(next)
         return next
     }
 
+    /**
+     * Commit the current layer, and begin a new one with [nextLayer] having
+     * [name].
+     */
     fun <N : M> commitAndNext(name: String, nextLayer: (String) -> N): N =
         commitAndNext { nextLayer(name) }
 
-    fun commitAndNext(name: String): M =
-        commitAndNext(name, defaultMutableLayer)
+    /**
+     * Commit the current layer, and begin a new one with [defaultLayer]
+     * having [name].
+     */
+    fun commitAndNext(name: String): M = commitAndNext(name, defaultLayer)
 
+    /** Discard the current layer. */
     fun rollback(): M {
-        _layers.pop()
-        return _layers.peek()
+        layers.pop()
+        return layers.peek()
     }
 
     override val entries: Set<Entry<K, V>>
@@ -69,11 +80,11 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
                 }
         }
 
-    override fun toString() = layers.mapIndexed { index, layer ->
+    override fun toString() = history.mapIndexed { index, layer ->
         "$index: $layer"
     }.joinToString("\n")
 
-    private fun allKeys() = _layers.flatMap { it.keys }.toSet()
+    private fun allKeys() = layers.flatMap { it.keys }.toSet()
 
     private fun computeValue(key: K): V {
         val rule = currentRuleFor<V>(key)
@@ -89,5 +100,5 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         valuesOrRules(key).filterIsInstance<XValue<T>>().map { it.value }
 
     private fun valuesOrRules(key: K): List<XValueOrRule<V>> =
-        _layers.mapNotNull { it[key] }.reversed()
+        layers.mapNotNull { it[key] }.reversed()
 }

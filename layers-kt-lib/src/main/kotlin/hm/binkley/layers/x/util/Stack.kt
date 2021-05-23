@@ -1,10 +1,13 @@
 package hm.binkley.layers.x.util
 
+import lombok.Generated
+
 interface XStack<out T> : List<T>, RandomAccess {
     fun peek() = last()
 }
 
-fun <T> XStack<T>.toMutableList() =
+@Generated // TODO: How to test?  Kotlin complains check is useless
+fun <T> XStack<T>.toMutableStack(): XMutableStack<T> =
     XArrayMutableStack((this as List<T>).toMutableList())
 
 fun <T> stackOf(): XStack<T> = XArrayStack(listOf())
@@ -15,6 +18,9 @@ interface XMutableStack<T> : XStack<T>, MutableList<T> {
     fun push(element: T) = add(element)
     fun pop() = removeLast()
 }
+
+@Generated // TODO: How to test?  Kotlin complains check is useless
+fun <T> XMutableStack<T>.toStack(): XStack<T> = this
 
 open class XArrayStack<T>(
     private val elements: List<T> = listOf(),

@@ -1,5 +1,6 @@
 package hm.binkley.layers
 
+import hm.binkley.layers.rules.SumOfRule.Companion.sumOfRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -16,6 +17,13 @@ internal class MutablePlainLayerTest {
         layer.values
 
         layer shouldBe mapOf(bobKey to 3.toValue())
+    }
+
+    @Test
+    fun `should contruct from existing data`() {
+        val layer = DefaultMutableLayer("BOB", mapOf("SALLY" to sumOfRule()))
+
+        layer shouldBe mapOf("SALLY" to 0)
     }
 
     @Test

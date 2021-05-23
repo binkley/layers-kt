@@ -70,19 +70,19 @@ internal class XLayersTest {
     fun `should apply rule`() {
         val testKey = "SALLY"
         val layers = XLayers(
-            firstLayerName = "AND #0",
+            firstLayerName = "AND zeroth",
             defaultMutableLayer = testMutableLayer
         )
         layers.edit {
             this[testKey] = latestOfRule(0)
         }
 
-        layers.commitAndNext("AND #1")
+        layers.commitAndNext("AND first")
         layers.edit {
             this[testKey] = 3.toValue()
         }
 
-        layers.commitAndNext("AND #2")
+        layers.commitAndNext("AND second")
         layers.edit {
             this[testKey] = 4.toValue()
         }
@@ -94,24 +94,24 @@ internal class XLayersTest {
     fun `should use latest rule`() {
         val testKey = "SALLY"
         val layers = XLayers(
-            firstLayerName = "AND #0",
+            firstLayerName = "AND zeroth",
             defaultMutableLayer = testMutableLayer
         )
         layers.edit {
             this[testKey] = latestOfRule(0)
         }
 
-        layers.commitAndNext("AND #1")
+        layers.commitAndNext("AND first")
         layers.edit {
             this[testKey] = 3.toValue()
         }
 
-        layers.commitAndNext("AND #2")
+        layers.commitAndNext("AND second")
         layers.edit {
             this[testKey] = sumOfRule()
         }
 
-        layers.commitAndNext("AND #3")
+        layers.commitAndNext("AND third")
         layers.edit {
             this[testKey] = 4.toValue()
         }
@@ -123,7 +123,7 @@ internal class XLayersTest {
     fun `should skip unassigned keys in layers for rules`() {
         val testKey = "SALLY"
         val layers = XLayers(
-            firstLayerName = "AND #0",
+            firstLayerName = "AND zeroth",
             defaultMutableLayer = testMutableLayer
         )
         layers.edit {
@@ -131,9 +131,9 @@ internal class XLayersTest {
         }
 
         // No changes for SALLY
-        layers.commitAndNext("AND #1")
+        layers.commitAndNext("AND first")
 
-        layers.commitAndNext("AND #2")
+        layers.commitAndNext("AND second")
         layers.edit {
             this[testKey] = 4.toValue()
         }
@@ -145,7 +145,7 @@ internal class XLayersTest {
     fun `should support what-if scenarios`() {
         val testKey = "SALLY"
         val layers = XLayers(
-            firstLayerName = "AND #0",
+            firstLayerName = "AND zeroth",
             defaultMutableLayer = testMutableLayer
         )
         layers.edit {

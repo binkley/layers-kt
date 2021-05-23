@@ -10,33 +10,33 @@ internal class XLayersTest {
     fun `should have a debuggable representation`() {
         val testKey = "SALLY"
         val layers = XLayers(
-            firstLayerName = "AND #0",
+            firstLayerName = "AND zeroth",
             defaultMutableLayer = testMutableLayer
         )
         layers.edit {
             this[testKey] = latestOfRule(0)
         }
 
-        layers.commitAndNext("AND #1")
+        layers.commitAndNext("AND first")
         layers.edit {
             this[testKey] = 3.toValue()
         }
 
-        layers.commitAndNext("AND #2")
+        layers.commitAndNext("AND second")
         layers.edit {
             this[testKey] = sumOfRule()
         }
 
-        layers.commitAndNext("AND #3")
+        layers.commitAndNext("AND third")
         layers.edit {
             this[testKey] = 4.toValue()
         }
 
         "$layers" shouldBe """
-0: XDefaultMutableLayer[AND #3]: {SALLY=<Value[Int]>: 4}
-1: XDefaultMutableLayer[AND #2]: {SALLY=<Rule>: Sum}
-2: XDefaultMutableLayer[AND #1]: {SALLY=<Value[Int]>: 3}
-3: XDefaultMutableLayer[AND #0]: {SALLY=<Rule>: Latest[default=0]}
+0: XDefaultMutableLayer[AND zeroth]: {SALLY=<Rule>: Latest[default=0]}
+1: XDefaultMutableLayer[AND first]: {SALLY=<Value[Int]>: 3}
+2: XDefaultMutableLayer[AND second]: {SALLY=<Rule>: Sum}
+3: XDefaultMutableLayer[AND third]: {SALLY=<Value[Int]>: 4}
         """.trimIndent()
     }
 

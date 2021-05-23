@@ -15,7 +15,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
 ) : AbstractMap<K, V>() {
     val layers: List<XLayer<K, V>> get() = _layers
 
-    fun edit(block: XEditBlock<K, V>): M = _layers.first().edit(block)
+    fun edit(block: XEditBlock<K, V>): M = _layers.last().edit(block)
 
     fun whatIf(block: XEditBlock<K, V>): Map<K, V> {
         val layers = XLayers(
@@ -28,7 +28,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
 
     fun <N : M> commitAndNext(nextLayer: () -> N): N {
         val next = nextLayer()
-        _layers.add(0, next)
+        _layers.add(next)
         return next
     }
 
@@ -77,5 +77,5 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         valuesOrRules(key).filterIsInstance<XValue<T>>().map { it.value }
 
     private fun valuesOrRules(key: K): List<XValueOrRule<V>> =
-        _layers.mapNotNull { it[key] }
+        _layers.mapNotNull { it[key] }.reversed()
 }

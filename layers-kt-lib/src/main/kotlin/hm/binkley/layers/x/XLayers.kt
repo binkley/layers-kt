@@ -42,6 +42,11 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     fun commitAndNext(name: String): M =
         commitAndNext(name, defaultMutableLayer)
 
+    fun rollback(): M {
+        _layers.pop()
+        return _layers.peek()
+    }
+
     override val entries: Set<Entry<K, V>>
         get() = object : AbstractSet<Entry<K, V>>() {
             private val keys: Set<K> = allKeys()

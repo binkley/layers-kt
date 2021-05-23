@@ -158,4 +158,25 @@ internal class XLayersTest {
         layers shouldBe mapOf(testKey to 0)
         whatIf shouldBe mapOf(testKey to 1)
     }
+
+    @Test
+    fun `should undo`() {
+        val testKey = "SALLY"
+        val layers = XLayers(
+            firstLayerName = "AND zeroth",
+            defaultMutableLayer = testMutableLayer
+        )
+        layers.edit {
+            this[testKey] = sumOfRule()
+        }
+
+        layers.commitAndNext("AND first", testMutableLayer)
+        layers.edit {
+            this[testKey] = 1.toValue()
+        }
+
+        layers.rollback()
+
+        layers shouldBe mapOf(testKey to 0)
+    }
 }

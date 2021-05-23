@@ -7,6 +7,7 @@ interface XStack<out T> : List<T>, RandomAccess {
 }
 
 @Generated // TODO: How to test?  Kotlin complains check is useless
+@Suppress("UNUSED")
 fun <T> XStack<T>.toMutableStack(): XMutableStack<T> =
     XArrayMutableStack((this as List<T>).toMutableList())
 
@@ -20,6 +21,7 @@ interface XMutableStack<T> : XStack<T>, MutableList<T> {
 }
 
 @Generated // TODO: How to test?  Kotlin complains check is useless
+@Suppress("UNUSED")
 fun <T> XMutableStack<T>.toStack(): XStack<T> = this
 
 open class XArrayStack<T>(

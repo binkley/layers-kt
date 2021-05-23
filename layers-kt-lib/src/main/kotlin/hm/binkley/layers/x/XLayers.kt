@@ -8,7 +8,14 @@ import hm.binkley.layers.x.util.mutableStackOf
 import java.util.AbstractMap.SimpleEntry
 import kotlin.collections.Map.Entry
 
-/** @todo Make Spotbugs happy about foo.collectionOp().toCollectionType() */
+/**
+ * A [Map] view of all values in all layers _after_ applying rules for each
+ * list of values.  A `Layers` begins with one empty layer to edit.
+ *
+ * To all layers immutably in order of committal, use [history].
+ *
+ * @todo Make Spotbugs happy about foo.collectionOp().toCollectionType()
+ */
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
 open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     private val firstLayerName: String = "<INIT>",
@@ -17,6 +24,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         defaultLayer(firstLayerName)
     ),
 ) : AbstractMap<K, V>() {
+    /** An immutable view in committal order of each layer. */
     val history: XStack<XLayer<K, V>> get() = layers
 
     fun <T : V> newRule(
@@ -39,10 +47,16 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         ) = compute(values)
     }
 
-    /** Convenience function for editing the current layer. */
+    /**
+     * Edits the current layer as a mutable map.  This layer is not yet
+     * committed.
+     */
     fun edit(block: XEditBlock<K, V>): M = layers.peek().edit(block)
 
-    /** Commit the current layer, and begin a new one with [defaultLayer]. */
+    /**
+     * Commits the current layer, and begins a new layer using [defaultLayer]
+     * having a name provided by that layer.
+     */
     fun <N : M> commitAndNext(nextLayer: () -> N): N {
         val next = nextLayer()
         layers.push(next)
@@ -50,25 +64,31 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     }
 
     /**
-     * Commit the current layer, and begin a new one with [nextLayer] having
-     * [name].
+     * Commits the current layer, and begins a new layer with [nextLayer]
+     * given [name].
      */
     fun <N : M> commitAndNext(name: String, nextLayer: (String) -> N): N =
         commitAndNext { nextLayer(name) }
 
     /**
-     * Commit the current layer, and begin a new one with [defaultLayer]
-     * having [name].
+     * Commits the current layer, and begins a new one with [defaultLayer]
+     * given [name].
      */
     fun commitAndNext(name: String): M = commitAndNext(name, defaultLayer)
 
-    /** Discard the current layer. */
+    /** Discards the current layer. */
     fun rollback(): M {
         layers.pop()
         return layers.peek()
     }
 
-    /** Try "what-if" scenarios without mutating the current layer. */
+    /**
+     * Tries "what-if" scenarios without mutating the current layer.  The
+     * returned map behaves as if "this" had [block] applied to
+     * a new default layer.
+     *
+     * @todo Does applying [block] to the current layer make more sense?
+     */
     fun whatIf(
         name: String = "<WHAT-IF>",
         block: XEditBlock<K, V>,

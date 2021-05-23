@@ -13,9 +13,10 @@ _An experiment in style and technique in Kotlin_.
 
 `Layers` is a list of maps that appears as a single map. It uses _rules_
 to provide a single value for each key, based on all values for that key in
-the list of maps. For example, if the key "bob" has values 1, 2, and 3 in
-different layers, and the rule were to sum these, then the value of the
-"bob" key in a layers would be 6.
+the list of maps. For example, if the key "BOB" has values 1, 2, and 3 in
+different layers, and the rule were "sum", then the value of "BOB" in the map
+would be 6. Changing the rule to "latest of" for "BOB" would result in the map
+having 3 for the value of that key.
 
 (See [Layers Java](https://github.com/binkley/layers-java) for an older
 approach in Java.)
@@ -28,7 +29,7 @@ There are no run-time dependencies.
 
 ## Platform
 
-This code has been built for JDK 11.
+This code relies on JDK 11 or newer.
 
 ## Build
 
@@ -119,7 +120,7 @@ is a subtype of
 - `edit` &mdash; edits with a block. All `Map` methods apply. A sample:
   ```kotlin
         editableLayer.edit {
-            this["bob"] = 3.toEntry()
+            this["BOB"] = 3.toEntry()
         }
 
   ```
@@ -153,3 +154,4 @@ See
 
 * Rationalize uses of `Map` as input _vs_ `MutableMap` reused as a property or
   delegated argument
+* Incorporate the spike having generic key and value types

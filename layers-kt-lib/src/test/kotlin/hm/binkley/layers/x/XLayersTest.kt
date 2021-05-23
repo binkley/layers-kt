@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 internal class XLayersTest {
     @Test
-    fun `should have a debuggable representation`() {
+    fun `should have a debuggable view`() {
         val testKey = "SALLY"
         val layers = XLayers(
             firstLayerName = "AND zeroth",

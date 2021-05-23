@@ -6,3 +6,11 @@ internal val testMutableLayer = defaultMutableLayer<String, Any>()
 
 internal class TestNamedLayer :
     XDefaultMutableLayer<String, Any, TestNamedLayer>("FRED")
+
+internal class TestSubtypeLayer(name: String) :
+    XDefaultMutableLayer<String, Any, TestSubtypeLayer>(name) {
+    @Suppress("UNCHECKED_CAST")
+    fun foo(key: String) {
+        this[key] = (2 * getAs<Int>(key)).toValue()
+    }
+}

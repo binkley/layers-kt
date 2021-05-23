@@ -1,9 +1,12 @@
 package hm.binkley.layers.x
 
+@Suppress("DELEGATED_MEMBER_HIDES_SUPERTYPE_OVERRIDE")
 open class XDefaultMutableLayer<K : Any, V : Any, M : XDefaultMutableLayer<K, V, M>>(
     name: String,
-) : XDefaultLayer<K, V, M>(name),
-    XMutableLayer<K, V, M> {
+    map: XLayerMutableMap<K, V> = mutableMapOf(),
+) : XDefaultLayer<K, V, M>(name, map),
+    XMutableLayer<K, V, M>,
+    XLayerMutableMap<K, V> by map {
     override fun edit(block: XEditBlock<K, V>): M {
         block(map)
         return self

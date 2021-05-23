@@ -165,6 +165,26 @@ internal class XLayersTest {
     }
 
     @Test
+    fun `should commit subtype layer`() {
+        val testKey = "SALLY"
+        val layers = XLayers(
+            firstLayerName = "AND zeroth",
+            defaultMutableLayer = testMutableLayer
+        )
+        layers.edit {
+            this[testKey] = sumOfRule()
+        }
+
+        val layer = layers.commitAndNext("AND first", ::TestSubtypeLayer)
+        layer.edit {
+            this[testKey] = 1.toValue()
+        }
+        layer.foo(testKey)
+
+        layers shouldBe mapOf(testKey to 2)
+    }
+
+    @Test
     fun `should undo`() {
         val testKey = "SALLY"
         val layers = XLayers(
@@ -175,7 +195,7 @@ internal class XLayersTest {
             this[testKey] = sumOfRule()
         }
 
-        layers.commitAndNext("AND first", testMutableLayer)
+        layers.commitAndNext("AND first")
         layers.edit {
             this[testKey] = 1.toValue()
         }

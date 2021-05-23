@@ -7,7 +7,7 @@ import java.util.AbstractMap.SimpleEntry
  * Creates a new list of editable layers, with an initial blank editable
  * layer.
  *
- * @todo History, metadata
+ * @todo Metadata
  */
 class Layers(
     private val history: MutableList<MutableLayer<*>>,
@@ -91,7 +91,7 @@ class Layers(
         "$index: [${layer::class.simpleName}] $layer"
     }.joinToString("\n")
 
-    // TODO: Inline refactor once SpotBugs is sorted out
+    /* @todo Inline refactor once SpotBugs is sorted out */
     @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
     private fun entries() = history.flatMap {
         it.keys

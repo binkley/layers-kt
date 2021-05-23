@@ -13,7 +13,7 @@ fun <T> XMutableStack<T>.toStack(): XStack<T> = this
 
 open class XArrayStack<T>(
     private val elements: List<T> = listOf(),
-) : XStack<T>, List<T> by elements
+) : XStack<T>, List<T> by elements.toList()
 
 fun <T> mutableStackOf(): XMutableStack<T> =
     XArrayMutableStack(mutableListOf())
@@ -22,5 +22,5 @@ fun <T> mutableStackOf(vararg elements: T): XMutableStack<T> =
     XArrayMutableStack(mutableListOf(*elements))
 
 open class XArrayMutableStack<T>(
-    elements: MutableList<T> = mutableListOf(),
-) : XMutableStack<T>, MutableList<T> by elements
+    private val elements: MutableList<T> = mutableListOf(),
+) : XMutableStack<T>, MutableList<T> by elements.toMutableList()

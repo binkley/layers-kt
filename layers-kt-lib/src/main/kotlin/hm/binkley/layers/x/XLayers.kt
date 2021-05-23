@@ -1,6 +1,10 @@
 package hm.binkley.layers.x
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
+import hm.binkley.layers.x.util.XArrayMutableStack
+import hm.binkley.layers.x.util.XMutableStack
+import hm.binkley.layers.x.util.XStack
+import hm.binkley.layers.x.util.mutableStackOf
 import java.util.AbstractMap.SimpleEntry
 import kotlin.collections.Map.Entry
 
@@ -9,18 +13,18 @@ import kotlin.collections.Map.Entry
 open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     firstLayerName: String = "<INIT>",
     private val defaultMutableLayer: (String) -> M,
-    private val _layers: MutableList<M> = mutableListOf(
+    private val _layers: XMutableStack<M> = mutableStackOf(
         defaultMutableLayer(firstLayerName)
     ),
 ) : AbstractMap<K, V>() {
-    val layers: List<XLayer<K, V>> get() = _layers
+    val layers: XStack<XLayer<K, V>> get() = _layers
 
     fun edit(block: XEditBlock<K, V>): M = _layers.last().edit(block)
 
     fun whatIf(block: XEditBlock<K, V>): Map<K, V> {
         val layers = XLayers(
             defaultMutableLayer = defaultMutableLayer,
-            _layers = ArrayList(_layers),
+            _layers = XArrayMutableStack(_layers),
         )
         layers.commitAndNext("<WHAT-IF>").edit(block)
         return layers
@@ -28,7 +32,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
 
     fun <N : M> commitAndNext(nextLayer: () -> N): N {
         val next = nextLayer()
-        _layers.add(next)
+        _layers.push(next)
         return next
     }
 

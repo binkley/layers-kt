@@ -11,6 +11,16 @@ internal class StackTest {
     }
 
     @Test
+    fun `should copy`() {
+        val prior = mutableListOf(3)
+        val stack = XArrayStack(prior)
+
+        prior.removeFirst()
+
+        stack shouldBe listOf(3)
+    }
+
+    @Test
     fun `should peek`() {
         val stack = stackOf(3)
 

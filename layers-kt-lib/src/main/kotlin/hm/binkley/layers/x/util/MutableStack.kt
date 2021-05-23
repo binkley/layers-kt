@@ -24,3 +24,6 @@ fun <T> mutableStackOf(vararg elements: T): XMutableStack<T> =
 open class XArrayMutableStack<T>(
     private val elements: MutableList<T> = mutableListOf(),
 ) : XMutableStack<T>, MutableList<T> by elements.toMutableList()
+
+@Generated // TODO: How to test?  Kotlin complains check is useless
+fun <T> List<T>.toMutableStack() = XArrayMutableStack(toMutableList())

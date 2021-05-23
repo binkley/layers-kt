@@ -21,12 +21,15 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
 
     fun edit(block: XEditBlock<K, V>): M = _layers.last().edit(block)
 
-    fun whatIf(block: XEditBlock<K, V>): Map<K, V> {
+    fun whatIf(
+        name: String = "<WHAT-IF>",
+        block: XEditBlock<K, V>,
+    ): Map<K, V> {
         val layers = XLayers(
             defaultMutableLayer = defaultMutableLayer,
             _layers = XArrayMutableStack(_layers),
         )
-        layers.commitAndNext("<WHAT-IF>").edit(block)
+        layers.commitAndNext(name).edit(block)
         return layers
     }
 

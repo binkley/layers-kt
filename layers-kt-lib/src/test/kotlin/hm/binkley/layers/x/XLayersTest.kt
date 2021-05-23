@@ -151,12 +151,17 @@ internal class XLayersTest {
         layers.edit {
             this[testKey] = latestOfRule(0)
         }
-        val whatIf = layers.whatIf {
+
+        val whatIfA = layers.whatIf {
             this[testKey] = 1.toValue()
+        }
+        val whatIfB = layers.whatIf("<WHOZ-ZAT?>") {
+            this[testKey] = 2.toValue()
         }
 
         layers shouldBe mapOf(testKey to 0)
-        whatIf shouldBe mapOf(testKey to 1)
+        whatIfA shouldBe mapOf(testKey to 1)
+        whatIfB shouldBe mapOf(testKey to 2)
     }
 
     @Test

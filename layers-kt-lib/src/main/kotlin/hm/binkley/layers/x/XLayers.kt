@@ -11,13 +11,33 @@ import kotlin.collections.Map.Entry
 /** @todo Make Spotbugs happy about foo.collectionOp().toCollectionType() */
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
 open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
-    firstLayerName: String = "<INIT>",
+    private val firstLayerName: String = "<INIT>",
     private val defaultLayer: (String) -> M,
     private val layers: XMutableStack<M> = mutableStackOf(
         defaultLayer(firstLayerName)
     ),
 ) : AbstractMap<K, V>() {
     val history: XStack<XLayer<K, V>> get() = layers
+
+    fun <T : V> newRule(
+        name: String,
+        compute: () -> T,
+    ): XRule<V, T> = object : XRule<V, T>(name) {
+        override fun invoke(
+            values: List<T>,
+            layers: XLayers<*, V, *>,
+        ) = compute()
+    }
+
+    fun <T : V> newRule(
+        name: String,
+        compute: (List<T>) -> T,
+    ): XRule<V, T> = object : XRule<V, T>(name) {
+        override fun invoke(
+            values: List<T>,
+            layers: XLayers<*, V, *>,
+        ) = compute(values)
+    }
 
     /** Convenience function for editing the current layer. */
     fun edit(block: XEditBlock<K, V>): M = layers.peek().edit(block)

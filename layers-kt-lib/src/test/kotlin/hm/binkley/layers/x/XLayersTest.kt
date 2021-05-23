@@ -204,4 +204,42 @@ internal class XLayersTest {
 
         layers shouldBe mapOf(testKey to 0)
     }
+
+    @Test
+    fun `should create a constant rule`() {
+        val layers = XLayers(
+            firstLayerName = "AND zeroth",
+            defaultLayer = testMutableLayer
+        )
+        val rule = layers.newRule("I AM CONSTANT") { -> 3 }
+
+        val testKey = "SALLY"
+        layers.edit {
+            this[testKey] = rule
+        }
+
+        layers shouldBe mapOf(testKey to 3)
+    }
+
+    @Test
+    fun `should create a values-based rule`() {
+        val layers = XLayers(
+            firstLayerName = "AND zeroth",
+            defaultLayer = testMutableLayer
+        )
+        val rule = layers.newRule<Int>("I AM SUMMATION") { values ->
+            values.sum()
+        }
+
+        val testKey = "SALLY"
+        layers.edit {
+            this[testKey] = rule
+        }
+        layers.commitAndNext("AND first")
+        layers.edit {
+            this[testKey] = 1.toValue()
+        }
+
+        layers shouldBe mapOf(testKey to 1)
+    }
 }

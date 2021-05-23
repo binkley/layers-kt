@@ -11,6 +11,6 @@ internal class TestSubtypeLayer(name: String) :
     XDefaultMutableLayer<String, Any, TestSubtypeLayer>(name) {
     @Suppress("UNCHECKED_CAST")
     fun foo(key: String) {
-        this[key] = (2 * getAs<Int>(key)).toValue()
+        this[key] = (2 * getValueAs<Int>(key)).toValue()
     }
 }

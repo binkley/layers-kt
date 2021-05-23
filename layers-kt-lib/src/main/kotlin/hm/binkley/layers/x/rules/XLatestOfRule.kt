@@ -5,7 +5,7 @@ import hm.binkley.layers.x.XRule
 
 class XLatestOfRule<V : Any, T : V>(
     private val default: T,
-) : XRule<V, T>("Latest[default=$default]") {
+) : XRule<V, T>("Latest(default=$default)") {
     override fun invoke(
         values: List<T>,
         layers: XLayers<*, V, *>,

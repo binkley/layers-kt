@@ -33,9 +33,9 @@ internal class XLayersTest {
         }
 
         "$layers" shouldBe """
-0: XDefaultMutableLayer[AND zeroth]: {SALLY=<Rule>: Latest[default=0]}
+0: XDefaultMutableLayer[AND zeroth]: {SALLY=<Rule>: Latest(default=0)}
 1: XDefaultMutableLayer[AND first]: {SALLY=<Value[Int]>: 3}
-2: XDefaultMutableLayer[AND second]: {SALLY=<Rule>: Sum}
+2: XDefaultMutableLayer[AND second]: {SALLY=<Rule>: Sum[Int]}
 3: XDefaultMutableLayer[AND third]: {SALLY=<Value[Int]>: 4}
         """.trimIndent()
     }

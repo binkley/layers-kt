@@ -20,7 +20,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     val history: XStack<XLayer<K, V>> get() = layers
 
     /** Convenience function for editing the current layer. */
-    fun edit(block: XEditBlock<K, V>): M = layers.last().edit(block)
+    fun edit(block: XEditBlock<K, V>): M = layers.peek().edit(block)
 
     /** Commit the current layer, and begin a new one with [defaultLayer]. */
     fun <N : M> commitAndNext(nextLayer: () -> N): N {

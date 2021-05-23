@@ -4,7 +4,7 @@ import hm.binkley.layers.x.XLayers
 import hm.binkley.layers.x.XRule
 
 /** @todo Single rule for summing Number types (Int, Float, et al) */
-class XSumOfRule : XRule<Any, Int>("Sum") {
+class XSumOfRule : XRule<Any, Int>("Sum[Int]") {
     override fun invoke(
         values: List<Int>,
         layers: XLayers<*, Any, *>,

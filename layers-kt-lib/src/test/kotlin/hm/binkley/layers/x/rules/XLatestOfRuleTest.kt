@@ -7,6 +7,6 @@ import org.junit.jupiter.api.Test
 internal class XLatestOfRuleTest {
     @Test
     fun `should have a debuggable representation`() {
-        "${latestOfRule(31)}" shouldBe "<Rule>: Latest[default=31]"
+        "${latestOfRule(31)}" shouldBe "<Rule>: Latest(default=31)"
     }
 }

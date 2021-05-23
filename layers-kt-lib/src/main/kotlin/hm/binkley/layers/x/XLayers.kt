@@ -22,19 +22,6 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     /** Convenience function for editing the current layer. */
     fun edit(block: XEditBlock<K, V>): M = layers.last().edit(block)
 
-    /** Try "what-if" scenarios without mutating Layers. */
-    fun whatIf(
-        name: String = "<WHAT-IF>",
-        block: XEditBlock<K, V>,
-    ): Map<K, V> {
-        val layers = XLayers(
-            defaultLayer = defaultLayer,
-            layers = XArrayMutableStack(layers),
-        )
-        layers.commitAndNext(name).edit(block)
-        return layers
-    }
-
     /** Commit the current layer, and begin a new one with [defaultLayer]. */
     fun <N : M> commitAndNext(nextLayer: () -> N): N {
         val next = nextLayer()
@@ -59,6 +46,19 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     fun rollback(): M {
         layers.pop()
         return layers.peek()
+    }
+
+    /** Try "what-if" scenarios without mutating the current layer. */
+    fun whatIf(
+        name: String = "<WHAT-IF>",
+        block: XEditBlock<K, V>,
+    ): Map<K, V> {
+        val layers = XLayers(
+            defaultLayer = defaultLayer,
+            layers = XArrayMutableStack(layers),
+        )
+        layers.commitAndNext(name).edit(block)
+        return layers
     }
 
     override val entries: Set<Entry<K, V>>

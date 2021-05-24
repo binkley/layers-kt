@@ -1,18 +1,21 @@
 package hm.binkley.layers.x
 
+import hm.binkley.layers.x.XDefaultMutableLayer.Companion.defaultMutableLayer
 import hm.binkley.layers.x.rules.XLatestOfRule.Companion.latestOfRule
 import hm.binkley.layers.x.rules.XSumOfRule.Companion.sumOfRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 internal class XLayersTest {
+    val layers = XLayers(
+        firstLayerName = "AND zeroth",
+        defaultLayer = testMutableLayer
+    )
+
     @Test
     fun `should have a debuggable view`() {
         val testKey = "SALLY"
-        val layers = XLayers(
-            firstLayerName = "AND zeroth",
-            defaultLayer = testMutableLayer
-        )
+
         layers.edit {
             this[testKey] = latestOfRule(0)
         }
@@ -69,10 +72,7 @@ internal class XLayersTest {
     @Test
     fun `should apply rule`() {
         val testKey = "SALLY"
-        val layers = XLayers(
-            firstLayerName = "AND zeroth",
-            defaultLayer = testMutableLayer
-        )
+
         layers.edit {
             this[testKey] = latestOfRule(0)
         }
@@ -93,10 +93,7 @@ internal class XLayersTest {
     @Test
     fun `should use latest rule`() {
         val testKey = "SALLY"
-        val layers = XLayers(
-            firstLayerName = "AND zeroth",
-            defaultLayer = testMutableLayer
-        )
+
         layers.edit {
             this[testKey] = latestOfRule(0)
         }
@@ -122,10 +119,7 @@ internal class XLayersTest {
     @Test
     fun `should skip unassigned keys in layers for rules`() {
         val testKey = "SALLY"
-        val layers = XLayers(
-            firstLayerName = "AND zeroth",
-            defaultLayer = testMutableLayer
-        )
+
         layers.edit {
             this[testKey] = latestOfRule(0)
         }
@@ -144,10 +138,7 @@ internal class XLayersTest {
     @Test
     fun `should support what-if scenarios`() {
         val testKey = "SALLY"
-        val layers = XLayers(
-            firstLayerName = "AND zeroth",
-            defaultLayer = testMutableLayer
-        )
+
         layers.edit {
             this[testKey] = latestOfRule(0)
         }
@@ -167,10 +158,7 @@ internal class XLayersTest {
     @Test
     fun `should commit subtype layer`() {
         val testKey = "SALLY"
-        val layers = XLayers(
-            firstLayerName = "AND zeroth",
-            defaultLayer = testMutableLayer
-        )
+
         layers.edit {
             this[testKey] = sumOfRule()
         }
@@ -185,12 +173,9 @@ internal class XLayersTest {
     }
 
     @Test
-    fun `should undo`() {
+    fun `should rollback`() {
         val testKey = "SALLY"
-        val layers = XLayers(
-            firstLayerName = "AND zeroth",
-            defaultLayer = testMutableLayer
-        )
+
         layers.edit {
             this[testKey] = sumOfRule()
         }
@@ -207,10 +192,6 @@ internal class XLayersTest {
 
     @Test
     fun `should create a constant rule`() {
-        val layers = XLayers(
-            firstLayerName = "AND zeroth",
-            defaultLayer = testMutableLayer
-        )
         val rule = layers.newRule("I AM CONSTANT") { -> 3 }
 
         val testKey = "SALLY"
@@ -223,10 +204,6 @@ internal class XLayersTest {
 
     @Test
     fun `should create a values-based rule`() {
-        val layers = XLayers(
-            firstLayerName = "AND zeroth",
-            defaultLayer = testMutableLayer
-        )
         val rule = layers.newRule<Int>("I AM SUMMATION") { values ->
             values.sum()
         }
@@ -248,10 +225,6 @@ internal class XLayersTest {
         val testKey = "SALLY"
         val otherKey = "FRED"
 
-        val layers = XLayers(
-            firstLayerName = "AND zeroth",
-            defaultLayer = testMutableLayer
-        )
         val rule =
             layers.newRule<Int>("I AM COMPLICATED") { values, myLayers ->
                 values.sum() + (myLayers[otherKey] as Int)
@@ -267,5 +240,18 @@ internal class XLayersTest {
         }
 
         layers shouldBe mapOf(testKey to 4, otherKey to 3)
+    }
+}
+
+private val testMutableLayer = defaultMutableLayer<String, Any>()
+
+private class TestNamedLayer :
+    XDefaultMutableLayer<String, Any, TestNamedLayer>("FRED")
+
+private class TestSubtypeLayer(name: String) :
+    XDefaultMutableLayer<String, Any, TestSubtypeLayer>(name) {
+    @Suppress("UNCHECKED_CAST")
+    fun foo(key: String) {
+        this[key] = (2 * getValueAs<Int>(key)).toValue()
     }
 }

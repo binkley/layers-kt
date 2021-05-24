@@ -112,7 +112,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     }
 
     // Short-circuit computing all keys to avoid circular calls for rules
-    override fun get(key: K) = computeValue(key)
+    override fun get(key: K): V? = computeValue(key)
 
     override val entries: Set<Entry<K, V>>
         get() = object : AbstractSet<Entry<K, V>>() {

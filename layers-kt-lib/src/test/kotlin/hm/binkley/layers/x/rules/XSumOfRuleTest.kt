@@ -7,6 +7,6 @@ import org.junit.jupiter.api.Test
 internal class XSumOfRuleTest {
     @Test
     fun `should have a debuggable view`() {
-        "${sumOfRule()}" shouldBe "<Rule>: Sum[Int]"
+        "${sumOfRule("BOB")}" shouldBe "<Rule/BOB>: Sum[Int]"
     }
 }

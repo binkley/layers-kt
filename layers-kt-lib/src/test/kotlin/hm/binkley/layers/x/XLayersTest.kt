@@ -17,7 +17,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
 
         layers.edit {
-            this[testKey] = latestOfRule(0)
+            this[testKey] = latestOfRule(testKey, 0)
         }
 
         layers.commitAndNext("AND first")
@@ -27,7 +27,7 @@ internal class XLayersTest {
 
         layers.commitAndNext("AND second")
         layers.edit {
-            this[testKey] = sumOfRule()
+            this[testKey] = sumOfRule(testKey)
         }
 
         layers.commitAndNext("AND third")
@@ -36,9 +36,9 @@ internal class XLayersTest {
         }
 
         "$layers" shouldBe """
-0: XDefaultMutableLayer[AND zeroth]: {SALLY=<Rule>: Latest(default=0)}
+0: XDefaultMutableLayer[AND zeroth]: {SALLY=<Rule/SALLY>: Latest(default=0)}
 1: XDefaultMutableLayer[AND first]: {SALLY=<Value[Int]>: 3}
-2: XDefaultMutableLayer[AND second]: {SALLY=<Rule>: Sum[Int]}
+2: XDefaultMutableLayer[AND second]: {SALLY=<Rule/SALLY>: Sum[Int]}
 3: XDefaultMutableLayer[AND third]: {SALLY=<Value[Int]>: 4}
         """.trimIndent()
     }
@@ -74,7 +74,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
 
         layers.edit {
-            this[testKey] = latestOfRule(0)
+            this[testKey] = latestOfRule(testKey, 0)
         }
 
         layers.commitAndNext("AND first")
@@ -95,7 +95,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
 
         layers.edit {
-            this[testKey] = latestOfRule(0)
+            this[testKey] = latestOfRule(testKey, 0)
         }
 
         layers.commitAndNext("AND first")
@@ -105,7 +105,7 @@ internal class XLayersTest {
 
         layers.commitAndNext("AND second")
         layers.edit {
-            this[testKey] = sumOfRule()
+            this[testKey] = sumOfRule(testKey)
         }
 
         layers.commitAndNext("AND third")
@@ -121,7 +121,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
 
         layers.edit {
-            this[testKey] = latestOfRule(0)
+            this[testKey] = latestOfRule(testKey, 0)
         }
 
         // No changes for SALLY
@@ -140,13 +140,13 @@ internal class XLayersTest {
         val testKey = "SALLY"
 
         layers.edit {
-            this[testKey] = latestOfRule(0)
+            this[testKey] = latestOfRule(testKey, 0)
         }
 
         val whatIfA = layers.whatIf {
             this[testKey] = 1.toValue()
         }
-        val whatIfB = layers.whatIf("<WHOZ-ZAT?>") {
+        val whatIfB = layers.whatIf("<ONLY THE PHANTOM KNOWS>") {
             this[testKey] = 2.toValue()
         }
 
@@ -160,7 +160,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
 
         layers.edit {
-            this[testKey] = sumOfRule()
+            this[testKey] = sumOfRule(testKey)
         }
 
         val layer = layers.commitAndNext("AND first", ::TestSubtypeLayer)
@@ -177,7 +177,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
 
         layers.edit {
-            this[testKey] = sumOfRule()
+            this[testKey] = sumOfRule(testKey)
         }
 
         layers.commitAndNext("AND first")
@@ -192,9 +192,9 @@ internal class XLayersTest {
 
     @Test
     fun `should create a constant rule`() {
-        val rule = layers.newRule("I AM CONSTANT") { -> 3 }
-
         val testKey = "SALLY"
+        val rule = layers.newRule(testKey, "I AM CONSTANT") { -> 3 }
+
         layers.edit {
             this[testKey] = rule
         }
@@ -204,11 +204,11 @@ internal class XLayersTest {
 
     @Test
     fun `should create a values-based rule`() {
-        val rule = layers.newRule<Int>("I AM SUMMATION") { values ->
+        val testKey = "SALLY"
+        val rule = layers.newRule<Int>(testKey, "I AM SUMMATION") { values ->
             values.sum()
         }
 
-        val testKey = "SALLY"
         layers.edit {
             this[testKey] = rule
         }
@@ -226,13 +226,17 @@ internal class XLayersTest {
         val otherKey = "FRED"
 
         val rule =
-            layers.newRule<Int>("I AM COMPLICATED") { values, myLayers ->
+            layers.newRule<Int>(
+                testKey,
+                "I AM COMPLICATED"
+            ) { values, myLayers ->
                 values.sum() + (myLayers[otherKey] as Int)
             }
 
         layers.edit {
             this[testKey] = rule
-            this[otherKey] = layers.newRule("FRED AT YOUR SERVICE") { -> 3 }
+            this[otherKey] =
+                layers.newRule(otherKey, "FRED AT YOUR SERVICE") { -> 3 }
         }
         layers.commitAndNext("AND first")
         layers.edit {

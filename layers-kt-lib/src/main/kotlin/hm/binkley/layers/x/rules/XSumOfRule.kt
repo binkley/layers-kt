@@ -4,14 +4,16 @@ import hm.binkley.layers.x.XLayers
 import hm.binkley.layers.x.XRule
 
 /** @todo Single rule for summing Number types (Int, Float, et al) */
-class XSumOfRule : XRule<Any, Int>("Sum[Int]") {
+class XSumOfRule<K : Any>(
+    key: K,
+) : XRule<K, Any, Int>(key, "Sum[Int]") {
     override fun invoke(
+        key: K,
         values: List<Int>,
         layers: XLayers<*, Any, *>,
     ) = values.sum()
 
     companion object {
-        private val INSTANCE = XSumOfRule()
-        fun sumOfRule() = INSTANCE
+        fun <K : Any> sumOfRule(key: K) = XSumOfRule(key)
     }
 }

@@ -28,30 +28,36 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     val history: XStack<XLayer<K, V>> get() = layers
 
     fun <T : V> newRule(
+        key: K,
         name: String,
         computeValue: () -> T,
-    ): XRule<V, T> = object : XRule<V, T>(name) {
+    ): XRule<K, V, T> = object : XRule<K, V, T>(key, name) {
         override fun invoke(
+            key: K,
             values: List<T>,
             layers: XLayers<*, V, *>,
         ) = computeValue()
     }
 
     fun <T : V> newRule(
+        key: K,
         name: String,
         computeValue: (List<T>) -> T,
-    ): XRule<V, T> = object : XRule<V, T>(name) {
+    ): XRule<K, V, T> = object : XRule<K, V, T>(key, name) {
         override fun invoke(
+            key: K,
             values: List<T>,
             layers: XLayers<*, V, *>,
         ) = computeValue(values)
     }
 
     fun <T : V> newRule(
+        key: K,
         name: String,
         computeValue: (List<T>, XLayers<*, V, *>) -> T,
-    ): XRule<V, T> = object : XRule<V, T>(name) {
+    ): XRule<K, V, T> = object : XRule<K, V, T>(key, name) {
         override fun invoke(
+            key: K,
             values: List<T>,
             layers: XLayers<*, V, *>,
         ) = computeValue(values, layers)
@@ -143,11 +149,11 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         val rule = currentRuleFor<V>(key)
         val values = currentValuesFor<V>(key)
 
-        return rule(values, this)
+        return rule(key, values, this)
     }
 
-    private fun <T : V> currentRuleFor(key: K): XRule<V, T> =
-        valuesOrRules(key).filterIsInstance<XRule<V, T>>().first()
+    private fun <T : V> currentRuleFor(key: K): XRule<K, V, T> =
+        valuesOrRules(key).filterIsInstance<XRule<K, V, T>>().first()
 
     private fun <T : V> currentValuesFor(key: K): List<T> =
         valuesOrRules(key).filterIsInstance<XValue<T>>().map { it.value }

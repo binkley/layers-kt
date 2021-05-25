@@ -25,7 +25,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     ),
 ) : AbstractMap<K, V>() {
     /** An immutable view in committal order of each layer. */
-    val history: XStack<XLayer<K, V>> get() = layers
+    val history: XStack<XLayer<K, V, M>> get() = layers
 
     fun <T : V> newRule(
         key: K,

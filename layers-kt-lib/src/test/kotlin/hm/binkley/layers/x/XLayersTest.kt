@@ -1,7 +1,6 @@
 package hm.binkley.layers.x
 
 import hm.binkley.layers.x.XDefaultMutableLayer.Companion.defaultMutableLayer
-import hm.binkley.layers.x.rules.XLatestOfRule.Companion.latestOfRule
 import hm.binkley.layers.x.rules.XSumOfRule.Companion.sumOfRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -17,7 +16,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
 
         layers.edit {
-            this[testKey] = latestOfRule(testKey, 0)
+            this[testKey] = layers.latestOfRule(testKey, 0)
         }
 
         layers.commitAndNext("AND first")
@@ -74,7 +73,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
 
         layers.edit {
-            this[testKey] = latestOfRule(testKey, 0)
+            this[testKey] = layers.latestOfRule(testKey, 0)
         }
 
         layers.commitAndNext("AND first")
@@ -95,7 +94,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
 
         layers.edit {
-            this[testKey] = latestOfRule(testKey, 0)
+            this[testKey] = layers.latestOfRule(testKey, 0)
         }
 
         layers.commitAndNext("AND first")
@@ -121,7 +120,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
 
         layers.edit {
-            this[testKey] = latestOfRule(testKey, 0)
+            this[testKey] = layers.latestOfRule(testKey, 0)
         }
 
         // No changes for SALLY
@@ -140,7 +139,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
 
         layers.edit {
-            this[testKey] = latestOfRule(testKey, 0)
+            this[testKey] = layers.latestOfRule(testKey, 0)
         }
 
         val whatIfA = layers.whatIf {
@@ -191,12 +190,12 @@ internal class XLayersTest {
     }
 
     @Test
-    fun `should create a constant rule`() {
+    fun `should create a named constant rule`() {
         val testKey = "SALLY"
-        val rule = layers.newRule(testKey, "I AM CONSTANT") { -> 3 }
+        val testRule = layers.newRule(testKey, "I AM CONSTANT") { -> 3 }
 
         layers.edit {
-            this[testKey] = rule
+            this[testKey] = testRule
         }
 
         layers shouldBe mapOf(testKey to 3)
@@ -205,12 +204,13 @@ internal class XLayersTest {
     @Test
     fun `should create a values-based rule`() {
         val testKey = "SALLY"
-        val rule = layers.newRule<Int>(testKey, "I AM SUMMATION") { values ->
-            values.sum()
-        }
+        val testRule =
+            layers.newRule<Int>(testKey, "I AM SUMMATION") { values ->
+                values.sum()
+            }
 
         layers.edit {
-            this[testKey] = rule
+            this[testKey] = testRule
         }
         layers.commitAndNext("AND first")
         layers.edit {
@@ -225,7 +225,7 @@ internal class XLayersTest {
         val testKey = "SALLY"
         val otherKey = "FRED"
 
-        val rule =
+        val testRule =
             layers.newRule<Int>(
                 testKey,
                 "I AM COMPLICATED"
@@ -234,9 +234,8 @@ internal class XLayersTest {
             }
 
         layers.edit {
-            this[testKey] = rule
-            this[otherKey] =
-                layers.newRule(otherKey, "FRED AT YOUR SERVICE") { -> 3 }
+            this[testKey] = testRule
+            this[otherKey] = layers.constantRule(otherKey, 3)
         }
         layers.commitAndNext("AND first")
         layers.edit {
@@ -249,14 +248,50 @@ internal class XLayersTest {
     @Test
     fun `should create a key-based rule`() {
         val testKey = "SALLY"
-        val rule = layers.newRule<Int>(testKey, "KEYFULL") { key, _, _ ->
+        val testRule = layers.newRule<Int>(testKey, "KEYFULL") { key, _, _ ->
             key.length
         }
+        layers.edit {
+            this[testKey] = testRule
+        }
+
+        layers shouldBe mapOf(testKey to 5)
+    }
+
+    @Test
+    fun `should create a default constant rule`() {
+        val testKey = "SALLY"
+        val rule = layers.constantRule(testKey, 17)
         layers.edit {
             this[testKey] = rule
         }
 
-        layers shouldBe mapOf(testKey to 5)
+        layers.commitAndNext("AND first")
+        layers.edit {
+            this[testKey] = 34.toValue()
+        }
+
+        layers shouldBe mapOf(testKey to 17)
+    }
+
+    @Test
+    fun `should create a latest-of rule`() {
+        val testKey = "SALLY"
+        val testRule = layers.latestOfRule(testKey, "")
+        layers.edit {
+            this[testKey] = testRule
+        }
+
+        layers.commitAndNext("AND first")
+        layers.edit {
+            this[testKey] = "APPLE".toValue()
+        }
+        layers.commitAndNext("AND second")
+        layers.edit {
+            this[testKey] = "BANANA".toValue()
+        }
+
+        layers shouldBe mapOf(testKey to "BANANA")
     }
 }
 

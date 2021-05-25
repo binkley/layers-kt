@@ -76,6 +76,18 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     }
 
     /**
+     * @todo Should there be a runtime exception for adding values to a key
+     *       having a constant rule?
+     */
+    fun <T : V> constantRule(key: K, value: T): XRule<K, V, T> =
+        newRule(key, "Constant(value=$value)") { -> value }
+
+    fun <T : V> latestOfRule(key: K, default: T): XRule<K, V, T> =
+        newRule(key, "Latest(default=$default)") { values ->
+            values.firstOrNull() ?: default
+        }
+
+    /**
      * Edits the current layer as a mutable map.  This layer is not yet
      * committed.
      */

@@ -63,6 +63,18 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         ) = computeValue(values, layers)
     }
 
+    fun <T : V> newRule(
+        key: K,
+        name: String,
+        computeValue: (K, List<T>, XLayers<*, V, *>) -> T,
+    ): XRule<K, V, T> = object : XRule<K, V, T>(key, name) {
+        override fun invoke(
+            key: K,
+            values: List<T>,
+            layers: XLayers<*, V, *>,
+        ) = computeValue(key, values, layers)
+    }
+
     /**
      * Edits the current layer as a mutable map.  This layer is not yet
      * committed.

@@ -245,6 +245,19 @@ internal class XLayersTest {
 
         layers shouldBe mapOf(testKey to 4, otherKey to 3)
     }
+
+    @Test
+    fun `should create a key-based rule`() {
+        val testKey = "SALLY"
+        val rule = layers.newRule<Int>(testKey, "KEYFULL") { key, _, _ ->
+            key.length
+        }
+        layers.edit {
+            this[testKey] = rule
+        }
+
+        layers shouldBe mapOf(testKey to 5)
+    }
 }
 
 private val testMutableLayer = defaultMutableLayer<String, Any>()

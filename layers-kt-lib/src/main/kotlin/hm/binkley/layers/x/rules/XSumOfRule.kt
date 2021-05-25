@@ -10,7 +10,7 @@ class XSumOfRule<K : Any>(
     override fun invoke(
         key: K,
         values: List<Int>,
-        layers: XLayers<*, Any, *>,
+        layers: XLayers<K, Any, *>,
     ) = values.sum()
 
     companion object {

@@ -35,7 +35,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         override fun invoke(
             key: K,
             values: List<T>,
-            layers: XLayers<*, V, *>,
+            layers: XLayers<K, V, *>,
         ) = computeValue()
     }
 
@@ -47,31 +47,31 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         override fun invoke(
             key: K,
             values: List<T>,
-            layers: XLayers<*, V, *>,
+            layers: XLayers<K, V, *>,
         ) = computeValue(values)
     }
 
     fun <T : V> newRule(
         key: K,
         name: String,
-        computeValue: (List<T>, XLayers<*, V, *>) -> T,
+        computeValue: (List<T>, XLayers<K, V, *>) -> T,
     ): XRule<K, V, T> = object : XRule<K, V, T>(key, name) {
         override fun invoke(
             key: K,
             values: List<T>,
-            layers: XLayers<*, V, *>,
+            layers: XLayers<K, V, *>,
         ) = computeValue(values, layers)
     }
 
     fun <T : V> newRule(
         key: K,
         name: String,
-        computeValue: (K, List<T>, XLayers<*, V, *>) -> T,
+        computeValue: (K, List<T>, XLayers<K, V, *>) -> T,
     ): XRule<K, V, T> = object : XRule<K, V, T>(key, name) {
         override fun invoke(
             key: K,
             values: List<T>,
-            layers: XLayers<*, V, *>,
+            layers: XLayers<K, V, *>,
         ) = computeValue(key, values, layers)
     }
 

@@ -1,6 +1,6 @@
 package hm.binkley.layers.x
 
-/** @todo How for M to extend L, and also be a MutableLayer? */
+/** @todo How for M to extend L, inheriting layer-specific funcs/props? */
 interface XMutableLayer<K : Any, V : Any, M : XMutableLayer<K, V, M>> :
     XLayer<K, V>, XLayerMutableMap<K, V> {
     @Suppress("UNCHECKED_CAST")

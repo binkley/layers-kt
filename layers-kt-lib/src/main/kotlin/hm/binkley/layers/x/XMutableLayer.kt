@@ -8,7 +8,4 @@ interface XMutableLayer<K : Any, V : Any, M : XMutableLayer<K, V, M>> :
         get() = this as M
 
     fun edit(block: XEditBlock<K, V>): M
-
-    @Suppress("UNCHECKED_CAST")
-    fun <T : V> getValueAs(key: K): T = (this[key] as XValue<T>).value
 }

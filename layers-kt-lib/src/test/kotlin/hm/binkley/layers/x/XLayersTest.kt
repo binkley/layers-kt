@@ -6,10 +6,7 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 internal class XLayersTest {
-    val layers = XLayers(
-        firstLayerName = "AND zeroth",
-        defaultLayer = testMutableLayer
-    )
+    val layers = XLayers("AND zeroth", defaultMutableLayer<String, Any>())
 
     @Test
     fun `should have a debuggable view`() {
@@ -282,8 +279,6 @@ internal class XLayersTest {
         layers shouldBe mapOf(testKey to "BANANA")
     }
 }
-
-private val testMutableLayer = defaultMutableLayer<String, Any>()
 
 private class TestSubtypeLayer(
     name: String,

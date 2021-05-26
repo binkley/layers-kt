@@ -30,7 +30,7 @@ internal class XLayerTest {
             defaultMutableLayer<String, Number>()
         )
         layers.edit {
-            this[testKey] = layers.constantRule(testKey, 7)
+            this[testKey] = constantRule(testKey, 7)
         }
 
         layers.commitAndNext("AND first")

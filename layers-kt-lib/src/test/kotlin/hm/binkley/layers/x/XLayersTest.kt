@@ -199,13 +199,12 @@ internal class XLayersTest {
     @Test
     fun `should create a values-based rule`() {
         val testKey = "SALLY"
-        val testRule =
-            layers.newRule<Int>(testKey, "I AM SUMMATION") { values ->
-                values.sum()
-            }
 
         layers.edit {
-            this[testKey] = testRule
+            this[testKey] =
+                newRule<Int>(testKey, "I AM SUMMATION") { values ->
+                    values.sum()
+                }
         }
         layers.commitAndNext("AND first")
         layers.edit {
@@ -220,15 +219,13 @@ internal class XLayersTest {
         val testKey = "SALLY"
         val otherKey = "FRED"
 
-        val testRule = layers.newRule<Int>(
-            testKey,
-            "I AM COMPLICATED"
-        ) { values, myLayers ->
-            values.sum() + (myLayers[otherKey] as Int)
-        }
-
         layers.edit {
-            this[testKey] = testRule
+            this[testKey] = newRule<Int>(
+                testKey,
+                "I AM COMPLICATED"
+            ) { values, myLayers ->
+                values.sum() + (myLayers[otherKey] as Int)
+            }
             this[otherKey] = constantRule(otherKey, 3)
         }
         layers.commitAndNext("AND first")

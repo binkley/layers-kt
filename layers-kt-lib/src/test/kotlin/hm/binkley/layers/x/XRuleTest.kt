@@ -28,6 +28,6 @@ private val testRule = object : XRule<String, Foo, Bar>(
     override fun invoke(
         key: String,
         values: List<Bar>,
-        layers: XLayers<String, Foo, *>,
+        layers: XLayersForRules<String, Foo, *>,
     ): Bar = Bar
 }

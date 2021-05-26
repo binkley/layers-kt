@@ -21,7 +21,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     firstLayerName: String = "<INIT>",
     private val defaultLayer: (String, () -> XEditMap<K, V>) -> M,
     private val layers: XMutableStack<M> = mutableStackOf(),
-) : AbstractMap<K, V>(), XRules<K, V> {
+) : AbstractMap<K, V>(), XRules<K, V>, XLayersForRules<K, V, M> {
     init {
         // TODO: Avoid this ugly way to support deep cloning
         if (layers.isEmpty()) commitAndNext(firstLayerName)
@@ -31,10 +31,27 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
      * An immutable stack view in committal order of each layer with entry
      * values as layer values or rules.
      */
-    val history: XStack<XLayer<K, V, M>> get() = layers
+    override val history: XStack<XLayer<K, V, M>> get() = layers
 
     /** Gets the current-most, mutable layer. */
-    fun peek(): M = layers.last()
+    override fun peek(): M = layers.last()
+
+    /**
+     * Tries "what-if" scenarios without mutating the current layer.  The
+     * returned map behaves as if "this" had [block] applied to
+     * a new default layer.
+     */
+    override fun whatIf(
+        name: String,
+        block: XEditBlock<K, V>,
+    ): Map<K, V> {
+        val layers = XLayers(
+            defaultLayer = defaultLayer,
+            layers = XArrayMutableStack(layers),
+        )
+        layers.commitAndNext(name).edit(block)
+        return layers
+    }
 
     override fun <T : V> newRule(
         key: K,
@@ -44,7 +61,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         override fun invoke(
             key: K,
             values: List<T>,
-            layers: XLayers<K, V, *>,
+            layers: XLayersForRules<K, V, *>,
         ) = computeValue()
     }
 
@@ -56,31 +73,31 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         override fun invoke(
             key: K,
             values: List<T>,
-            layers: XLayers<K, V, *>,
+            layers: XLayersForRules<K, V, *>,
         ) = computeValue(values)
     }
 
     override fun <T : V> newRule(
         key: K,
         name: String,
-        computeValue: (List<T>, XLayers<K, V, *>) -> T,
+        computeValue: (List<T>, XLayersForRules<K, V, *>) -> T,
     ): XRule<K, V, T> = object : XRule<K, V, T>(key, name) {
         override fun invoke(
             key: K,
             values: List<T>,
-            layers: XLayers<K, V, *>,
+            layers: XLayersForRules<K, V, *>,
         ) = computeValue(values, layers)
     }
 
     override fun <T : V> newRule(
         key: K,
         name: String,
-        computeValue: (K, List<T>, XLayers<K, V, *>) -> T,
+        computeValue: (K, List<T>, XLayersForRules<K, V, *>) -> T,
     ): XRule<K, V, T> = object : XRule<K, V, T>(key, name) {
         override fun invoke(
             key: K,
             values: List<T>,
-            layers: XLayers<K, V, *>,
+            layers: XLayersForRules<K, V, *>,
         ) = computeValue(key, values, layers)
     }
 
@@ -125,23 +142,6 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     fun rollback(): M {
         layers.pop()
         return layers.peek()
-    }
-
-    /**
-     * Tries "what-if" scenarios without mutating the current layer.  The
-     * returned map behaves as if "this" had [block] applied to
-     * a new default layer.
-     */
-    fun whatIf(
-        name: String = "<WHAT-IF>",
-        block: XEditBlock<K, V>,
-    ): Map<K, V> {
-        val layers = XLayers(
-            defaultLayer = defaultLayer,
-            layers = XArrayMutableStack(layers),
-        )
-        layers.commitAndNext(name).edit(block)
-        return layers
     }
 
     // Short-circuit computing all keys to avoid circular calls for rules

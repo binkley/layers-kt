@@ -190,6 +190,6 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
 
     private inner class EditMap :
         XLayerMutableMap<K, V> by peek(),
-        XRules<K, V> by this@XLayers,
+        XRules<K, V> by this,
         XEditMap<K, V>
 }

@@ -14,11 +14,12 @@ open class XDefaultMutableLayer<K : Any, V : Any, M : XDefaultMutableLayer<K, V,
     }
 
     companion object {
-        fun <K : Any, V : Any> defaultMutableLayer(): (String, () -> XEditMap<K, V>) -> XDefaultMutableLayer<K, V, *> =
+        fun <K : Any, V : Any> defaultMutableLayer(): SelfFactory<K, V> =
             { name, editMap ->
-                XDefaultMutableLayer<K, V, XDefaultMutableLayer<K, V, *>>(
-                    name, editMap
-                )
+                XDefaultMutableLayer<K, V, Self<K, V>>(name, editMap)
             }
     }
 }
+
+private typealias Self<K, V> = XDefaultMutableLayer<K, V, *>
+private typealias SelfFactory<K, V> = (String, () -> XEditMap<K, V>) -> Self<K, V>

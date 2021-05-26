@@ -293,7 +293,7 @@ private class TestSubtypeLayer(
     editMap: () -> XEditMap<String, Any>,
 ) : XDefaultMutableLayer<String, Any, TestSubtypeLayer>(name, editMap) {
     @Suppress("UNCHECKED_CAST")
-    fun foo(key: String) {
+    fun foo(key: String) = edit {
         this[key] = (2 * getValueAs<Int>(key)).toValue()
     }
 }

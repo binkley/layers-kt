@@ -9,9 +9,11 @@ import org.junit.jupiter.api.Test
 internal class XLayerTest {
     @Test
     fun `should be self`() {
-        open class TestBaseLayer<L : TestBaseLayer<L>> : XDefaultLayer<String, Int, L>("Test Layer") {
+        open class TestBaseLayer<L : TestBaseLayer<L>> :
+            XDefaultLayer<String, Int, L>("Test Layer") {
             fun foo() = self
         }
+
         class TestLayer : TestBaseLayer<TestLayer>() {
             fun bar() = this
         }
@@ -21,11 +23,17 @@ internal class XLayerTest {
     }
 
     @Test
-    fun `should get value as requested type`() {
+    fun `should get latest value as requested type`() {
         val testKey = "SALLY"
-        val mutableLayer = defaultMutableLayer<String, Number>()("BOB")
-        mutableLayer.edit { this[testKey] = 3.toValue() }
+        val layers = XLayers(
+            "AND zeroth",
+            defaultMutableLayer<String, Number>()
+        )
+        layers.edit {
+            // TODO: Not a valid case -- every key should have a rule first
+            this[testKey] = 3.toValue()
+        }
 
-        mutableLayer.getValueAs<Int>(testKey) shouldBe 3
+        layers.peek().getValueAs<Int>(testKey) shouldBe 3
     }
 }

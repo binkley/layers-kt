@@ -18,16 +18,24 @@ import kotlin.collections.Map.Entry
  */
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
 open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
-    private val firstLayerName: String = "<INIT>",
-    private val defaultLayer: (String) -> M,
-    private val layers: XMutableStack<M> = mutableStackOf(
-        defaultLayer(firstLayerName)
-    ),
-) : AbstractMap<K, V>() {
-    /** An immutable view in committal order of each layer. */
+    firstLayerName: String = "<INIT>",
+    private val defaultLayer: (String, () -> XEditMap<K, V>) -> M,
+    private val layers: XMutableStack<M> = mutableStackOf(),
+) : AbstractMap<K, V>(), XRules<K, V> {
+    init {
+        if (layers.isEmpty()) commitAndNext(firstLayerName)
+    }
+
+    /**
+     * An immutable stack view in committal order of each layer with entry
+     * values as layer values or rules.
+     */
     val history: XStack<XLayer<K, V, M>> get() = layers
 
-    fun <T : V> newRule(
+    /** Gets the current-most, mutable layer. */
+    fun peek(): M = layers.last()
+
+    override fun <T : V> newRule(
         key: K,
         name: String,
         computeValue: () -> T,
@@ -39,7 +47,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         ) = computeValue()
     }
 
-    fun <T : V> newRule(
+    override fun <T : V> newRule(
         key: K,
         name: String,
         computeValue: (List<T>) -> T,
@@ -51,7 +59,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         ) = computeValue(values)
     }
 
-    fun <T : V> newRule(
+    override fun <T : V> newRule(
         key: K,
         name: String,
         computeValue: (List<T>, XLayers<K, V, *>) -> T,
@@ -63,7 +71,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
         ) = computeValue(values, layers)
     }
 
-    fun <T : V> newRule(
+    override fun <T : V> newRule(
         key: K,
         name: String,
         computeValue: (K, List<T>, XLayers<K, V, *>) -> T,
@@ -79,10 +87,10 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
      * @todo Should there be a runtime exception for adding values to a key
      *       having a constant rule?
      */
-    fun <T : V> constantRule(key: K, value: T): XRule<K, V, T> =
+    override fun <T : V> constantRule(key: K, value: T): XRule<K, V, T> =
         newRule(key, "Constant(value=$value)") { -> value }
 
-    fun <T : V> latestOfRule(key: K, default: T): XRule<K, V, T> =
+    override fun <T : V> latestOfRule(key: K, default: T): XRule<K, V, T> =
         newRule(key, "Latest(default=$default)") { values ->
             values.firstOrNull() ?: default
         }
@@ -94,21 +102,17 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     fun edit(block: XEditBlock<K, V>): M = layers.peek().edit(block)
 
     /**
-     * Commits the current layer, and begins a new layer using [defaultLayer]
-     * having a name provided by that layer.
-     */
-    fun <N : M> commitAndNext(nextLayer: () -> N): N {
-        val next = nextLayer()
-        layers.push(next)
-        return next
-    }
-
-    /**
      * Commits the current layer, and begins a new layer with [nextLayer]
      * given [name].
      */
-    fun <N : M> commitAndNext(name: String, nextLayer: (String) -> N): N =
-        commitAndNext { nextLayer(name) }
+    fun <N : M> commitAndNext(
+        name: String,
+        nextLayer: (String, () -> XEditMap<K, V>) -> N,
+    ): N {
+        val next = nextLayer(name, ::EditMap)
+        layers.push(next)
+        return next
+    }
 
     /**
      * Commits the current layer, and begins a new one with [defaultLayer]
@@ -184,4 +188,9 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
 
     private fun valuesOrRules(key: K): List<XValueOrRule<V>> =
         layers.mapNotNull { it[key] }.reversed()
+
+    private inner class EditMap :
+        XLayerMutableMap<K, V> by peek(),
+        XRules<K, V> by this@XLayers,
+        XEditMap<K, V>
 }

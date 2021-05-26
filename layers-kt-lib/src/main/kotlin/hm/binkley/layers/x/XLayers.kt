@@ -23,6 +23,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     private val layers: XMutableStack<M> = mutableStackOf(),
 ) : AbstractMap<K, V>(), XRules<K, V> {
     init {
+        // TODO: Avoid this ugly way to support deep cloning
         if (layers.isEmpty()) commitAndNext(firstLayerName)
     }
 

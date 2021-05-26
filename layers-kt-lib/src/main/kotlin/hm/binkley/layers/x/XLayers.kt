@@ -131,8 +131,6 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
      * Tries "what-if" scenarios without mutating the current layer.  The
      * returned map behaves as if "this" had [block] applied to
      * a new default layer.
-     *
-     * @todo Does applying [block] to the current layer make more sense?
      */
     fun whatIf(
         name: String = "<WHAT-IF>",

@@ -185,6 +185,7 @@ open class XLayers<K : Any, V : Any, M : XMutableLayer<K, V, M>>(
     private fun <T : V> currentValuesFor(key: K): List<T> =
         valuesOrRules(key).filterIsInstance<XValue<T>>().map { it.value }
 
+    /** Finds valid values or rules for [key] in _newest to oldest_ order. */
     private fun valuesOrRules(key: K): List<XValueOrRule<V>> =
         layers.mapNotNull { it[key] }.reversed()
 

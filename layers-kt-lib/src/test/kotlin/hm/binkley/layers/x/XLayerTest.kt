@@ -30,7 +30,11 @@ internal class XLayerTest {
             defaultMutableLayer<String, Number>()
         )
         layers.edit {
-            // TODO: Not a valid case -- every key should have a rule first
+            this[testKey] = layers.constantRule(testKey, 7)
+        }
+
+        layers.commitAndNext("AND first")
+        layers.edit {
             this[testKey] = 3.toValue()
         }
 

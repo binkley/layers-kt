@@ -14,6 +14,6 @@ package hm.binkley.layers.x
 abstract class XRule<K : Any, V : Any, T : V>(
     val key: K,
     val name: String,
-) : XValueOrRule<V>, (K, List<T>, XLayersForRules<K, V, *>) -> T {
+) : XValueOrRule<V>, (K, List<T>, XLayers<K, V, *>) -> T {
     final override fun toString() = "<Rule/$key>: $name"
 }

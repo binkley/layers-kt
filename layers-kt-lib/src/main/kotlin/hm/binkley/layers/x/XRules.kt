@@ -16,13 +16,13 @@ interface XRules<K : Any, V : Any> {
     fun <T : V> newRule(
         key: K,
         name: String,
-        computeValue: (List<T>, XLayersForRules<K, V, *>) -> T,
+        computeValue: (List<T>, XLayers<K, V, *>) -> T,
     ): XRule<K, V, T>
 
     fun <T : V> newRule(
         key: K,
         name: String,
-        computeValue: (K, List<T>, XLayersForRules<K, V, *>) -> T,
+        computeValue: (K, List<T>, XLayers<K, V, *>) -> T,
     ): XRule<K, V, T>
 
     fun <T : V> constantRule(key: K, value: T): XRule<K, V, T>

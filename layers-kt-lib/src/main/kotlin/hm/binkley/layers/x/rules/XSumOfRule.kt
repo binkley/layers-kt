@@ -1,6 +1,6 @@
 package hm.binkley.layers.x.rules
 
-import hm.binkley.layers.x.XLayersForRules
+import hm.binkley.layers.x.XLayers
 import hm.binkley.layers.x.XRule
 
 /** @todo Single rule for summing Number types (Int, Float, et al) */
@@ -10,7 +10,7 @@ class XSumOfRule<K : Any>(
     override fun invoke(
         key: K,
         values: List<Int>,
-        layers: XLayersForRules<K, Any, *>,
+        layers: XLayers<K, Any, *>,
     ) = values.sum()
 
     companion object {

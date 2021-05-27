@@ -25,7 +25,7 @@ internal class XLayerTest {
     @Test
     fun `should get latest value as requested type`() {
         val testKey = "SALLY"
-        val layers = XLayers(
+        val layers = XMutableLayers(
             "AND zeroth",
             defaultMutableLayer<String, Number>()
         )

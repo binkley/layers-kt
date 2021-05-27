@@ -5,8 +5,8 @@ import hm.binkley.layers.x.rules.XSumOfRule.Companion.sumOfRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-internal class XLayersTest {
-    val layers = XLayers("AND zeroth", defaultMutableLayer<String, Any>())
+internal class XMutableLayersTest {
+    val layers = XMutableLayers("AND zeroth", defaultMutableLayer<String, Any>())
 
     @Test
     fun `should have a debuggable view`() {

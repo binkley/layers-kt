@@ -1,14 +1,14 @@
-package hm.binkley.layers.x.xx
+package hm.binkley.layers.x
 
-interface Layer<K : Any, V : Any, L : Layer<K, V, L>>
-    : Map<K, ValueOrRule<V>> {
+interface Layer<K : Any, V : Any, L : Layer<K, V, L>> :
+    Map<K, ValueOrRule<V>> {
     @Suppress("UNCHECKED_CAST")
     val self: L
         get() = this as L
 }
 
-interface MutableLayer<K : Any, V : Any, M : MutableLayer<K, V, M>>
-    : Layer<K, V, M>,
+interface MutableLayer<K : Any, V : Any, M : MutableLayer<K, V, M>> :
+    Layer<K, V, M>,
     MutableMap<K, ValueOrRule<V>> {
     fun edit(block: EditMap<K, V>.() -> Unit)
 }
@@ -27,8 +27,8 @@ open class DefaultMutableLayer<K : Any, V : Any, M : DefaultMutableLayer<K, V, M
 
     override fun toString(): String = map.toString()
 
-    private inner class LayerEditMap
-        : EditMap<K, V>, MutableMap<K, ValueOrRule<V>> by map {
+    private inner class LayerEditMap :
+        EditMap<K, V>, MutableMap<K, ValueOrRule<V>> by map {
         @Suppress("UNCHECKED_CAST")
         override fun <T : V> getOtherValueAs(key: K): T =
             (this[key] as Value<T>).value

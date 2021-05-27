@@ -1,4 +1,4 @@
-package hm.binkley.layers.x.xx
+package hm.binkley.layers.x
 
 sealed interface ValueOrRule<V : Any>
 
@@ -29,7 +29,7 @@ interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
     }
 
     fun <T : V> constantRule(value: T): Rule<K, V, T> =
-        rule("Constant(value=$value") { _, _, _ -> value }
+        rule("Constant(value=$value)") { _, _, _ -> value }
 
     fun <T : V> latestOfRule(default: T): Rule<K, V, T> =
         rule("Latest(default=$default)") { _, values, _ ->

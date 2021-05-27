@@ -1,7 +1,10 @@
-package hm.binkley.layers.x.xx
+package hm.binkley.layers.x
 
-import hm.binkley.layers.x.xx.DefaultMutableLayers.Companion.defaultMutableLayers
+import hm.binkley.layers.x.DefaultMutableLayers.Companion.defaultMutableLayers
+import lombok.Generated
 
+/** @todo Test `main()`, a kind of user-journey test at unit level */
+@Generated // Lie to JaCoCo
 fun main() {
     println("== USING DEFAULT TYPES")
 

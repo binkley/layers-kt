@@ -1,10 +1,10 @@
-package hm.binkley.layers.x.xx
+package hm.binkley.layers.x
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
+import hm.binkley.layers.x.DefaultMutableLayer.Companion.defaultMutableLayer
 import hm.binkley.layers.x.util.XMutableStack
 import hm.binkley.layers.x.util.XStack
 import hm.binkley.layers.x.util.mutableStackOf
-import hm.binkley.layers.x.util.toMutableStack
-import hm.binkley.layers.x.xx.DefaultMutableLayer.Companion.defaultMutableLayer
 import java.util.AbstractMap.SimpleEntry
 import kotlin.collections.Map.Entry
 
@@ -18,8 +18,8 @@ interface Layers<K : Any, V : Any> : Map<K, V> {
     ): Map<K, V>
 }
 
-interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>
-    : Layers<K, V> {
+interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :
+    Layers<K, V> {
     fun edit(block: EditMap<K, V>.() -> Unit)
 
     /** @todo Returning M loses type information for K and V ?! */
@@ -27,13 +27,17 @@ interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>
     fun <N : M> commitAndNext(nextMutableLayer: () -> N): N
 }
 
+@SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
 open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     override val name: String,
-    private val layers: XMutableStack<M> = mutableStackOf(),
+    initLayers: List<M> = listOf(),
     private val defaultMutableLayer: () -> M,
 ) : MutableLayers<K, V, M>, AbstractMap<K, V>() {
+    private val layers: XMutableStack<M> = mutableStackOf()
+
     init {
-        if (layers.isEmpty()) layers.add(defaultMutableLayer())
+        if (initLayers.isEmpty()) layers.add(defaultMutableLayer())
+        else layers.addAll(initLayers)
     }
 
     companion object {
@@ -52,16 +56,9 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         name: String,
         block: EditMap<K, V>.() -> Unit,
     ): Map<K, V> {
-        val whatIfLayers = layers.toMutableStack()
-        val whatIfLayer = defaultMutableLayer()
-        whatIfLayers.push(whatIfLayer)
-        whatIfLayer.edit(block)
-
-        return DefaultMutableLayers(
-            name,
-            whatIfLayers,
-            defaultMutableLayer,
-        )
+        val whatIf = DefaultMutableLayers(name, layers, defaultMutableLayer)
+        whatIf.commitAndNext().edit(block)
+        return whatIf
     }
 
     override fun edit(block: EditMap<K, V>.() -> Unit) =
@@ -117,11 +114,12 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         return rule(key, values, ViewMap(key))
     }
 
-    private inner class LayersEditMap
-        : EditMap<K, V>, MutableMap<K, ValueOrRule<V>> by layers.peek() {
+    private inner class LayersEditMap :
+        EditMap<K, V>, MutableMap<K, ValueOrRule<V>> by layers.peek() {
         @Suppress("UNCHECKED_CAST")
-        override fun <T : V> getOtherValueAs(key: K): T {
-            return this@DefaultMutableLayers[key] as T
-        }
+        @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
+        override fun <T : V> getOtherValueAs(key: K): T =
+            // TODO: Assumes the "other" key is present
+            this@DefaultMutableLayers[key] as T
     }
 }

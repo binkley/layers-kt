@@ -2,7 +2,7 @@ package hm.binkley.layers.x.util
 
 import lombok.Generated
 
-interface XStack<out T> : List<T>, RandomAccess {
+interface XStack<out T> : List<T> {
     fun peek() = last()
 }
 

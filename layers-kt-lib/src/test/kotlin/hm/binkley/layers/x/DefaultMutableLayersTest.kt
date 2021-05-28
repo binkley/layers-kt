@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Test
 
 internal class DefaultMutableLayersTest {
     private val layers = defaultMutableLayers<String, Number>("A NAME")
+    private val customLayers =
+        DefaultMutableLayers<String, Number, DefaultMutableLayer<String, Number, *>>(
+            "Test Custom Layers"
+        ) { DefaultMutableLayer() }
 
     @Test
     fun `should have a debuggable representation`() {
@@ -73,4 +77,17 @@ A NAME: {}
         map shouldBe mapOf("A KEY" to 3)
         layers shouldBe emptyMap()
     }
+
+    @Test
+    fun `should add a sub-type layer and use it`() {
+        val layer = customLayers.commitAndNext { TestCustomMutableLayer() }
+
+        // That this compiles *is* the test
+        layer.foo()
+    }
+}
+
+private class TestCustomMutableLayer :
+    DefaultMutableLayer<String, Number, TestCustomMutableLayer>() {
+    fun foo() = Unit
 }

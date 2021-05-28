@@ -7,14 +7,14 @@ import hm.binkley.layers.rpg.rules.StatRule.Companion.statRule
 enum class BaseStat {
     MIGHT, DEFTNESS, GRIT, WIT, FORESIGHT, PRESENCE;
 
-    private fun installInto(layer: LayerMutableMap) {
+    private fun addTo(layer: LayerMutableMap) {
         layer[name] = statRule(name)
         layer["$name-BONUS"] = statBonusRule(name)
     }
 
     companion object {
-        fun LayerMutableMap.installStats() = values().forEach {
-            it.installInto(this)
+        fun LayerMutableMap.addStats() = values().forEach {
+            it.addTo(this)
         }
     }
 }

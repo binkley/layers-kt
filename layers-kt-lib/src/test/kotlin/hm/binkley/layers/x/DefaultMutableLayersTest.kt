@@ -5,7 +5,8 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 internal class DefaultMutableLayersTest {
-    private val layers = defaultMutableLayers<String, Number>("A NAME")
+    private val defaultLayers = defaultMutableLayers<String, Number>("A NAME")
+    // TODO: Less cumbersome syntax for custom layers
     private val customLayers =
         DefaultMutableLayers<String, Number, DefaultMutableLayer<String, Number, *>>(
             "Test Custom Layers"
@@ -13,7 +14,7 @@ internal class DefaultMutableLayersTest {
 
     @Test
     fun `should have a debuggable representation`() {
-        "$layers" shouldBe """
+        "$defaultLayers" shouldBe """
 A NAME: {}
 0: {}
         """.trimIndent()
@@ -21,19 +22,19 @@ A NAME: {}
 
     @Test
     fun `should be named`() {
-        layers.name shouldBe "A NAME"
+        defaultLayers.name shouldBe "A NAME"
     }
 
     @Test
     fun `should be a computed map`() {
-        layers.edit {
+        defaultLayers.edit {
             this["A KEY"] = latestOfRule(7)
         }
-        layers.commitAndNext().edit {
+        defaultLayers.commitAndNext().edit {
             this["A KEY"] = 3.toValue()
         }
 
-        layers shouldBe mapOf("A KEY" to 3)
+        defaultLayers shouldBe mapOf("A KEY" to 3)
     }
 
     @Test
@@ -50,16 +51,16 @@ A NAME: {}
             }
         }
 
-        layers.edit {
+        defaultLayers.edit {
             this["A KEY"] = rule
         }
 
-        layers["A KEY"] shouldBe 3
+        defaultLayers["A KEY"] shouldBe 3
     }
 
     @Test
     fun `should read other values in layers`() {
-        layers.edit {
+        defaultLayers.edit {
             this["OTHER KEY"] = constantRule(3)
 
             val value = getOtherValueAs<Int>("OTHER KEY")
@@ -70,12 +71,12 @@ A NAME: {}
 
     @Test
     fun `should run what-if scenarios`() {
-        val map = layers.whatIf {
+        val map = defaultLayers.whatIf {
             this["A KEY"] = constantRule(3)
         }
 
         map shouldBe mapOf("A KEY" to 3)
-        layers shouldBe emptyMap()
+        defaultLayers shouldBe emptyMap()
     }
 
     @Test

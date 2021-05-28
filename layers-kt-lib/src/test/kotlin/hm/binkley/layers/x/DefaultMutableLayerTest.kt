@@ -22,8 +22,9 @@ internal class DefaultMutableLayerTest {
     }
 
     @Test
-    fun `should read other values in current layer`() {
+    fun `should read other values independently in current layer`() {
         layer.edit {
+            this["A KEY"] = 17.0.toValue()
             this["OTHER KEY"] = 3.toValue()
 
             val value = getOtherValueAs<Int>("OTHER KEY")

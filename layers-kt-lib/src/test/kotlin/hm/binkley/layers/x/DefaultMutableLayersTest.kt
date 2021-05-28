@@ -23,10 +23,10 @@ A NAME: {}
     @Test
     fun `should be a computed map`() {
         layers.edit {
-            this["A KEY"] = constantRule(3)
+            this["A KEY"] = latestOfRule(7)
         }
         layers.commitAndNext().edit {
-            this["A KEY"] = 7.toValue()
+            this["A KEY"] = 3.toValue()
         }
 
         layers shouldBe mapOf("A KEY" to 3)

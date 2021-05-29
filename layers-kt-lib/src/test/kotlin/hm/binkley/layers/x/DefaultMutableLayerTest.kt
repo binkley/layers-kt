@@ -1,7 +1,9 @@
 package hm.binkley.layers.x
 
 import hm.binkley.layers.x.DefaultMutableLayer.Companion.defaultMutableLayer
+import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.beTheSameInstanceAs
 import org.junit.jupiter.api.Test
 
 internal class DefaultMutableLayerTest {
@@ -14,11 +16,12 @@ internal class DefaultMutableLayerTest {
 
     @Test
     fun `should edit`() {
-        layer.edit {
+        val edited = layer.edit {
             this["A KEY"] = 3.toValue()
         }
 
         layer shouldBe mapOf("A KEY" to 3.toValue())
+        edited should beTheSameInstanceAs(edited)
     }
 
     @Test

@@ -12,7 +12,7 @@ interface Layer<K : Any, V : Any, L : Layer<K, V, L>> :
 interface MutableLayer<K : Any, V : Any, M : MutableLayer<K, V, M>> :
     Layer<K, V, M>,
     MutableMap<K, ValueOrRule<V>> {
-    fun edit(block: EditMap<K, V>.() -> Unit)
+    fun edit(block: EditMap<K, V>.() -> Unit): M
 }
 
 open class DefaultMutableLayer<K : Any, V : Any, M : DefaultMutableLayer<K, V, M>>(
@@ -27,8 +27,10 @@ open class DefaultMutableLayer<K : Any, V : Any, M : DefaultMutableLayer<K, V, M
             DefaultMutableLayer<K, V, DefaultMutableLayer<K, V, *>>(name)
     }
 
-    override fun edit(block: EditMap<K, V>.() -> Unit) =
+    override fun edit(block: EditMap<K, V>.() -> Unit): M {
         LayerEditMap().block()
+        return self
+    }
 
     override fun toString(): String = "$name: $map"
 

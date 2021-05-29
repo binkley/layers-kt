@@ -52,11 +52,11 @@ fun main() {
     b.edit {
         this["CAROL"] = 17.toValue()
     }
-    d.commitAndNext("Third")
+    d.commitAndNext("Second")
     d.edit {
         this["CAROL"] = 19.toValue()
     }
-    d.commitAndNext("Fourth")
+    d.commitAndNext("Third")
     d.edit {
         this["CAROL"] = rule<Int>("Product[Int]") { _, values, _ ->
             values.fold(1) { a, b -> a * b }
@@ -72,10 +72,13 @@ fun main() {
         this["CAROL"] = (-1).toValue()
     }
 
+    println("- WHAT-IF")
     println(e)
+    println("- ORIGINAL")
+    println(d)
 
     println()
-    println("== ORIGINAL WITHOUT WHAT-IF")
+    println("== USING A RULE DEPENDANT ON THE VALUE OF ANOTHER KEY")
 
     d.edit {
         this["DAVE"] = rule<Int>("Halve[Int](other=CAROL)") { _, _, _ ->
@@ -86,7 +89,7 @@ fun main() {
     println(d)
 
     println()
-    println("== MORE COMPLEX RULES")
+    println("== USING A RULE NEEDING A FULL VIEW OF LAYERS")
 
     d.edit {
         this["DAVE"] = rule<Int>("Count of non-DAVE keys") { _, _, view ->

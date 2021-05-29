@@ -12,10 +12,7 @@ interface Layers<K : Any, V : Any> : Map<K, V> {
     val name: String
     val history: XStack<Map<K, ValueOrRule<V>>>
 
-    fun whatIf(
-        scenarioName: String = "<WHAT-IF: ${this.name}>",
-        block: EditMap<K, V>.() -> Unit,
-    ): Map<K, V>
+    fun whatIf(block: EditMap<K, V>.() -> Unit): Map<K, V>
 }
 
 interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :
@@ -55,12 +52,9 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     override val entries: Set<Entry<K, V>> get() = ViewSet()
     override val history: XStack<Map<K, ValueOrRule<V>>> = layers
 
-    override fun whatIf(
-        scenarioName: String,
-        block: EditMap<K, V>.() -> Unit,
-    ): Map<K, V> {
+    override fun whatIf(block: EditMap<K, V>.() -> Unit): Map<K, V> {
         val whatIf = DefaultMutableLayers(
-            scenarioName, "<INIT>", layers, defaultMutableLayer
+            name, "<INIT>", layers, defaultMutableLayer
         )
         whatIf.commitAndNext("<WHAT-IF>").edit(block)
         return whatIf

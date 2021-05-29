@@ -15,11 +15,11 @@ fun main() {
             values.sum()
         }
     }
-    c.commitAndNext()
+    c.commitAndNext("First")
     c.edit {
         this["ALICE"] = Value(3)
     }
-    val a = c.commitAndNext()
+    val a = c.commitAndNext("Second")
     a.edit {
         this["BOB"] = Value(4.0)
     }
@@ -32,12 +32,12 @@ fun main() {
     val d =
         DefaultMutableLayers<String, Number, DefaultMutableLayer<String, Number, *>>(
             "D"
-        ) { DefaultMutableLayer() }
+        ) { DefaultMutableLayer(it) }
     d.edit {
         this["CAROL"] = constantRule(2)
     }
 
-    class Bob : DefaultMutableLayer<String, Number, Bob>() {
+    class Bob : DefaultMutableLayer<String, Number, Bob>("BOB") {
         fun foo() = println("I AM FOCUTUS OF BOB")
     }
 
@@ -52,11 +52,11 @@ fun main() {
     b.edit {
         this["CAROL"] = 17.toValue()
     }
-    d.commitAndNext()
+    d.commitAndNext("Third")
     d.edit {
         this["CAROL"] = 19.toValue()
     }
-    d.commitAndNext()
+    d.commitAndNext("Fourth")
     d.edit {
         this["CAROL"] = rule<Int>("Product[Int]") { _, values, _ ->
             values.fold(1) { a, b -> a * b }

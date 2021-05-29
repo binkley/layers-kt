@@ -13,7 +13,7 @@ interface Layers<K : Any, V : Any> : Map<K, V> {
     val history: XStack<Map<K, ValueOrRule<V>>>
 
     fun whatIf(
-        name: String = "<WHAT-IF: ${this.name}>",
+        scenarioName: String = "<WHAT-IF: ${this.name}>",
         block: EditMap<K, V>.() -> Unit,
     ): Map<K, V>
 }
@@ -23,20 +23,23 @@ interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :
     fun edit(block: EditMap<K, V>.() -> Unit)
 
     /** @todo Returning M loses type information for K and V ?! */
-    fun commitAndNext(): MutableLayer<K, V, M>
+    fun commitAndNext(name: String): MutableLayer<K, V, M>
     fun <N : M> commitAndNext(nextMutableLayer: () -> N): N
 }
 
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
 open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     override val name: String,
+    // TODO: If initLayers provided, there's no point to this
+    firstLayerName: String = "<INIT>",
     initLayers: List<M> = listOf(),
-    private val defaultMutableLayer: () -> M,
+    private val defaultMutableLayer: (String) -> M,
 ) : MutableLayers<K, V, M>, AbstractMap<K, V>() {
     private val layers: XMutableStack<M> = mutableStackOf()
 
     init {
-        if (initLayers.isEmpty()) layers.add(defaultMutableLayer())
+        if (initLayers.isEmpty())
+            layers.add(defaultMutableLayer(firstLayerName))
         else layers.addAll(initLayers)
     }
 
@@ -45,7 +48,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
             name: String,
         ): MutableLayers<K, V, *> =
             DefaultMutableLayers<K, V, MutableLayer<K, V, *>>(name) {
-                defaultMutableLayer<K, V>()
+                defaultMutableLayer<K, V>(it)
             }
     }
 
@@ -53,18 +56,22 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     override val history: XStack<Map<K, ValueOrRule<V>>> = layers
 
     override fun whatIf(
-        name: String,
+        scenarioName: String,
         block: EditMap<K, V>.() -> Unit,
     ): Map<K, V> {
-        val whatIf = DefaultMutableLayers(name, layers, defaultMutableLayer)
-        whatIf.commitAndNext().edit(block)
+        val whatIf = DefaultMutableLayers(
+            scenarioName, "<INIT>", layers, defaultMutableLayer
+        )
+        whatIf.commitAndNext("<WHAT-IF>").edit(block)
         return whatIf
     }
 
     override fun edit(block: EditMap<K, V>.() -> Unit) =
         LayersEditMap().block()
 
-    override fun commitAndNext(): M = commitAndNext(defaultMutableLayer)
+    override fun commitAndNext(name: String): M = commitAndNext {
+        defaultMutableLayer(name)
+    }
 
     override fun <N : M> commitAndNext(nextMutableLayer: () -> N): N {
         val layer = nextMutableLayer()

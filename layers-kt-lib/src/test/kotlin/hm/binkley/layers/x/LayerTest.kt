@@ -14,6 +14,7 @@ internal class LayerTest {
 }
 
 private class TestLayer(
+    override val name: String = "TEST",
     map: Map<String, ValueOrRule<Number>> = mapOf(),
 ) : Layer<String, Number, TestLayer>,
     Map<String, ValueOrRule<Number>> by map

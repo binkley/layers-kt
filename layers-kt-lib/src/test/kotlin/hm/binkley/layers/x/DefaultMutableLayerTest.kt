@@ -5,11 +5,11 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 internal class DefaultMutableLayerTest {
-    private val layer = defaultMutableLayer<String, Number>()
+    private val layer = defaultMutableLayer<String, Number>("TEST")
 
     @Test
     fun `should have a debuggable representation`() {
-        "$layer" shouldBe "{}"
+        "$layer" shouldBe "TEST: {}"
     }
 
     @Test

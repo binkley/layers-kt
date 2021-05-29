@@ -6,17 +6,18 @@ import org.junit.jupiter.api.Test
 
 internal class DefaultMutableLayersTest {
     private val defaultLayers = defaultMutableLayers<String, Number>("A NAME")
+
     // TODO: Less cumbersome syntax for custom layers
     private val customLayers =
         DefaultMutableLayers<String, Number, DefaultMutableLayer<String, Number, *>>(
             "Test Custom Layers"
-        ) { DefaultMutableLayer() }
+        ) { DefaultMutableLayer(it) }
 
     @Test
     fun `should have a debuggable representation`() {
         "$defaultLayers" shouldBe """
 A NAME: {}
-0: {}
+0: <INIT>: {}
         """.trimIndent()
     }
 
@@ -30,7 +31,7 @@ A NAME: {}
         defaultLayers.edit {
             this["A KEY"] = latestOfRule(7)
         }
-        defaultLayers.commitAndNext().edit {
+        defaultLayers.commitAndNext("First").edit {
             this["A KEY"] = 3.toValue()
         }
 
@@ -89,6 +90,6 @@ A NAME: {}
 }
 
 private class TestCustomMutableLayer :
-    DefaultMutableLayer<String, Number, TestCustomMutableLayer>() {
+    DefaultMutableLayer<String, Number, TestCustomMutableLayer>("TEST") {
     fun foo() = Unit
 }

@@ -21,7 +21,7 @@ internal class DefaultMutableLayerTest {
         }
 
         layer shouldBe mapOf("A KEY" to 3.toValue())
-        edited should beTheSameInstanceAs(edited)
+        edited should beTheSameInstanceAs(layer)
     }
 
     @Test

@@ -142,8 +142,6 @@
     </dependencies>
 
     <build>
-        <defaultGoal>verify</defaultGoal>
-
         <!-- @formatter:off -->
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
@@ -269,7 +267,7 @@
                                         <limit>
                                             <!-- TODO: JaCoCo limits, such as
                                                   DefaultMarkerConstructor -->
-                                            <minimum>95%</minimum>
+                                            <minimum>96%</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -348,10 +346,10 @@
                 <artifactId>pitest-maven</artifactId>
                 <version>${pitest-maven.version}</version>
                 <configuration>
-                    <!-- TODO: This is getting silly.  JaCoCo and/or Pitest
-                               does not understand Kotlin inner classes -->
+                    <!-- TODO: JaCoCo and/or Pitest does not understand Kotlin
+                               inner classes -->
                     <coverageThreshold>78</coverageThreshold>
-                    <mutationThreshold>38</mutationThreshold>
+                    <mutationThreshold>44</mutationThreshold>
                     <timestampedReports>false</timestampedReports>
                 </configuration>
                 <executions>

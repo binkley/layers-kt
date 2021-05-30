@@ -16,4 +16,5 @@ fun <T> stackOf(vararg elements: T): Stack<T> =
     ArrayStack(listOf(*elements))
 
 @Generated // TODO: How to test?  Kotlin complains check is useless
+@Suppress("UNUSED")
 fun <T> List<T>.toStack() = ArrayStack(this)

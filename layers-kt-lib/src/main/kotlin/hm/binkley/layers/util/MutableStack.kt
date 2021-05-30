@@ -26,4 +26,5 @@ open class ArrayMutableStack<T>(
 ) : MutableStack<T>, MutableList<T> by elements.toMutableList()
 
 @Generated // TODO: How to test?  Kotlin complains check is useless
+@Suppress("UNUSED")
 fun <T> List<T>.toMutableStack() = ArrayMutableStack(toMutableList())

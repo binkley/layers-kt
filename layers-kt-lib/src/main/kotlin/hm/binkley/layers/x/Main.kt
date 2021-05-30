@@ -9,18 +9,18 @@ fun main() {
     println("== USING DEFAULT TYPES")
 
     val c = defaultMutableLayers<String, Number>("C")
-    c.edit {
+    c.edit @Generated {
         this["ALICE"] = latestRule(0)
-        this["BOB"] = rule<Double>("Sum[Int]") { _, values, _ ->
+        this["BOB"] = rule<Double>("Sum[Int]") @Generated { _, values, _ ->
             values.sum()
         }
     }
     c.commitAndNext("First")
-    c.edit {
+    c.edit @Generated {
         this["ALICE"] = Value(3)
     }
     val a = c.commitAndNext("Second")
-    a.edit {
+    a.edit @Generated {
         this["BOB"] = Value(4.0)
     }
 
@@ -32,16 +32,17 @@ fun main() {
     val d =
         DefaultMutableLayers<String, Number, DefaultMutableLayer<String, Number, *>>(
             "D"
-        ) { DefaultMutableLayer(it) }
-    d.edit {
+        ) @Generated { DefaultMutableLayer(it) }
+    d.edit @Generated {
         this["CAROL"] = constantRule(2)
     }
 
+    @Generated
     class Bob : DefaultMutableLayer<String, Number, Bob>("BOB") {
         fun foo() = println("I AM FOCUTUS OF BOB")
     }
 
-    val b = d.commitAndNext { Bob() }
+    val b = d.commitAndNext @Generated { Bob() }
     b.foo()
 
     println(d)
@@ -49,16 +50,16 @@ fun main() {
     println()
     println("== USING LATEST RULE FOR A KEY")
 
-    b.edit {
+    b.edit @Generated {
         this["CAROL"] = 17.toValue()
     }
     d.commitAndNext("Second")
-    d.edit {
+    d.edit @Generated {
         this["CAROL"] = 19.toValue()
     }
     d.commitAndNext("Third")
-    d.edit {
-        this["CAROL"] = rule<Int>("Product[Int]") { _, values, _ ->
+    d.edit @Generated {
+        this["CAROL"] = rule<Int>("Product[Int]") @Generated { _, values, _ ->
             values.fold(1) { a, b -> a * b }
         }
     }
@@ -68,7 +69,7 @@ fun main() {
     println()
     println("== WHAT-IF SCENARIO")
 
-    val e = d.whatIf {
+    val e = d.whatIf @Generated {
         this["CAROL"] = (-1).toValue()
     }
 
@@ -80,10 +81,11 @@ fun main() {
     println()
     println("== USING A RULE DEPENDANT ON THE VALUE OF ANOTHER KEY")
 
-    d.edit {
-        this["DAVE"] = rule<Int>("Halve[Int](other=CAROL)") { _, _, _ ->
-            getOtherValueAs<Int>("CAROL") / 2
-        }
+    d.edit @Generated {
+        this["DAVE"] =
+            rule<Int>("Halve[Int](other=CAROL)") @Generated { _, _, _ ->
+                getOtherValueAs<Int>("CAROL") / 2
+            }
     }
 
     println(d)
@@ -91,10 +93,11 @@ fun main() {
     println()
     println("== USING A RULE NEEDING A FULL VIEW OF LAYERS")
 
-    d.edit {
-        this["DAVE"] = rule<Int>("Count of non-DAVE keys") { _, _, view ->
-            view.keys.size
-        }
+    d.edit @Generated {
+        this["DAVE"] =
+            rule<Int>("Count of non-DAVE keys") @Generated { _, _, view ->
+                view.keys.size
+            }
         this["EVE"] = constantRule(31)
     }
 

@@ -1,6 +1,7 @@
 package hm.binkley.layers.x
 
 import hm.binkley.layers.x.DefaultMutableLayers.Companion.defaultMutableLayers
+import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -76,6 +77,18 @@ A NAME: {}
 
             value shouldBe 3
         }
+    }
+
+    @Test
+    fun `should exclude current key from rules view`() {
+        defaultLayers.edit {
+            this["A KEY"] = rule<Int>("A RULE") { _, _, view ->
+                view.keys.shouldBeEmpty()
+                3
+            }
+        }
+
+        defaultLayers["A KEY"] shouldBe 3
     }
 
     @Test

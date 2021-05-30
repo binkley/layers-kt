@@ -1,16 +1,16 @@
 package hm.binkley.layers.x
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
-import hm.binkley.layers.x.DefaultMutableLayer.Companion.defaultMutableLayer
-import hm.binkley.layers.util.XMutableStack
-import hm.binkley.layers.util.XStack
+import hm.binkley.layers.util.MutableStack
+import hm.binkley.layers.util.Stack
 import hm.binkley.layers.util.mutableStackOf
+import hm.binkley.layers.x.DefaultMutableLayer.Companion.defaultMutableLayer
 import java.util.AbstractMap.SimpleEntry
 import kotlin.collections.Map.Entry
 
 interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
     val name: String
-    val history: XStack<Map<K, ValueOrRule<V>>>
+    val history: Stack<Map<K, ValueOrRule<V>>>
     val current: L
 
     fun whatIf(block: EditMap<K, V>.() -> Unit): Map<K, V>
@@ -33,7 +33,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     initLayers: List<M> = listOf(),
     private val defaultMutableLayer: (String) -> M,
 ) : MutableLayers<K, V, M>, AbstractMap<K, V>() {
-    private val layers: XMutableStack<M> = mutableStackOf()
+    private val layers: MutableStack<M> = mutableStackOf()
 
     init {
         if (initLayers.isEmpty())
@@ -51,7 +51,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     }
 
     override val entries: Set<Entry<K, V>> get() = ViewSet()
-    override val history: XStack<Map<K, ValueOrRule<V>>> = layers
+    override val history: Stack<Map<K, ValueOrRule<V>>> = layers
     override val current: M get() = layers.peek()
 
     override fun whatIf(block: EditMap<K, V>.() -> Unit): Map<K, V> {

@@ -13,7 +13,7 @@ internal class StackTest {
     @Test
     fun `should copy`() {
         val prior = mutableListOf(3)
-        val stack = XArrayStack(prior)
+        val stack = ArrayStack(prior)
 
         prior.removeFirst()
 

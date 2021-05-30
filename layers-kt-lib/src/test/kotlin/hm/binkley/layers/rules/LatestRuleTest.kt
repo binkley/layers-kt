@@ -1,16 +1,16 @@
 package hm.binkley.layers.rules
 
-import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
+import hm.binkley.layers.rules.LatestRule.Companion.latestRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import java.util.Collections.emptyList
 import java.util.Collections.emptyMap
 
-internal class LatestOfRuleTest {
+internal class LatestRuleTest {
     @Test
     fun `should have a debuggable presentation`() =
         "${
-        LatestOfRule(
+        LatestRule(
             "BOB",
             "?"
         )
@@ -18,7 +18,7 @@ internal class LatestOfRuleTest {
 
     @Test
     fun `should provide a default`() {
-        latestOfRule("BOB", "MISSING")(
+        latestRule("BOB", "MISSING")(
             "BOB",
             emptyList(),
             emptyMap(),
@@ -27,7 +27,7 @@ internal class LatestOfRuleTest {
 
     @Test
     fun `should calculate rule`() =
-        latestOfRule("BOB", 0)(
+        latestRule("BOB", 0)(
             "BOB",
             listOf(1, 2, 3),
             emptyMap(),

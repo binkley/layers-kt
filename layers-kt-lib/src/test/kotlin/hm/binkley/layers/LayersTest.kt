@@ -1,6 +1,6 @@
 package hm.binkley.layers
 
-import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
+import hm.binkley.layers.rules.LatestRule.Companion.latestRule
 import hm.binkley.layers.rules.SumOfRule.Companion.sumOfRule
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
@@ -313,4 +313,4 @@ private val maryRule =
         ) = throw NullPointerException()
     }
 
-private val fredRule = latestOfRule(fredKey, "MISSING")
+private val fredRule = latestRule(fredKey, "MISSING")

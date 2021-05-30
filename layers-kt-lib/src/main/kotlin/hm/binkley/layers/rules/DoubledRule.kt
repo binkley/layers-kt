@@ -5,7 +5,7 @@ import hm.binkley.layers.ValueMap
 class DoubledRule(
     key: String,
     private val default: Int,
-) : LatestOfRule<Int>(key, default) {
+) : LatestRule<Int>(key, default) {
     override fun invoke(key: String, values: List<Int>, allValues: ValueMap) =
         2 * super.invoke(key, values, allValues)
 

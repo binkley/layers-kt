@@ -5,12 +5,12 @@ import hm.binkley.layers.NamedRule
 import hm.binkley.layers.ValueMap
 import hm.binkley.layers.rpg.rules.StatBonusRule.Companion.statBonusRule
 import hm.binkley.layers.rpg.rules.StatRule.Companion.statRule
-import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
+import hm.binkley.layers.rules.LatestRule.Companion.latestRule
 
 class StatRule(
     stat: String,
 ) : NamedRule<Int>(stat) {
-    private val impl = latestOfRule(stat, 8)
+    private val impl = latestRule(stat, 8)
 
     override fun invoke(key: String, values: List<Int>, allValues: ValueMap): Int =
         impl.invoke(key, values, allValues)

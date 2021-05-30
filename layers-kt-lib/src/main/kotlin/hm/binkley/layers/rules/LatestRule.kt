@@ -3,7 +3,7 @@ package hm.binkley.layers.rules
 import hm.binkley.layers.Rule
 import hm.binkley.layers.ValueMap
 
-open class LatestOfRule<T>(
+open class LatestRule<T>(
     private val key: String,
     private val default: T,
 ) : Rule<T>() {
@@ -13,7 +13,6 @@ open class LatestOfRule<T>(
     override fun description() = "Latest(default=$default)"
 
     companion object {
-        fun <T> latestOfRule(key: String, default: T) =
-            LatestOfRule(key, default)
+        fun <T> latestRule(key: String, default: T) = LatestRule(key, default)
     }
 }

@@ -2,7 +2,7 @@ package hm.binkley.layers.rpg.rules
 
 import hm.binkley.layers.Layers
 import hm.binkley.layers.rpg.rules.StatBonusRule.Companion.statBonusRule
-import hm.binkley.layers.rules.LatestOfRule.Companion.latestOfRule
+import hm.binkley.layers.rules.LatestRule.Companion.latestRule
 import hm.binkley.layers.toValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
@@ -19,7 +19,7 @@ internal class StatRuleTest {
         val statKey = "BOXITUDE"
         val statBonusKey = "$statKey-BONUS"
         val layers = Layers.new {
-            this[statKey] = latestOfRule(statKey, 8)
+            this[statKey] = latestRule(statKey, 8)
             this[statBonusKey] = statBonusRule(statKey)
         }
         layers.commitAndNext(statKey) {
@@ -49,7 +49,7 @@ internal class StatRuleTest {
             val statKey = "DORKMENT"
             val statBonusKey = "$statKey-BONUS"
             val layers = Layers.new {
-                this[statKey] = latestOfRule("BOB", "not an integer")
+                this[statKey] = latestRule("BOB", "not an integer")
                 this[statBonusKey] = statBonusRule(statKey)
             }
 

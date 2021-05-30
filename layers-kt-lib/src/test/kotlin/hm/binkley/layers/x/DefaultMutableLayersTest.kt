@@ -13,6 +13,8 @@ internal class DefaultMutableLayersTest {
             "Test Custom Layers"
         ) { DefaultMutableLayer(it) }
 
+    private val extendedLayers = TestLayers()
+
     @Test
     fun `should have a debuggable representation`() {
         "$defaultLayers" shouldBe """
@@ -36,6 +38,12 @@ A NAME: {}
         }
 
         defaultLayers shouldBe mapOf("A KEY" to 3)
+    }
+
+    @Test
+    fun `should peek at top layer`() {
+        // That this compiles *is* the test
+        extendedLayers.current.foo()
     }
 
     @Test
@@ -87,9 +95,30 @@ A NAME: {}
         // That this compiles *is* the test
         layer.foo()
     }
+
+    @Test
+    fun `should have a customized layers`() {
+        val layer =
+            extendedLayers.commitAndNext { TestCustomMutableSubLayer() }
+
+        // That this compiles *is* the test
+        layer.bar()
+    }
 }
 
-private class TestCustomMutableLayer :
-    DefaultMutableLayer<String, Number, TestCustomMutableLayer>("TEST") {
+private open class TestCustomMutableLayer(
+    name: String = "TEST",
+) : DefaultMutableLayer<String, Number, TestCustomMutableLayer>(name) {
     fun foo() = Unit
 }
+
+private open class TestCustomMutableSubLayer :
+    TestCustomMutableLayer("SUB-TEST") {
+    fun bar() = Unit
+}
+
+private class TestLayers :
+    DefaultMutableLayers<String, Number, TestCustomMutableLayer>(
+        "TESTS",
+        defaultMutableLayer = { TestCustomMutableLayer(it) },
+    )

@@ -1,4 +1,4 @@
-package hm.binkley.layers.x.util
+package hm.binkley.layers.util
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test

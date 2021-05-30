@@ -1,4 +1,4 @@
-package hm.binkley.layers.x.util
+package hm.binkley.layers.util
 
 import lombok.Generated
 

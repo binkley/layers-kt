@@ -27,6 +27,8 @@ data class Value<V>(
     override fun toString() = "<Value>: $value"
 }
 
+fun <V> V.toValue(): ValueOrRule<V> = Value(this)
+
 /**
  * A computed value for layers based on all direct values over each
  * individual layer. The computation may consider the "key" for the value

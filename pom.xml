@@ -346,9 +346,9 @@
                 <artifactId>pitest-maven</artifactId>
                 <version>${pitest-maven.version}</version>
                 <configuration>
-                    <!-- TODO: JaCoCo and/or Pitest does not understand Kotlin
-                               inner classes -->
-                    <coverageThreshold>78</coverageThreshold>
+                    <!-- TODO: JaCoCo and/or Pitest do not understand
+                               Kotlin well -->
+                    <coverageThreshold>77</coverageThreshold>
                     <mutationThreshold>44</mutationThreshold>
                     <timestampedReports>false</timestampedReports>
                 </configuration>

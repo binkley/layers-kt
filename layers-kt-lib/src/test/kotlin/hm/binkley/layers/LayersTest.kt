@@ -82,34 +82,6 @@ internal class LayersTest {
     }
 
     @Test
-    fun `should edit the current layer with varargs`() {
-        val layers = Layers.new().edit(bobKey to bobRule)
-
-        layers shouldBe Layers.new(bobKey to bobRule)
-    }
-
-    @Test
-    fun `should complain when editing varargs without rules`() {
-        shouldThrow<IllegalArgumentException> {
-            Layers.new().edit(bobKey to 1.toValue())
-        }
-    }
-
-    @Test
-    fun `should edit the current layer with a map`() {
-        val layers = Layers.new().edit(mapOf(bobKey to bobRule))
-
-        layers shouldBe Layers.new(bobKey to bobRule)
-    }
-
-    @Test
-    fun `should complain when editing the a map without rules`() {
-        shouldThrow<IllegalArgumentException> {
-            Layers.new().edit(mapOf(bobKey to 1.toValue()))
-        }
-    }
-
-    @Test
     fun `should edit the current layer with a block`() {
         val layers = Layers.new().edit {
             this[bobKey] = bobRule

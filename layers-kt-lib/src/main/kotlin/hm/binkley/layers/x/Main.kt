@@ -10,7 +10,7 @@ fun main() {
 
     val c = defaultMutableLayers<String, Number>("C")
     c.edit {
-        this["ALICE"] = latestOfRule(0)
+        this["ALICE"] = latestRule(0)
         this["BOB"] = rule<Double>("Sum[Int]") { _, values, _ ->
             values.sum()
         }

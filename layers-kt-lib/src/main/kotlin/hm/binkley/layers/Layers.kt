@@ -13,7 +13,7 @@ interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
     val history: Stack<Map<K, ValueOrRule<V>>>
     val current: L
 
-    fun whatIf(block: EditMap<K, V>.() -> Unit): Map<K, V>
+    fun whatIfWith(block: EditMap<K, V>.() -> Unit): Map<K, V>
 }
 
 interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :
@@ -54,7 +54,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     override val history: Stack<Map<K, ValueOrRule<V>>> = layers
     override val current: M get() = layers.peek()
 
-    override fun whatIf(block: EditMap<K, V>.() -> Unit): Map<K, V> {
+    override fun whatIfWith(block: EditMap<K, V>.() -> Unit): Map<K, V> {
         val whatIf = DefaultMutableLayers(
             name, "<INIT>", layers, defaultMutableLayer
         )

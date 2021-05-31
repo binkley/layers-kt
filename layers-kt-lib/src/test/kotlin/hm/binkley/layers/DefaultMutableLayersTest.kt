@@ -93,11 +93,11 @@ A NAME: {}
 
     @Test
     fun `should run what-if scenarios`() {
-        val map = defaultLayers.whatIf {
+        val whatIf = defaultLayers.whatIfWith {
             this["A KEY"] = constantRule(3)
         }
 
-        map shouldBe mapOf("A KEY" to 3)
+        whatIf shouldBe mapOf("A KEY" to 3)
         defaultLayers shouldBe emptyMap()
     }
 

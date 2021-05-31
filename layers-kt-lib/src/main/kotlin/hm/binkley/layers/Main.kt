@@ -69,7 +69,7 @@ fun main() {
     println()
     println("== WHAT-IF SCENARIO")
 
-    val e = d.whatIf @Generated {
+    val e = d.whatIfWith @Generated {
         this["CAROL"] = (-1).toValue()
     }
 

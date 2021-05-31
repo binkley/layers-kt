@@ -23,16 +23,4 @@ internal class DefaultMutableLayerTest {
         layer shouldBe mapOf("A KEY" to 3.toValue())
         edited should beTheSameInstanceAs(layer)
     }
-
-    @Test
-    fun `should read other values independently in current layer`() {
-        layer.edit {
-            this["A KEY"] = 17.0.toValue()
-            this["OTHER KEY"] = 3.toValue()
-
-            val value = getOtherValueAs<Int>("OTHER KEY")
-
-            value shouldBe 3
-        }
-    }
 }

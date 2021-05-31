@@ -28,16 +28,12 @@ open class DefaultMutableLayer<K : Any, V : Any, M : DefaultMutableLayer<K, V, M
     }
 
     override fun edit(block: EditMap<K, V>.() -> Unit): M {
-        LayerEditMap().block()
+        DefaultEditMap().block()
         return self
     }
 
     override fun toString(): String = "$name: $map"
 
-    private inner class LayerEditMap :
-        EditMap<K, V>, MutableMap<K, ValueOrRule<V>> by map {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : V> getOtherValueAs(key: K): T =
-            (this[key] as Value<T>).value
-    }
+    private inner class DefaultEditMap :
+        EditMap<K, V>, MutableMap<K, ValueOrRule<V>> by map
 }

@@ -59,8 +59,4 @@ internal class EditMapTest {
 
 private class TestEditMap(
     private val map: MutableMap<String, ValueOrRule<Number>> = mutableMapOf(),
-) : EditMap<String, Number>, MutableMap<String, ValueOrRule<Number>> by map {
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : Number> getOtherValueAs(key: String): T =
-        throw IllegalStateException("BUG: Not supported by test edit map")
-}
+) : EditMap<String, Number>, MutableMap<String, ValueOrRule<Number>> by map

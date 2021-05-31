@@ -1,8 +1,6 @@
 package hm.binkley.layers
 
 interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
-    fun <T : V> getOtherValueAs(key: K): T
-
     fun <T : V> rule(
         name: String,
         block: (K, List<T>, Map<K, V>) -> T,
@@ -13,6 +11,10 @@ interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
 
     fun <T : V> constantRule(value: T) = ConstantRule<K, V, T>(value)
     fun <T : V> latestRule(default: T) = LatestRule<K, V, T>(default)
+}
+
+interface LayersEditMap<K : Any, V : Any> : EditMap<K, V> {
+    fun <T : V> getOtherValueAs(key: K): T
 }
 
 open class ConstantRule<K : Any, V : Any, T : V>(

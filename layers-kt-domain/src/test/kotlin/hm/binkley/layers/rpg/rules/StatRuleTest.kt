@@ -1,6 +1,7 @@
 package hm.binkley.layers.rpg.rules
 
 import hm.binkley.layers.rpg.RpgLayers.Companion.newCharacter
+import hm.binkley.layers.toValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -28,7 +29,7 @@ internal class StatRuleTest {
 
     @Test
     fun `should round bonus from a stat`() {
-        val statKey = "FRUBNESS"
+        val statKey = "FRABNESS"
         val statBonusKey = "$statKey-BONUS"
 
         layers.edit {
@@ -40,7 +41,7 @@ internal class StatRuleTest {
     }
 
     @Test
-    fun `should complain if dependency is not an integer`() {
+    fun `should require stats to be integers`() {
         val statKey = "DORKMENT"
         val statBonusKey = "$statKey-BONUS"
 
@@ -52,5 +53,31 @@ internal class StatRuleTest {
         shouldThrow<ClassCastException> {
             layers[statBonusKey]
         }
+    }
+
+    @Test
+    fun `should default stats to 8`() {
+        val statKey = "HACKANCE"
+
+        layers.edit {
+            this[statKey] = statRule(statKey)
+        }
+
+        layers[statKey] shouldBe 8
+    }
+
+    @Test
+    fun `should add up stat changes cumulatively`() {
+        val statKey = "JOUSATION"
+
+        layers.edit {
+            this[statKey] = statRule(statKey)
+        }
+        layers.commitAndNext("Increase Jousation")
+        layers.edit {
+            this[statKey] = 1.toValue()
+        }
+
+        layers[statKey] shouldBe 9
     }
 }

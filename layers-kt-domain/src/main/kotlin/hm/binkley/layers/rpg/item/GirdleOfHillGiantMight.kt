@@ -5,7 +5,7 @@ import hm.binkley.layers.rpg.RpgLayer
 import kotlin.math.max
 
 /**
- * @todo How to not revinvent the wheel on calculating current might?
+ * @todo Do not repeat oneself calculating current might sans this item
  * @todo The rule is subtly mistaken.  Say a character had 2 magic items:
  *       1) An earlier item granted 22 strength
  *       2) This later item grants 21 strength

@@ -1,4 +1,4 @@
-package hm.binkley.layers.x
+package hm.binkley.layers
 
 import io.kotest.matchers.should
 import io.kotest.matchers.types.beInstanceOf

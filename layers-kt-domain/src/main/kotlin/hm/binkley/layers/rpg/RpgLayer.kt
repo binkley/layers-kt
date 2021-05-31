@@ -1,6 +1,6 @@
 package hm.binkley.layers.rpg
 
-import hm.binkley.layers.x.DefaultMutableLayer
+import hm.binkley.layers.DefaultMutableLayer
 
 open class RpgLayer(
     name: String,

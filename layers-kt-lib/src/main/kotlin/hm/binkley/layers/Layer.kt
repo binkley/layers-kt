@@ -1,4 +1,4 @@
-package hm.binkley.layers.x
+package hm.binkley.layers
 
 interface Layer<K : Any, V : Any, L : Layer<K, V, L>> :
     Map<K, ValueOrRule<V>> {

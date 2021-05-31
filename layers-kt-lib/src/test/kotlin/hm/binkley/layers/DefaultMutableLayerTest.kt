@@ -1,6 +1,6 @@
-package hm.binkley.layers.x
+package hm.binkley.layers
 
-import hm.binkley.layers.x.DefaultMutableLayer.Companion.defaultMutableLayer
+import hm.binkley.layers.DefaultMutableLayer.Companion.defaultMutableLayer
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.beTheSameInstanceAs

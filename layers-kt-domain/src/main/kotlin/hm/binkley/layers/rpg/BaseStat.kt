@@ -1,8 +1,8 @@
 package hm.binkley.layers.rpg
 
+import hm.binkley.layers.EditMap
 import hm.binkley.layers.rpg.rules.statBonusRule
 import hm.binkley.layers.rpg.rules.statRule
-import hm.binkley.layers.x.EditMap
 
 enum class BaseStat {
     MIGHT, DEFTNESS, GRIT, WIT, FORESIGHT, PRESENCE;

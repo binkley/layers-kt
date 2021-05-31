@@ -1,6 +1,6 @@
-package hm.binkley.layers.x
+package hm.binkley.layers
 
-import hm.binkley.layers.x.DefaultMutableLayers.Companion.defaultMutableLayers
+import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
 import lombok.Generated
 
 /** @todo Test `main()`, a kind of user-journey test at unit level */

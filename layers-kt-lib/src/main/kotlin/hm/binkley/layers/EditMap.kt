@@ -1,4 +1,4 @@
-package hm.binkley.layers.x
+package hm.binkley.layers
 
 interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
     fun <T : V> getOtherValueAs(key: K): T

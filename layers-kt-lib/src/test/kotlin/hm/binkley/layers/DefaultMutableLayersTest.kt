@@ -1,6 +1,6 @@
-package hm.binkley.layers.x
+package hm.binkley.layers
 
-import hm.binkley.layers.x.DefaultMutableLayers.Companion.defaultMutableLayers
+import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test

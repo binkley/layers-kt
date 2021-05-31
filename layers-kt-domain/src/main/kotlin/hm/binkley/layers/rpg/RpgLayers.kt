@@ -1,7 +1,7 @@
 package hm.binkley.layers.rpg
 
+import hm.binkley.layers.DefaultMutableLayers
 import hm.binkley.layers.rpg.BaseStat.Companion.addStatRules
-import hm.binkley.layers.x.DefaultMutableLayers
 
 open class RpgLayers private constructor(
     name: String,

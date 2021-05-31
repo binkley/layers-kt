@@ -5,6 +5,7 @@ import hm.binkley.layers.DefaultMutableLayer.Companion.defaultMutableLayer
 import hm.binkley.layers.util.MutableStack
 import hm.binkley.layers.util.Stack
 import hm.binkley.layers.util.mutableStackOf
+import hm.binkley.layers.util.toMutableStack
 import java.util.AbstractMap.SimpleEntry
 import kotlin.collections.Map.Entry
 
@@ -14,6 +15,9 @@ interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
     val current: L
 
     fun whatIfWith(block: EditMap<K, V>.() -> Unit): Map<K, V>
+
+    /** @todo Layers parameter as `L` loses type information ?! */
+    fun whatIfWithout(layer: Layer<*, *, *>): Map<K, V>
 }
 
 interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :
@@ -60,6 +64,17 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         )
         whatIf.commitAndNext("<WHAT-IF>").edit(block)
         return whatIf
+    }
+
+    override fun whatIfWithout(layer: Layer<*, *, *>): Map<K, V> {
+        val layers: MutableStack<M> = layers.toMutableStack()
+        layers.remove(layer)
+        return DefaultMutableLayers(
+            name,
+            "<INIT>",
+            initLayers = layers,
+            defaultMutableLayer
+        )
     }
 
     override fun edit(block: EditMap<K, V>.() -> Unit) =

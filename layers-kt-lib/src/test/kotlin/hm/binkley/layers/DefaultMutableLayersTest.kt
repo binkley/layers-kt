@@ -92,13 +92,25 @@ A NAME: {}
     }
 
     @Test
-    fun `should run what-if scenarios`() {
+    fun `should run what-if-with scenarios`() {
         val whatIf = defaultLayers.whatIfWith {
             this["A KEY"] = constantRule(3)
         }
 
         whatIf shouldBe mapOf("A KEY" to 3)
         defaultLayers shouldBe emptyMap()
+    }
+
+    @Test
+    fun `should run what-if-without scenarios`() {
+        defaultLayers.edit {
+            this["A KEY"] = constantRule(3)
+        }
+
+        val whatIf = defaultLayers.whatIfWithout(defaultLayers.current)
+
+        whatIf shouldBe emptyMap()
+        defaultLayers shouldBe mapOf("A KEY" to 3)
     }
 
     @Test

@@ -267,7 +267,7 @@
                                         <limit>
                                             <!-- TODO: JaCoCo limits, such as
                                                   DefaultMarkerConstructor -->
-                                            <minimum>96%</minimum>
+                                            <minimum>95%</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -348,8 +348,8 @@
                 <configuration>
                     <!-- TODO: JaCoCo and/or Pitest do not understand
                                Kotlin well -->
-                    <coverageThreshold>77</coverageThreshold>
-                    <mutationThreshold>44</mutationThreshold>
+                    <coverageThreshold>64</coverageThreshold>
+                    <mutationThreshold>22</mutationThreshold>
                     <timestampedReports>false</timestampedReports>
                 </configuration>
                 <executions>

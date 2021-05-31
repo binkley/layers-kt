@@ -17,13 +17,15 @@ interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
 
 open class ConstantRule<K : Any, V : Any, T : V>(
     private val value: T,
-) : Rule<K, V, T>("Constant(value=$value)") {
+    name: String = "Constant(value=$value)",
+) : Rule<K, V, T>(name) {
     override fun invoke(key: K, values: List<T>, view: Map<K, V>): T = value
 }
 
 open class LatestRule<K : Any, V : Any, T : V>(
     private val default: T,
-) : Rule<K, V, T>("Latest(default=$default)") {
+    name: String = "Latest(default=$default)",
+) : Rule<K, V, T>(name) {
     override fun invoke(key: K, values: List<T>, view: Map<K, V>): T =
         values.lastOrNull() ?: default
 }

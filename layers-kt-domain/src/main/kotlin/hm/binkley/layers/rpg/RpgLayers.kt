@@ -1,14 +1,24 @@
 package hm.binkley.layers.rpg
 
-import hm.binkley.layers.Layers
-import hm.binkley.layers.rpg.BaseStat.Companion.addStats
-import hm.binkley.layers.rules.LatestRule.Companion.latestRule
+import hm.binkley.layers.rpg.BaseStat.Companion.addStatRules
+import hm.binkley.layers.x.DefaultMutableLayers
 
-fun newCharacter() = Layers.new(listOf(CharacterLayer("<INIT>"))).edit {
-    this["PLAYER-NAME"] = latestRule("PLAYER-NAME", "")
-    this["CHARACTER-NAME"] = latestRule("CHARACTER-NAME", "")
-
-    addStats()
+open class RpgLayers private constructor(
+    name: String,
+) : DefaultMutableLayers<String, Any, RpgLayer>(
+    name,
+    initLayers = listOf(
+        CharacterLayer(name).edit {
+            this["PLAYER-NAME"] = latestRule("")
+            this["CHARACTER-NAME"] = latestRule("")
+            addStatRules()
+        }
+    ),
+    defaultMutableLayer = { RpgLayer(it) }
+) {
+    companion object {
+        fun newCharacter(name: String) = RpgLayers(name)
+    }
 }
 
-class CharacterLayer(name: String) : RpgLayer<CharacterLayer>(name)
+class CharacterLayer(name: String) : RpgLayer(name)

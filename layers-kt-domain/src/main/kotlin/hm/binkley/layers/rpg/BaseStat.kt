@@ -1,20 +1,16 @@
 package hm.binkley.layers.rpg
 
-import hm.binkley.layers.LayerMutableMap
-import hm.binkley.layers.rpg.rules.StatBonusRule.Companion.statBonusRule
-import hm.binkley.layers.rpg.rules.StatRule.Companion.statRule
+import hm.binkley.layers.rpg.rules.statBonusRule
+import hm.binkley.layers.rpg.rules.statRule
+import hm.binkley.layers.x.EditMap
 
 enum class BaseStat {
     MIGHT, DEFTNESS, GRIT, WIT, FORESIGHT, PRESENCE;
 
-    private fun addTo(layer: LayerMutableMap) {
-        layer[name] = statRule(name)
-        layer["$name-BONUS"] = statBonusRule(name)
-    }
-
     companion object {
-        fun LayerMutableMap.addStats() = values().forEach {
-            it.addTo(this)
+        fun EditMap<String, Any>.addStatRules() = values().forEach {
+            this[it.name] = statRule(it.name)
+            this["${it.name}-BONUS"] = statBonusRule(it.name)
         }
     }
 }

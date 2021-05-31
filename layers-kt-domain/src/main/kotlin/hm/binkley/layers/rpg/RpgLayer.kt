@@ -1,7 +1,7 @@
 package hm.binkley.layers.rpg
 
-import hm.binkley.layers.MutablePlainLayer
+import hm.binkley.layers.x.DefaultMutableLayer
 
-open class RpgLayer<M : RpgLayer<M>>(
+open class RpgLayer(
     name: String,
-) : MutablePlainLayer<M>(name)
+) : DefaultMutableLayer<String, Any, RpgLayer>(name)

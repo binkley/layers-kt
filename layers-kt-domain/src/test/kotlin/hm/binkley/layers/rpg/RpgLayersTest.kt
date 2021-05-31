@@ -1,10 +1,11 @@
 package hm.binkley.layers.rpg
 
+import hm.binkley.layers.rpg.RpgLayers.Companion.newCharacter
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class RpgLayersTest {
-    private val character = newCharacter()
+    private val character = newCharacter("TEST CHARACTER")
 
     @Test
     fun `should have might`() {

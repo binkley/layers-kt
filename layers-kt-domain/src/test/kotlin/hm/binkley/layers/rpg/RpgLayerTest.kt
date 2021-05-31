@@ -1,5 +1,6 @@
 package hm.binkley.layers.rpg
 
+import hm.binkley.layers.rpg.RpgLayers.Companion.newCharacter
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -15,7 +16,8 @@ internal class RpgLayerTest {
 
     @Test
     fun `should start a new character`() {
-        val character = newCharacter()
+        val character = newCharacter("TEST CHARACTER")
+
         character["PLAYER-NAME"] shouldBe ""
         character["CHARACTER-NAME"] shouldBe ""
         character["MIGHT"] shouldBe 8

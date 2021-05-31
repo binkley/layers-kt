@@ -1,5 +1,6 @@
 package hm.binkley.layers.rpg
 
+import hm.binkley.layers.rpg.BaseStat.MIGHT
 import hm.binkley.layers.rpg.RpgLayers.Companion.newCharacter
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.shouldBe
@@ -20,7 +21,7 @@ internal class RpgLayerTest {
 
         character["PLAYER-NAME"] shouldBe ""
         character["CHARACTER-NAME"] shouldBe ""
-        character["MIGHT"] shouldBe 8
+        character[MIGHT.name] shouldBe 8
         character["MIGHT-BONUS"] shouldBe -1
     }
 }

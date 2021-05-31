@@ -22,6 +22,6 @@ internal class RpgLayerTest {
         character["PLAYER-NAME"] shouldBe ""
         character["CHARACTER-NAME"] shouldBe ""
         character[MIGHT.name] shouldBe 8
-        character["MIGHT-BONUS"] shouldBe -1
+        character[MIGHT.bonusKey] shouldBe -1
     }
 }

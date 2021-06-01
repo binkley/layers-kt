@@ -15,8 +15,6 @@ interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
     val current: L
 
     fun whatIfWith(block: EditMap<K, V>.() -> Unit): Map<K, V>
-
-    /** @todo Layers parameter as `L` loses type information ?! */
     fun whatIfWithout(layer: Layer<*, *, *>): Map<K, V>
 }
 
@@ -26,7 +24,7 @@ interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :
 
     /** @todo Returning M loses type information for K and V ?! */
     fun commitAndNext(name: String): MutableLayer<K, V, M>
-    fun <N : M> commitAndNext(nextMutableLayer: () -> N): N
+    fun <N : M> commitAndNext(next: () -> N): N
 }
 
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
@@ -84,8 +82,8 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         defaultMutableLayer(name)
     }
 
-    override fun <N : M> commitAndNext(nextMutableLayer: () -> N): N {
-        val layer = nextMutableLayer()
+    override fun <N : M> commitAndNext(next: () -> N): N {
+        val layer = next()
         layers.push(layer)
         return layer
     }
@@ -125,18 +123,15 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     }
 
     private fun allKeys(): Set<K> = history.flatMap { it.keys }.toSet()
-    private fun computeValue(key: K): V {
-        val rule = currentRuleFor<V>(key)
-        val values = currentValuesFor<V>(key)
+    private fun <T : V> computeValue(key: K): T {
+        val rule = currentRuleFor<T>(key)
+        val values = currentValuesFor<T>(key)
 
         return rule(key, values, ViewMap(key))
     }
 
     private inner class DefaultLayersEditMap :
         LayersEditMap<K, V>, MutableMap<K, ValueOrRule<V>> by layers.peek() {
-        @Suppress("UNCHECKED_CAST")
-        @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
-        override fun <T : V> getOtherValueAs(key: K): T =
-            this@DefaultMutableLayers[key] as T
+        override fun <T : V> getOtherValueAs(key: K): T = computeValue(key)
     }
 }

@@ -1,7 +1,7 @@
 package hm.binkley.layers.rpg.item
 
-import hm.binkley.layers.rpg.BaseStat.MIGHT
 import hm.binkley.layers.rpg.RpgLayer
+import hm.binkley.layers.rpg.Stat.MIGHT
 import kotlin.math.max
 
 /**

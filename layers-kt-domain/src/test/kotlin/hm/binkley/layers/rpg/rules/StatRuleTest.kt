@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 internal class StatRuleTest {
-    private val character = newCharacter("TEST CHARACTER")
+    private val character = newCharacter()
 
     @Test
     fun `should have a debuggable presentation for stats`() =

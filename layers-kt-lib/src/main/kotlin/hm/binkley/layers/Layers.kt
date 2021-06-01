@@ -11,7 +11,7 @@ import kotlin.collections.Map.Entry
 
 interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
     val name: String
-    val history: Stack<Map<K, ValueOrRule<V>>>
+    val history: Stack<Layer<K, V, *>>
     val current: L
 
     fun whatIfWith(block: EditMap<K, V>.() -> Unit): Map<K, V>
@@ -53,7 +53,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     }
 
     override val entries: Set<Entry<K, V>> get() = ViewSet()
-    override val history: Stack<Map<K, ValueOrRule<V>>> = layers
+    override val history: Stack<Layer<K, V, *>> = layers
     override val current: M get() = layers.peek()
 
     override fun whatIfWith(block: EditMap<K, V>.() -> Unit): Map<K, V> {

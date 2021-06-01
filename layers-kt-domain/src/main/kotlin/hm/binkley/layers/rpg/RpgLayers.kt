@@ -6,10 +6,10 @@ open class RpgLayers private constructor(
     name: String,
 ) : DefaultMutableLayers<String, Any, RpgLayer>(
     name,
-    initLayers = listOf(CharacterLayer(name)),
+    initLayers = listOf(CharacterLayer(), StatLayer()),
     defaultMutableLayer = { RpgLayer(it) }
 ) {
     companion object {
-        fun newCharacter(name: String) = RpgLayers(name)
+        fun newCharacter() = RpgLayers("IGNORED")
     }
 }

@@ -137,7 +137,6 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         @Suppress("UNCHECKED_CAST")
         @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
         override fun <T : V> getOtherValueAs(key: K): T =
-            // TODO: Assumes the "other" key is present
             this@DefaultMutableLayers[key] as T
     }
 }

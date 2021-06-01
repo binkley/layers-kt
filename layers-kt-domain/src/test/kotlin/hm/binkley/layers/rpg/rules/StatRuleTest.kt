@@ -12,13 +12,13 @@ internal class StatRuleTest {
     @Test
     fun `should have a debuggable presentation for stats`() =
         character.edit {
-            "${statRule("FRED")}" shouldBe "<Rule>: Stat[Int](stat=FRED)"
+            "${statRule("FRED")}" shouldBe "<Rule>Stat[Int](stat=FRED)"
         }
 
     @Test
     fun `should have a debuggable presentation for stat bonuses`() =
         character.edit {
-            "${statBonusRule("WILMA")}" shouldBe "<Rule>: Stat-Bonus[Int](stat=WILMA)"
+            "${statBonusRule("WILMA")}" shouldBe "<Rule>Stat-Bonus[Int](stat=WILMA)"
         }
 
     @Test

@@ -43,6 +43,6 @@ internal class MutableStackTest {
         val element = stack.pop()
 
         element shouldBe 3
-        stack shouldBe stackOf()
+        stack shouldBe emptyStack()
     }
 }

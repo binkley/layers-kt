@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 internal class ValueTest {
     @Test
     fun `should have a debuggable representation`() {
-        "${Value(3)}" shouldBe "<Value>: 3"
+        "${Value(3)}" shouldBe "<Value>3"
     }
 
     @Test

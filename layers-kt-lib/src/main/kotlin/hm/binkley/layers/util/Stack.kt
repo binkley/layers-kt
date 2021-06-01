@@ -16,7 +16,7 @@ interface Stack<out T> : List<T> {
 fun <T> Stack<T>.toMutableStack(): MutableStack<T> =
     ArrayMutableStack((this as List<T>).toMutableList())
 
-fun <T> stackOf(): Stack<T> = ArrayStack(listOf())
+fun <T> emptyStack(): Stack<T> = ArrayStack(emptyList())
 fun <T> stackOf(vararg elements: T): Stack<T> =
     ArrayStack(listOf(*elements))
 

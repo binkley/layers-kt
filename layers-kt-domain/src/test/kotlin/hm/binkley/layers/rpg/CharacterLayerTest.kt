@@ -1,13 +1,14 @@
 package hm.binkley.layers.rpg
 
 import hm.binkley.layers.DefaultMutableLayers
+import hm.binkley.layers.util.stackOf
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 internal class CharacterLayerTest {
     private val layers = DefaultMutableLayers(
         name = "TEST LAYERS",
-        initLayers = listOf(CharacterLayer()),
+        initLayers = stackOf(CharacterLayer()),
         defaultMutableLayer = { CharacterLayer() },
     )
 

@@ -7,13 +7,14 @@ import hm.binkley.layers.rpg.Stat.GRIT
 import hm.binkley.layers.rpg.Stat.MIGHT
 import hm.binkley.layers.rpg.Stat.PRESENCE
 import hm.binkley.layers.rpg.Stat.WIT
+import hm.binkley.layers.util.stackOf
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 internal class StatLayerTest {
     private val layers = DefaultMutableLayers(
         name = "TEST LAYERS",
-        initLayers = listOf(StatLayer()),
+        initLayers = stackOf(StatLayer()),
         defaultMutableLayer = { StatLayer() },
     )
 

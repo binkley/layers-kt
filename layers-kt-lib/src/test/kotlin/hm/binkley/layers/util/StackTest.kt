@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 internal class StackTest {
     @Test
     fun `should be a list`() {
-        stackOf<Int>() shouldBe listOf()
+        emptyStack<Int>() shouldBe listOf()
         stackOf(3) shouldBe listOf(3)
     }
 

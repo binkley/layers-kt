@@ -19,11 +19,8 @@ internal class EditMapTest {
     }
 
     @Test
-    fun `should have a debuggable representation for constant rules`() {
-        val rule = TestEditMap().constantRule(7)
-
-        "$rule" shouldBe "<Rule>: Constant(value=7)"
-    }
+    fun `should have a debuggable representation for constant rules`() =
+        "${TestEditMap().constantRule(7)}" shouldBe "<Rule>Constant(value=7)"
 
     @Test
     fun `should run constant rules`() {
@@ -34,11 +31,8 @@ internal class EditMapTest {
     }
 
     @Test
-    fun `should have a debuggable representation for latest-of rules`() {
-        val rule = TestEditMap().latestRule(7)
-
-        "$rule" shouldBe "<Rule>: Latest(default=7)"
-    }
+    fun `should have a debuggable representation for latest-of rules`() =
+        "${TestEditMap().latestRule(7)}" shouldBe "<Rule>Latest(default=7)"
 
     @Test
     fun `should default for latest-of rules`() {

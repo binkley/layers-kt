@@ -4,6 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import hm.binkley.layers.DefaultMutableLayer.Companion.defaultMutableLayer
 import hm.binkley.layers.util.MutableStack
 import hm.binkley.layers.util.Stack
+import hm.binkley.layers.util.emptyStack
 import hm.binkley.layers.util.mutableStackOf
 import hm.binkley.layers.util.toMutableStack
 import java.util.AbstractMap.SimpleEntry
@@ -27,12 +28,12 @@ interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :
     fun <N : M> commitAndNext(next: () -> N): N
 }
 
+/** @todo _Either_ `firstLayerName` or `initLayers`, not both */
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
 open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     override val name: String,
-    // TODO: If initLayers provided, there's no point to this
     firstLayerName: String = "<INIT>",
-    initLayers: List<M> = listOf(),
+    initLayers: Stack<M> = emptyStack(),
     private val defaultMutableLayer: (String) -> M,
 ) : MutableLayers<K, V, M>, AbstractMap<K, V>() {
     private val layers: MutableStack<M> = mutableStackOf()
@@ -89,7 +90,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     }
 
     override fun toString() = history.mapIndexed { index, layer ->
-        "$index: $layer"
+        "$index: $layer(${layer::class.simpleName})"
     }.joinToString("\n", "$name: ${super.toString()}\n")
 
     private fun <T : V> currentRuleFor(key: K): Rule<K, V, T> =

@@ -14,6 +14,11 @@ interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
 }
 
 interface LayersEditMap<K : Any, V : Any> : EditMap<K, V> {
+    /**
+     * Returns the value of another [key] as computed by layers.  The value
+     * of the current key used in a rule context is `null` (this avoids
+     * recursion and stack overflow).
+     */
     fun <T : V> getOtherValueAs(key: K): T
 }
 

@@ -1,10 +1,9 @@
 package hm.binkley.layers.rpg
 
-import hm.binkley.layers.rpg.BaseStat.MIGHT
 import hm.binkley.layers.rpg.RpgLayers.Companion.newCharacter
 import io.kotest.matchers.booleans.shouldBeFalse
-import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 
 internal class RpgLayerTest {
@@ -19,9 +18,6 @@ internal class RpgLayerTest {
     fun `should start a new character`() {
         val character = newCharacter("TEST CHARACTER")
 
-        character["PLAYER-NAME"] shouldBe ""
-        character["CHARACTER-NAME"] shouldBe ""
-        character[MIGHT.name] shouldBe 8
-        character[MIGHT.bonusKey] shouldBe -1
+        character.current.shouldBeInstanceOf<CharacterLayer>()
     }
 }

@@ -16,8 +16,8 @@ class GirdleOfHillGiantMight : RpgLayer("Girdle of Might of the Hill Giant") {
     init {
         edit {
             this[MIGHT.name] =
-                rule<Int>("Floor[Int](min=21)") { _, values, _ ->
-                    max(21, 8 + values.sum())
+                rule<Int>("Floor[Int](min=19)") { _, values, _ ->
+                    max(19, values.sum())
                 }
         }
     }

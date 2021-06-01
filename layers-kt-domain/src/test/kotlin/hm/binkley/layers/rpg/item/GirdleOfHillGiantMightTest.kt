@@ -12,11 +12,11 @@ internal class GirdleOfHillGiantMightTest {
         val character = newCharacter("TEST CHARACTER")
         character.commitAndNext("Bump might")
         character.edit {
-            this[MIGHT.name] = 12.toValue() // 8+12 = 20
+            this[MIGHT.name] = 18.toValue()
         }
         character.commitAndNext { GirdleOfHillGiantMight() }
 
-        character[MIGHT.name] shouldBe 21
+        character[MIGHT.name] shouldBe 19
     }
 
     @Test
@@ -24,10 +24,10 @@ internal class GirdleOfHillGiantMightTest {
         val character = newCharacter("TEST CHARACTER")
         character.commitAndNext("Bump might")
         character.edit {
-            this[MIGHT.name] = 14.toValue() // 8+14 = 22
+            this[MIGHT.name] = 20.toValue()
         }
         character.commitAndNext { GirdleOfHillGiantMight() }
 
-        character[MIGHT.name] shouldBe 22
+        character[MIGHT.name] shouldBe 20
     }
 }

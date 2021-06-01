@@ -29,37 +29,37 @@ internal class CharacterLayerTest {
 
     @Test
     fun `should have might rules`() {
-        layers[MIGHT.name] shouldBe 8
-        layers[MIGHT.bonusKey] shouldBe -1
+        layers[MIGHT.name] shouldBe 0
+        layers[MIGHT.bonusKey] shouldBe -5
     }
 
     @Test
     fun `should have deftness rules`() {
-        layers[DEFTNESS.name] shouldBe 8
-        layers[DEFTNESS.bonusKey] shouldBe -1
+        layers[DEFTNESS.name] shouldBe 0
+        layers[DEFTNESS.bonusKey] shouldBe -5
     }
 
     @Test
     fun `should have grit rules`() {
-        layers[GRIT.name] shouldBe 8
-        layers[GRIT.bonusKey] shouldBe -1
+        layers[GRIT.name] shouldBe 0
+        layers[GRIT.bonusKey] shouldBe -5
     }
 
     @Test
     fun `should have wit rules`() {
-        layers[WIT.name] shouldBe 8
-        layers[WIT.bonusKey] shouldBe -1
+        layers[WIT.name] shouldBe 0
+        layers[WIT.bonusKey] shouldBe -5
     }
 
     @Test
     fun `should have foresight rules`() {
-        layers[FORESIGHT.name] shouldBe 8
-        layers[FORESIGHT.bonusKey] shouldBe -1
+        layers[FORESIGHT.name] shouldBe 0
+        layers[FORESIGHT.bonusKey] shouldBe -5
     }
 
     @Test
     fun `should have presence rules`() {
-        layers[PRESENCE.name] shouldBe 8
-        layers[PRESENCE.bonusKey] shouldBe -1
+        layers[PRESENCE.name] shouldBe 0
+        layers[PRESENCE.bonusKey] shouldBe -5
     }
 }

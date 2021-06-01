@@ -7,24 +7,31 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 internal class StatRuleTest {
-    private val layers = newCharacter("TEST CHARACTER")
+    private val character = newCharacter("TEST CHARACTER")
 
     @Test
-    fun `should have a debuggable presentation`() =
-        "${StatBonusRule("FRED")}" shouldBe
-            "<Rule>: Stat-Bonus[Int](stat=FRED)"
+    fun `should have a debuggable presentation for stats`() =
+        character.edit {
+            "${statRule("FRED")}" shouldBe "<Rule>: Stat[Int](stat=FRED)"
+        }
+
+    @Test
+    fun `should have a debuggable presentation for stat bonuses`() =
+        character.edit {
+            "${statBonusRule("WILMA")}" shouldBe "<Rule>: Stat-Bonus[Int](stat=WILMA)"
+        }
 
     @Test
     fun `should calculate the bonus from a stat`() {
         val statKey = "BOXITUDE"
         val statBonusKey = "$statKey-BONUS"
 
-        layers.edit {
+        character.edit {
             this[statKey] = constantRule(12)
             this[statBonusKey] = statBonusRule(statKey)
         }
 
-        layers[statBonusKey] shouldBe 1
+        character[statBonusKey] shouldBe 1
     }
 
     @Test
@@ -32,12 +39,12 @@ internal class StatRuleTest {
         val statKey = "FRABNESS"
         val statBonusKey = "$statKey-BONUS"
 
-        layers.edit {
+        character.edit {
             this[statKey] = constantRule(13)
             this[statBonusKey] = statBonusRule(statKey)
         }
 
-        layers[statBonusKey] shouldBe 1
+        character[statBonusKey] shouldBe 1
     }
 
     @Test
@@ -45,39 +52,39 @@ internal class StatRuleTest {
         val statKey = "DORKMENT"
         val statBonusKey = "$statKey-BONUS"
 
-        layers.edit {
+        character.edit {
             this[statKey] = constantRule("not an integer")
             this[statBonusKey] = statBonusRule(statKey)
         }
 
         shouldThrow<ClassCastException> {
-            layers[statBonusKey]
+            character[statBonusKey]
         }
     }
 
     @Test
-    fun `should default stats to 8`() {
+    fun `should default stats to 0`() {
         val statKey = "HACKANCE"
 
-        layers.edit {
+        character.edit {
             this[statKey] = statRule(statKey)
         }
 
-        layers[statKey] shouldBe 8
+        character[statKey] shouldBe 0
     }
 
     @Test
     fun `should add up stat changes cumulatively`() {
         val statKey = "JOUSATION"
 
-        layers.edit {
+        character.edit {
             this[statKey] = statRule(statKey)
         }
-        layers.commitAndNext("Increase Jousation")
-        layers.edit {
+        character.commitAndNext("Increase Jousation")
+        character.edit {
             this[statKey] = 1.toValue()
         }
 
-        layers[statKey] shouldBe 9
+        character[statKey] shouldBe 1
     }
 }

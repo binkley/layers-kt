@@ -71,7 +71,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     }
 
     override fun toString() = history.mapIndexed { index, layer ->
-        "$index: $layer(${layer::class.simpleName})"
+        "$index (${layer::class.simpleName}): $layer"
     }.joinToString("\n", "$name: ${super.toString()}\n")
 
     private fun <T : V> currentRuleFor(

@@ -20,7 +20,7 @@ internal class DefaultMutableLayersTest {
     fun `should have a debuggable representation`() {
         "$defaultLayers" shouldBe """
 A NAME: {}
-0: <INIT>: {}(DefaultMutableLayer)
+0 (DefaultMutableLayer): <INIT>: {}
         """.trimIndent()
     }
 

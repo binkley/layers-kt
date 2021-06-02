@@ -1,6 +1,12 @@
-package hm.binkley.layers
+package hm.binkley.layers.rpg
 
+import hm.binkley.layers.DefaultMutableLayer
+import hm.binkley.layers.DefaultMutableLayers
 import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
+import hm.binkley.layers.Value
+import hm.binkley.layers.rpg.Character.Companion.newCharacter
+import hm.binkley.layers.rpg.item.GirdleOfHillGiantMight
+import hm.binkley.layers.toValue
 import lombok.Generated
 
 /** @todo Test `main()`, a kind of user-journey test at unit level */
@@ -102,4 +108,11 @@ fun main() {
     }
 
     println(d)
+
+    println()
+    println("==SAMPLE CHARACTER")
+    val character = newCharacter("BOB")
+    character.commitAndNext(::GirdleOfHillGiantMight)
+
+    println(character)
 }

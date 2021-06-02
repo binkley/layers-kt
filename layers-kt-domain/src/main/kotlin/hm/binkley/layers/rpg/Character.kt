@@ -11,6 +11,6 @@ open class Character private constructor(
     defaultMutableLayer = { RpgLayer(it) }
 ) {
     companion object {
-        fun newCharacter() = Character("IGNORED")
+        fun newCharacter(name: String) = Character(name)
     }
 }

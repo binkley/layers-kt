@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class CharacterTest {
     @Test
     fun `should start with a character and a stat layer`() {
-        newCharacter().history.map {
+        newCharacter("TEST CHARACTER").history.map {
             it::class
         } shouldBe stackOf(PlayerLayer::class, StatLayer::class)
     }

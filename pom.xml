@@ -348,8 +348,8 @@
                 <configuration>
                     <!-- TODO: JaCoCo and/or Pitest do not understand
                                Kotlin well -->
-                    <coverageThreshold>64</coverageThreshold>
-                    <mutationThreshold>22</mutationThreshold>
+                    <coverageThreshold>66</coverageThreshold>
+                    <mutationThreshold>25</mutationThreshold>
                     <timestampedReports>false</timestampedReports>
                 </configuration>
                 <executions>

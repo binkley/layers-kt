@@ -1,6 +1,6 @@
 package hm.binkley.layers.rpg.rules
 
-import hm.binkley.layers.rpg.RpgLayers.Companion.newCharacter
+import hm.binkley.layers.rpg.Character.Companion.newCharacter
 import hm.binkley.layers.toValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe

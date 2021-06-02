@@ -1,6 +1,6 @@
 package hm.binkley.layers.rpg
 
-class CharacterLayer : RpgLayer("Character") {
+class PlayerLayer : RpgLayer("Character") {
     init {
         edit {
             this["PLAYER-NAME"] = latestRule("")

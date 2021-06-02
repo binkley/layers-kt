@@ -1,6 +1,6 @@
 package hm.binkley.layers.rpg.item
 
-import hm.binkley.layers.rpg.RpgLayers.Companion.newCharacter
+import hm.binkley.layers.rpg.Character.Companion.newCharacter
 import hm.binkley.layers.rpg.Stat.MIGHT
 import hm.binkley.layers.toValue
 import io.kotest.matchers.shouldBe

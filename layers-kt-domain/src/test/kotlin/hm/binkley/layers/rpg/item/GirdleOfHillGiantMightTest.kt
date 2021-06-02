@@ -10,7 +10,7 @@ internal class GirdleOfHillGiantMightTest {
     @Test
     fun `should have Hill Giant might if better than yours`() {
         val character = newCharacter()
-        character.commitAndNext("Bump might")
+        character.commitAndNext("Set might")
         character.edit {
             this[MIGHT.name] = 18.toValue()
         }
@@ -22,7 +22,7 @@ internal class GirdleOfHillGiantMightTest {
     @Test
     fun `should have better than Hill Giant might if yours is better`() {
         val character = newCharacter()
-        character.commitAndNext("Bump might")
+        character.commitAndNext("Set might")
         character.edit {
             this[MIGHT.name] = 20.toValue()
         }

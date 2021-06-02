@@ -25,7 +25,7 @@ interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :
 
     /** @todo Returning M loses type information for K and V ?! */
     fun commitAndNext(name: String): MutableLayer<K, V, M>
-    fun <N : M> commitAndNext(next: () -> N): N
+    fun <N : M> commitAndNext(next: (LayersEditMap<K, V>) -> N): N
 }
 
 /** @todo _Either_ `firstLayerName` or `initLayers`, not both */
@@ -83,8 +83,8 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         defaultMutableLayer(name)
     }
 
-    override fun <N : M> commitAndNext(next: () -> N): N {
-        val layer = next()
+    override fun <N : M> commitAndNext(next: (LayersEditMap<K, V>) -> N): N {
+        val layer = next(DefaultLayersEditMap())
         layers.push(layer)
         return layer
     }
@@ -93,8 +93,15 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         "$index: $layer(${layer::class.simpleName})"
     }.joinToString("\n", "$name: ${super.toString()}\n")
 
-    private fun <T : V> currentRuleFor(key: K): Rule<K, V, T> =
-        valuesOrRules(key).filterIsInstance<Rule<K, V, T>>().last()
+    private fun <T : V> currentRuleFor(
+        key: K,
+        except: Rule<K, V, T>?,
+    ): Rule<K, V, T> {
+        val rules = valuesOrRules(key).filterIsInstance<Rule<K, V, T>>()
+        val current = rules.last()
+        return if (except != current) current
+        else return rules[rules.lastIndex - 1]
+    }
 
     private fun <T : V> currentValuesFor(key: K): List<T> =
         valuesOrRules(key).filterIsInstance<Value<T>>().map { it.value }
@@ -124,8 +131,11 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     }
 
     private fun allKeys(): Set<K> = history.flatMap { it.keys }.toSet()
-    private fun <T : V> computeValue(key: K): T {
-        val rule = currentRuleFor<T>(key)
+    private fun <T : V> computeValue(
+        key: K,
+        except: Rule<K, V, T>? = null,
+    ): T {
+        val rule = currentRuleFor(key, except)
         val values = currentValuesFor<T>(key)
 
         return rule(key, values, ViewMap(key))
@@ -133,6 +143,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
 
     private inner class DefaultLayersEditMap :
         LayersEditMap<K, V>, MutableMap<K, ValueOrRule<V>> by layers.peek() {
-        override fun <T : V> getOtherValueAs(key: K): T = computeValue(key)
+        override fun <T : V> getAs(key: K, except: Rule<K, V, T>?): T =
+            computeValue(key, except)
     }
 }

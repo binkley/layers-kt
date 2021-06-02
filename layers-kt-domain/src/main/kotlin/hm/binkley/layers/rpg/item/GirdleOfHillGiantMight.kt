@@ -1,5 +1,7 @@
 package hm.binkley.layers.rpg.item
 
+import hm.binkley.layers.LayersEditMap
+import hm.binkley.layers.Rule
 import hm.binkley.layers.rpg.RpgLayer
 import hm.binkley.layers.rpg.Stat.MIGHT
 import kotlin.math.max
@@ -12,14 +14,23 @@ import kotlin.math.max
  *       The 20 should prevail.  A smarter rule would try what-if scenarios
  *       comparing without this item, and with this item
  */
-class GirdleOfHillGiantMight :
+class GirdleOfHillGiantMight(layersEditMap: LayersEditMap<String, Any>) :
     RpgLayer("Girdle of Might of the Hill Giant") {
     init {
         edit {
-            this[MIGHT.name] =
-                rule<Int>("Floor[Int](min=19)") { _, values, _ ->
-                    max(19, values.sum())
-                }
+            this[MIGHT.name] = GirdleOfHillGiantMightRule(layersEditMap)
         }
     }
+}
+
+private class GirdleOfHillGiantMightRule(
+    private val layersEditMap: LayersEditMap<String, Any>,
+) : Rule<String, Any, Int>(
+    "Floor[Int](min=19)"
+) {
+    override fun invoke(
+        key: String,
+        values: List<Int>,
+        view: Map<String, Any>,
+    ): Int = max(19, layersEditMap.getAs(MIGHT.name, except = this))
 }

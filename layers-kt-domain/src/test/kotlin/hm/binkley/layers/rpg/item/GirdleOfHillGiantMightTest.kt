@@ -14,7 +14,7 @@ internal class GirdleOfHillGiantMightTest {
         character.edit {
             this[MIGHT.name] = 18.toValue()
         }
-        character.commitAndNext { GirdleOfHillGiantMight() }
+        character.commitAndNext { GirdleOfHillGiantMight(it) }
 
         character[MIGHT.name] shouldBe 19
     }
@@ -26,7 +26,7 @@ internal class GirdleOfHillGiantMightTest {
         character.edit {
             this[MIGHT.name] = 20.toValue()
         }
-        character.commitAndNext { GirdleOfHillGiantMight() }
+        character.commitAndNext { GirdleOfHillGiantMight(it) }
 
         character[MIGHT.name] shouldBe 20
     }

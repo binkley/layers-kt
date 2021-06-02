@@ -73,9 +73,26 @@ A NAME: {}
         defaultLayers.edit {
             this["OTHER KEY"] = constantRule(3)
 
-            val value = getOtherValueAs<Int>("OTHER KEY")
+            val value = getAs<Int>("OTHER KEY")
 
             value shouldBe 3
+        }
+    }
+
+    @Test
+    fun `should exclude specific rule`() {
+        defaultLayers.edit {
+            this["A KEY"] = constantRule(3)
+        }
+        defaultLayers.commitAndNext("TEST LAYER")
+
+        val except: Rule<String, Number, Int> = ConstantRule(7)
+        defaultLayers.edit {
+            this["A KEY"] = except
+        }
+
+        defaultLayers.edit {
+            getAs("A KEY", except) shouldBe 3
         }
     }
 

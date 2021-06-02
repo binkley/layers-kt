@@ -84,7 +84,7 @@ fun main() {
     d.edit @Generated {
         this["DAVE"] =
             rule<Int>("Halve[Int](other=CAROL)") @Generated { _, _, _ ->
-                getOtherValueAs<Int>("CAROL") / 2
+                getAs<Int>("CAROL") / 2
             }
     }
 

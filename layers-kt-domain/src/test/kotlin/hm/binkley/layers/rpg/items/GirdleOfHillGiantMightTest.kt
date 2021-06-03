@@ -1,4 +1,4 @@
-package hm.binkley.layers.rpg.item
+package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.Character.Companion.newCharacter
 import hm.binkley.layers.rpg.Stat.MIGHT

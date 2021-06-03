@@ -5,7 +5,7 @@ import hm.binkley.layers.DefaultMutableLayers
 import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
 import hm.binkley.layers.Value
 import hm.binkley.layers.rpg.Character.Companion.newCharacter
-import hm.binkley.layers.rpg.item.GirdleOfHillGiantMight
+import hm.binkley.layers.rpg.items.GirdleOfHillGiantMight
 import hm.binkley.layers.toValue
 import lombok.Generated
 

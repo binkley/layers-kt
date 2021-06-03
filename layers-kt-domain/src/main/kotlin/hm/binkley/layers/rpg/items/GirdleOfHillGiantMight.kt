@@ -1,4 +1,4 @@
-package hm.binkley.layers.rpg.item
+package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.RpgLayer
 import hm.binkley.layers.rpg.RpgLayersEditMap

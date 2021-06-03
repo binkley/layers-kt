@@ -1,5 +1,8 @@
 package hm.binkley.layers
 
+import hm.binkley.layers.rules.ConstantRule
+import hm.binkley.layers.rules.LatestRule
+
 interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
     fun <T : V> rule(
         name: String,
@@ -20,19 +23,4 @@ interface LayersEditMap<K : Any, V : Any> : EditMap<K, V> {
      * recursion and stack overflow).
      */
     fun <T : V> getAs(key: K, except: Rule<K, V, T>? = null): T
-}
-
-open class ConstantRule<K : Any, V : Any, T : V>(
-    private val value: T,
-    name: String = "Constant(value=$value)",
-) : Rule<K, V, T>(name) {
-    override fun invoke(key: K, values: List<T>, view: Map<K, V>): T = value
-}
-
-open class LatestRule<K : Any, V : Any, T : V>(
-    private val default: T,
-    name: String = "Latest(default=$default)",
-) : Rule<K, V, T>(name) {
-    override fun invoke(key: K, values: List<T>, view: Map<K, V>): T =
-        values.lastOrNull() ?: default
 }

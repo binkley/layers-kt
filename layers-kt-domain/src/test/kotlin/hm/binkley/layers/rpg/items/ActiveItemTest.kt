@@ -6,7 +6,7 @@ import hm.binkley.layers.rpg.rules.PassThruRule
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-internal class ItemTest {
+internal class ActiveItemTest {
     private val character = newCharacter("TEST CHARACTER")
 
     init {
@@ -33,7 +33,7 @@ internal class ItemTest {
 private class TestItem(
     private val layers: RpgLayersEditMap,
     active: Boolean = false,
-) : Item<TestItem>("TEST ITEM", active) {
+) : ActiveItem<TestItem>("TEST ITEM", active, layers) {
     init {
         edit {
             this["A KEY"] =

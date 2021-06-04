@@ -8,24 +8,39 @@ import org.junit.jupiter.api.Test
 
 internal class GirdleOfHillGiantMightTest {
     @Test
-    fun `should have Hill Giant might if better than yours`() {
+    fun `should start inactive`() {
         val character = newCharacter("TEST CHARACTER")
         character.commitAndNext("Set might")
         character.edit {
             this[MIGHT.name] = 18.toValue()
         }
+
+        character.commitAndNext { GirdleOfHillGiantMight(it) }
+
+        character[MIGHT.name] shouldBe 18
+    }
+
+    @Test
+    fun `should have Hill Giant might if better than existing`() {
+        val character = newCharacter("TEST CHARACTER")
+        character.commitAndNext("Set might")
+        character.edit {
+            this[MIGHT.name] = 18.toValue()
+        }
+
         character.commitAndNext { GirdleOfHillGiantMight(it).don() }
 
         character[MIGHT.name] shouldBe 19
     }
 
     @Test
-    fun `should have better than Hill Giant might if yours is better`() {
+    fun `should have better than Hill Giant might if existing is better`() {
         val character = newCharacter("TEST CHARACTER")
         character.commitAndNext("Set might")
         character.edit {
             this[MIGHT.name] = 20.toValue()
         }
+
         character.commitAndNext { GirdleOfHillGiantMight(it).don() }
 
         character[MIGHT.name] shouldBe 20

@@ -22,5 +22,5 @@ interface LayersEditMap<K : Any, V : Any> : EditMap<K, V> {
      * of the current key used in a rule context is `null` (this avoids
      * recursion and stack overflow).
      */
-    fun <T : V> getAs(key: K, except: Rule<K, V, T>? = null): T
+    fun <T : V> getAs(key: K, except: Layer<K, V, *>? = null): T
 }

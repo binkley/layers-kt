@@ -8,7 +8,8 @@ class GirdleOfHillGiantMight(layers: RpgLayersEditMap) :
     Item("Girdle of Might of the Hill Giant") {
     init {
         edit {
-            this[MIGHT.name] = FloorRule(19, layers)
+            this[MIGHT.name] =
+                FloorRule(19, this@GirdleOfHillGiantMight, layers)
         }
     }
 }

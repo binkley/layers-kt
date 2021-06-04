@@ -1,7 +1,6 @@
 package hm.binkley.layers
 
 import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
-import hm.binkley.layers.rules.ConstantRule
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -81,19 +80,18 @@ A NAME: {}
     }
 
     @Test
-    fun `should exclude specific rule`() {
+    fun `should exclude specific layer`() {
         defaultLayers.edit {
             this["A KEY"] = constantRule(3)
         }
-        defaultLayers.commitAndNext("TEST LAYER")
+        val layer = defaultLayers.commitAndNext("TEST LAYER")
 
-        val except: Rule<String, Number, Int> = ConstantRule(7)
         defaultLayers.edit {
-            this["A KEY"] = except
+            this["A KEY"] = constantRule(7)
         }
 
         defaultLayers.edit {
-            getAs("A KEY", except) shouldBe 3
+            getAs<Int>("A KEY", layer) shouldBe 3
         }
     }
 

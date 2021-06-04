@@ -46,16 +46,8 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         return whatIf
     }
 
-    override fun whatIfWithout(layer: Layer<*, *, *>): Map<K, V> {
-        val layers: MutableStack<M> = layers.toMutableStack()
-        layers.remove(layer)
-        return DefaultMutableLayers(
-            name,
-            "<INIT>",
-            initLayers = layers,
-            defaultMutableLayer
-        )
-    }
+    override fun whatIfWithout(layer: Layer<*, *, *>): Map<K, V> =
+        without(layer)
 
     override fun edit(block: LayersEditMap<K, V>.() -> Unit) =
         DefaultLayersEditMap().block()
@@ -74,21 +66,43 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         "$index (${layer::class.simpleName}): $layer"
     }.joinToString("\n", "$name: ${super.toString()}\n")
 
-    private fun <T : V> currentRuleFor(
-        key: K,
-        except: Rule<K, V, T>?,
-    ): Rule<K, V, T> {
-        val rules = valuesOrRules(key).filterIsInstance<Rule<K, V, T>>()
-        val current = rules.last()
-        return if (except != current) current
-        else return rules[rules.lastIndex - 1]
+    private fun without(layer: Layer<*, *, *>): DefaultMutableLayers<K, V, M> {
+        val layers: MutableStack<M> = layers.toMutableStack()
+        layers.remove(layer)
+        return DefaultMutableLayers(
+            name,
+            "<INIT>",
+            initLayers = layers,
+            defaultMutableLayer
+        )
     }
+
+    private fun <T : V> computeValue(
+        key: K,
+        except: Layer<K, V, *>? = null,
+    ): T {
+        val exceptLayers =
+            if (null == except) this
+            else without(except as Layer<*, *, *>)
+        val rule = exceptLayers.currentRuleFor<T>(key)
+        val values = exceptLayers.currentValuesFor<T>(key)
+
+        return rule(key, values, ViewMap(key))
+    }
+
+    private fun <T : V> currentRuleFor(key: K): Rule<K, V, T> =
+        valuesOrRules(key).filterIsInstance<Rule<K, V, T>>().last()
 
     private fun <T : V> currentValuesFor(key: K): List<T> =
         valuesOrRules(key).filterIsInstance<Value<T>>().map { it.value }
 
-    private fun valuesOrRules(key: K): List<ValueOrRule<V>> =
+    private fun valuesOrRules(
+        key: K,
+        layers: Stack<M> = this.layers,
+    ): List<ValueOrRule<V>> =
         layers.mapNotNull { it[key] }
+
+    private fun allKeys(): Set<K> = history.flatMap { it.keys }.toSet()
 
     private inner class ViewIterator(keys: Set<K>) : Iterator<Entry<K, V>> {
         private val kit = keys.iterator()
@@ -111,20 +125,9 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
             get() = ViewSet(allKeys().filterNot { it == except }.toSet())
     }
 
-    private fun allKeys(): Set<K> = history.flatMap { it.keys }.toSet()
-    private fun <T : V> computeValue(
-        key: K,
-        except: Rule<K, V, T>? = null,
-    ): T {
-        val rule = currentRuleFor(key, except)
-        val values = currentValuesFor<T>(key)
-
-        return rule(key, values, ViewMap(key))
-    }
-
     private inner class DefaultLayersEditMap :
         LayersEditMap<K, V>, MutableMap<K, ValueOrRule<V>> by layers.peek() {
-        override fun <T : V> getAs(key: K, except: Rule<K, V, T>?): T =
+        override fun <T : V> getAs(key: K, except: Layer<K, V, *>?): T =
             computeValue(key, except)
     }
 }

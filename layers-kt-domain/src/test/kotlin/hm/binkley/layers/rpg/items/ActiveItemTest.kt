@@ -3,6 +3,8 @@ package hm.binkley.layers.rpg.items
 import hm.binkley.layers.rpg.Character.Companion.newCharacter
 import hm.binkley.layers.rpg.RpgLayersEditMap
 import hm.binkley.layers.rpg.rules.PassThruRule
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -16,17 +18,27 @@ internal class ActiveItemTest {
     }
 
     @Test
+    fun `should have a debuggable representation`() {
+        val item = character.commitAndNext { TestItem(it) }
+
+        "${item.don()}" shouldBe "[+]TEST ITEM: {A KEY=<Rule>Constant(value=7)}"
+        "${item.doff()}" shouldBe "[-]TEST ITEM: {A KEY=<Rule>Constant(value=7)}"
+    }
+
+    @Test
     fun `should ignore inactive items`() {
-        character.commitAndNext { TestItem(it).doff() }
+        val item = character.commitAndNext { TestItem(it).doff() }
 
         character["A KEY"] shouldBe 3
+        item.active.shouldBeFalse()
     }
 
     @Test
     fun `should use active items`() {
-        character.commitAndNext { TestItem(it).don() }
+        val item = character.commitAndNext { TestItem(it).don() }
 
         character["A KEY"] shouldBe 7
+        item.active.shouldBeTrue()
     }
 }
 
@@ -36,9 +48,10 @@ private class TestItem(
 ) : ActiveItem<TestItem>("TEST ITEM", active, layers) {
     init {
         edit {
+            val rule = constantRule(7)
             this["A KEY"] =
-                if (active) constantRule(7)
-                else PassThruRule(this@TestItem, layers)
+                if (active) rule
+                else PassThruRule(rule.name, this@TestItem, layers)
         }
     }
 

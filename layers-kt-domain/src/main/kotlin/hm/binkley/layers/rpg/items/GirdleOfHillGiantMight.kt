@@ -8,14 +8,12 @@ class GirdleOfHillGiantMight(
     active: Boolean = false,
 ) : ActiveItem<GirdleOfHillGiantMight>(
     "Girdle of Might of the Hill Giant",
-    false,
+    active,
     layers
 ) {
     init {
         edit {
-            this[MIGHT.name] =
-                if (active) floorRule(19)
-                else passThruRule()
+            this[MIGHT.name] = activeFloorRule(19)
         }
     }
 

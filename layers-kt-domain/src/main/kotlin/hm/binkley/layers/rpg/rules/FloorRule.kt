@@ -3,6 +3,7 @@ package hm.binkley.layers.rpg.rules
 import hm.binkley.layers.Layer
 import hm.binkley.layers.rpg.RpgLayersEditMap
 import hm.binkley.layers.rpg.RpgRule
+import hm.binkley.layers.rpg.RpgView
 import kotlin.math.max
 
 open class FloorRule(
@@ -13,6 +14,6 @@ open class FloorRule(
     override fun invoke(
         key: String,
         values: List<Int>,
-        view: Map<String, Any>,
+        view: RpgView,
     ): Int = max(value, layers.getAs(key, except = layer))
 }

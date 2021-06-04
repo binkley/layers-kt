@@ -1,6 +1,5 @@
 package hm.binkley.layers.rpg.rules
 
-import hm.binkley.layers.Layer
 import hm.binkley.layers.rpg.RpgLayersEditMap
 import hm.binkley.layers.rpg.RpgRule
 import hm.binkley.layers.rpg.RpgView

@@ -67,7 +67,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     }.joinToString("\n", "$name: ${super.toString()}\n")
 
     private fun without(except: List<Layer<*, *, *>>):
-            DefaultMutableLayers<K, V, M> {
+        DefaultMutableLayers<K, V, M> {
         val layers: MutableStack<M> = layers.toMutableStack()
         layers.removeAll(except)
         return DefaultMutableLayers(

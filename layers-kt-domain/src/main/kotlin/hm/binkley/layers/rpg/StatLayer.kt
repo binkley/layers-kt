@@ -1,6 +1,6 @@
 package hm.binkley.layers.rpg
 
-class StatLayer : RpgLayer("Stats") {
+class StatLayer : RpgLayer<StatLayer>("Stats") {
     init {
         edit { addStatRules() }
     }

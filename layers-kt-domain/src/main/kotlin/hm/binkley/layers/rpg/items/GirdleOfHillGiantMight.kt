@@ -6,9 +6,11 @@ import hm.binkley.layers.rpg.Stat.MIGHT
 class GirdleOfHillGiantMight(
     private val layers: RpgLayersEditMap,
     active: Boolean = false,
+    previous: GirdleOfHillGiantMight? = null,
 ) : ActiveItem<GirdleOfHillGiantMight>(
     "Girdle of Might of the Hill Giant",
     active,
+    previous,
     layers
 ) {
     init {
@@ -17,5 +19,8 @@ class GirdleOfHillGiantMight(
         }
     }
 
-    override fun new(active: Boolean) = GirdleOfHillGiantMight(layers, active)
+    override fun new(
+        active: Boolean,
+        previous: GirdleOfHillGiantMight,
+    ) = GirdleOfHillGiantMight(layers, active, this)
 }

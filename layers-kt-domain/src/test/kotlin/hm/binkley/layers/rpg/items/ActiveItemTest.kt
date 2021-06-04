@@ -2,7 +2,7 @@ package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.Character.Companion.newCharacter
 import hm.binkley.layers.rpg.RpgLayersEditMap
-import hm.binkley.layers.rpg.rules.PassThruRule
+import hm.binkley.layers.rpg.rules.InactiveRule
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
@@ -21,8 +21,9 @@ internal class ActiveItemTest {
     fun `should have a debuggable representation`() {
         val item = character.commitAndNext { TestItem(it) }
 
-        "${item.don()}" shouldBe "[+]TEST ITEM: {A KEY=<Rule>Constant(value=7)}"
-        "${item.doff()}" shouldBe "[-]TEST ITEM: {A KEY=<Rule>Constant(value=7)}"
+        "$item" shouldBe "[-]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> null"
+        "${item.don()}" shouldBe "[+]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
+        "${item.doff()}" shouldBe "[-]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
     }
 
     @Test
@@ -40,20 +41,30 @@ internal class ActiveItemTest {
         character["A KEY"] shouldBe 7
         item.active.shouldBeTrue()
     }
+
+    @Test
+    fun `should use toggle activeness`() {
+        val item = character.commitAndNext { TestItem(it).don() }
+        character.commitAndNext { item.doff() }
+
+        character["A KEY"] shouldBe 3
+    }
 }
 
 private class TestItem(
     private val layers: RpgLayersEditMap,
     active: Boolean = false,
-) : ActiveItem<TestItem>("TEST ITEM", active, layers) {
+    previous: TestItem? = null,
+) : ActiveItem<TestItem>("TEST ITEM", active, previous, layers) {
     init {
         edit {
             val rule = constantRule(7)
             this["A KEY"] =
                 if (active) rule
-                else PassThruRule(rule.name, this@TestItem, layers)
+                else InactiveRule(rule.name, this@TestItem, layers)
         }
     }
 
-    override fun new(active: Boolean) = TestItem(layers, active)
+    override fun new(active: Boolean, previous: TestItem) =
+        TestItem(layers, active, previous)
 }

@@ -91,7 +91,7 @@ A NAME: {}
         }
 
         defaultLayers.edit {
-            getAs<Int>("A KEY", layer) shouldBe 3
+            getAs<Int>("A KEY", listOf(layer)) shouldBe 3
         }
     }
 

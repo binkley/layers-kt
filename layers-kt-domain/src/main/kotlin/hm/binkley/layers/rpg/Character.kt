@@ -3,14 +3,15 @@ package hm.binkley.layers.rpg
 import hm.binkley.layers.DefaultMutableLayers
 import hm.binkley.layers.util.stackOf
 
-open class Character private constructor(
+@Suppress("UNCHECKED_CAST")
+open class Character<M : RpgLayer<M>> private constructor(
     name: String,
-) : DefaultMutableLayers<String, Any, RpgLayer>(
+) : DefaultMutableLayers<String, Any, M>(
     name,
-    initLayers = stackOf(PlayerLayer(), StatLayer()),
-    defaultMutableLayer = { RpgLayer(it) }
+    initLayers = stackOf<M>(PlayerLayer() as M, StatLayer() as M),
+    defaultMutableLayer = { RpgLayer<RpgLayer<*>>(it) as M }
 ) {
     companion object {
-        fun newCharacter(name: String) = Character(name)
+        fun newCharacter(name: String) = Character<RpgLayer<*>>(name)
     }
 }

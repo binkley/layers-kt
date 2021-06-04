@@ -47,7 +47,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     }
 
     override fun whatIfWithout(layer: Layer<*, *, *>): Map<K, V> =
-        without(layer)
+        without(listOf(layer))
 
     override fun edit(block: LayersEditMap<K, V>.() -> Unit) =
         DefaultLayersEditMap().block()
@@ -66,9 +66,10 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         "$index (${layer::class.simpleName}): $layer"
     }.joinToString("\n", "$name: ${super.toString()}\n")
 
-    private fun without(layer: Layer<*, *, *>): DefaultMutableLayers<K, V, M> {
+    private fun without(except: List<Layer<*, *, *>>):
+            DefaultMutableLayers<K, V, M> {
         val layers: MutableStack<M> = layers.toMutableStack()
-        layers.remove(layer)
+        layers.removeAll(except)
         return DefaultMutableLayers(
             name,
             "<INIT>",
@@ -79,11 +80,9 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
 
     private fun <T : V> computeValue(
         key: K,
-        except: Layer<K, V, *>? = null,
+        except: List<Layer<K, V, *>> = listOf(),
     ): T {
-        val exceptLayers =
-            if (null == except) this
-            else without(except as Layer<*, *, *>)
+        val exceptLayers = without(except)
         val rule = exceptLayers.currentRuleFor<T>(key)
         val values = exceptLayers.currentValuesFor<T>(key)
 
@@ -127,7 +126,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
 
     private inner class DefaultLayersEditMap :
         LayersEditMap<K, V>, MutableMap<K, ValueOrRule<V>> by layers.peek() {
-        override fun <T : V> getAs(key: K, except: Layer<K, V, *>?): T =
+        override fun <T : V> getAs(key: K, except: List<Layer<K, V, *>>): T =
             computeValue(key, except)
     }
 }

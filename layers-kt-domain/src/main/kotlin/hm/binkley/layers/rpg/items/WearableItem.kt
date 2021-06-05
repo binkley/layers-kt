@@ -4,18 +4,18 @@ import hm.binkley.layers.rpg.RpgEditMap
 import hm.binkley.layers.rpg.RpgLayersEditMap
 import hm.binkley.layers.rpg.RpgRule
 import hm.binkley.layers.rpg.rules.FloorRule
-import hm.binkley.layers.rpg.rules.InactiveRule
+import hm.binkley.layers.rpg.rules.NotWornRule
 
-abstract class ActiveItem<I : ActiveItem<I>>(
+abstract class WearableItem<I : WearableItem<I>>(
     name: String,
-    val active: Boolean,
+    val worn: Boolean,
     private val previous: I?,
     private val layers: RpgLayersEditMap,
 ) : Item<I>(name) {
     protected abstract fun new(active: Boolean, previous: I): I
 
     override fun toString(): String =
-        if (active) "[+]${super.toString()} -> ${previous?.name}"
+        if (worn) "[+]${super.toString()} -> ${previous?.name}"
         else "[-]${super.toString()} -> ${previous?.name}"
 
     fun same(): List<I> {
@@ -29,19 +29,19 @@ abstract class ActiveItem<I : ActiveItem<I>>(
     }
 
     fun don() =
-        if (!active) new(true, self)
+        if (!worn) new(true, self)
         else throw IllegalStateException("Already donned: $this")
 
     fun doff() =
-        if (active) new(false, self)
+        if (worn) new(false, self)
         else throw IllegalStateException("Already doffed: $this")
 
     // The "this" pointer is unused, however it restricts scope
-    fun RpgEditMap.activeFloorRule(value: Int): RpgRule<Int> {
-        val rule = FloorRule(value, this@ActiveItem, layers)
-        return if (active) rule else inactiveRule(rule)
+    fun RpgEditMap.floorRuleIfWorn(value: Int): RpgRule<Int> {
+        val rule = FloorRule(value, this@WearableItem, layers)
+        return if (worn) rule else inactiveRule(rule)
     }
 
     private fun <T : Any> inactiveRule(rule: RpgRule<T>): RpgRule<T> =
-        InactiveRule(rule.name, self, layers)
+        NotWornRule(rule.name, self, layers)
 }

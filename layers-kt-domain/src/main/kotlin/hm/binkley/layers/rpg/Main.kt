@@ -1,5 +1,6 @@
 package hm.binkley.layers.rpg
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import hm.binkley.layers.DefaultMutableLayer
 import hm.binkley.layers.DefaultMutableLayers
 import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
@@ -9,7 +10,12 @@ import hm.binkley.layers.rpg.items.GirdleOfHillGiantMight.Companion.girdleOfHill
 import hm.binkley.layers.toValue
 import lombok.Generated
 
-/** @todo Test `main()`, a kind of user-journey test at unit level */
+/**
+ * @todo Test `main()`, a kind of user-journey test at unit level
+ * @todo SpotBugs confuses the local variable, `newGirdle`, for a field;
+ *       perhaps Kotlin is saying the wrong things in the .class file?
+ */
+@SuppressFBWarnings("SE_BAD_FIELD")
 @Generated // Lie to JaCoCo
 fun main() {
     println("== USING DEFAULT TYPES")

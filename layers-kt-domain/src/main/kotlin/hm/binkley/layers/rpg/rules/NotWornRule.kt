@@ -3,17 +3,17 @@ package hm.binkley.layers.rpg.rules
 import hm.binkley.layers.rpg.RpgLayersEditMap
 import hm.binkley.layers.rpg.RpgRule
 import hm.binkley.layers.rpg.RpgView
-import hm.binkley.layers.rpg.items.ActiveItem
+import hm.binkley.layers.rpg.items.WearableItem
 
 /**
- * A "pass through" rule has no behavior, representing inactive rules, however
- * it keeps the name of the rules that would otherwise be active.  This lets
- * text representations show the rule properly and if that rule is active or
- * inactive.
+ * This "pass through" rule has no behavior, representing unapplied rules,
+ * however it keeps the name of the rules that would otherwise be applied.
+ * This lets text representations show the rule properly, and if that rule is
+ * applicable or not.
  */
-class InactiveRule<T : Any>(
+class NotWornRule<T : Any>(
     name: String,
-    private val layer: ActiveItem<*>,
+    private val layer: WearableItem<*>,
     private val layers: RpgLayersEditMap,
 ) : RpgRule<T>(name) {
     override fun invoke(

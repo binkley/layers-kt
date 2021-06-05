@@ -5,17 +5,17 @@ import hm.binkley.layers.rpg.Stat.MIGHT
 
 class GirdleOfHillGiantMight private constructor(
     private val layers: RpgLayersEditMap,
-    active: Boolean,
+    worn: Boolean,
     previous: GirdleOfHillGiantMight?,
-) : ActiveItem<GirdleOfHillGiantMight>(
+) : WearableItem<GirdleOfHillGiantMight>(
     "Girdle of Might of the Hill Giant",
-    active,
+    worn,
     previous,
     layers
 ) {
     init {
         edit {
-            this[MIGHT.name] = activeFloorRule(19)
+            this[MIGHT.name] = floorRuleIfWorn(19)
         }
     }
 

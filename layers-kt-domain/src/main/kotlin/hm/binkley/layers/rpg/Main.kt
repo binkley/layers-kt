@@ -5,7 +5,7 @@ import hm.binkley.layers.DefaultMutableLayers
 import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
 import hm.binkley.layers.Value
 import hm.binkley.layers.rpg.Character.Companion.newCharacter
-import hm.binkley.layers.rpg.items.GirdleOfHillGiantMight
+import hm.binkley.layers.rpg.items.GirdleOfHillGiantMight.Companion.girdleOfHillGiantMight
 import hm.binkley.layers.toValue
 import lombok.Generated
 
@@ -112,7 +112,8 @@ fun main() {
     println()
     println("==SAMPLE CHARACTER")
     val character = newCharacter("BOB")
-    character.commitAndNext(::GirdleOfHillGiantMight)
+    val newGirdle = character.commitAndNext { girdleOfHillGiantMight(it) }
+    character.commitAndNext { newGirdle.don() }
 
     println(character)
 }

@@ -44,9 +44,13 @@ internal class ActiveItemTest {
 
     @Test
     fun `should use toggle activeness`() {
-        val item = character.commitAndNext { TestItem(it).don() }
-        character.commitAndNext { item.doff() }
+        val newItem = character.commitAndNext { TestItem(it) }
+        character["A KEY"] shouldBe 3
 
+        val donnedItem = character.commitAndNext { newItem.don() }
+        character["A KEY"] shouldBe 7
+
+        character.commitAndNext { donnedItem.doff() }
         character["A KEY"] shouldBe 3
     }
 }

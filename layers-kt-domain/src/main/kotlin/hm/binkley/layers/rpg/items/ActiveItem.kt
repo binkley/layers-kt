@@ -31,13 +31,12 @@ abstract class ActiveItem<I : ActiveItem<I>>(
     fun don() = new(true, self)
     fun doff() = new(false, self)
 
-    // The "this" pointers are unused, however it restricts scope
+    // The "this" pointer is unused, however it restricts scope
     fun RpgEditMap.activeFloorRule(value: Int): RpgRule<Int> {
         val rule = FloorRule(value, this@ActiveItem, layers)
-
         return if (active) rule else inactiveRule(rule)
     }
 
     private fun <T : Any> inactiveRule(rule: RpgRule<T>): RpgRule<T> =
-        InactiveRule(rule.name, this, layers)
+        InactiveRule(rule.name, self, layers)
 }

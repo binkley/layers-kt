@@ -2,6 +2,7 @@ package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.Character.Companion.newCharacter
 import hm.binkley.layers.rpg.Stat.MIGHT
+import hm.binkley.layers.rpg.items.GirdleOfHillGiantMight.Companion.girdleOfHillGiantMight
 import hm.binkley.layers.toValue
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -15,7 +16,7 @@ internal class GirdleOfHillGiantMightTest {
             this[MIGHT.name] = 18.toValue()
         }
 
-        character.commitAndNext { GirdleOfHillGiantMight(it) }
+        character.commitAndNext { girdleOfHillGiantMight(it) }
 
         character[MIGHT.name] shouldBe 18
     }
@@ -28,7 +29,7 @@ internal class GirdleOfHillGiantMightTest {
             this[MIGHT.name] = 18.toValue()
         }
 
-        character.commitAndNext { GirdleOfHillGiantMight(it).don() }
+        character.commitAndNext { girdleOfHillGiantMight(it).don() }
 
         character[MIGHT.name] shouldBe 19
     }
@@ -41,7 +42,7 @@ internal class GirdleOfHillGiantMightTest {
             this[MIGHT.name] = 20.toValue()
         }
 
-        character.commitAndNext { GirdleOfHillGiantMight(it).don() }
+        character.commitAndNext { girdleOfHillGiantMight(it).don() }
 
         character[MIGHT.name] shouldBe 20
     }

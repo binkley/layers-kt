@@ -28,8 +28,13 @@ abstract class ActiveItem<I : ActiveItem<I>>(
         return items
     }
 
-    fun don() = new(true, self)
-    fun doff() = new(false, self)
+    fun don() =
+        if (!active) new(true, self)
+        else throw IllegalStateException("Already donned: $this")
+
+    fun doff() =
+        if (active) new(false, self)
+        else throw IllegalStateException("Already doffed: $this")
 
     // The "this" pointer is unused, however it restricts scope
     fun RpgEditMap.activeFloorRule(value: Int): RpgRule<Int> {

@@ -3,6 +3,7 @@ package hm.binkley.layers.rpg.items
 import hm.binkley.layers.rpg.Character.Companion.newCharacter
 import hm.binkley.layers.rpg.RpgLayersEditMap
 import hm.binkley.layers.rpg.rules.InactiveRule
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
@@ -19,16 +20,15 @@ internal class ActiveItemTest {
 
     @Test
     fun `should have a debuggable representation`() {
-        val item = character.commitAndNext { TestItem(it) }
+        val newItem = character.commitAndNext { TestItem(it) }
 
-        "$item" shouldBe "[-]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> null"
-        "${item.don()}" shouldBe "[+]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
-        "${item.doff()}" shouldBe "[-]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
+        "$newItem" shouldBe "[-]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> null"
+        "${newItem.don()}" shouldBe "[+]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
     }
 
     @Test
     fun `should ignore inactive items`() {
-        val item = character.commitAndNext { TestItem(it).doff() }
+        val item = character.commitAndNext { TestItem(it) }
 
         character["A KEY"] shouldBe 3
         item.active.shouldBeFalse()
@@ -52,6 +52,21 @@ internal class ActiveItemTest {
 
         character.commitAndNext { donnedItem.doff() }
         character["A KEY"] shouldBe 3
+    }
+
+    @Test
+    fun `should complain to don an already donned item`() {
+        shouldThrow<IllegalStateException> {
+            character.commitAndNext { TestItem(it) }.don().don()
+        }
+    }
+
+    @Test
+    fun `should complain to doff an already doffed item`() {
+        shouldThrow<IllegalStateException> {
+            // New item starteds doffed
+            character.commitAndNext { TestItem(it) }.doff()
+        }
     }
 }
 

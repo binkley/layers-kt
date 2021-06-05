@@ -6,6 +6,11 @@ import hm.binkley.layers.rpg.RpgRule
 import hm.binkley.layers.rpg.rules.FloorRule
 import hm.binkley.layers.rpg.rules.NotWornRule
 
+/**
+ * @todo Explore direct pointers to other layers ([previous]) _vs_ tracking
+ *       layer indices; the older Java implementation used the indices
+ *       approach
+ */
 abstract class WearableItem<I : WearableItem<I>>(
     name: String,
     val worn: Boolean,

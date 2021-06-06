@@ -197,7 +197,7 @@
                 <configuration>
                     <apiVersion>1.5</apiVersion>
                     <args>
-                        <arg>-Werror</arg>
+<!--                        <arg>-Werror</arg>-->
                     </args>
                     <jvmTarget>${jdk.version}</jvmTarget>
                     <languageVersion>1.5</languageVersion>

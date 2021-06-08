@@ -20,10 +20,17 @@ internal class WearableItemTest {
 
     @Test
     fun `should have a debuggable representation`() {
-        val newItem = character.commitAndNext { TestWearableItem(it) }
+        val newItemA = character.commitAndNext { TestWearableItem(it) }
+        "$newItemA" shouldBe
+            "[-]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> null"
+        "${newItemA.don()}" shouldBe
+            "[+]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
 
-        "$newItem" shouldBe "[-]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> null"
-        "${newItem.don()}" shouldBe "[+]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
+        val newItemB = character.commitAndNext { TestWearableItem(it, true) }
+        "$newItemB" shouldBe
+            "[+]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> null"
+        "${newItemB.doff()}" shouldBe
+            "[-]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
     }
 
     @Test

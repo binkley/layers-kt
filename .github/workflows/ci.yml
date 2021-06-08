@@ -3,13 +3,13 @@ name: build
 on:
   push:
     paths-ignore:
-      - README.md
+      - '*.md'
   pull_request:
     paths-ignore:
-      - README.md
+      - '*.md'
 
 jobs:
-  build-maven:
+  build:
     name: Builds and tests for Maven under Batect
     runs-on: ubuntu-latest
 
@@ -29,6 +29,9 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
+      - name: Manage Batect telemetry
+        run: ./batect --permanently-enable-telemetry
+
       - name: Restore Maven caches
         uses: actions/cache@master
         env:
@@ -42,4 +45,4 @@ jobs:
             ${{ runner.os }}-
 
       - name: Build and test with Maven under Batect
-        run: ./batect --permanently-enable-telemetry build
+        run: ./batect build

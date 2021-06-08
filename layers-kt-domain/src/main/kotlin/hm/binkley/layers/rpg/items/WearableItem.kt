@@ -53,6 +53,7 @@ abstract class WearableItem<I : WearableItem<I>>(
      * Provides simpler rule syntax specific to RPG.  The "this" pointer to
      * `RpgEditMap` is unused, but specified to limit scope.
      */
+    @Suppress("unused")
     fun RpgEditMap.floorRuleIfWorn(value: Int): RpgRule<Int> =
         FloorRule(value, this@WearableItem, layers).ifWorn()
 

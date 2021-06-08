@@ -266,7 +266,8 @@
                                     <limits>
                                         <limit>
                                             <!-- TODO: JaCoCo limits, such as
-                                                  DefaultMarkerConstructor -->
+                                                  DefaultMarkerConstructor and
+                                                  inner classes -->
                                             <minimum>95%</minimum>
                                         </limit>
                                     </limits>

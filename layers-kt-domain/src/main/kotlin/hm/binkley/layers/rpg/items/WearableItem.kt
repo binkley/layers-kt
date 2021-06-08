@@ -54,13 +54,15 @@ abstract class WearableItem<I : WearableItem<I>>(
      * `RpgEditMap` is unused, but specified to limit scope.
      */
     @Suppress("unused")
-    fun RpgEditMap.floorRuleIfWorn(value: Int): RpgRule<Int> =
-        FloorRule(value, this@WearableItem, layers).ifWorn()
+    fun RpgEditMap.floorRuleIfWorn(value: Int): RpgRule<Int> = ifWorn {
+        FloorRule(value, this@WearableItem, layers)
+    }
 
     override fun toString(): String =
         if (worn) "[+]${super.toString()} -> ${previous?.name}"
         else "[-]${super.toString()} -> ${previous?.name}"
 
-    private fun <T : Any> RpgRule<T>.ifWorn(): RpgRule<T> =
-        if (worn) this else NotWornRule(name, self, layers)
+    private fun <T : Any> ifWorn(
+        rule: () -> RpgRule<T>,
+    ): RpgRule<T> = if (worn) rule() else NotWornRule(name, self, layers)
 }

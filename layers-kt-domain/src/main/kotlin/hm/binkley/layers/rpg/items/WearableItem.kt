@@ -25,6 +25,8 @@ abstract class WearableItem<I : WearableItem<I>>(
      * Lists this item, and earlier versions of it.  For example,
      * donning/doffing a wearable item adds layers, and each layer represents
      * the _same_ item.
+     *
+     * @todo Should this belong to a type higher up the hierarchy?
      */
     fun same(): List<Layer<String, Any, *>> {
         val items = mutableListOf<I>()

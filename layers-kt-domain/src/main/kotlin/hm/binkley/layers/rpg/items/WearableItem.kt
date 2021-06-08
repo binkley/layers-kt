@@ -11,6 +11,7 @@ import hm.binkley.layers.rpg.rules.NotWornRule
  * @todo Explore direct pointers to other layers ([previous]) _vs_ tracking
  *       layer indices; the older Java implementation used the indices
  *       approach
+ * @todo Consider moving [worn] into a key-value map pair
  */
 abstract class WearableItem<I : WearableItem<I>>(
     name: String,

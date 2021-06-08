@@ -17,10 +17,10 @@ abstract class WearableItem<I : WearableItem<I>>(
     name: String,
     val worn: Boolean,
     private val previous: I?,
-    private val layers: RpgLayersEditMap,
+    protected val layers: RpgLayersEditMap,
 ) : Item<I>(name) {
     /** Creates a layer _copy_ linked to the parent it is copied from. */
-    protected abstract fun activateNext(active: Boolean, previous: I): I
+    protected abstract fun activateNext(worn: Boolean, previous: I): I
 
     /**
      * Lists this item, and earlier versions of it.  For example,

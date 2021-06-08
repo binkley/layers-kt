@@ -20,7 +20,7 @@ internal class WearableItemTest {
 
     @Test
     fun `should have a debuggable representation`() {
-        val newItem = character.commitAndNext { TestItem(it) }
+        val newItem = character.commitAndNext { TestWearableItem(it) }
 
         "$newItem" shouldBe "[-]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> null"
         "${newItem.don()}" shouldBe "[+]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
@@ -28,7 +28,7 @@ internal class WearableItemTest {
 
     @Test
     fun `should ignore inactive items`() {
-        val item = character.commitAndNext { TestItem(it) }
+        val item = character.commitAndNext { TestWearableItem(it) }
 
         character["A KEY"] shouldBe 3
         item.worn.shouldBeFalse()
@@ -36,7 +36,7 @@ internal class WearableItemTest {
 
     @Test
     fun `should use active items`() {
-        val item = character.commitAndNext { TestItem(it).don() }
+        val item = character.commitAndNext { TestWearableItem(it).don() }
 
         character["A KEY"] shouldBe 7
         item.worn.shouldBeTrue()
@@ -44,7 +44,7 @@ internal class WearableItemTest {
 
     @Test
     fun `should use toggle activeness`() {
-        val newItem = character.commitAndNext { TestItem(it) }
+        val newItem = character.commitAndNext { TestWearableItem(it) }
         character["A KEY"] shouldBe 3
 
         val donnedItem = character.commitAndNext { newItem.don() }
@@ -57,7 +57,7 @@ internal class WearableItemTest {
     @Test
     fun `should complain to don an already donned item`() {
         shouldThrow<IllegalStateException> {
-            character.commitAndNext { TestItem(it) }.don().don()
+            character.commitAndNext { TestWearableItem(it) }.don().don()
         }
     }
 
@@ -65,25 +65,25 @@ internal class WearableItemTest {
     fun `should complain to doff an already doffed item`() {
         shouldThrow<IllegalStateException> {
             // New item starteds doffed
-            character.commitAndNext { TestItem(it) }.doff()
+            character.commitAndNext { TestWearableItem(it) }.doff()
         }
     }
 }
 
-private class TestItem(
-    private val layers: RpgLayersEditMap,
+private class TestWearableItem(
+    layers: RpgLayersEditMap,
     active: Boolean = false,
-    previous: TestItem? = null,
-) : WearableItem<TestItem>("TEST ITEM", active, previous, layers) {
+    previous: TestWearableItem? = null,
+) : WearableItem<TestWearableItem>("TEST ITEM", active, previous, layers) {
     init {
         edit {
             val rule = constantRule(7)
             this["A KEY"] =
                 if (active) rule
-                else NotWornRule(rule.name, this@TestItem, layers)
+                else NotWornRule(rule.name, this@TestWearableItem, layers)
         }
     }
 
-    override fun activateNext(active: Boolean, previous: TestItem) =
-        TestItem(layers, active, previous)
+    override fun activateNext(worn: Boolean, previous: TestWearableItem) =
+        TestWearableItem(layers, worn, previous)
 }

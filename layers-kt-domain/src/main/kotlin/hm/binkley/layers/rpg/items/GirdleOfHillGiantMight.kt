@@ -4,7 +4,7 @@ import hm.binkley.layers.rpg.RpgLayersEditMap
 import hm.binkley.layers.rpg.Stat.MIGHT
 
 class GirdleOfHillGiantMight private constructor(
-    private val layers: RpgLayersEditMap,
+    layers: RpgLayersEditMap,
     worn: Boolean,
     previous: GirdleOfHillGiantMight?,
 ) : WearableItem<GirdleOfHillGiantMight>(
@@ -25,7 +25,7 @@ class GirdleOfHillGiantMight private constructor(
     }
 
     override fun activateNext(
-        active: Boolean,
+        worn: Boolean,
         previous: GirdleOfHillGiantMight,
-    ) = GirdleOfHillGiantMight(layers, active, previous)
+    ) = GirdleOfHillGiantMight(layers, worn, previous)
 }

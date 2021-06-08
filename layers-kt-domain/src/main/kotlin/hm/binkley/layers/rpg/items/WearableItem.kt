@@ -19,7 +19,7 @@ abstract class WearableItem<I : WearableItem<I>>(
     private val previous: I?,
     private val layers: RpgLayersEditMap,
 ) : Item<I>(name) {
-    /** Creates a layer _copy_ linked to the parent it copied from. */
+    /** Creates a layer _copy_ linked to the parent it is copied from. */
     protected abstract fun new(active: Boolean, previous: I): I
 
     /**

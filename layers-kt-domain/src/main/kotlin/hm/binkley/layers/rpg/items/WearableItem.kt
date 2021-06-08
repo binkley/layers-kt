@@ -40,13 +40,13 @@ abstract class WearableItem<I : WearableItem<I>>(
 
     /** Puts on this item, and applies its rules. */
     fun don() =
-        if (!worn) new(true, self)
-        else throw IllegalStateException("Already donned: $this")
+        if (worn) throw IllegalStateException("Already donned: $this")
+        else new(true, self)
 
     /** Takes off this item, and prevents its rules from being applied. */
     fun doff() =
-        if (worn) new(false, self)
-        else throw IllegalStateException("Already doffed: $this")
+        if (!worn) throw IllegalStateException("Already doffed: $this")
+        else new(false, self)
 
     /**
      * Provides simpler rule syntax specific to RPG.  The "this" pointer to

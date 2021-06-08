@@ -84,6 +84,6 @@ private class TestItem(
         }
     }
 
-    override fun new(active: Boolean, previous: TestItem) =
+    override fun activateNext(active: Boolean, previous: TestItem) =
         TestItem(layers, active, previous)
 }

@@ -20,7 +20,7 @@ abstract class WearableItem<I : WearableItem<I>>(
     private val layers: RpgLayersEditMap,
 ) : Item<I>(name) {
     /** Creates a layer _copy_ linked to the parent it is copied from. */
-    protected abstract fun new(active: Boolean, previous: I): I
+    protected abstract fun activateNext(active: Boolean, previous: I): I
 
     /**
      * Lists this item, and earlier versions of it.  For example,
@@ -42,12 +42,12 @@ abstract class WearableItem<I : WearableItem<I>>(
     /** Puts on this item, and applies its rules. */
     fun don() =
         if (worn) throw IllegalStateException("Already donned: $this")
-        else new(true, self)
+        else activateNext(true, self)
 
     /** Takes off this item, and prevents its rules from being applied. */
     fun doff() =
         if (!worn) throw IllegalStateException("Already doffed: $this")
-        else new(false, self)
+        else activateNext(false, self)
 
     /**
      * Provides simpler rule syntax specific to RPG.  The "this" pointer to

@@ -24,7 +24,7 @@ class GirdleOfHillGiantMight private constructor(
             GirdleOfHillGiantMight(layers, false, null)
     }
 
-    override fun new(
+    override fun activateNext(
         active: Boolean,
         previous: GirdleOfHillGiantMight,
     ) = GirdleOfHillGiantMight(layers, active, previous)

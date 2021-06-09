@@ -1,6 +1,6 @@
 package hm.binkley.layers.rpg.items
 
-import hm.binkley.layers.rpg.Character.Companion.newCharacter
+import hm.binkley.layers.rpg.Character.Companion.character
 import hm.binkley.layers.rpg.RpgLayersEditMap
 import hm.binkley.layers.rpg.rules.NotWornRule
 import io.kotest.assertions.throwables.shouldThrow
@@ -10,7 +10,7 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 internal class WearableItemTest {
-    private val character = newCharacter("TEST CHARACTER")
+    private val character = character("TEST CHARACTER")
 
     init {
         character.edit {

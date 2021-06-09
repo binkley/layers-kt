@@ -1,12 +1,12 @@
 package hm.binkley.layers.rpg.items
 
-import hm.binkley.layers.rpg.Character.Companion.newCharacter
+import hm.binkley.layers.rpg.Character.Companion.character
 import hm.binkley.layers.rpg.RpgLayersEditMap
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 internal class ContainerTest {
-    private val character = newCharacter("TEST CHARACTER")
+    private val character = character("TEST CHARACTER")
 
     @Test
     fun `should have a debuggable representation`() =
@@ -18,7 +18,7 @@ internal class ContainerTest {
         val item = character.commitAndNext { TestItem() }
         val container = character.commitAndNext {
             TestContainer(it)
-        }.add(item)
+        }.stow(item)
 
         container.contents shouldBe listOf(item)
     }
@@ -28,13 +28,11 @@ internal class ContainerTest {
         val item = character.commitAndNext { TestItem() }
         val container = character.commitAndNext {
             TestContainer(it, contents = listOf(item))
-        }.remove(item)
+        }.unstow(item)
 
         container.contents shouldBe emptyList<Item<*>>()
     }
 }
-
-private class TestItem : Item<TestItem>("TEST ITEM")
 
 private class TestContainer(
     layers: RpgLayersEditMap,

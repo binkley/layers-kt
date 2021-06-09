@@ -1,13 +1,13 @@
 package hm.binkley.layers.rpg.rules
 
-import hm.binkley.layers.rpg.Character.Companion.newCharacter
+import hm.binkley.layers.rpg.Character.Companion.character
 import hm.binkley.layers.toValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 internal class StatRuleTest {
-    private val character = newCharacter("TEST CHARACTER")
+    private val character = character("TEST CHARACTER")
 
     @Test
     fun `should have a debuggable presentation for stats`() =

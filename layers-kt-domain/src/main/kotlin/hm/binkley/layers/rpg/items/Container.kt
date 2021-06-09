@@ -2,6 +2,7 @@ package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.RpgLayersEditMap
 
+/** @todo Capacity for containers */
 abstract class Container<I : Item<I>, C : Container<I, C>>(
     name: String,
     layers: RpgLayersEditMap,
@@ -23,16 +24,26 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
         contents: List<I>,
     ): C
 
-    fun add(item: I): C {
-        val contents = contents.toMutableList() // Make a copy
-        contents.add(item)
-        return updateContainer(worn, self, contents)
+    /**
+     * Adds [item] to this container, returning a new container.  The
+     * original container remains unmutated.  A container is a `Layer`, so the
+     * mutated copy needs to be committed.
+     */
+    fun stow(item: I): C {
+        val updatedContents = contents.toMutableList()
+        updatedContents.add(item)
+        return updateContainer(worn, self, updatedContents)
     }
 
-    fun remove(item: I): C {
-        val contents = contents.toMutableList() // Make a copy
-        contents.remove(item)
-        return updateContainer(worn, self, contents)
+    /**
+     * Removes [item] to this container, returning a new container.  The
+     * original container remains unmutated.  A container is a `Layer`, so the
+     * mutated copy needs to be committed.
+     */
+    fun unstow(item: I): C {
+        val updatedContents = contents.toMutableList()
+        updatedContents.remove(item)
+        return updateContainer(worn, self, updatedContents)
     }
 
     override fun toString() = "${super.toString()}: $contents"

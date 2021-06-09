@@ -12,6 +12,6 @@ open class Character<M : RpgLayer<M>> private constructor(
     defaultMutableLayer = { RpgLayer<RpgLayer<*>>(it) as M }
 ) {
     companion object {
-        fun newCharacter(name: String) = Character<RpgLayer<*>>(name)
+        fun character(name: String) = Character<RpgLayer<*>>(name)
     }
 }

@@ -8,9 +8,9 @@ import hm.binkley.layers.rpg.RpgLayersEditMap
 abstract class Container<I : Item<I>, C : Container<I, C>>(
     name: String,
     weight: Float,
-    layers: RpgLayersEditMap,
     worn: Boolean,
     previous: C?,
+    layers: RpgLayersEditMap,
     contents: List<I>,
 ) : WearableItem<C>(
     name,

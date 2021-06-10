@@ -10,9 +10,9 @@ class Backpack<I : Item<I>>(
 ) : Container<I, Backpack<I>>(
     "Backpack",
     5.0f,
-    layers,
     worn,
     previous,
+    layers,
     contents,
 ) {
     companion object {

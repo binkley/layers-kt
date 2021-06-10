@@ -15,10 +15,11 @@ import hm.binkley.layers.rpg.rules.NotWornRule
  */
 abstract class WearableItem<I : WearableItem<I>>(
     name: String,
+    weight: Float,
     val worn: Boolean,
     private val previous: I?,
     protected val layers: RpgLayersEditMap,
-) : Item<I>(name) {
+) : Item<I>(name, weight) {
     /** Creates a layer _copy_ linked to the parent it is copied from. */
     protected abstract fun activateNext(worn: Boolean, previous: I): I
 

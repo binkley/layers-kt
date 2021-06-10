@@ -9,6 +9,7 @@ class Backpack<I : Item<I>>(
     contents: List<I> = listOf(),
 ) : Container<I, Backpack<I>>(
     "Backpack",
+    5.0f,
     layers,
     worn,
     previous,

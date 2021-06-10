@@ -5,12 +5,14 @@ import hm.binkley.layers.rpg.RpgLayersEditMap
 /** @todo Capacity for containers */
 abstract class Container<I : Item<I>, C : Container<I, C>>(
     name: String,
+    weight: Float,
     layers: RpgLayersEditMap,
     worn: Boolean,
     previous: C?,
     contents: List<I>,
 ) : WearableItem<C>(
     name,
+    weight,
     worn,
     previous,
     layers

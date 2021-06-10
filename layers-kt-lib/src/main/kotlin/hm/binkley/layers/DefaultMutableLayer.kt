@@ -12,7 +12,7 @@ open class DefaultMutableLayer<K : Any, V : Any, M : DefaultMutableLayer<K, V, M
             DefaultMutableLayer<K, V, DefaultMutableLayer<K, V, *>>(name)
     }
 
-    override fun edit(block: EditMap<K, V>.() -> Unit): M {
+    final override fun edit(block: EditMap<K, V>.() -> Unit): M {
         DefaultEditMap().block()
         return self
     }

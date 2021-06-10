@@ -22,15 +22,15 @@ internal class WearableItemTest {
     fun `should have a debuggable representation`() {
         val newItemA = character.commitAndNext { TestWearableItem(it) }
         "$newItemA" shouldBe
-            "[-]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> null"
+            "[-]TEST ITEM: {ITEM-WEIGHT=<Value>13.13, A KEY=<Rule>Constant(value=7)} -> null"
         "${newItemA.don()}" shouldBe
-            "[+]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
+            "[+]TEST ITEM: {ITEM-WEIGHT=<Value>13.13, A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
 
         val newItemB = character.commitAndNext { TestWearableItem(it, true) }
         "$newItemB" shouldBe
-            "[+]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> null"
+            "[+]TEST ITEM: {ITEM-WEIGHT=<Value>13.13, A KEY=<Rule>Constant(value=7)} -> null"
         "${newItemB.doff()}" shouldBe
-            "[-]TEST ITEM: {A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
+            "[-]TEST ITEM: {ITEM-WEIGHT=<Value>13.13, A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
     }
 
     @Test
@@ -81,7 +81,13 @@ private class TestWearableItem(
     layers: RpgLayersEditMap,
     active: Boolean = false,
     previous: TestWearableItem? = null,
-) : WearableItem<TestWearableItem>("TEST ITEM", active, previous, layers) {
+) : WearableItem<TestWearableItem>(
+    "TEST ITEM",
+    13.13f,
+    active,
+    previous,
+    layers
+) {
     init {
         edit {
             val rule = constantRule(7)

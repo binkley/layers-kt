@@ -1,8 +1,10 @@
 package hm.binkley.layers.rpg.items
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import hm.binkley.layers.rpg.RpgLayersEditMap
 
 /** @todo Capacity for containers */
+@SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
 abstract class Container<I : Item<I>, C : Container<I, C>>(
     name: String,
     weight: Float,
@@ -19,6 +21,15 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
 ) {
     private val _contents = contents.toMutableList()
     val contents: List<I> get() = _contents
+
+    init {
+        edit {
+            this["$name-WEIGHT"] =
+                rule<Float>("Sum[Float]") { _, _, _ ->
+                    contents.map { it.weight }.sum()
+                }
+        }
+    }
 
     protected abstract fun updateContainer(
         worn: Boolean,

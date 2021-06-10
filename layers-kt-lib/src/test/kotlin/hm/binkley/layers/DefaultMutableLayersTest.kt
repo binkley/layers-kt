@@ -1,6 +1,7 @@
 package hm.binkley.layers
 
 import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
+import hm.binkley.layers.util.emptyStack
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -139,11 +140,19 @@ A NAME: {}
 
     @Test
     fun `should have a customized layers`() {
-        val layer =
-            extendedLayers.commitAndNext { TestCustomMutableSubLayer() }
+        val layer = extendedLayers.commitAndNext {
+            TestCustomMutableSubLayer()
+        }
 
         // That this compiles *is* the test
         layer.bar()
+    }
+
+    @Test
+    fun `should undo`() {
+        defaultLayers.rollback()
+
+        defaultLayers.history shouldBe emptyStack()
     }
 }
 

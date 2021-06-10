@@ -18,4 +18,7 @@ interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :
     /** @todo Returning M loses type information for K and V ?! */
     fun commitAndNext(name: String): MutableLayer<K, V, M>
     fun <N : M> commitAndNext(next: (LayersEditMap<K, V>) -> N): N
+
+    /** Removes the most recent layer. */
+    fun rollback()
 }

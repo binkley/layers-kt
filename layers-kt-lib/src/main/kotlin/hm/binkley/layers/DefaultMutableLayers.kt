@@ -62,6 +62,10 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         return layer
     }
 
+    override fun rollback() {
+        layers.pop()
+    }
+
     override fun toString() = history.mapIndexed { index, layer ->
         "$index (${layer::class.simpleName}): $layer"
     }.joinToString("\n", "$name: ${super.toString()}\n")

@@ -107,8 +107,8 @@ fun main() {
 
     d.edit @Generated {
         this["DAVE"] =
-            rule<Int>("Count of non-DAVE keys") @Generated { _, _, view ->
-                view.keys.size
+            rule<Int>("Count of non-DAVE keys") @Generated { _, _, layers ->
+                layers.keys.size
             }
         this["EVE"] = constantRule(31)
     }

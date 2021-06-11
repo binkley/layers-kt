@@ -2,7 +2,6 @@ package hm.binkley.layers
 
 import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
 import hm.binkley.layers.util.emptyStack
-import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -49,27 +48,6 @@ A NAME: {}
     }
 
     @Test
-    fun `should gather view entries from layers to execute a rule`() {
-        // TODO: This test feels upside down
-        val rule = object : Rule<String, Number, Int>("A RULE") {
-            override fun invoke(
-                key: String,
-                values: List<Int>,
-                view: Map<String, Number>,
-            ): Int {
-                view shouldBe emptyMap()
-                return 3
-            }
-        }
-
-        defaultLayers.edit {
-            this["A KEY"] = rule
-        }
-
-        defaultLayers["A KEY"] shouldBe 3
-    }
-
-    @Test
     fun `should read other values in layers`() {
         defaultLayers.edit {
             this["OTHER KEY"] = constantRule(3)
@@ -97,18 +75,6 @@ A NAME: {}
     }
 
     @Test
-    fun `should exclude current key from rules view`() {
-        defaultLayers.edit {
-            this["A KEY"] = rule<Int>("A RULE") { _, _, view ->
-                view.keys.shouldBeEmpty()
-                3
-            }
-        }
-
-        defaultLayers["A KEY"] shouldBe 3
-    }
-
-    @Test
     fun `should run what-if-with scenarios`() {
         val whatIf = defaultLayers.whatIfWith {
             this["A KEY"] = constantRule(3)
@@ -124,7 +90,8 @@ A NAME: {}
             this["A KEY"] = constantRule(3)
         }
 
-        val whatIf = defaultLayers.whatIfWithout(defaultLayers.current)
+        val whatIf =
+            defaultLayers.whatIfWithout(listOf(defaultLayers.current))
 
         whatIf shouldBe emptyMap()
         defaultLayers shouldBe mapOf("A KEY" to 3)

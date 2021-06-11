@@ -46,8 +46,8 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         return whatIf
     }
 
-    override fun whatIfWithout(layer: Layer<*, *, *>): Map<K, V> =
-        without(listOf(layer))
+    override fun whatIfWithout(layers: List<Layer<*, *, *>>): Map<K, V> =
+        without(layers)
 
     override fun edit(block: LayersEditMap<K, V>.() -> Unit) =
         DefaultLayersEditMap().block()
@@ -86,11 +86,11 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         key: K,
         except: List<Layer<K, V, *>> = listOf(),
     ): T {
-        val exceptLayers = without(except)
-        val rule = exceptLayers.currentRuleFor<T>(key)
-        val values = exceptLayers.currentValuesFor<T>(key)
+        val whatIf = without(except)
+        val rule = whatIf.currentRuleFor<T>(key)
+        val values = whatIf.currentValuesFor<T>(key)
 
-        return rule(key, values, ViewMap(key))
+        return rule(key, values, this)
     }
 
     private fun <T : V> currentRuleFor(key: K): Rule<K, V, T> =
@@ -121,11 +121,6 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         AbstractSet<Entry<K, V>>() {
         override val size: Int get() = keys.size
         override fun iterator(): Iterator<Entry<K, V>> = ViewIterator(keys)
-    }
-
-    private inner class ViewMap(private val except: K) : AbstractMap<K, V>() {
-        override val entries: Set<Entry<K, V>>
-            get() = ViewSet(allKeys().filterNot { it == except }.toSet())
     }
 
     private inner class DefaultLayersEditMap :

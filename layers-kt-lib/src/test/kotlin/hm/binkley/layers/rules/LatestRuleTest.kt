@@ -1,5 +1,7 @@
 package hm.binkley.layers.rules
 
+import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
+import hm.binkley.layers.Rule
 import hm.binkley.layers.TestEditMap
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -11,16 +13,24 @@ internal class LatestRuleTest {
 
     @Test
     fun `should calculate`() {
-        val rule = TestEditMap().latestRule(7)
-        val value = rule("A RULE", listOf(1, 2, 3), emptyMap())
+        val rule: Rule<String, Number, Int> = TestEditMap().latestRule(7)
+        val value = rule(
+            "A RULE",
+            listOf(1, 2, 3),
+            defaultMutableLayers("TEST LAYERS")
+        )
 
         value shouldBe 3
     }
 
     @Test
     fun `should provide a default value`() {
-        val rule = TestEditMap().latestRule(7)
-        val value = rule("A RULE", emptyList(), emptyMap())
+        val rule: Rule<String, Number, Int> = TestEditMap().latestRule(7)
+        val value = rule(
+            "A RULE",
+            emptyList(),
+            defaultMutableLayers("TEST LAYERS")
+        )
 
         value shouldBe 7
     }

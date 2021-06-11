@@ -6,10 +6,13 @@ import hm.binkley.layers.rules.LatestRule
 interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
     fun <T : V> rule(
         name: String,
-        block: (K, List<T>, Map<K, V>) -> T,
+        block: (K, List<T>, Layers<K, V, *>) -> T,
     ): Rule<K, V, T> = object : Rule<K, V, T>(name) {
-        override fun invoke(key: K, values: List<T>, view: Map<K, V>): T =
-            block(key, values, view)
+        override fun invoke(
+            key: K,
+            values: List<T>,
+            layers: Layers<K, V, *>,
+        ): T = block(key, values, layers)
     }
 
     fun <T : V> constantRule(value: T) = ConstantRule<K, V, T>(value)

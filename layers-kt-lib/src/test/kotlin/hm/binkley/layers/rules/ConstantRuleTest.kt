@@ -1,5 +1,6 @@
 package hm.binkley.layers.rules
 
+import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
 import hm.binkley.layers.TestEditMap
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -12,7 +13,11 @@ internal class ConstantRuleTest {
     @Test
     fun `should calculate`() {
         val rule = TestEditMap().constantRule(3)
-        val value = rule("A RULE", listOf(), mapOf())
+        val value = rule(
+            "A RULE",
+            listOf(),
+            defaultMutableLayers("TEST LAYERS")
+        )
 
         value shouldBe 3
     }

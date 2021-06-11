@@ -12,6 +12,6 @@ fun <T : Any> T.toValue() = Value(this)
 
 abstract class Rule<K : Any, V : Any, T : V>(
     val name: String,
-) : ValueOrRule<V>(), (K, List<T>, Map<K, V>) -> T {
+) : ValueOrRule<V>(), (K, List<T>, Layers<K, V, *>) -> T {
     override fun toString() = "<Rule>$name"
 }

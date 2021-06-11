@@ -11,7 +11,7 @@ internal class ContainerTest {
     @Test
     fun `should have a debuggable representation`() =
         "${character.commitAndNext { TestContainer(it) }}" shouldBe
-                "[-]TEST CONTAINER: {ITEM-WEIGHT=<Value>11.1, TEST CONTAINER-WEIGHT=<Rule>Sum[Float]} -> null: []"
+            "[-]TEST CONTAINER: {ITEM-WEIGHT=<Value>11.1, TEST CONTAINER-WEIGHT=<Rule>Sum[Float]} -> null: []"
 
     @Test
     fun `should add an item`() {

@@ -12,6 +12,6 @@ fun RpgEditMap.statRule(stat: String) =
     }
 
 fun RpgEditMap.statBonusRule(stat: String) =
-    rule<Int>("Stat-Bonus[Int](stat=$stat)") { _, _, view ->
-        (view[stat] as Int - 10) / 2
+    rule<Int>("Stat-Bonus[Int](stat=$stat)") { _, _, layers ->
+        (layers[stat] as Int - 10) / 2
     }

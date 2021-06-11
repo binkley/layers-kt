@@ -1,7 +1,6 @@
 package hm.binkley.layers.rpg.rules
 
 import hm.binkley.layers.rpg.RpgLayers
-import hm.binkley.layers.rpg.RpgLayersEditMap
 import hm.binkley.layers.rpg.RpgRule
 import hm.binkley.layers.rpg.items.WearableItem
 
@@ -14,11 +13,10 @@ import hm.binkley.layers.rpg.items.WearableItem
 class NotWornRule<T : Any>(
     name: String,
     private val layer: WearableItem<*>,
-    private val editMap: RpgLayersEditMap,
 ) : RpgRule<T>(name) {
     override fun invoke(
         key: String,
         values: List<T>,
         layers: RpgLayers,
-    ): T = editMap.getAs(key, except = layer.same())
+    ): T = layers.getAs(key, except = layer.same())
 }

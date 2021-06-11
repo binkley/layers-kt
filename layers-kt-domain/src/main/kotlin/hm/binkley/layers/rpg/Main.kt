@@ -95,8 +95,8 @@ fun main() {
 
     d.edit @Generated {
         this["DAVE"] =
-            rule<Int>("Halve[Int](other=CAROL)") @Generated { _, _, _ ->
-                getAs<Int>("CAROL") / 2
+            rule<Int>("Halve[Int](other=CAROL)") @Generated { _, _, layers ->
+                layers.getAs<Int>("CAROL") / 2
             }
     }
 

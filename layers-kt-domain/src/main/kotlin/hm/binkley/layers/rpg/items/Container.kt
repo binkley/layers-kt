@@ -1,7 +1,7 @@
 package hm.binkley.layers.rpg.items
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
-import hm.binkley.layers.rpg.RpgLayersEditMap
+import hm.binkley.layers.rpg.RpgEditMap
 
 /** @todo Capacity for containers */
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
@@ -10,7 +10,7 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
     weight: Float,
     worn: Boolean,
     previous: C?,
-    layers: RpgLayersEditMap,
+    layers: RpgEditMap,
     contents: List<I>,
 ) : WearableItem<C>(
     name,

@@ -2,7 +2,6 @@ package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.Layer
 import hm.binkley.layers.rpg.RpgEditMap
-import hm.binkley.layers.rpg.RpgLayersEditMap
 import hm.binkley.layers.rpg.RpgRule
 import hm.binkley.layers.rpg.rules.FloorRule
 import hm.binkley.layers.rpg.rules.NotWornRule
@@ -18,7 +17,7 @@ abstract class WearableItem<I : WearableItem<I>>(
     weight: Float,
     val worn: Boolean,
     private val previous: I?,
-    protected val layers: RpgLayersEditMap,
+    protected val layers: RpgEditMap,
 ) : Item<I>(name, weight) {
     /** Creates a layer _copy_ linked to the parent it is copied from. */
     protected abstract fun activateNext(worn: Boolean, previous: I): I

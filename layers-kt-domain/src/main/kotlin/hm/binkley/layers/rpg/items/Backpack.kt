@@ -1,9 +1,9 @@
 package hm.binkley.layers.rpg.items
 
-import hm.binkley.layers.rpg.RpgLayersEditMap
+import hm.binkley.layers.rpg.RpgEditMap
 
 class Backpack<I : Item<I>>(
-    layers: RpgLayersEditMap,
+    layers: RpgEditMap,
     worn: Boolean = false,
     previous: Backpack<I>? = null,
     contents: List<I> = listOf(),
@@ -16,7 +16,7 @@ class Backpack<I : Item<I>>(
     contents,
 ) {
     companion object {
-        fun <I : Item<I>> backpack(layers: RpgLayersEditMap): Backpack<I> {
+        fun <I : Item<I>> backpack(layers: RpgEditMap): Backpack<I> {
             return Backpack(layers, false)
         }
     }

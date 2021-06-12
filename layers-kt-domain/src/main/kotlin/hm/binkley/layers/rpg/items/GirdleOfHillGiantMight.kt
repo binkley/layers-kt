@@ -1,10 +1,10 @@
 package hm.binkley.layers.rpg.items
 
-import hm.binkley.layers.rpg.RpgLayersEditMap
+import hm.binkley.layers.rpg.RpgEditMap
 import hm.binkley.layers.rpg.Stat.MIGHT
 
 class GirdleOfHillGiantMight private constructor(
-    layers: RpgLayersEditMap,
+    layers: RpgEditMap,
     worn: Boolean,
     previous: GirdleOfHillGiantMight?,
 ) : WearableItem<GirdleOfHillGiantMight>(
@@ -21,7 +21,7 @@ class GirdleOfHillGiantMight private constructor(
     }
 
     companion object {
-        fun girdleOfHillGiantMight(layers: RpgLayersEditMap) =
+        fun girdleOfHillGiantMight(layers: RpgEditMap) =
             GirdleOfHillGiantMight(layers, false, null)
     }
 

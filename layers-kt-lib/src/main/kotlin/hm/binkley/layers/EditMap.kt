@@ -18,8 +18,3 @@ interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
     fun <T : V> constantRule(value: T) = ConstantRule<K, V, T>(value)
     fun <T : V> latestRule(default: T) = LatestRule<K, V, T>(default)
 }
-
-interface LayersEditMap<K : Any, V : Any> : EditMap<K, V> {
-    /** @todo Merge into [Layers.getAs] */
-    fun <T : V> getAs(key: K, except: List<Layer<K, V, *>> = listOf()): T
-}

@@ -23,11 +23,11 @@ interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
 
 interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :
     Layers<K, V, M> {
-    fun edit(block: LayersEditMap<K, V>.() -> Unit)
+    fun edit(block: EditMap<K, V>.() -> Unit)
 
     /** @todo Returning M loses type information for K and V ?! */
     fun commitAndNext(name: String): MutableLayer<K, V, M>
-    fun <N : M> commitAndNext(next: (LayersEditMap<K, V>) -> N): N
+    fun <N : M> commitAndNext(next: (EditMap<K, V>) -> N): N
 
     /** Removes the most recent layer. */
     fun rollback()

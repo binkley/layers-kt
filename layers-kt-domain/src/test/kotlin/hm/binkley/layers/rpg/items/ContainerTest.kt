@@ -1,7 +1,7 @@
 package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.Character.Companion.character
-import hm.binkley.layers.rpg.RpgLayersEditMap
+import hm.binkley.layers.rpg.RpgEditMap
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -42,7 +42,7 @@ internal class ContainerTest {
 }
 
 private class TestContainer(
-    layers: RpgLayersEditMap,
+    layers: RpgEditMap,
     worn: Boolean = false,
     previous: TestContainer? = null,
     contents: List<TestItem> = listOf(),

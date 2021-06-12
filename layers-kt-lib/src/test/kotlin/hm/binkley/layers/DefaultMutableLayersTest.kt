@@ -48,17 +48,6 @@ A NAME: {}
     }
 
     @Test
-    fun `should read other values in layers`() {
-        defaultLayers.edit {
-            this["OTHER KEY"] = constantRule(3)
-
-            val value = getAs<Int>("OTHER KEY")
-
-            value shouldBe 3
-        }
-    }
-
-    @Test
     fun `should exclude specific layer`() {
         defaultLayers.edit {
             this["A KEY"] = constantRule(3)
@@ -67,10 +56,6 @@ A NAME: {}
 
         defaultLayers.edit {
             this["A KEY"] = constantRule(7)
-        }
-
-        defaultLayers.edit {
-            getAs<Int>("A KEY", listOf(layer)) shouldBe 3
         }
     }
 

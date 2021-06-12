@@ -52,14 +52,14 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     override fun whatIfWithout(except: List<Layer<*, *, *>>): Map<K, V> =
         without(except)
 
-    override fun edit(block: LayersEditMap<K, V>.() -> Unit) =
+    override fun edit(block: EditMap<K, V>.() -> Unit) =
         DefaultLayersEditMap().block()
 
     override fun commitAndNext(name: String): M = commitAndNext {
         defaultMutableLayer(name)
     }
 
-    override fun <N : M> commitAndNext(next: (LayersEditMap<K, V>) -> N): N {
+    override fun <N : M> commitAndNext(next: (EditMap<K, V>) -> N): N {
         val layer = next(DefaultLayersEditMap())
         layers.push(layer)
         return layer
@@ -127,8 +127,5 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     }
 
     private inner class DefaultLayersEditMap :
-        LayersEditMap<K, V>, MutableMap<K, ValueOrRule<V>> by layers.peek() {
-        override fun <T : V> getAs(key: K, except: List<Layer<K, V, *>>): T =
-            computeValue(key, except)
-    }
+        EditMap<K, V>, MutableMap<K, ValueOrRule<V>> by layers.peek()
 }

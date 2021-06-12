@@ -1,7 +1,7 @@
 package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.Character.Companion.character
-import hm.binkley.layers.rpg.RpgLayersEditMap
+import hm.binkley.layers.rpg.RpgEditMap
 import hm.binkley.layers.rpg.rules.NotWornRule
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
@@ -78,7 +78,7 @@ internal class WearableItemTest {
 }
 
 private class TestWearableItem(
-    layers: RpgLayersEditMap,
+    layers: RpgEditMap,
     active: Boolean = false,
     previous: TestWearableItem? = null,
 ) : WearableItem<TestWearableItem>(

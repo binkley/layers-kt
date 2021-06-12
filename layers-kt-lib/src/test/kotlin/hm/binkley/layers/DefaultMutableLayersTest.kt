@@ -48,18 +48,6 @@ A NAME: {}
     }
 
     @Test
-    fun `should exclude specific layer`() {
-        defaultLayers.edit {
-            this["A KEY"] = constantRule(3)
-        }
-        val layer = defaultLayers.commitAndNext("TEST LAYER")
-
-        defaultLayers.edit {
-            this["A KEY"] = constantRule(7)
-        }
-    }
-
-    @Test
     fun `should run what-if-with scenarios`() {
         val whatIf = defaultLayers.whatIfWith {
             this["A KEY"] = constantRule(3)

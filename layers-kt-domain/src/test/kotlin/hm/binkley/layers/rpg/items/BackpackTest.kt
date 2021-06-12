@@ -10,7 +10,7 @@ internal class BackpackTest {
 
     @Test
     fun `should add and remove an item`() {
-        var backpack = character.commitAndNext { backpack<Item<*>>(it) }
+        var backpack = character.commitAndNext { backpack<Item<*>>() }
         val item = character.commitAndNext { TestItem() }
 
         backpack = character.commitAndNext { backpack.stow(item) }

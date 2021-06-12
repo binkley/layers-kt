@@ -1,10 +1,8 @@
 package hm.binkley.layers.rpg.items
 
-import hm.binkley.layers.rpg.RpgEditMap
 import hm.binkley.layers.rpg.Stat.MIGHT
 
 class GirdleOfHillGiantMight private constructor(
-    layers: RpgEditMap,
     worn: Boolean,
     previous: GirdleOfHillGiantMight?,
 ) : WearableItem<GirdleOfHillGiantMight>(
@@ -12,7 +10,6 @@ class GirdleOfHillGiantMight private constructor(
     1.0f,
     worn,
     previous,
-    layers
 ) {
     init {
         edit {
@@ -21,12 +18,11 @@ class GirdleOfHillGiantMight private constructor(
     }
 
     companion object {
-        fun girdleOfHillGiantMight(layers: RpgEditMap) =
-            GirdleOfHillGiantMight(layers, false, null)
+        fun girdleOfHillGiantMight() = GirdleOfHillGiantMight(false, null)
     }
 
     override fun activateNext(
         worn: Boolean,
         previous: GirdleOfHillGiantMight,
-    ) = GirdleOfHillGiantMight(layers, worn, previous)
+    ) = GirdleOfHillGiantMight(worn, previous)
 }

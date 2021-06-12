@@ -1,7 +1,6 @@
 package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.Character.Companion.character
-import hm.binkley.layers.rpg.RpgEditMap
 import hm.binkley.layers.rpg.rules.NotWornRule
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
@@ -20,13 +19,13 @@ internal class WearableItemTest {
 
     @Test
     fun `should have a debuggable representation`() {
-        val newItemA = character.commitAndNext { TestWearableItem(it) }
+        val newItemA = character.commitAndNext { TestWearableItem() }
         "$newItemA" shouldBe
             "[-]TEST ITEM: {ITEM-WEIGHT=<Value>13.13, A KEY=<Rule>Constant(value=7)} -> null"
         "${newItemA.don()}" shouldBe
             "[+]TEST ITEM: {ITEM-WEIGHT=<Value>13.13, A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
 
-        val newItemB = character.commitAndNext { TestWearableItem(it, true) }
+        val newItemB = character.commitAndNext { TestWearableItem(true) }
         "$newItemB" shouldBe
             "[+]TEST ITEM: {ITEM-WEIGHT=<Value>13.13, A KEY=<Rule>Constant(value=7)} -> null"
         "${newItemB.doff()}" shouldBe
@@ -35,7 +34,7 @@ internal class WearableItemTest {
 
     @Test
     fun `should ignore inactive items`() {
-        val item = character.commitAndNext { TestWearableItem(it) }
+        val item = character.commitAndNext { TestWearableItem() }
 
         character["A KEY"] shouldBe 3
         item.worn.shouldBeFalse()
@@ -43,7 +42,7 @@ internal class WearableItemTest {
 
     @Test
     fun `should use active items`() {
-        val item = character.commitAndNext { TestWearableItem(it).don() }
+        val item = character.commitAndNext { TestWearableItem().don() }
 
         character["A KEY"] shouldBe 7
         item.worn.shouldBeTrue()
@@ -51,7 +50,7 @@ internal class WearableItemTest {
 
     @Test
     fun `should use toggle activeness`() {
-        val newItem = character.commitAndNext { TestWearableItem(it) }
+        val newItem = character.commitAndNext { TestWearableItem() }
         character["A KEY"] shouldBe 3
 
         val donnedItem = character.commitAndNext { newItem.don() }
@@ -64,7 +63,7 @@ internal class WearableItemTest {
     @Test
     fun `should complain to don an already donned item`() {
         shouldThrow<IllegalStateException> {
-            character.commitAndNext { TestWearableItem(it) }.don().don()
+            character.commitAndNext { TestWearableItem() }.don().don()
         }
     }
 
@@ -72,13 +71,12 @@ internal class WearableItemTest {
     fun `should complain to doff an already doffed item`() {
         shouldThrow<IllegalStateException> {
             // New item starteds doffed
-            character.commitAndNext { TestWearableItem(it) }.doff()
+            character.commitAndNext { TestWearableItem() }.doff()
         }
     }
 }
 
 private class TestWearableItem(
-    layers: RpgEditMap,
     active: Boolean = false,
     previous: TestWearableItem? = null,
 ) : WearableItem<TestWearableItem>(
@@ -86,7 +84,6 @@ private class TestWearableItem(
     13.13f,
     active,
     previous,
-    layers
 ) {
     init {
         edit {
@@ -98,5 +95,5 @@ private class TestWearableItem(
     }
 
     override fun activateNext(worn: Boolean, previous: TestWearableItem) =
-        TestWearableItem(layers, worn, previous)
+        TestWearableItem(worn, previous)
 }

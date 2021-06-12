@@ -1,9 +1,6 @@
 package hm.binkley.layers.rpg.items
 
-import hm.binkley.layers.rpg.RpgEditMap
-
 class Backpack<I : Item<I>>(
-    layers: RpgEditMap,
     worn: Boolean = false,
     previous: Backpack<I>? = null,
     contents: List<I> = listOf(),
@@ -12,21 +9,18 @@ class Backpack<I : Item<I>>(
     5.0f,
     worn,
     previous,
-    layers,
     contents,
 ) {
     companion object {
-        fun <I : Item<I>> backpack(layers: RpgEditMap): Backpack<I> {
-            return Backpack(layers, false)
-        }
+        fun <I : Item<I>> backpack(): Backpack<I> = Backpack(false)
     }
 
     override fun updateContainer(
         worn: Boolean,
         previous: Backpack<I>?,
         contents: List<I>,
-    ): Backpack<I> = Backpack(layers, worn, previous, contents)
+    ): Backpack<I> = Backpack(worn, previous, contents)
 
     override fun activateNext(worn: Boolean, previous: Backpack<I>) =
-        Backpack(layers, worn, previous, contents)
+        Backpack(worn, previous, contents)
 }

@@ -119,7 +119,7 @@ fun main() {
     println("==SAMPLE CHARACTER")
     val character = character("BOB")
     val newGirdle = character.commitAndNext @Generated {
-        girdleOfHillGiantMight(it)
+        girdleOfHillGiantMight()
     }
     character.commitAndNext @Generated { newGirdle.don() }
 

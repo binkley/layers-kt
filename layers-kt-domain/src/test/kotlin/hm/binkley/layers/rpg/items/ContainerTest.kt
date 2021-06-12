@@ -1,7 +1,6 @@
 package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.Character.Companion.character
-import hm.binkley.layers.rpg.RpgEditMap
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -10,7 +9,7 @@ internal class ContainerTest {
 
     @Test
     fun `should have a debuggable representation`() =
-        "${character.commitAndNext { TestContainer(it) }}" shouldBe
+        "${character.commitAndNext { TestContainer() }}" shouldBe
             "[-]TEST CONTAINER: {ITEM-WEIGHT=<Value>11.1, TEST CONTAINER-WEIGHT=<Rule>Sum[Float]} -> null: []"
 
     @Test
@@ -18,7 +17,7 @@ internal class ContainerTest {
         val testItem = TestItem()
         val item = character.commitAndNext { testItem }
         val unpacked = character.commitAndNext {
-            TestContainer(it)
+            TestContainer()
         }
 
         val packed = character.commitAndNext { unpacked.stow(item) }
@@ -31,7 +30,7 @@ internal class ContainerTest {
     fun `should remove an item`() {
         val item = character.commitAndNext { TestItem() }
         val packed = character.commitAndNext {
-            TestContainer(it, contents = listOf(item))
+            TestContainer(contents = listOf(item))
         }
 
         val unpacked = character.commitAndNext { packed.unstow(item) }
@@ -42,7 +41,6 @@ internal class ContainerTest {
 }
 
 private class TestContainer(
-    layers: RpgEditMap,
     worn: Boolean = false,
     previous: TestContainer? = null,
     contents: List<TestItem> = listOf(),
@@ -51,7 +49,6 @@ private class TestContainer(
     11.1f,
     worn,
     previous,
-    layers,
     contents
 ) {
     override fun activateNext(
@@ -63,5 +60,5 @@ private class TestContainer(
         worn: Boolean,
         previous: TestContainer?,
         contents: List<TestItem>,
-    ) = TestContainer(layers, worn, previous, contents)
+    ) = TestContainer(worn, previous, contents)
 }

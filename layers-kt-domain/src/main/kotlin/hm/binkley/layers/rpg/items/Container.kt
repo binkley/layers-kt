@@ -1,7 +1,6 @@
 package hm.binkley.layers.rpg.items
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
-import hm.binkley.layers.rpg.RpgEditMap
 
 /** @todo Capacity for containers */
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
@@ -10,14 +9,12 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
     weight: Float,
     worn: Boolean,
     previous: C?,
-    layers: RpgEditMap,
     contents: List<I>,
 ) : WearableItem<C>(
     name,
     weight,
     worn,
     previous,
-    layers
 ) {
     private val _contents = contents.toMutableList()
     val contents: List<I> get() = _contents

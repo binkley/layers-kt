@@ -59,8 +59,8 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         defaultMutableLayer(name)
     }
 
-    override fun <N : M> commitAndNext(next: (EditMap<K, V>) -> N): N {
-        val layer = next(DefaultLayersEditMap())
+    override fun <N : M> commitAndNext(next: () -> N): N {
+        val layer = next()
         layers.push(layer)
         return layer
     }

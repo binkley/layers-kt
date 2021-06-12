@@ -39,12 +39,12 @@ fun main() {
     println(c)
 
     println()
-    println("== USING CUSTOM TYPES")
+    println("== USING CUSTOM TYPES -- SYNTAX IS POOR")
 
     val d =
         DefaultMutableLayers<String, Number, DefaultMutableLayer<String, Number, *>>(
-            "D"
-        ) @Generated { DefaultMutableLayer(it) }
+            "D", @Generated { DefaultMutableLayer(it) }
+        )
     d.edit @Generated {
         this["CAROL"] = constantRule(2)
     }

@@ -11,8 +11,9 @@ internal class DefaultMutableLayersTest {
     // TODO: Less cumbersome syntax for custom layers
     private val customLayers =
         DefaultMutableLayers<String, Number, DefaultMutableLayer<String, Number, *>>(
-            "Test Custom Layers"
-        ) { DefaultMutableLayer(it) }
+            "Test Custom Layers",
+            { DefaultMutableLayer(it) }
+        )
 
     private val extendedLayers = TestLayers()
 

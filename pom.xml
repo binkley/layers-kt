@@ -349,7 +349,7 @@
                 <configuration>
                     <!-- TODO: JaCoCo and/or Pitest do not understand
                                Kotlin well -->
-                    <mutationThreshold>41</mutationThreshold>
+                    <mutationThreshold>40</mutationThreshold>
                     <timestampedReports>false</timestampedReports>
                 </configuration>
                 <executions>

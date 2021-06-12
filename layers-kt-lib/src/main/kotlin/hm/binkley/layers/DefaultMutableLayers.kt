@@ -1,37 +1,29 @@
 package hm.binkley.layers
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
+import hm.binkley.layers.DefaultMutableLayer.Companion.defaultMutableLayer
 import hm.binkley.layers.util.MutableStack
 import hm.binkley.layers.util.Stack
-import hm.binkley.layers.util.emptyStack
-import hm.binkley.layers.util.mutableStackOf
+import hm.binkley.layers.util.stackOf
 import hm.binkley.layers.util.toMutableStack
 import java.util.AbstractMap.SimpleEntry
 import kotlin.collections.Map.Entry
 
-/** @todo _Either_ `firstLayerName` or `initLayers`, not both */
 @SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
 open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     override val name: String,
-    firstLayerName: String = "<INIT>",
-    initLayers: Stack<M> = emptyStack(),
     private val defaultMutableLayer: (String) -> M,
+    initLayers: Stack<M> = stackOf(defaultMutableLayer("<INIT>")),
 ) : MutableLayers<K, V, M>, AbstractMap<K, V>() {
-    private val layers: MutableStack<M> = mutableStackOf()
-
-    init {
-        if (initLayers.isEmpty())
-            layers.add(defaultMutableLayer(firstLayerName))
-        else layers.addAll(initLayers)
-    }
+    private val layers: MutableStack<M> = initLayers.toMutableStack()
 
     companion object {
         fun <K : Any, V : Any> defaultMutableLayers(
             name: String,
         ): MutableLayers<K, V, *> =
-            DefaultMutableLayers<K, V, MutableLayer<K, V, *>>(name) {
-                DefaultMutableLayer.defaultMutableLayer<K, V>(it)
-            }
+            DefaultMutableLayers<K, V, MutableLayer<K, V, *>>(
+                name, defaultMutableLayer<K, V>()
+            )
     }
 
     override val entries: Set<Entry<K, V>> get() = ViewSet()
@@ -43,7 +35,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
 
     override fun whatIfWith(block: EditMap<K, V>.() -> Unit): Map<K, V> {
         val whatIf = DefaultMutableLayers(
-            name, "<INIT>", layers, defaultMutableLayer
+            name, defaultMutableLayer, layers
         )
         whatIf.commitAndNext("<WHAT-IF>").edit(block)
         return whatIf
@@ -77,12 +69,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         DefaultMutableLayers<K, V, M> {
         val layers: MutableStack<M> = layers.toMutableStack()
         layers.removeAll(except)
-        return DefaultMutableLayers(
-            name,
-            "<INIT>",
-            initLayers = layers,
-            defaultMutableLayer
-        )
+        return DefaultMutableLayers(name, defaultMutableLayer, layers)
     }
 
     private fun <T : V> computeValue(

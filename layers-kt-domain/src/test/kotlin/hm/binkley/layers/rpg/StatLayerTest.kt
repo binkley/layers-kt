@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test
 internal class StatLayerTest {
     private val layers = DefaultMutableLayers(
         name = "TEST LAYERS",
-        initLayers = stackOf(StatLayer()),
         defaultMutableLayer = { StatLayer() },
+        initLayers = stackOf(StatLayer()),
     )
 
     @Test

@@ -36,8 +36,8 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
 
     /**
      * Adds [item] to this container, returning a new container.  The
-     * original container remains unmutated.  A container is a `Layer`, so the
-     * mutated copy needs to be committed.
+     * original container remains unchanged.  A container is a `Layer`, so the
+     * mutated copy needs to be saved.
      */
     fun stow(item: I): C {
         val updatedContents = contents.toMutableList()
@@ -47,8 +47,8 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
 
     /**
      * Removes [item] to this container, returning a new container.  The
-     * original container remains unmutated.  A container is a `Layer`, so the
-     * mutated copy needs to be committed.
+     * original container remains unchanged.  A container is a `Layer`, so the
+     * mutated copy needs to be saved.
      */
     fun unstow(item: I): C {
         val updatedContents = contents.toMutableList()

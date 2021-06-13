@@ -11,12 +11,12 @@ internal class GirdleOfHillGiantMightTest {
     @Test
     fun `should start inactive`() {
         val character = character("TEST CHARACTER")
-        character.commitAndNext("Set might")
+        character.saveAndNext("Set might")
         character.edit {
             this[MIGHT.name] = 18.toValue()
         }
 
-        character.commitAndNext { girdleOfHillGiantMight() }
+        character.saveAndNext { girdleOfHillGiantMight() }
 
         character[MIGHT.name] shouldBe 18
     }
@@ -24,12 +24,12 @@ internal class GirdleOfHillGiantMightTest {
     @Test
     fun `should have Hill Giant might if better than existing`() {
         val character = character("TEST CHARACTER")
-        character.commitAndNext("Set might")
+        character.saveAndNext("Set might")
         character.edit {
             this[MIGHT.name] = 18.toValue()
         }
 
-        character.commitAndNext { girdleOfHillGiantMight().don() }
+        character.saveAndNext { girdleOfHillGiantMight().don() }
 
         character[MIGHT.name] shouldBe 19
     }
@@ -37,12 +37,12 @@ internal class GirdleOfHillGiantMightTest {
     @Test
     fun `should have better than Hill Giant might if existing is better`() {
         val character = character("TEST CHARACTER")
-        character.commitAndNext("Set might")
+        character.saveAndNext("Set might")
         character.edit {
             this[MIGHT.name] = 20.toValue()
         }
 
-        character.commitAndNext { girdleOfHillGiantMight().don() }
+        character.saveAndNext { girdleOfHillGiantMight().don() }
 
         character[MIGHT.name] shouldBe 20
     }

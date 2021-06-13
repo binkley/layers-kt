@@ -80,7 +80,7 @@ internal class StatRuleTest {
         character.edit {
             this[statKey] = statRule(statKey)
         }
-        character.commitAndNext("Increase Jousation")
+        character.saveAndNext("Increase Jousation")
         character.edit {
             this[statKey] = 1.toValue()
         }

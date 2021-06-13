@@ -27,11 +27,11 @@ fun main() {
             values.sum()
         }
     }
-    c.commitAndNext("First")
+    c.saveAndNext("First")
     c.edit @Generated {
         this["ALICE"] = Value(3)
     }
-    val a = c.commitAndNext("Second")
+    val a = c.saveAndNext("Second")
     a.edit @Generated {
         this["BOB"] = Value(4.0)
     }
@@ -54,7 +54,7 @@ fun main() {
         fun foo() = println("I AM FOCUTUS OF BOB")
     }
 
-    val b = d.commitAndNext @Generated { Bob() }
+    val b = d.saveAndNext @Generated { Bob() }
     b.foo()
 
     println(d)
@@ -65,11 +65,11 @@ fun main() {
     b.edit @Generated {
         this["CAROL"] = 17.toValue()
     }
-    d.commitAndNext("Second")
+    d.saveAndNext("Second")
     d.edit @Generated {
         this["CAROL"] = 19.toValue()
     }
-    d.commitAndNext("Third")
+    d.saveAndNext("Third")
     d.edit @Generated {
         this["CAROL"] = rule<Int>("Product[Int]") @Generated { _, values, _ ->
             values.fold(1) { a, b -> a * b }
@@ -118,10 +118,10 @@ fun main() {
     println()
     println("==SAMPLE CHARACTER")
     val character = character("BOB")
-    val newGirdle = character.commitAndNext @Generated {
+    val newGirdle = character.saveAndNext @Generated {
         girdleOfHillGiantMight()
     }
-    character.commitAndNext @Generated { newGirdle.don() }
+    character.saveAndNext @Generated { newGirdle.don() }
 
     println(character)
 }

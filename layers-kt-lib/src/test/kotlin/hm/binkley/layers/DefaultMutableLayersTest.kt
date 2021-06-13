@@ -35,7 +35,7 @@ A NAME: {}
         defaultLayers.edit {
             this["A KEY"] = latestRule(7)
         }
-        defaultLayers.commitAndNext("First").edit {
+        defaultLayers.saveAndNext("First").edit {
             this["A KEY"] = 3.toValue()
         }
 
@@ -81,7 +81,7 @@ A NAME: {}
 
     @Test
     fun `should add a sub-type layer and use it`() {
-        val layer = customLayers.commitAndNext { TestCustomMutableLayer() }
+        val layer = customLayers.saveAndNext { TestCustomMutableLayer() }
 
         // That this compiles *is* the test
         layer.foo()
@@ -89,7 +89,7 @@ A NAME: {}
 
     @Test
     fun `should have a customized layers`() {
-        val layer = extendedLayers.commitAndNext {
+        val layer = extendedLayers.saveAndNext {
             TestCustomMutableSubLayer()
         }
 
@@ -99,7 +99,7 @@ A NAME: {}
 
     @Test
     fun `should undo`() {
-        defaultLayers.rollback()
+        defaultLayers.undo()
 
         defaultLayers.history shouldBe emptyStack()
     }

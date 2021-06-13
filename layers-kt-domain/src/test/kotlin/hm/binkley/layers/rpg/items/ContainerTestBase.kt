@@ -11,13 +11,13 @@ internal abstract class ContainerTestBase<C : Container<TestItem, C>>(
 
     @Test
     fun `should add and remove an item`() {
-        val empty = character.commitAndNext { container }
-        val item = character.commitAndNext { TestItem() }
+        val empty = character.saveAndNext { container }
+        val item = character.saveAndNext { TestItem() }
 
-        val packed = character.commitAndNext { empty.stow(item) }
+        val packed = character.saveAndNext { empty.stow(item) }
         packed.contents shouldBe listOf(item)
 
-        val unpacked = character.commitAndNext { empty.unstow(item) }
+        val unpacked = character.saveAndNext { empty.unstow(item) }
         unpacked.contents shouldBe emptyList()
     }
 }

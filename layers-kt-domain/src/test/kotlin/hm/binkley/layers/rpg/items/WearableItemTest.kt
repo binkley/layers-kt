@@ -19,13 +19,13 @@ internal class WearableItemTest {
 
     @Test
     fun `should have a debuggable representation`() {
-        val newItemA = character.commitAndNext { TestWearableItem() }
+        val newItemA = character.saveAndNext { TestWearableItem() }
         "$newItemA" shouldBe
             "[-]TEST ITEM: {ITEM-WEIGHT=<Value>13.13, A KEY=<Rule>Constant(value=7)} -> null"
         "${newItemA.don()}" shouldBe
             "[+]TEST ITEM: {ITEM-WEIGHT=<Value>13.13, A KEY=<Rule>Constant(value=7)} -> TEST ITEM"
 
-        val newItemB = character.commitAndNext { TestWearableItem(true) }
+        val newItemB = character.saveAndNext { TestWearableItem(true) }
         "$newItemB" shouldBe
             "[+]TEST ITEM: {ITEM-WEIGHT=<Value>13.13, A KEY=<Rule>Constant(value=7)} -> null"
         "${newItemB.doff()}" shouldBe
@@ -34,7 +34,7 @@ internal class WearableItemTest {
 
     @Test
     fun `should ignore inactive items`() {
-        val item = character.commitAndNext { TestWearableItem() }
+        val item = character.saveAndNext { TestWearableItem() }
 
         character["A KEY"] shouldBe 3
         item.worn.shouldBeFalse()
@@ -42,7 +42,7 @@ internal class WearableItemTest {
 
     @Test
     fun `should use active items`() {
-        val item = character.commitAndNext { TestWearableItem().don() }
+        val item = character.saveAndNext { TestWearableItem().don() }
 
         character["A KEY"] shouldBe 7
         item.worn.shouldBeTrue()
@@ -50,20 +50,20 @@ internal class WearableItemTest {
 
     @Test
     fun `should use toggle activeness`() {
-        val newItem = character.commitAndNext { TestWearableItem() }
+        val newItem = character.saveAndNext { TestWearableItem() }
         character["A KEY"] shouldBe 3
 
-        val donnedItem = character.commitAndNext { newItem.don() }
+        val donnedItem = character.saveAndNext { newItem.don() }
         character["A KEY"] shouldBe 7
 
-        character.commitAndNext { donnedItem.doff() }
+        character.saveAndNext { donnedItem.doff() }
         character["A KEY"] shouldBe 3
     }
 
     @Test
     fun `should complain to don an already donned item`() {
         shouldThrow<IllegalStateException> {
-            character.commitAndNext { TestWearableItem() }.don().don()
+            character.saveAndNext { TestWearableItem() }.don().don()
         }
     }
 
@@ -71,7 +71,7 @@ internal class WearableItemTest {
     fun `should complain to doff an already doffed item`() {
         shouldThrow<IllegalStateException> {
             // New item starteds doffed
-            character.commitAndNext { TestWearableItem() }.doff()
+            character.saveAndNext { TestWearableItem() }.doff()
         }
     }
 }

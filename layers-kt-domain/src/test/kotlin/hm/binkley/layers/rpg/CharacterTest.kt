@@ -34,7 +34,7 @@ class CharacterTest {
     fun `should have a net item weight`() {
         character["ITEM-WEIGHT"] shouldBe 0.0f
 
-        val testItem = character.commitAndNext { TestItem() }
+        val testItem = character.saveAndNext { TestItem() }
 
         character["ITEM-WEIGHT"] shouldBe testItem.weight
     }

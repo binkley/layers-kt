@@ -9,18 +9,18 @@ internal class ContainerTest {
 
     @Test
     fun `should have a debuggable representation`() =
-        "${character.commitAndNext { TestContainer() }}" shouldBe
+        "${character.saveAndNext { TestContainer() }}" shouldBe
             "[-]TEST CONTAINER: {ITEM-WEIGHT=<Value>11.1, TEST CONTAINER-WEIGHT=<Rule>Sum[Float]} -> null: []"
 
     @Test
     fun `should add an item`() {
         val testItem = TestItem()
-        val item = character.commitAndNext { testItem }
-        val unpacked = character.commitAndNext {
+        val item = character.saveAndNext { testItem }
+        val unpacked = character.saveAndNext {
             TestContainer()
         }
 
-        val packed = character.commitAndNext { unpacked.stow(item) }
+        val packed = character.saveAndNext { unpacked.stow(item) }
 
         packed.contents shouldBe listOf(item)
         character["TEST CONTAINER-WEIGHT"] shouldBe testItem.weight
@@ -28,12 +28,12 @@ internal class ContainerTest {
 
     @Test
     fun `should remove an item`() {
-        val item = character.commitAndNext { TestItem() }
-        val packed = character.commitAndNext {
+        val item = character.saveAndNext { TestItem() }
+        val packed = character.saveAndNext {
             TestContainer(contents = listOf(item))
         }
 
-        val unpacked = character.commitAndNext { packed.unstow(item) }
+        val unpacked = character.saveAndNext { packed.unstow(item) }
 
         unpacked.contents shouldBe emptyList<Item<*>>()
         character["TEST CONTAINER-WEIGHT"] shouldBe 0.0f

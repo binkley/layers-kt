@@ -34,7 +34,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         val whatIf = DefaultMutableLayers(
             name, defaultMutableLayer, layers
         )
-        whatIf.commitAndNext("<WHAT-IF>").edit(block)
+        whatIf.saveAndNext("<WHAT-IF>").edit(block)
         return whatIf
     }
 
@@ -44,17 +44,17 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     override fun edit(block: EditMap<K, V>.() -> Unit) =
         DefaultLayersEditMap().block()
 
-    override fun commitAndNext(name: String): M = commitAndNext {
+    override fun saveAndNext(name: String): M = saveAndNext {
         defaultMutableLayer(name)
     }
 
-    override fun <N : M> commitAndNext(next: () -> N): N {
+    override fun <N : M> saveAndNext(next: () -> N): N {
         val layer = next()
         layers.push(layer)
         return layer
     }
 
-    override fun rollback() {
+    override fun undo() {
         layers.pop()
     }
 

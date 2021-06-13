@@ -49,6 +49,15 @@ A NAME: {}
     }
 
     @Test
+    fun `should get a key as typed`() {
+        defaultLayers.edit {
+            this["A KEY"] = constantRule(3)
+        }
+
+        defaultLayers.getAs<Int>("A KEY") shouldBe 3
+    }
+
+    @Test
     fun `should run what-if-with scenarios`() {
         val whatIf = defaultLayers.whatIfWith {
             this["A KEY"] = constantRule(3)

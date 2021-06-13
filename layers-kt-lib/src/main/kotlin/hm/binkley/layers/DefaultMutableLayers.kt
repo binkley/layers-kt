@@ -30,9 +30,6 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     override val history: Stack<Layer<K, V, *>> = layers
     override val current: M get() = layers.peek()
 
-    override fun <T : V> getAs(key: K, except: List<Layer<K, V, *>>): T =
-        computeValue(key, except)
-
     override fun whatIfWith(block: EditMap<K, V>.() -> Unit): Map<K, V> {
         val whatIf = DefaultMutableLayers(
             name, defaultMutableLayer, layers

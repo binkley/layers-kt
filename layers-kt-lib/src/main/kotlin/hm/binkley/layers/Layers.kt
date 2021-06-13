@@ -12,10 +12,10 @@ interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
     /**
      * Returns the typed value of another [key] as computed by layers.  Use
      * [except] to compute without certain layers.
-     *
-     * @todo Merge into [whatIfWithout]
      */
-    fun <T : V> getAs(key: K, except: List<Layer<K, V, *>> = listOf()): T
+    @Suppress("UNCHECKED_CAST")
+    fun <T : V> getAs(key: K, except: List<Layer<K, V, *>> = listOf()): T =
+        whatIfWithout(except)[key] as T
 
     /**
      * Creates a map (after rules applied) as-if there were an additional,

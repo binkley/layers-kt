@@ -12,6 +12,10 @@ interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
     /**
      * Returns the typed value of another [key] as computed by layers.  Use
      * [except] to compute without certain layers.
+     *
+     * *NB* &mdash; this function would be nicer as an extension function on
+     * the interface, but would then require caller to provide [K], [V], and
+     * [L].
      */
     @Suppress("UNCHECKED_CAST")
     fun <T : V> getAs(key: K, except: List<Layer<K, V, *>> = listOf()): T =

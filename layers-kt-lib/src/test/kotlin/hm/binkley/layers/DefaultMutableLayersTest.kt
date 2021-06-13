@@ -73,8 +73,7 @@ A NAME: {}
             this["A KEY"] = constantRule(3)
         }
 
-        val whatIf =
-            defaultLayers.whatIfWithout(listOf(defaultLayers.current))
+        val whatIf = defaultLayers.whatIfWithout() // current
 
         whatIf shouldBe emptyMap()
         defaultLayers shouldBe mapOf("A KEY" to 3)

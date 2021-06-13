@@ -17,8 +17,20 @@ interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
      */
     fun <T : V> getAs(key: K, except: List<Layer<K, V, *>> = listOf()): T
 
+    /**
+     * Creates a map (after rules applied) as-if there were an additional,
+     * topmost layer defined by [block], suitable for compare/contrast of
+     * changes without modifying these layers.
+     */
     fun whatIfWith(block: EditMap<K, V>.() -> Unit): Map<K, V>
-    fun whatIfWithout(except: List<Layer<*, *, *>>): Map<K, V>
+
+    /**
+     * Creates a map (after rules applied) as-if these layers did not
+     * include the [except] list.  The default list is the [current] layer;
+     * this default is suitable for compare/contrast of ongoing edits against
+     * the current, topmost layer.
+     */
+    fun whatIfWithout(except: List<Layer<*, *, *>> = listOf(current)): Map<K, V>
 }
 
 interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :

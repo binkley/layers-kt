@@ -10,15 +10,13 @@ internal class BackpackTest {
 
     @Test
     fun `should add and remove an item`() {
-        var backpack = character.commitAndNext { backpack<Item<*>>() }
+        val empty = character.commitAndNext { backpack<Item<*>>() }
         val item = character.commitAndNext { TestItem() }
 
-        backpack = character.commitAndNext { backpack.stow(item) }
-        backpack.contents shouldBe listOf(item)
+        val packed = character.commitAndNext { empty.stow(item) }
+        packed.contents shouldBe listOf(item)
 
-        backpack = character.commitAndNext { backpack.unstow(item) }
-        backpack.contents shouldBe emptyList()
-
-        character.history.size shouldBe 6
+        val unpacked = character.commitAndNext { empty.unstow(item) }
+        unpacked.contents shouldBe emptyList()
     }
 }

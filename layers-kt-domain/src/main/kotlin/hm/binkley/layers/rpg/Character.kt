@@ -13,7 +13,11 @@ open class Character<M : RpgLayer<M>> private constructor(
 ) : DefaultMutableLayers<String, Any, M>(
     name,
     defaultMutableLayer = { RpgLayer<RpgLayer<*>>(it) as M },
-    initLayers = stackOf<M>(PlayerLayer() as M, StatLayer() as M)
+    initLayers = stackOf<M>(
+        PlayerLayer() as M,
+        StatLayer() as M,
+        InventoryLayer() as M,
+    )
 ) {
     companion object {
         fun character(name: String) = Character<RpgLayer<*>>(name)

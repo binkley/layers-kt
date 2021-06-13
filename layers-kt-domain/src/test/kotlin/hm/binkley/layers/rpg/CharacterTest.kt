@@ -13,7 +13,11 @@ class CharacterTest {
     fun `should start with a character and a stat layer`() {
         character.history.map {
             it::class
-        } shouldBe stackOf(PlayerLayer::class, StatLayer::class)
+        } shouldBe stackOf(
+            PlayerLayer::class,
+            StatLayer::class,
+            InventoryLayer::class,
+        )
     }
 
     @Test

@@ -77,13 +77,9 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         return DefaultMutableLayers(name, defaultMutableLayer, layers)
     }
 
-    private fun <T : V> computeValue(
-        key: K,
-        except: List<Layer<K, V, *>> = listOf(),
-    ): T {
-        val whatIf = without(except)
-        val rule = whatIf.currentRuleFor<T>(key)
-        val values = whatIf.currentValuesFor<T>(key)
+    private fun <T : V> computeValue(key: K): T {
+        val rule = currentRuleFor<T>(key)
+        val values = currentValuesFor<T>(key)
 
         return rule(key, values, this)
     }

@@ -26,7 +26,7 @@ interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
      * topmost layer defined by [block], suitable for compare/contrast of
      * changes without modifying these layers.
      */
-    fun whatIfWith(block: EditMap<K, V>.() -> Unit): Map<K, V>
+    fun whatIfWith(block: EditMap<K, V>.() -> Unit): Layers<K, V, L>
 
     /**
      * Creates a map (after rules applied) as-if these layers did not
@@ -34,17 +34,27 @@ interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
      * this default is suitable for compare/contrast of ongoing edits against
      * the current, topmost layer.
      */
-    fun whatIfWithout(except: List<Layer<K, V, *>> = listOf(current)): Map<K, V>
+    fun whatIfWithout(except: List<Layer<K, V, *>> = listOf(current)): Layers<K, V, L>
 }
 
 interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :
     Layers<K, V, M> {
+    /** Modifies the current layer. */
     fun edit(block: EditMap<K, V>.() -> Unit)
 
-    /** @todo Returning M loses type information for K and V ?! */
+    /**
+     * Commits the current layer, and starts a new layer.  Implementations
+     * decide the type of the new layer.
+     *
+     * @todo Returning M loses type information for K and V ?!
+     */
     fun saveAndNext(name: String): MutableLayer<K, V, M>
+
+    /**
+     * Commits the current layer, and starts a new layer provided by [next].
+     */
     fun <N : M> saveAndNext(next: () -> N): N
 
-    /** Removes the most recent layer. */
+    /** Removes the current layer. */
     fun undo()
 }

@@ -35,17 +35,16 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
      * (key/value pairs) for all keys.  Most rules do not need to compute the
      * values for other keys.
      */
+    @SuppressFBWarnings("NP_NONNULL_RETURN_VIOLATION")
     override fun get(key: K): V = computeValue(key)
 
-    override fun whatIfWith(block: EditMap<K, V>.() -> Unit): Map<K, V> {
-        val whatIf = DefaultMutableLayers(
-            name, defaultMutableLayer, layers
-        )
+    override fun whatIfWith(block: EditMap<K, V>.() -> Unit): Layers<K, V, M> {
+        val whatIf = DefaultMutableLayers(name, defaultMutableLayer, layers)
         whatIf.saveAndNext("<WHAT-IF>").edit(block)
         return whatIf
     }
 
-    override fun whatIfWithout(except: List<Layer<K, V, *>>): Map<K, V> =
+    override fun whatIfWithout(except: List<Layer<K, V, *>>): Layers<K, V, M> =
         without(except)
 
     override fun edit(block: EditMap<K, V>.() -> Unit) =

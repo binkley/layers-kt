@@ -38,14 +38,15 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     @SuppressFBWarnings("NP_NONNULL_RETURN_VIOLATION")
     override fun get(key: K): V = computeValue(key)
 
-    override fun whatIfWith(block: EditMap<K, V>.() -> Unit): Layers<K, V, M> {
+    override fun whatIfWith(block: EditMap<K, V>.() -> Unit):
+        Layers<K, V, M> {
         val whatIf = DefaultMutableLayers(name, defaultMutableLayer, layers)
         whatIf.saveAndNext("<WHAT-IF>").edit(block)
         return whatIf
     }
 
-    override fun whatIfWithout(except: List<Layer<K, V, *>>): Layers<K, V, M> =
-        without(except)
+    override fun whatIfWithout(except: List<Layer<K, V, *>>):
+        Layers<K, V, M> = without(except)
 
     override fun edit(block: EditMap<K, V>.() -> Unit) =
         DefaultLayersEditMap().block()

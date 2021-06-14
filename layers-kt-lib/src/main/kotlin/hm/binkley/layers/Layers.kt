@@ -34,7 +34,7 @@ interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
      * this default is suitable for compare/contrast of ongoing edits against
      * the current, topmost layer.
      */
-    fun whatIfWithout(except: List<Layer<*, *, *>> = listOf(current)): Map<K, V>
+    fun whatIfWithout(except: List<Layer<K, V, *>> = listOf(current)): Map<K, V>
 }
 
 interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :

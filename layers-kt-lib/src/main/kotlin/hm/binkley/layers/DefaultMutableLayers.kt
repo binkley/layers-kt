@@ -38,7 +38,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         return whatIf
     }
 
-    override fun whatIfWithout(except: List<Layer<*, *, *>>): Map<K, V> =
+    override fun whatIfWithout(except: List<Layer<K, V, *>>): Map<K, V> =
         without(except)
 
     override fun edit(block: EditMap<K, V>.() -> Unit) =

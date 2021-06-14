@@ -5,7 +5,7 @@ import hm.binkley.layers.rpg.RpgRule
 import hm.binkley.layers.rpg.items.WearableItem
 import kotlin.math.max
 
-open class FloorRule(
+class FloorRule(
     private val value: Int,
     private val layer: WearableItem<*>,
 ) : RpgRule<Int>("Floor[Int](value=$value)") {

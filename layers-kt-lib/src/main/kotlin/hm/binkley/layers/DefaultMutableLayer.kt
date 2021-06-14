@@ -8,12 +8,8 @@ open class DefaultMutableLayer<K : Any, V : Any, M : DefaultMutableLayer<K, V, M
 ) : MutableLayer<K, V, M>, MutableMap<K, ValueOrRule<V>> by map {
     companion object {
         @Suppress("UNCHECKED_CAST")
-        fun <K : Any, V : Any> defaultMutableLayer(
-            name: String,
-        ): ThisLayer<K, V> = DefaultMutableLayer<K, V, ThisLayer<K, V>>(name)
-
-        fun <K : Any, V : Any> defaultMutableLayer(): (String) -> ThisLayer<K, V> =
-            { defaultMutableLayer(it) }
+        fun <K : Any, V : Any> defaultMutableLayer(name: String): ThisLayer<K, V> =
+            DefaultMutableLayer<K, V, ThisLayer<K, V>>(name)
     }
 
     final override fun edit(block: EditMap<K, V>.() -> Unit): M {

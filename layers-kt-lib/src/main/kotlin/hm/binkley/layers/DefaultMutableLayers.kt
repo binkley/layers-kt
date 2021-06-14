@@ -22,7 +22,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
             name: String,
         ): MutableLayers<K, V, *> =
             DefaultMutableLayers<K, V, MutableLayer<K, V, *>>(
-                name, defaultMutableLayer<K, V>()
+                name, { defaultMutableLayer<K, V>(it) }
             )
     }
 

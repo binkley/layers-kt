@@ -30,6 +30,13 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     override val history: Stack<Layer<K, V, *>> = layers
     override val current: M get() = layers.peek()
 
+    /**
+     * Directly compute the value for [key], rather than find the entries
+     * (key/value pairs) for all keys.  Most rules do not need to compute the
+     * values for other keys.
+     */
+    override fun get(key: K): V = computeValue(key)
+
     override fun whatIfWith(block: EditMap<K, V>.() -> Unit): Map<K, V> {
         val whatIf = DefaultMutableLayers(
             name, defaultMutableLayer, layers
@@ -64,6 +71,8 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
 
     private fun without(except: List<Layer<*, *, *>>):
         DefaultMutableLayers<K, V, M> {
+        if (except.isEmpty()) return this
+
         val layers: MutableStack<M> = layers.toMutableStack()
         layers.removeAll(except)
         return DefaultMutableLayers(name, defaultMutableLayer, layers)

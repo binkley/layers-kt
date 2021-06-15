@@ -54,7 +54,7 @@ abstract class WearableItem<I : WearableItem<I>>(
      */
     @Suppress("unused")
     fun RpgEditMap.floorRuleIfWorn(value: Int): RpgRule<Int> = ifWorn {
-        FloorRule(value, this@WearableItem)
+        FloorRule(value, self)
     }
 
     override fun toString(): String =

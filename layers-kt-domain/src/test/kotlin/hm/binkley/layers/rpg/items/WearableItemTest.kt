@@ -88,9 +88,7 @@ private class TestWearableItem(
     init {
         edit {
             val rule = constantRule(7)
-            this["A KEY"] =
-                if (active) rule
-                else NotWornRule(rule.name, this@TestWearableItem)
+            this["A KEY"] = if (active) rule else NotWornRule(rule.name, self)
         }
     }
 

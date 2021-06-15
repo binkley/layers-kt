@@ -21,8 +21,8 @@ class GirdleOfHillGiantMight private constructor(
         fun girdleOfHillGiantMight() = GirdleOfHillGiantMight(false, null)
     }
 
-    override fun activateNext(
-        worn: Boolean,
+    override fun change(
         previous: GirdleOfHillGiantMight,
+        worn: Boolean,
     ) = GirdleOfHillGiantMight(worn, previous)
 }

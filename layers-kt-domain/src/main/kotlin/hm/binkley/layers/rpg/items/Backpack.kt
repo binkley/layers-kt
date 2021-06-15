@@ -21,6 +21,6 @@ class Backpack<I : Item<I>>(
         contents: List<I>,
     ): Backpack<I> = Backpack(worn, previous, contents)
 
-    override fun activateNext(worn: Boolean, previous: Backpack<I>) =
+    override fun change(previous: Backpack<I>, worn: Boolean) =
         Backpack(worn, previous, contents)
 }

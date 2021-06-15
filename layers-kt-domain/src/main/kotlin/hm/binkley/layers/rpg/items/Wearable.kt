@@ -28,8 +28,9 @@ interface Wearable<I> where I : Item<I>, I : Wearable<I> {
 /**
  * @todo Explore direct pointers to other layers ([previous]) _vs_ tracking
  *       layer indices; the older Java implementation used the indices
- *       approach
- * @todo Consider moving [worn] into a key-value map pair
+ *       approach.  Indices make sense if caller is not undoing them, and
+ *       expecting to push back onto the stack later items referring to
+ *       earlier popped items
  */
 abstract class WearableItem<I : WearableItem<I>>(
     name: String,
@@ -38,7 +39,7 @@ abstract class WearableItem<I : WearableItem<I>>(
     private val previous: I?,
 ) : Item<I>(name, weight), Wearable<I> {
     /** Creates a layer _copy_ linked to the parent it is copied from. */
-    protected abstract fun activateNext(worn: Boolean, previous: I): I
+    protected abstract fun change(previous: I, worn: Boolean): I
 
     override fun same(): List<Layer<String, Any, *>> {
         val items = mutableListOf<I>()
@@ -52,11 +53,11 @@ abstract class WearableItem<I : WearableItem<I>>(
 
     override fun don() =
         if (worn) throw IllegalStateException("Already donned: $this")
-        else activateNext(true, self)
+        else change(self, true)
 
     override fun doff() =
         if (!worn) throw IllegalStateException("Already doffed: $this")
-        else activateNext(false, self)
+        else change(self, false)
 
     /**
      * Provides simpler rule syntax specific to RPG.  The "this" pointer to

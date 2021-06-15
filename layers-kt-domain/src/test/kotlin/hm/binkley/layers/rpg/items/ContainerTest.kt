@@ -51,9 +51,9 @@ private class TestContainer(
     previous,
     contents
 ) {
-    override fun activateNext(
-        worn: Boolean,
+    override fun change(
         previous: TestContainer,
+        worn: Boolean,
     ) = updateContainer(worn, previous, contents)
 
     override fun updateContainer(

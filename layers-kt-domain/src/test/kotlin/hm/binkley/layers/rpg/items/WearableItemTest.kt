@@ -92,6 +92,6 @@ private class TestWearableItem(
         }
     }
 
-    override fun activateNext(worn: Boolean, previous: TestWearableItem) =
+    override fun change(previous: TestWearableItem, worn: Boolean) =
         TestWearableItem(worn, previous)
 }

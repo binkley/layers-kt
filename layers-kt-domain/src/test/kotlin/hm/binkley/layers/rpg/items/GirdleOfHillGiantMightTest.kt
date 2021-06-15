@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 
 internal class GirdleOfHillGiantMightTest {
     @Test
-    fun `should start inactive`() {
+    fun `should start unworn`() {
         val character = character("TEST CHARACTER")
         character.saveAndNext("Set might")
         character.edit {

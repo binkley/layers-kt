@@ -1,8 +1,9 @@
 package hm.binkley.layers.rpg.rules
 
+import hm.binkley.layers.Rule
 import hm.binkley.layers.rpg.RpgLayers
 import hm.binkley.layers.rpg.RpgRule
-import hm.binkley.layers.rpg.items.WearableItem
+import hm.binkley.layers.rpg.items.Wearable
 
 /**
  * This "pass through" rule has no behavior, representing unapplied rules,
@@ -10,13 +11,16 @@ import hm.binkley.layers.rpg.items.WearableItem
  * This lets text representations show the rule properly, and if that rule is
  * applicable or not.
  */
-class NotWornRule<T : Any>(
+class WornRule<T : Any>(
     name: String,
-    private val layer: WearableItem<*>,
+    private val rule: Rule<String, Any, T>,
+    private val layer: Wearable<*>,
 ) : RpgRule<T>(name) {
     override fun invoke(
         key: String,
         values: List<T>,
         layers: RpgLayers,
-    ): T = layers.getAs(key, except = layer.same())
+    ): T =
+        if (layer.worn) rule(key, values, layers)
+        else layers.getAs(key, except = layer.same())
 }

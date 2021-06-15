@@ -1,7 +1,7 @@
 package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.Character.Companion.character
-import hm.binkley.layers.rpg.rules.NotWornRule
+import hm.binkley.layers.rpg.rules.WornRule
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -33,7 +33,7 @@ internal class WearableItemTest {
     }
 
     @Test
-    fun `should ignore inactive items`() {
+    fun `should ignore unworn items`() {
         val item = character.saveAndNext { TestWearableItem() }
 
         character["A KEY"] shouldBe 3
@@ -41,7 +41,7 @@ internal class WearableItemTest {
     }
 
     @Test
-    fun `should use active items`() {
+    fun `should use worn items`() {
         val item = character.saveAndNext { TestWearableItem().don() }
 
         character["A KEY"] shouldBe 7
@@ -49,7 +49,7 @@ internal class WearableItemTest {
     }
 
     @Test
-    fun `should use toggle activeness`() {
+    fun `should toggle wornness`() {
         val newItem = character.saveAndNext { TestWearableItem() }
         character["A KEY"] shouldBe 3
 
@@ -77,18 +77,18 @@ internal class WearableItemTest {
 }
 
 private class TestWearableItem(
-    active: Boolean = false,
+    worn: Boolean = false,
     previous: TestWearableItem? = null,
 ) : WearableItem<TestWearableItem>(
     "TEST ITEM",
     13.13f,
-    active,
+    worn,
     previous,
 ) {
     init {
         edit {
             val rule = constantRule(7)
-            this["A KEY"] = if (active) rule else NotWornRule(rule.name, self)
+            this["A KEY"] = WornRule<Int>(rule.name, rule, self)
         }
     }
 

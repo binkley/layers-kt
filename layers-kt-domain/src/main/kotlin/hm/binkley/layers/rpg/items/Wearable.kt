@@ -41,6 +41,7 @@ abstract class WearableItem<I : WearableItem<I>>(
     /** Creates a layer _copy_ linked to the parent it is copied from. */
     protected abstract fun change(previous: I, worn: Boolean): I
 
+    /** @todo Is there a cleaner functional approach in Kotlin stdlib? */
     override fun same(): List<Layer<String, Any, *>> {
         val items = mutableListOf<I>()
         var current: I? = self

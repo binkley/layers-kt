@@ -1,6 +1,5 @@
 package hm.binkley.layers.rpg.items
 
-import hm.binkley.layers.Layer
 import hm.binkley.layers.rpg.RpgEditMap
 import hm.binkley.layers.rpg.RpgRule
 import hm.binkley.layers.rpg.rules.FloorRule
@@ -16,7 +15,7 @@ interface Wearable<I> where I : Item<I>, I : Wearable<I> {
      *
      * @todo Should this belong to a type higher up the hierarchy?
      */
-    fun same(): List<Layer<String, Any, *>>
+    fun same(): List<I>
 
     /** Puts on this item, and applies its rules. */
     fun don(): I
@@ -41,7 +40,7 @@ abstract class WearableItem<I : WearableItem<I>>(
     /** Creates a layer _copy_ linked to the parent it is copied from. */
     protected abstract fun change(previous: I, worn: Boolean): I
 
-    override fun same(): List<Layer<String, Any, *>> =
+    override fun same(): List<I> =
         generateSequence(self) { it.previous }.toList()
 
     override fun don() =
@@ -54,7 +53,8 @@ abstract class WearableItem<I : WearableItem<I>>(
 
     /**
      * Provides simpler rule syntax specific to RPG.  The "this" pointer to
-     * [RpgEditMap] is unused, but specified to limit scope.
+     * [RpgEditMap] is unused, but specified to limit scope.  It is not an
+     * extension function to retain access to the layer's `this`.
      */
     @Suppress("unused")
     fun RpgEditMap.floorRuleIfWorn(value: Int): RpgRule<Int> =

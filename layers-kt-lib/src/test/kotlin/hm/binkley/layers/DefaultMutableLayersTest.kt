@@ -3,6 +3,7 @@ package hm.binkley.layers
 import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
 import hm.binkley.layers.util.emptyStack
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeTypeOf
 import org.junit.jupiter.api.Test
 
 internal class DefaultMutableLayersTest {
@@ -10,9 +11,9 @@ internal class DefaultMutableLayersTest {
 
     // TODO: Less cumbersome syntax for custom layers
     private val customLayers =
-        DefaultMutableLayers<String, Number, DefaultMutableLayer<String, Number, *>>(
+        DefaultMutableLayers<String, Number, DefaultMutableLayer<String, Number, TestCustomMutableLayer>>(
             "Test Custom Layers",
-            { DefaultMutableLayer(it) }
+            { TestCustomMutableLayer(it) }
         )
 
     private val extendedLayers = TestLayers()
@@ -88,13 +89,18 @@ A NAME: {}
     }
 
     @Test
-    fun `should have a customized layers`() {
-        val layer = extendedLayers.saveAndNext {
+    fun `should have a customized layer`() {
+        val layer = customLayers.saveAndNext {
             TestCustomMutableSubLayer()
         }
 
         // That this compiles *is* the test
         layer.bar()
+    }
+
+    @Test
+    fun `should have custom history`() {
+        customLayers.history.first().shouldBeTypeOf<TestCustomMutableLayer>()
     }
 
     @Test

@@ -27,7 +27,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     }
 
     override val entries: Set<Entry<K, V>> get() = ViewSet()
-    override val history: Stack<Layer<K, V, *>> = layers
+    override val history: Stack<Layer<K, V, M>> = layers
     override val current: M get() = layers.peek()
 
     /**

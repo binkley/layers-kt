@@ -4,7 +4,7 @@ import hm.binkley.layers.util.Stack
 
 interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
     val name: String
-    val history: Stack<Layer<K, V, *>>
+    val history: Stack<Layer<K, V, L>>
 
     /** @todo Returning L loses type information for K and V ?! */
     val current: Layer<K, V, L>

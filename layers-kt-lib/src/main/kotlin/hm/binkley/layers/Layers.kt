@@ -2,7 +2,7 @@ package hm.binkley.layers
 
 import hm.binkley.layers.util.Stack
 
-interface Layers<K : Any, V : Any, L : Layer<K, V, L>> : Map<K, V> {
+interface Layers<K : Any, V : Any, out L : Layer<K, V, L>> : Map<K, V> {
     val name: String
     val history: Stack<Layer<K, V, L>>
 

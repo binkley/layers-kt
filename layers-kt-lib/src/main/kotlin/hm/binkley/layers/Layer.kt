@@ -1,6 +1,6 @@
 package hm.binkley.layers
 
-interface Layer<K : Any, V : Any, L : Layer<K, V, L>> :
+interface Layer<K : Any, V : Any, out L : Layer<K, V, L>> :
     Map<K, ValueOrRule<V>> {
     val name: String
 

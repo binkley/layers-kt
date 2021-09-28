@@ -38,4 +38,40 @@ class CharacterTest {
 
         character["ITEM-WEIGHT"] shouldBe testItem.weight
     }
+
+    @Test
+    fun `should update might directly`() = character.edit {
+        MIGHT = 13
+        MIGHT shouldBe 13
+    }
+
+    @Test
+    fun `should update deftness directly`() = character.edit {
+        DEFTNESS = 13
+        DEFTNESS shouldBe 13
+    }
+
+    @Test
+    fun `should update grit directly`() = character.edit {
+        GRIT = 13
+        GRIT shouldBe 13
+    }
+
+    @Test
+    fun `should update wit directly`() = character.edit {
+        WIT = 13
+        WIT shouldBe 13
+    }
+
+    @Test
+    fun `should update foresight directly`() = character.edit {
+        FORESIGHT = 13
+        FORESIGHT shouldBe 13
+    }
+
+    @Test
+    fun `should update presence directly`() = character.edit {
+        PRESENCE = 13
+        PRESENCE shouldBe 13
+    }
 }

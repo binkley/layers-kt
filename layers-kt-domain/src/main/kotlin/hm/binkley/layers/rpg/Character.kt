@@ -13,7 +13,7 @@ open class Character<M : RpgLayer<M>> private constructor(
 ) : DefaultMutableLayers<String, Any, M>(
     name,
     defaultMutableLayer = { RpgLayer<RpgLayer<*>>(it) as M },
-    initLayers = stackOf<M>(
+    initLayers = stackOf(
         PlayerLayer() as M,
         StatLayer() as M,
         InventoryLayer() as M,

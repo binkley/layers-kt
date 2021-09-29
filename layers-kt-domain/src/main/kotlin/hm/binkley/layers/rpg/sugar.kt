@@ -10,24 +10,22 @@ import kotlin.reflect.KProperty
 typealias RpgEditMap = EditMap<String, Any>
 typealias RpgLayers = Layers<String, Any, *>
 
-var EditMap<String, Any>.MIGHT: Int by StatDelegate()
-var EditMap<String, Any>.DEFTNESS: Int by StatDelegate()
-var EditMap<String, Any>.GRIT: Int by StatDelegate()
-var EditMap<String, Any>.WIT: Int by StatDelegate()
-var EditMap<String, Any>.FORESIGHT: Int by StatDelegate()
-var EditMap<String, Any>.PRESENCE: Int by StatDelegate()
+var RpgEditMap.MIGHT: Int by StatDelegate()
+var RpgEditMap.DEFTNESS: Int by StatDelegate()
+var RpgEditMap.GRIT: Int by StatDelegate()
+var RpgEditMap.WIT: Int by StatDelegate()
+var RpgEditMap.FORESIGHT: Int by StatDelegate()
+var RpgEditMap.PRESENCE: Int by StatDelegate()
 
-private class StatDelegate : ReadWriteProperty<EditMap<String, Any>, Int> {
+private class StatDelegate : ReadWriteProperty<RpgEditMap, Int> {
+    @Suppress("UNCHECKED_CAST")
     override operator fun getValue(
-        thisRef: EditMap<String, Any>,
+        thisRef: RpgEditMap,
         property: KProperty<*>
-    ): Int {
-        @Suppress("UNCHECKED_CAST")
-        return (thisRef[property.name]!! as Value<Int>).value
-    }
+    ) = (thisRef[property.name]!! as Value<Int>).value
 
     override operator fun setValue(
-        thisRef: EditMap<String, Any>,
+        thisRef: RpgEditMap,
         property: KProperty<*>,
         value: Int
     ) {

@@ -40,6 +40,18 @@ class CharacterTest {
     }
 
     @Test
+    fun `should update player name directly`() = character.edit {
+        `PLAYER-NAME` = "Bob"
+        `PLAYER-NAME` shouldBe "Bob"
+    }
+
+    @Test
+    fun `should update character name directly`() = character.edit {
+        `CHARACTER-NAME` = "Bob"
+        `CHARACTER-NAME` shouldBe "Bob"
+    }
+
+    @Test
     fun `should update might directly`() = character.edit {
         MIGHT = 13
         ++MIGHT
@@ -79,5 +91,12 @@ class CharacterTest {
         PRESENCE = 13
         ++PRESENCE
         PRESENCE shouldBe 14
+    }
+
+    @Test
+    fun `should update item weight directly`() = character.edit {
+        `ITEM-WEIGHT` = 1.1f
+        ++`ITEM-WEIGHT`
+        `ITEM-WEIGHT` shouldBe 2.1f
     }
 }

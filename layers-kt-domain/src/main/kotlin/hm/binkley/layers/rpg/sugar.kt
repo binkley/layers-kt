@@ -10,12 +10,15 @@ import kotlin.reflect.KProperty
 typealias RpgEditMap = EditMap<String, Any>
 typealias RpgLayers = Layers<String, Any, *>
 
+var RpgEditMap.`PLAYER-NAME`: String by EditDelegate()
+var RpgEditMap.`CHARACTER-NAME`: String by EditDelegate()
 var RpgEditMap.MIGHT: Int by EditDelegate()
 var RpgEditMap.DEFTNESS: Int by EditDelegate()
 var RpgEditMap.GRIT: Int by EditDelegate()
 var RpgEditMap.WIT: Int by EditDelegate()
 var RpgEditMap.FORESIGHT: Int by EditDelegate()
 var RpgEditMap.PRESENCE: Int by EditDelegate()
+var RpgEditMap.`ITEM-WEIGHT`: Float by EditDelegate()
 
 private class EditDelegate<T : Any> : ReadWriteProperty<RpgEditMap, T> {
     @Suppress("UNCHECKED_CAST")

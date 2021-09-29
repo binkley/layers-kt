@@ -20,7 +20,7 @@ var RpgEditMap.FORESIGHT: Int by EditDelegate()
 var RpgEditMap.PRESENCE: Int by EditDelegate()
 var RpgEditMap.`ITEM-WEIGHT`: Float by EditDelegate()
 
-private class EditDelegate<T : Any> : ReadWriteProperty<RpgEditMap, T> {
+class EditDelegate<T : Any> : ReadWriteProperty<RpgEditMap, T> {
     @Suppress("UNCHECKED_CAST")
     override operator fun getValue(
         thisRef: RpgEditMap,

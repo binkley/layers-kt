@@ -10,24 +10,24 @@ import kotlin.reflect.KProperty
 typealias RpgEditMap = EditMap<String, Any>
 typealias RpgLayers = Layers<String, Any, *>
 
-var RpgEditMap.MIGHT: Int by StatDelegate()
-var RpgEditMap.DEFTNESS: Int by StatDelegate()
-var RpgEditMap.GRIT: Int by StatDelegate()
-var RpgEditMap.WIT: Int by StatDelegate()
-var RpgEditMap.FORESIGHT: Int by StatDelegate()
-var RpgEditMap.PRESENCE: Int by StatDelegate()
+var RpgEditMap.MIGHT: Int by EditDelegate()
+var RpgEditMap.DEFTNESS: Int by EditDelegate()
+var RpgEditMap.GRIT: Int by EditDelegate()
+var RpgEditMap.WIT: Int by EditDelegate()
+var RpgEditMap.FORESIGHT: Int by EditDelegate()
+var RpgEditMap.PRESENCE: Int by EditDelegate()
 
-private class StatDelegate : ReadWriteProperty<RpgEditMap, Int> {
+private class EditDelegate<T : Any> : ReadWriteProperty<RpgEditMap, T> {
     @Suppress("UNCHECKED_CAST")
     override operator fun getValue(
         thisRef: RpgEditMap,
         property: KProperty<*>
-    ) = (thisRef[property.name]!! as Value<Int>).value
+    ) = (thisRef[property.name]!! as Value<T>).value
 
     override operator fun setValue(
         thisRef: RpgEditMap,
         property: KProperty<*>,
-        value: Int
+        value: T
     ) {
         thisRef[property.name] = value.toValue()
     }

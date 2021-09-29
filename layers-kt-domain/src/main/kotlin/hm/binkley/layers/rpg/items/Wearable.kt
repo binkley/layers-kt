@@ -24,13 +24,6 @@ interface Wearable<I> where I : Item<I>, I : Wearable<I> {
     fun doff(): I
 }
 
-/**
- * @todo Explore direct pointers to other layers ([previous]) _vs_ tracking
- *       layer indices; the older Java implementation used the indices
- *       approach.  Indices make sense if caller is not undoing them, and
- *       expecting to push back onto the stack later items referring to
- *       earlier popped items
- */
 abstract class WearableItem<I : WearableItem<I>>(
     name: String,
     weight: Float,

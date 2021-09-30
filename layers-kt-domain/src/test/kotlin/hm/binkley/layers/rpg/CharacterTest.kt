@@ -22,12 +22,12 @@ class CharacterTest {
 
     @Test
     fun `should have a player name rule`() {
-        character["PLAYER-NAME"] shouldBe ""
+        character["PLAYER_NAME"] shouldBe ""
     }
 
     @Test
     fun `should have a character name rule`() {
-        character["CHARACTER-NAME"] shouldBe ""
+        character["CHARACTER_NAME"] shouldBe ""
     }
 
     @Test
@@ -41,14 +41,14 @@ class CharacterTest {
 
     @Test
     fun `should update player name directly`() = character.edit {
-        `PLAYER-NAME` = "Bob"
-        `PLAYER-NAME` shouldBe "Bob"
+        PLAYER_NAME = "Bob"
+        PLAYER_NAME shouldBe "Bob"
     }
 
     @Test
     fun `should update character name directly`() = character.edit {
-        `CHARACTER-NAME` = "Bob"
-        `CHARACTER-NAME` shouldBe "Bob"
+        CHARACTER_NAME = "Bob"
+        CHARACTER_NAME shouldBe "Bob"
     }
 
     @Test

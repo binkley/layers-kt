@@ -10,8 +10,8 @@ import kotlin.reflect.KProperty
 typealias RpgEditMap = EditMap<String, Any>
 typealias RpgLayers = Layers<String, Any, *>
 
-var RpgEditMap.`PLAYER-NAME`: String by EditDelegate()
-var RpgEditMap.`CHARACTER-NAME`: String by EditDelegate()
+var RpgEditMap.PLAYER_NAME: String by EditDelegate()
+var RpgEditMap.CHARACTER_NAME: String by EditDelegate()
 var RpgEditMap.MIGHT: Int by EditDelegate()
 var RpgEditMap.DEFTNESS: Int by EditDelegate()
 var RpgEditMap.GRIT: Int by EditDelegate()

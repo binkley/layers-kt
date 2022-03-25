@@ -74,7 +74,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         if (except.isEmpty()) return this
 
         val layers: MutableStack<M> = layers.toMutableStack()
-        layers.removeAll(except)
+        layers.removeAll(except.toSet())
         return DefaultMutableLayers(name, defaultMutableLayer, layers)
     }
 

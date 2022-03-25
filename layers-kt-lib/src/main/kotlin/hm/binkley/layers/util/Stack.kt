@@ -1,5 +1,7 @@
 package hm.binkley.layers.util
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
+
 interface Stack<out T> : List<T> {
     fun peek() = last()
 }
@@ -14,6 +16,11 @@ fun <T> Stack<T>.toMutableStack(): MutableStack<T> =
 
 fun <T> emptyStack(): Stack<T> = ArrayStack()
 fun <T> stackOf(vararg elements: T): Stack<T> = ArrayStack(listOf(*elements))
+
+open class ArrayStack<T>(
+    @SuppressFBWarnings("EI_EXPOSE_REP2")
+    private val elements: List<T> = emptyList(),
+) : Stack<T>, List<T> by elements.toList()
 
 /**
  * Returns a new [Stack] filled with all elements of this collection.

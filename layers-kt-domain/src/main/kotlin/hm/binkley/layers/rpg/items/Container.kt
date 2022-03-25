@@ -9,7 +9,8 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
     weight: Float,
     worn: Boolean,
     previous: C?,
-    contents: List<I>,
+    @SuppressFBWarnings("EI_EXPOSE_REP", "EI_EXPOSE_REP2")
+    val contents: List<I>,
 ) : WearableItem<C>(
     name,
     weight,
@@ -17,8 +18,6 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
     previous,
 ) {
     private val _contents = contents.toMutableList()
-    @SuppressFBWarnings("EI_EXPOSE_REP")
-    val contents: List<I> get() = _contents
 
     init {
         edit {

@@ -18,6 +18,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     private val layers: MutableStack<M> = initLayers.toMutableStack()
 
     companion object {
+        @Suppress("UPPER_BOUND_VIOLATED_WARNING", "TYPE_MISMATCH_WARNING")
         fun <K : Any, V : Any> defaultMutableLayers(
             name: String,
         ): MutableLayers<K, V, *> =
@@ -88,8 +89,10 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     private fun <T : V> currentRuleFor(key: K): Rule<K, V, T> =
         valuesOrRules(key).filterIsInstance<Rule<K, V, T>>().last()
 
-    private fun <T : V> currentValuesFor(key: K): List<T> =
-        valuesOrRules(key).filterIsInstance<Value<T>>().map { it.value }
+    private fun <T : V> currentValuesFor(key: K): Sequence<T> =
+        valuesOrRules(key).asSequence()
+            .filterIsInstance<Value<T>>()
+            .map { it.value }
 
     private fun valuesOrRules(key: K): List<ValueOrRule<V>> =
         layers.mapNotNull { it[key] }

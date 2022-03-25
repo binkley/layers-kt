@@ -41,7 +41,7 @@ fun main() {
     println()
     println("== USING CUSTOM TYPES -- SYNTAX IS POOR")
 
-    val d =
+    @Suppress("TYPE_MISMATCH_WARNING", "UPPER_BOUND_VIOLATED_WARNING") val d =
         DefaultMutableLayers<String, Number, DefaultMutableLayer<String, Number, *>>(
             "D", @Generated { DefaultMutableLayer(it) }
         )

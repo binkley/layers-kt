@@ -1,5 +1,6 @@
 package hm.binkley.layers.rpg.items
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import hm.binkley.layers.rpg.RpgEditMap
 import hm.binkley.layers.rpg.RpgRule
 import hm.binkley.layers.rpg.rules.FloorRule
@@ -28,6 +29,7 @@ abstract class WearableItem<I : WearableItem<I>>(
     name: String,
     weight: Float,
     override val worn: Boolean,
+    @SuppressFBWarnings("EI_EXPOSE_REP2")
     private val previous: I?,
 ) : Item<I>(name, weight), Wearable<I> {
     /** Creates a layer _copy_ linked to the parent it is copied from. */

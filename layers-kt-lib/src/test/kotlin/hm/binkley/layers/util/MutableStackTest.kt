@@ -8,12 +8,13 @@ internal class MutableStackTest {
     fun `should be a list`() {
         mutableStackOf<Int>() shouldBe mutableListOf()
         mutableStackOf(3) shouldBe mutableListOf(3)
+        mutableStackOf(3).toStack() shouldBe listOf(3)
     }
 
     @Test
-    fun `should copy`() {
+    fun `should defensively copy`() {
         val prior = mutableListOf(3)
-        val stack = ArrayMutableStack(prior)
+        val stack = prior.toMutableStack()
 
         prior.removeFirst()
 

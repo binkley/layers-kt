@@ -12,7 +12,10 @@ open class Character<M : RpgLayer<M>> private constructor(
     name: String,
 ) : DefaultMutableLayers<String, Any, M>(
     name,
-    defaultMutableLayer = { RpgLayer<RpgLayer<*>>(it) as M },
+    defaultMutableLayer = {
+        @Suppress("UPPER_BOUND_VIOLATED_WARNING")
+        RpgLayer<RpgLayer<*>>(it) as M
+    },
     initLayers = stackOf(
         PlayerLayer() as M,
         StatLayer() as M,
@@ -20,6 +23,7 @@ open class Character<M : RpgLayer<M>> private constructor(
     )
 ) {
     companion object {
+        @Suppress("UPPER_BOUND_VIOLATED_WARNING")
         fun character(name: String) = Character<RpgLayer<*>>(name)
     }
 }

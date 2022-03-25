@@ -18,7 +18,7 @@ class WornRule<T : Any>(
 ) : RpgRule<T>(name) {
     override fun invoke(
         key: String,
-        values: List<T>,
+        values: Sequence<T>,
         layers: RpgLayers,
     ): T =
         if (layer.worn) rule(key, values, layers)

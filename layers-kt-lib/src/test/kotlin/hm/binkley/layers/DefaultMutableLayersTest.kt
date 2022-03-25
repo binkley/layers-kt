@@ -10,6 +10,7 @@ internal class DefaultMutableLayersTest {
     private val defaultLayers = defaultMutableLayers<String, Number>("A NAME")
 
     // TODO: Less cumbersome syntax for custom layers
+    @Suppress("UPPER_BOUND_VIOLATED_WARNING")
     private val customLayers =
         DefaultMutableLayers<String, Number, DefaultMutableLayer<String, Number, TestCustomMutableLayer>>(
             "Test Custom Layers",

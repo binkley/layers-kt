@@ -2,6 +2,7 @@ package hm.binkley.layers
 
 import hm.binkley.layers.DefaultMutableLayer.Companion.defaultMutableLayer
 import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
+import io.kotest.matchers.sequences.shouldContainExactly
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.beTheSameInstanceAs
@@ -33,7 +34,7 @@ internal class DefaultMutableLayerTest {
         val edited = layer.edit {
             rule = rule("TEST RULE") { key, values, l ->
                 key shouldBe "A KEY"
-                values shouldBe listOf(1, 2, 3)
+                values shouldContainExactly sequenceOf(1, 2, 3)
                 l shouldBe layers
                 3
             }
@@ -43,6 +44,6 @@ internal class DefaultMutableLayerTest {
         layer shouldBe mapOf("A KEY" to rule)
         edited should beTheSameInstanceAs(layer)
 
-        rule!!("A KEY", listOf(1, 2, 3), layers) shouldBe 3
+        rule!!("A KEY", sequenceOf(1, 2, 3), layers) shouldBe 3
     }
 }

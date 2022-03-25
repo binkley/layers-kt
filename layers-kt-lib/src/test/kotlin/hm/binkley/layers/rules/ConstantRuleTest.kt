@@ -15,7 +15,7 @@ internal class ConstantRuleTest {
         val rule = TestEditMap().constantRule(3)
         val value = rule(
             "A RULE",
-            listOf(),
+            sequenceOf(),
             defaultMutableLayers("TEST LAYERS")
         )
 

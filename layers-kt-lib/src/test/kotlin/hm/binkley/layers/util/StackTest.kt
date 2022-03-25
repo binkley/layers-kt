@@ -11,9 +11,9 @@ internal class StackTest {
     }
 
     @Test
-    fun `should copy`() {
+    fun `should defensively copy`() {
         val prior = mutableListOf(3)
-        val stack = ArrayStack(prior)
+        val stack = prior.toStack()
 
         prior.removeFirst()
 

@@ -17,6 +17,7 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
     previous,
 ) {
     private val _contents = contents.toMutableList()
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     val contents: List<I> get() = _contents
 
     init {

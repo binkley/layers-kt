@@ -1,30 +1,27 @@
 package hm.binkley.layers.util
 
-import lombok.Generated
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 
 interface MutableStack<T> : Stack<T>, MutableList<T> {
     fun push(element: T) = add(element)
     fun pop() = removeLast()
 }
 
-@Generated // TODO: How to test?  Kotlin complains check is useless
-@Suppress("UNUSED")
 fun <T> MutableStack<T>.toStack(): Stack<T> = this
 
 open class ArrayStack<T>(
-    private val elements: List<T> = listOf(),
+    @SuppressFBWarnings("EI_EXPOSE_REP2")
+    private val elements: List<T> = emptyList(),
 ) : Stack<T>, List<T> by elements.toList()
 
-fun <T> mutableStackOf(): MutableStack<T> =
-    ArrayMutableStack(mutableListOf())
+fun <T> mutableStackOf(): MutableStack<T> = ArrayMutableStack()
 
 fun <T> mutableStackOf(vararg elements: T): MutableStack<T> =
-    ArrayMutableStack(mutableListOf(*elements))
+    ArrayMutableStack(elements.toList())
 
 open class ArrayMutableStack<T>(
-    private val elements: MutableList<T> = mutableListOf(),
+    @SuppressFBWarnings("EI_EXPOSE_REP2")
+    private val elements: List<T> = emptyList(),
 ) : MutableStack<T>, MutableList<T> by elements.toMutableList()
 
-@Generated // TODO: How to test?  Kotlin complains check is useless
-@Suppress("UNUSED")
-fun <T> List<T>.toMutableStack() = ArrayMutableStack(toMutableList())
+fun <T> List<T>.toMutableStack() = ArrayMutableStack(this)

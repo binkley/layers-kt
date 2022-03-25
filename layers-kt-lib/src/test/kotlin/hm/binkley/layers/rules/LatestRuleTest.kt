@@ -16,7 +16,7 @@ internal class LatestRuleTest {
         val rule: Rule<String, Number, Int> = TestEditMap().latestRule(7)
         val value = rule(
             "A RULE",
-            listOf(1, 2, 3),
+            sequenceOf(1, 2, 3),
             defaultMutableLayers("TEST LAYERS")
         )
 
@@ -28,7 +28,7 @@ internal class LatestRuleTest {
         val rule: Rule<String, Number, Int> = TestEditMap().latestRule(7)
         val value = rule(
             "A RULE",
-            emptyList(),
+            emptySequence(),
             defaultMutableLayers("TEST LAYERS")
         )
 

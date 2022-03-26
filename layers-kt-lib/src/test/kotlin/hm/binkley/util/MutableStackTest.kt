@@ -23,6 +23,16 @@ internal class MutableStackTest {
     }
 
     @Test
+    fun `should pre-size`() {
+        val stack = ArrayMutableStack<Int>(1)
+
+        stack.push(1)
+        stack.push(2)
+
+        stack shouldBe listOf(1, 2)
+    }
+
+    @Test
     fun `should peek`() {
         val stack = mutableStackOf(3)
 

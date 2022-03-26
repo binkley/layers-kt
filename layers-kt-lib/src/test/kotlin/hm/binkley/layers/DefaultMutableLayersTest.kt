@@ -1,7 +1,7 @@
 package hm.binkley.layers
 
 import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
-import hm.binkley.layers.util.emptyStack
+import hm.binkley.util.emptyStack
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 import org.junit.jupiter.api.Test

@@ -1,6 +1,6 @@
 package hm.binkley.layers
 
-import hm.binkley.layers.util.Stack
+import hm.binkley.util.Stack
 
 interface Layers<K : Any, V : Any, out L : Layer<K, V, L>> : Map<K, V> {
     val name: String

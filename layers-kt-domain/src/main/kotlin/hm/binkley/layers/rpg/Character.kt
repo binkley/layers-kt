@@ -1,7 +1,7 @@
 package hm.binkley.layers.rpg
 
 import hm.binkley.layers.DefaultMutableLayers
-import hm.binkley.layers.util.stackOf
+import hm.binkley.util.stackOf
 
 /**
  * @todo Add a "item rule layer" that defines the key, `WORN` as those items

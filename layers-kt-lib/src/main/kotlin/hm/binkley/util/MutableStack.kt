@@ -1,4 +1,4 @@
-package hm.binkley.layers.util
+package hm.binkley.util
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 
@@ -9,8 +9,7 @@ interface MutableStack<T> : Stack<T>, MutableList<T> {
 
 fun <T> MutableStack<T>.toStack(): Stack<T> = this
 
-fun <T> mutableStackOf(): MutableStack<T> = ArrayMutableStack()
-
+fun <T> emptyMutableStack(): MutableStack<T> = ArrayMutableStack()
 fun <T> mutableStackOf(vararg elements: T): MutableStack<T> =
     ArrayMutableStack(elements.toList())
 

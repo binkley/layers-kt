@@ -2,10 +2,10 @@ package hm.binkley.layers
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import hm.binkley.layers.DefaultMutableLayer.Companion.defaultMutableLayer
-import hm.binkley.layers.util.MutableStack
-import hm.binkley.layers.util.Stack
-import hm.binkley.layers.util.stackOf
-import hm.binkley.layers.util.toMutableStack
+import hm.binkley.util.MutableStack
+import hm.binkley.util.Stack
+import hm.binkley.util.stackOf
+import hm.binkley.util.toMutableStack
 import java.util.AbstractMap.SimpleEntry
 import kotlin.collections.Map.Entry
 

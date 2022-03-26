@@ -1,4 +1,4 @@
-package hm.binkley.layers.util
+package hm.binkley.util
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 

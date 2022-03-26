@@ -1,5 +1,6 @@
-package hm.binkley.layers.util
+package hm.binkley.util
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -45,5 +46,14 @@ internal class MutableStackTest {
 
         element shouldBe 3
         stack shouldBe emptyStack()
+    }
+
+    @Test
+    fun `should complain on pop when empty`() {
+        val stack = emptyMutableStack<Int>()
+
+        shouldThrow<NoSuchElementException> {
+            stack.pop()
+        }
     }
 }

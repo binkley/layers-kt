@@ -2,7 +2,7 @@ package hm.binkley.layers.rpg
 
 import hm.binkley.layers.rpg.Character.Companion.character
 import hm.binkley.layers.rpg.items.TestItem
-import hm.binkley.layers.util.stackOf
+import hm.binkley.util.stackOf
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 

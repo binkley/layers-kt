@@ -7,7 +7,7 @@ import hm.binkley.layers.rpg.Stat.GRIT
 import hm.binkley.layers.rpg.Stat.MIGHT
 import hm.binkley.layers.rpg.Stat.PRESENCE
 import hm.binkley.layers.rpg.Stat.WIT
-import hm.binkley.layers.util.stackOf
+import hm.binkley.util.stackOf
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 

@@ -1,5 +1,6 @@
-package hm.binkley.layers.util
+package hm.binkley.util
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -25,5 +26,14 @@ internal class StackTest {
         val stack = stackOf(3)
 
         stack.peek() shouldBe 3
+    }
+
+    @Test
+    fun `should complain on peek when empty`() {
+        val stack = emptyStack<Int>()
+
+        shouldThrow<NoSuchElementException> {
+            stack.peek()
+        }
     }
 }

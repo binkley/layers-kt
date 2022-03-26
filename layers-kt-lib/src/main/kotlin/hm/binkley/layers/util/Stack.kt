@@ -15,7 +15,7 @@ fun <T> Stack<T>.toMutableStack(): MutableStack<T> =
     ArrayMutableStack((this as List<T>))
 
 fun <T> emptyStack(): Stack<T> = ArrayStack()
-fun <T> stackOf(vararg elements: T): Stack<T> = ArrayStack(listOf(*elements))
+fun <T> stackOf(vararg elements: T): Stack<T> = ArrayStack(elements.toList())
 
 open class ArrayStack<T>(
     @SuppressFBWarnings("EI_EXPOSE_REP2")

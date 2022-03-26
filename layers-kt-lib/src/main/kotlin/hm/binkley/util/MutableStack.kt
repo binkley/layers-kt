@@ -7,15 +7,19 @@ interface MutableStack<T> : Stack<T>, MutableList<T> {
     fun pop() = removeLast()
 }
 
-fun <T> MutableStack<T>.toStack(): Stack<T> = this
+open class ArrayMutableStack<T>(
+    @SuppressFBWarnings("EI_EXPOSE_REP2")
+    private val elements: Collection<T> = emptyList(),
+) : MutableStack<T>, MutableList<T> by elements.toMutableList()
 
-fun <T> emptyMutableStack(): MutableStack<T> = ArrayMutableStack()
+fun <T> emptyMutableStack(): MutableStack<T> = mutableStackOf()
 fun <T> mutableStackOf(vararg elements: T): MutableStack<T> =
     ArrayMutableStack(elements.toList())
 
-open class ArrayMutableStack<T>(
-    @SuppressFBWarnings("EI_EXPOSE_REP2")
-    private val elements: List<T> = emptyList(),
-) : MutableStack<T>, MutableList<T> by elements.toMutableList()
-
-fun <T> List<T>.toMutableStack() = ArrayMutableStack(this)
+/**
+ * Returns a new [MutableStack] filled with all elements of this collection.
+ *
+ * This is a _shallow_ copy.
+ */
+fun <T> Collection<T>.toMutableStack(): MutableStack<T> =
+    ArrayMutableStack(this)

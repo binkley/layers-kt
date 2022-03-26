@@ -33,9 +33,10 @@ internal class MutableStackTest {
     fun `should push`() {
         val stack = mutableStackOf<Int>()
 
-        stack.push(3)
+        val element = stack.push(3)
 
-        stack shouldBe stackOf(3)
+        element shouldBe 3
+        stack shouldBe listOf(3)
     }
 
     @Test
@@ -45,7 +46,7 @@ internal class MutableStackTest {
         val element = stack.pop()
 
         element shouldBe 3
-        stack shouldBe emptyStack()
+        stack shouldBe emptyList()
     }
 
     @Test
@@ -55,5 +56,59 @@ internal class MutableStackTest {
         shouldThrow<NoSuchElementException> {
             stack.pop()
         }
+    }
+
+    @Test
+    fun `should duplicate`() {
+        val stack = mutableStackOf(3)
+
+        stack.duplicate()
+
+        stack shouldBe listOf(3, 3)
+    }
+
+    @Test
+    fun `should rotate top N`() {
+        val stack = mutableStackOf(1, 2, 3, 4)
+
+        stack.rotate(4)
+
+        stack shouldBe listOf(4, 1, 2, 3)
+    }
+
+    @Test
+    fun `should rotate top 3 by default`() {
+        val stack = mutableStackOf(1, 2, 3, 4)
+
+        stack.rotate()
+
+        stack shouldBe listOf(1, 4, 2, 3)
+    }
+
+    @Test
+    fun `should rotate top 0`() {
+        val stack = mutableStackOf(1, 2, 3, 4)
+
+        stack.rotate(0)
+
+        stack shouldBe listOf(1, 2, 3, 4)
+    }
+
+    @Test
+    fun `should counter-rotate top N`() {
+        val stack = mutableStackOf(1, 2, 3, 4)
+
+        stack.rotate(-3)
+
+        stack shouldBe listOf(1, 3, 4, 2)
+    }
+
+    @Test
+    fun `should swap top 2`() {
+        val stack = mutableStackOf(1, 2, 3, 4)
+
+        stack.swap()
+
+        stack shouldBe listOf(1, 2, 4, 3)
     }
 }

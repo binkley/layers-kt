@@ -2,14 +2,17 @@ package hm.binkley.layers.rpg.items
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 
-/** @todo Capacity for containers */
-@SuppressFBWarnings("BC_BAD_CAST_TO_ABSTRACT_COLLECTION")
+/** @todo Capacity for containers: mass and dimensions */
+@SuppressFBWarnings(
+    "BC_BAD_CAST_TO_ABSTRACT_COLLECTION",
+    "EI_EXPOSE_REP",
+    "EI_EXPOSE_REP2",
+)
 abstract class Container<I : Item<I>, C : Container<I, C>>(
     name: String,
     weight: Float,
     worn: Boolean,
     previous: C?,
-    @SuppressFBWarnings("EI_EXPOSE_REP", "EI_EXPOSE_REP2")
     val contents: List<I>,
 ) : WearableItem<C>(
     name,

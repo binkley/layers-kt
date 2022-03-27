@@ -1,8 +1,6 @@
 package hm.binkley.util
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
-import java.util.ArrayDeque
-import java.util.Deque
 
 interface Stack<out T> : List<T> {
     /**
@@ -48,10 +46,10 @@ interface MutableStack<T> : Stack<T>, MutableList<T> {
 
 open class ArrayMutableStack<T>(
     @SuppressFBWarnings("EI_EXPOSE_REP2")
-    private val elements: Deque<T> = ArrayDeque(),
+    private val elements: List<T> = ArrayList(),
 ) : MutableStack<T>, MutableList<T> by elements.toMutableList() {
-    constructor(elements: Collection<T>) : this(ArrayDeque(elements))
-    constructor(initialCapacity: Int) : this(ArrayDeque(initialCapacity))
+    constructor(elements: Collection<T>) : this(ArrayList(elements))
+    constructor(initialCapacity: Int) : this(ArrayList(initialCapacity))
 
     // TODO: equals and hashCode
     override fun toString() = elements.toString()

@@ -76,6 +76,11 @@ fun <T> MutableStack<T>.duplicate() {
  * Rotates the top [n] elements "clockwise".
  * Use negative [n] to counter-rotate.
  *
+ * Contrast with [java.util.Collections.rotate] which acts as a
+ * mathematical "mod" operator: negative [n] "loop around".
+ * Other languages (such as Forth) provide two functions: one for clockwise
+ * and another for counter-clockwise rotations.
+ *
  * Examples given a stack, `[1, 2, 3, 4]`:
  * 1. `rotate()` mutates the stack to `[1, 4, 2, 3]`.
  * 2. `rotate(4)` mutates the stack to `[4, 1, 2, 3]`.

@@ -1,5 +1,7 @@
 package hm.binkley.util
 
+import hm.binkley.util.ArrayMutableStack.Companion.asMutableStack
+import hm.binkley.util.ArrayMutableStack.Companion.asStack
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -16,18 +18,34 @@ internal class StackTest {
 
     @Test
     fun `should defensively copy`() {
-        val prior = mutableListOf(3, 4)
+        val prior = mutableListOf(3, 4, 5)
         val stack = prior.toStack()
 
         prior.removeFirst()
 
-        stack shouldBe listOf(3, 4)
+        stack shouldBe listOf(3, 4, 5)
 
         val mutableStack = prior.toMutableStack()
 
         prior.removeFirst()
 
-        mutableStack shouldBe listOf(4)
+        mutableStack shouldBe listOf(4, 5)
+    }
+
+    @Test
+    fun `should wrap`() {
+        val prior = mutableListOf(3, 4, 5)
+        val stack = prior.asStack()
+
+        prior.removeFirst()
+
+        stack shouldBe listOf(4, 5)
+
+        val mutableStack = prior.asMutableStack()
+
+        prior.removeFirst()
+
+        mutableStack shouldBe listOf(5)
     }
 
     @Test

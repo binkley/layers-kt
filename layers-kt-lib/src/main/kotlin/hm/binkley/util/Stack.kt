@@ -44,26 +44,34 @@ interface MutableStack<T> : Stack<T>, MutableList<T> {
     fun pop(): T = removeLast()
 }
 
-open class ArrayMutableStack<T>(
+open class ArrayMutableStack<T> private constructor(
     @SuppressFBWarnings("EI_EXPOSE_REP2")
-    private val elements: List<T> = ArrayList(),
-) : MutableStack<T>, MutableList<T> by elements.toMutableList() {
+    private val elements: MutableList<T> = ArrayList(),
+) : MutableStack<T>, MutableList<T> by elements {
     constructor(elements: Collection<T>) : this(ArrayList(elements))
     constructor(initialCapacity: Int) : this(ArrayList(initialCapacity))
 
     // TODO: equals and hashCode
     override fun toString() = elements.toString()
+
+    companion object {
+        // TODO: Wrapper for [List]->[Stack]
+
+        /** Returns a [Stack] that wraps the list. */
+        fun <T> MutableList<T>.asStack(): Stack<T> =
+            ArrayMutableStack(this)
+
+        /** Returns a [MutableStack] that wraps the list. */
+        fun <T> MutableList<T>.asMutableStack(): Stack<T> =
+            ArrayMutableStack(this)
+    }
 }
 
 fun <T> emptyMutableStack(): MutableStack<T> = mutableStackOf()
 fun <T> mutableStackOf(vararg elements: T): MutableStack<T> =
     elements.toList().toMutableStack()
 
-/**
- * Returns a new [MutableStack] filled with all elements of this collection.
- *
- * This is a _shallow_ copy.
- */
+/** Returns a [MutableStack] filled this collection. */
 fun <T> Collection<T>.toMutableStack(): MutableStack<T> =
     ArrayMutableStack(this)
 

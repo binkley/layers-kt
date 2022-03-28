@@ -75,16 +75,6 @@ internal class StackTest {
     }
 
     @Test
-    fun `should push`() {
-        val stack = mutableStackOf<Int>()
-
-        val element = stack.push(3)
-
-        element shouldBe 3
-        stack shouldBe listOf(3)
-    }
-
-    @Test
     fun `should pop`() {
         val stack = mutableStackOf(3)
 
@@ -100,6 +90,35 @@ internal class StackTest {
 
         shouldThrow<NoSuchElementException> {
             stack.pop()
+        }
+    }
+
+    @Test
+    fun `should push`() {
+        val stack = mutableStackOf<Int>()
+
+        val element = stack.push(3)
+
+        element shouldBe 3
+        stack shouldBe listOf(3)
+    }
+
+    @Test
+    fun `should replace`() {
+        val stack = mutableStackOf(3)
+
+        val replace = stack.replace(4)
+
+        replace shouldBe 3
+        stack shouldBe listOf(4)
+    }
+
+    @Test
+    fun `should complain on replace when empty`() {
+        val stack = emptyMutableStack<Int>()
+
+        shouldThrow<NoSuchElementException> {
+            stack.replace(4)
         }
     }
 

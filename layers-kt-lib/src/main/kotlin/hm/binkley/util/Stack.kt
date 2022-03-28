@@ -43,6 +43,18 @@ interface MutableStack<T> : Stack<T>, MutableList<T> {
         add(element)
         return element
     }
+
+    /**
+     * Replaces the top with [element]
+     *
+     * @return the previous top element
+     * @throws NoSuchElementException if the stack is empty
+     */
+    fun replace(element: T): T {
+        val replace = pop()
+        push(element)
+        return replace
+    }
 }
 
 open class ArrayMutableStack<T> private constructor(

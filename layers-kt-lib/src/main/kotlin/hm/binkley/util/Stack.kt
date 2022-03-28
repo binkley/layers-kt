@@ -1,7 +1,5 @@
 package hm.binkley.util
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
-
 interface Stack<out T> : List<T> {
     /**
      * Peeks at top element.
@@ -29,23 +27,25 @@ fun <T> Collection<T>.toStack(): Stack<T> = toMutableStack()
 
 interface MutableStack<T> : Stack<T>, MutableList<T> {
     /**
-     * Pushes [element] to the top of the stack.
-     *
-     * @return [element]
-     */
-    fun push(element: T): T = element.also { add(it) }
-
-    /**
      * Pops the top element from the stack.
      *
      * @return the previously top element
      * @throws NoSuchElementException if the stack is empty
      */
     fun pop(): T = removeLast()
+
+    /**
+     * Pushes [element] to the top of the stack.
+     *
+     * @return [element]
+     */
+    fun push(element: T): T {
+        add(element)
+        return element
+    }
 }
 
 open class ArrayMutableStack<T> private constructor(
-    @SuppressFBWarnings("EI_EXPOSE_REP2")
     private val elements: MutableList<T> = ArrayList(),
 ) : MutableStack<T>, MutableList<T> by elements {
     constructor(elements: Collection<T>) : this(ArrayList(elements))

@@ -5,6 +5,5 @@ interface Layer<K : Any, V : Any, out L : Layer<K, V, L>> :
     val name: String
 
     @Suppress("UNCHECKED_CAST")
-    val self: L
-        get() = this as L
+    val self: L get() = this as L
 }

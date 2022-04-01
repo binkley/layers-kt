@@ -21,6 +21,10 @@
 
     <artifactId>layers-kt-domain</artifactId>
 
+    <properties>
+        <coverage.mutation>47</coverage.mutation>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

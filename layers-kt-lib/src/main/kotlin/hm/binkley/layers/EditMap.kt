@@ -22,10 +22,10 @@ interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
 }
 
 fun interface EditMapDelegate<
-        K : Any,
-        V : Any,
-        T : V,
-        > : ReadWriteProperty<EditMap<K, V>, T?> {
+    K : Any,
+    V : Any,
+    T : V,
+    > : ReadWriteProperty<EditMap<K, V>, T?> {
     /** Finds or creates a suitable edit map key. */
     fun KProperty<*>.toKey(): K
 

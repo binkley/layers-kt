@@ -1,38 +1,19 @@
 package hm.binkley.layers.rpg
 
 import hm.binkley.layers.EditMap
+import hm.binkley.layers.EditMapDelegate
 import hm.binkley.layers.Layers
-import hm.binkley.layers.Value
-import hm.binkley.layers.toValue
-import kotlin.properties.ReadWriteProperty
-import kotlin.reflect.KProperty
 
 typealias RpgEditMap = EditMap<String, Any>
 typealias RpgLayers = Layers<String, Any, *>
 
-var RpgEditMap.PLAYER_NAME: String by RpgEditDelegate()
-var RpgEditMap.CHARACTER_NAME: String by RpgEditDelegate()
-var RpgEditMap.MIGHT: Int by RpgEditDelegate()
-var RpgEditMap.DEFTNESS: Int by RpgEditDelegate()
-var RpgEditMap.GRIT: Int by RpgEditDelegate()
-var RpgEditMap.WIT: Int by RpgEditDelegate()
-var RpgEditMap.FORESIGHT: Int by RpgEditDelegate()
-var RpgEditMap.PRESENCE: Int by RpgEditDelegate()
-var RpgEditMap.`ITEM-WEIGHT`: Float by RpgEditDelegate()
+var RpgEditMap.PLAYER_NAME: String by EditMapDelegate { name }
+var RpgEditMap.CHARACTER_NAME: String by EditMapDelegate { name }
+var RpgEditMap.MIGHT: Int by EditMapDelegate { name }
+var RpgEditMap.DEFTNESS: Int by EditMapDelegate { name }
+var RpgEditMap.GRIT: Int by EditMapDelegate { name }
+var RpgEditMap.WIT: Int by EditMapDelegate { name }
+var RpgEditMap.FORESIGHT: Int by EditMapDelegate { name }
+var RpgEditMap.PRESENCE: Int by EditMapDelegate { name }
+var RpgEditMap.`ITEM-WEIGHT`: Float by EditMapDelegate { name }
 // TODO: Encumbrance
-
-class RpgEditDelegate<T : Any> : ReadWriteProperty<RpgEditMap, T> {
-    @Suppress("UNCHECKED_CAST")
-    override operator fun getValue(
-        thisRef: RpgEditMap,
-        property: KProperty<*>
-    ) = (thisRef[property.name]!! as Value<T>).value
-
-    override operator fun setValue(
-        thisRef: RpgEditMap,
-        property: KProperty<*>,
-        value: T
-    ) {
-        thisRef[property.name] = value.toValue()
-    }
-}

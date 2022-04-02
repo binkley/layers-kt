@@ -19,6 +19,7 @@ var RpgEditMap.WIT: Int by EditDelegate()
 var RpgEditMap.FORESIGHT: Int by EditDelegate()
 var RpgEditMap.PRESENCE: Int by EditDelegate()
 var RpgEditMap.`ITEM-WEIGHT`: Float by EditDelegate()
+// TODO: Encumbrance
 
 class EditDelegate<T : Any> : ReadWriteProperty<RpgEditMap, T> {
     @Suppress("UNCHECKED_CAST")

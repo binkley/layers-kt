@@ -16,6 +16,7 @@ class CharacterTest {
         } shouldBe stackOf(
             PlayerLayer::class,
             StatLayer::class,
+            // TODO: Details layer: physical, personality, etc
             InventoryLayer::class,
         )
     }

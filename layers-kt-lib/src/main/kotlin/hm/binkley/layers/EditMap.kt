@@ -52,3 +52,9 @@ fun interface EditMapDelegate<
         else thisRef[property.toKey()] = value.toValue()
     }
 }
+
+operator fun <
+    K : Any,
+    V : Any,
+    T : V,
+    > EditMap<K, V>.set(key: K, value: T) = put(key, value.toValue())

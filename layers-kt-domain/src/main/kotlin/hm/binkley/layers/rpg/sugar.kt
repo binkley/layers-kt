@@ -10,18 +10,18 @@ import kotlin.reflect.KProperty
 typealias RpgEditMap = EditMap<String, Any>
 typealias RpgLayers = Layers<String, Any, *>
 
-var RpgEditMap.PLAYER_NAME: String by EditDelegate()
-var RpgEditMap.CHARACTER_NAME: String by EditDelegate()
-var RpgEditMap.MIGHT: Int by EditDelegate()
-var RpgEditMap.DEFTNESS: Int by EditDelegate()
-var RpgEditMap.GRIT: Int by EditDelegate()
-var RpgEditMap.WIT: Int by EditDelegate()
-var RpgEditMap.FORESIGHT: Int by EditDelegate()
-var RpgEditMap.PRESENCE: Int by EditDelegate()
-var RpgEditMap.`ITEM-WEIGHT`: Float by EditDelegate()
+var RpgEditMap.PLAYER_NAME: String by RpgEditDelegate()
+var RpgEditMap.CHARACTER_NAME: String by RpgEditDelegate()
+var RpgEditMap.MIGHT: Int by RpgEditDelegate()
+var RpgEditMap.DEFTNESS: Int by RpgEditDelegate()
+var RpgEditMap.GRIT: Int by RpgEditDelegate()
+var RpgEditMap.WIT: Int by RpgEditDelegate()
+var RpgEditMap.FORESIGHT: Int by RpgEditDelegate()
+var RpgEditMap.PRESENCE: Int by RpgEditDelegate()
+var RpgEditMap.`ITEM-WEIGHT`: Float by RpgEditDelegate()
 // TODO: Encumbrance
 
-class EditDelegate<T : Any> : ReadWriteProperty<RpgEditMap, T> {
+class RpgEditDelegate<T : Any> : ReadWriteProperty<RpgEditMap, T> {
     @Suppress("UNCHECKED_CAST")
     override operator fun getValue(
         thisRef: RpgEditMap,

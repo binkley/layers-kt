@@ -6,8 +6,8 @@ interface MutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>> :
     fun edit(block: EditMap<K, V>.() -> Unit)
 
     /**
-     * Commits the current layer, and starts a new layer.  Implementations
-     * decide the type of the new layer.
+     * Commits the current layer, and starts a new layer.
+     * Implementations decide the type of the new layer.
      *
      * @todo Returning M loses type information for K and V ?!
      */

@@ -70,7 +70,7 @@ internal class WearableItemTest {
     @Test
     fun `should complain to doff an already doffed item`() {
         shouldThrow<IllegalStateException> {
-            // New item starteds doffed
+            // New item begin doffed
             character.saveAndNext { TestWearableItem() }.doff()
         }
     }
@@ -88,7 +88,7 @@ private class TestWearableItem(
     init {
         edit {
             val rule = constantRule(7)
-            this["A KEY"] = WornRule<Int>(rule.name, rule, self)
+            this["A KEY"] = WornRule(rule.name, rule, self)
         }
     }
 

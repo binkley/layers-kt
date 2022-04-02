@@ -1,8 +1,9 @@
 package hm.binkley.util
 
+/** An immutable stack view of [List]. */
 interface Stack<out T> : List<T> {
     /**
-     * Peeks at top element.
+     * Peeks at the top element.
      *
      * This is logically equivalent to:
      * ```
@@ -12,10 +13,13 @@ interface Stack<out T> : List<T> {
      * ```
      * but does not mutate the stack.
      */
-    fun peek() = last()
+    fun peek(): T = last()
 }
 
+/** Returns an empty, read-only stack. */
 fun <T> emptyStack(): Stack<T> = stackOf()
+
+/** Returns a new, read-only stack of the given [elements]. */
 fun <T> stackOf(vararg elements: T): Stack<T> = mutableStackOf(*elements)
 
 /**
@@ -25,6 +29,7 @@ fun <T> stackOf(vararg elements: T): Stack<T> = mutableStackOf(*elements)
  */
 fun <T> Collection<T>.toStack(): Stack<T> = toMutableStack()
 
+/** A mutable stack view of [MutableList]. */
 interface MutableStack<T> : Stack<T>, MutableList<T> {
     /**
      * Pops the top element from the stack.
@@ -57,6 +62,11 @@ interface MutableStack<T> : Stack<T>, MutableList<T> {
     }
 }
 
+/**
+ * A default implementation of [MutableStack] delegating to the given
+ * [elements] mutable list.
+ * The list defaults to [ArrayList].
+ */
 open class ArrayMutableStack<T> private constructor(
     private val elements: MutableList<T> = ArrayList(),
 ) : MutableStack<T>, MutableList<T> by elements {
@@ -64,7 +74,7 @@ open class ArrayMutableStack<T> private constructor(
     constructor(initialCapacity: Int) : this(ArrayList(initialCapacity))
 
     // TODO: equals and hashCode
-    override fun toString() = elements.toString()
+    override fun toString(): String = elements.toString()
 
     companion object {
         // TODO: Wrapper for [List]->[Stack]
@@ -79,9 +89,12 @@ open class ArrayMutableStack<T> private constructor(
     }
 }
 
+/** Returns an empty, mutable stack. */
 fun <T> emptyMutableStack(): MutableStack<T> = mutableStackOf()
+
+/** Returns a new, mutable stack of the given [elements]. */
 fun <T> mutableStackOf(vararg elements: T): MutableStack<T> =
-    elements.toList().toMutableStack()
+    elements.asList().toMutableStack()
 
 /** Returns a [MutableStack] filled this collection. */
 fun <T> Collection<T>.toMutableStack(): MutableStack<T> =
@@ -121,4 +134,4 @@ fun <T> MutableStack<T>.rotate(n: Int = 3) {
  *
  * @see [rotate]
  */
-fun <T> MutableStack<T>.swap() = rotate(2)
+fun <T> MutableStack<T>.swap(): Unit = rotate(2)

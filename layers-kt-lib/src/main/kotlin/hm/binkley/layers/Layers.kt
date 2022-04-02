@@ -3,23 +3,27 @@ package hm.binkley.layers
 import hm.binkley.util.Stack
 
 interface Layers<K : Any, V : Any, out L : Layer<K, V, L>> : Map<K, V> {
+    /** The name of these layers. */
     val name: String
+    /** A read-only view of layers in oldest-to-newest order. */
     val history: Stack<Layer<K, V, L>>
 
     /** @todo Returning L loses type information for K and V ?! */
     val current: Layer<K, V, L>
 
     /**
-     * Returns the typed value of another [key] as computed by layers.  Use
-     * [except] to compute without certain layers.
+     * Returns the typed value of another [key] as computed by layers.
+     * Use [except] to compute without certain layers.
      *
      * *NB* &mdash; this function would be nicer as an extension function on
      * the interface, but would then require caller to provide [K], [V], and
      * [L].
      */
     @Suppress("UNCHECKED_CAST")
-    fun <T : V> getAs(key: K, except: List<Layer<K, V, *>> = listOf()): T =
-        whatIfWithout(except)[key] as T
+    fun <T : V> getAs(
+        key: K,
+        except: Collection<Layer<K, V, *>> = listOf(),
+    ): T = whatIfWithout(except)[key] as T
 
     /**
      * Creates a map (after rules applied) as-if there were an additional,
@@ -30,11 +34,12 @@ interface Layers<K : Any, V : Any, out L : Layer<K, V, L>> : Map<K, V> {
 
     /**
      * Creates a map (after rules applied) as-if these layers did not
-     * include the [except] list.  The default list is the [current] layer;
-     * this default is suitable for compare/contrast of ongoing edits against
-     * the current, topmost layer.
+     * include the [except] list.
+     * The default list is the [current] layer; this default is suitable
+     * for compare/contrast of ongoing edits against the current, topmost
+     * layer.
      */
     fun whatIfWithout(
-        except: List<Layer<K, V, *>> = listOf(current)
+        except: Collection<Layer<K, V, *>> = listOf(current)
     ): Layers<K, V, L>
 }

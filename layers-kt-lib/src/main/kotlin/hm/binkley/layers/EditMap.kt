@@ -5,7 +5,9 @@ import hm.binkley.layers.rules.LatestRule
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
+/** A constrained mixin for editing a [MutableLayer] or [MutableLayers]. */
 interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
+    /** Convenience for creating a new [Rule] with a [block]. */
     fun <T : V> rule(
         name: String,
         block: (K, Sequence<T>, Layers<K, V, *>) -> T,
@@ -17,16 +19,31 @@ interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
         ): T = block(key, values, layers)
     }
 
-    fun <T : V> constantRule(value: T) = ConstantRule<K, V, T>(value)
-    fun <T : V> latestRule(default: T) = LatestRule<K, V, T>(default)
+    /** Convenience for creating a new constant rule. */
+    fun <T : V> constantRule(value: T): ConstantRule<K, V, T> =
+        ConstantRule(value)
+
+    /** Convenience for creating a new latest-with-default rule. */
+    fun <T : V> latestRule(default: T): LatestRule<K, V, T> =
+        LatestRule(default)
 }
 
+/**
+ * Convenience for defining map keys as compilable syntax.
+ * An example:
+ * ```
+ * var TestEditMap.BOB: Int by EditMapDelegate { name }
+ * // Elsewhere ...
+ * val editMap = TestEditMap()
+ * editMap.BOB = 17
+ * ```
+ */
 fun interface EditMapDelegate<
     K : Any,
     V : Any,
     T : V,
     > : ReadWriteProperty<EditMap<K, V>, T?> {
-    /** Finds or creates a suitable edit map key. */
+    /** The edit map key of this property. */
     fun KProperty<*>.toKey(): K
 
     @Suppress("UNCHECKED_CAST")
@@ -53,6 +70,7 @@ fun interface EditMapDelegate<
     }
 }
 
+/** Convenience for converting the value to a [Value]. */
 operator fun <
     K : Any,
     V : Any,

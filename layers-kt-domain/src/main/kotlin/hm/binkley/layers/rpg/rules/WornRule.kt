@@ -6,10 +6,10 @@ import hm.binkley.layers.rpg.RpgRule
 import hm.binkley.layers.rpg.items.Wearable
 
 /**
- * This "pass through" rule has no behavior, representing unapplied rules,
- * however it keeps the name of the rules that would otherwise be applied.
- * This lets text representations show the rule properly, and if that rule is
- * applicable or not.
+ * This "pass through" rule has no behavior, representing unapplied rules.
+ * However, it keeps the name of the rules that would otherwise be applied.
+ * This behavior lets text representations show the rule properly, and if
+ * a given rule is applicable or not.
  */
 class WornRule<T : Any>(
     name: String,

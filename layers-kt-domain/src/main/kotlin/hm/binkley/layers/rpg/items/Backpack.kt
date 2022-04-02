@@ -1,5 +1,12 @@
 package hm.binkley.layers.rpg.items
 
+/**
+ * A wearable backpack container weighing 5#.
+ *
+ * @param worn default unworn (`false`)
+ * @param previous default no link to this item in an earlier state (`null`)
+ * @param contents default no items in the backpack (empty list)
+ */
 class Backpack<I : Item<I>>(
     worn: Boolean = false,
     previous: Backpack<I>? = null,
@@ -12,6 +19,7 @@ class Backpack<I : Item<I>>(
     contents,
 ) {
     companion object {
+        /** Creates a new, unworn [Backpack]. */
         fun <I : Item<I>> backpack(): Backpack<I> = Backpack(false)
     }
 
@@ -21,6 +29,6 @@ class Backpack<I : Item<I>>(
         contents: List<I>,
     ): Backpack<I> = Backpack(worn, previous, contents)
 
-    override fun change(previous: Backpack<I>, worn: Boolean) =
+    override fun change(previous: Backpack<I>, worn: Boolean): Backpack<I> =
         Backpack(worn, previous, contents)
 }

@@ -23,7 +23,12 @@ open class Character<M : RpgLayer<M>> private constructor(
     )
 ) {
     companion object {
-        @Suppress("UPPER_BOUND_VIOLATED_WARNING")
+        /**
+         * Creates a new, blank [Character].
+         *
+         * @param name the name of the character
+         */
+        @Suppress("UPPER_BOUND_VIOLATED_WARNING", "PublicApiImplicitType")
         fun character(name: String) = Character<RpgLayer<*>>(name)
     }
 }

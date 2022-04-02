@@ -2,6 +2,7 @@ package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.Stat.MIGHT
 
+/** Sets your [MIGHT] to a minimum of 19. */
 class GirdleOfHillGiantMight private constructor(
     worn: Boolean,
     previous: GirdleOfHillGiantMight?,
@@ -18,11 +19,13 @@ class GirdleOfHillGiantMight private constructor(
     }
 
     companion object {
-        fun girdleOfHillGiantMight() = GirdleOfHillGiantMight(false, null)
+        /** Creates a new, unworn [GirdleOfHillGiantMight]. */
+        fun girdleOfHillGiantMight(): GirdleOfHillGiantMight =
+            GirdleOfHillGiantMight(false, null)
     }
 
     override fun change(
         previous: GirdleOfHillGiantMight,
         worn: Boolean,
-    ) = GirdleOfHillGiantMight(worn, previous)
+    ): GirdleOfHillGiantMight = GirdleOfHillGiantMight(worn, previous)
 }

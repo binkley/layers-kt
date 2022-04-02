@@ -3,6 +3,7 @@ package hm.binkley.layers.rules
 import hm.binkley.layers.Layers
 import hm.binkley.layers.Rule
 
+/** Base type for rules returning a constant value. */
 open class ConstantRule<K : Any, V : Any, T : V>(
     private val value: T,
     name: String = "Constant(value=$value)",

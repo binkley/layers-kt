@@ -2,7 +2,11 @@ package hm.binkley.layers.rpg.items
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 
-/** @todo Capacity for containers: mass and dimensions */
+/**
+ * Base type for container items.
+ *
+ * @todo Capacity for containers: mass and dimensions
+ */
 @SuppressFBWarnings(
     "BC_BAD_CAST_TO_ABSTRACT_COLLECTION",
     "EI_EXPOSE_REP",
@@ -13,6 +17,7 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
     weight: Float,
     worn: Boolean,
     previous: C?,
+    /** The contents of this container. */
     val contents: List<I>,
 ) : WearableItem<C>(
     name,
@@ -31,6 +36,7 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
         }
     }
 
+    /** Creates a new, updated layer for this container. */
     protected abstract fun updateContainer(
         worn: Boolean,
         previous: C?,
@@ -38,9 +44,9 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
     ): C
 
     /**
-     * Adds [item] to this container, returning a new container.  The
-     * original container remains unchanged.  A container is a `Layer`, so the
-     * mutated copy needs to be saved.
+     * Adds [item] to this container, returning a new container.
+     * The original container remains unchanged.
+     * A container is a `Layer`, so the mutated copy needs to be saved.
      */
     fun stow(item: I): C {
         val updatedContents = contents.toMutableList()
@@ -49,9 +55,9 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
     }
 
     /**
-     * Removes [item] to this container, returning a new container.  The
-     * original container remains unchanged.  A container is a `Layer`, so the
-     * mutated copy needs to be saved.
+     * Removes [item] to this container, returning a new container.
+     * The original container remains unchanged.
+     * A container is a `Layer`, so the mutated copy needs to be saved.
      */
     fun unstow(item: I): C {
         val updatedContents = contents.toMutableList()
@@ -59,5 +65,5 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
         return updateContainer(worn, self, updatedContents)
     }
 
-    override fun toString() = "${super.toString()}: $contents"
+    override fun toString(): String = "${super.toString()}: $contents"
 }

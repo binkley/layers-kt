@@ -33,8 +33,8 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
 
     /**
      * Directly compute the value for [key], rather than find the entries
-     * (key/value pairs) for all keys.  Most rules do not need to compute the
-     * values for other keys.
+     * (key/value pairs) for all keys.
+     * Most rules do not need to compute the values for other keys.
      */
     @SuppressFBWarnings("NP_NONNULL_RETURN_VIOLATION")
     override fun get(key: K): V = computeValue(key)
@@ -46,10 +46,10 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         return whatIf
     }
 
-    override fun whatIfWithout(except: List<Layer<K, V, *>>):
+    override fun whatIfWithout(except: Collection<Layer<K, V, *>>):
         Layers<K, V, M> = without(except)
 
-    override fun edit(block: EditMap<K, V>.() -> Unit) =
+    override fun edit(block: EditMap<K, V>.() -> Unit): Unit =
         DefaultLayersEditMap().block()
 
     override fun saveAndNext(name: String): M = saveAndNext {
@@ -66,11 +66,11 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
         layers.pop()
     }
 
-    override fun toString() = history.mapIndexed { index, layer ->
+    override fun toString(): String = history.mapIndexed { index, layer ->
         "$index (${layer::class.simpleName}): $layer"
     }.joinToString("\n", "$name: ${super.toString()}\n")
 
-    private fun without(except: List<Layer<*, *, *>>):
+    private fun without(except: Collection<Layer<*, *, *>>):
         DefaultMutableLayers<K, V, M> {
         if (except.isEmpty()) return this
 

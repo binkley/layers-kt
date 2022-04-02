@@ -15,5 +15,6 @@ var RpgEditMap.GRIT: Int by EditMapDelegate { name }
 var RpgEditMap.WIT: Int by EditMapDelegate { name }
 var RpgEditMap.FORESIGHT: Int by EditMapDelegate { name }
 var RpgEditMap.PRESENCE: Int by EditMapDelegate { name }
+@Suppress("ObjectPropertyName")
 var RpgEditMap.`ITEM-WEIGHT`: Float by EditMapDelegate { name }
 // TODO: Encumbrance

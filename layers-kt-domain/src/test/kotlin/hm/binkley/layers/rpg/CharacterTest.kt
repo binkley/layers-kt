@@ -41,61 +41,61 @@ class CharacterTest {
     }
 
     @Test
-    fun `should update player name directly`() = character.edit {
+    fun `should update player name directly`(): Unit = character.edit {
         PLAYER_NAME = "Bob"
         PLAYER_NAME shouldBe "Bob"
     }
 
     @Test
-    fun `should update character name directly`() = character.edit {
+    fun `should update character name directly`(): Unit = character.edit {
         CHARACTER_NAME = "Bob"
         CHARACTER_NAME shouldBe "Bob"
     }
 
     @Test
-    fun `should update might directly`() = character.edit {
+    fun `should update might directly`(): Unit = character.edit {
         MIGHT = 13
         ++MIGHT
         MIGHT shouldBe 14
     }
 
     @Test
-    fun `should update deftness directly`() = character.edit {
+    fun `should update deftness directly`(): Unit = character.edit {
         DEFTNESS = 13
         ++DEFTNESS
         DEFTNESS shouldBe 14
     }
 
     @Test
-    fun `should update grit directly`() = character.edit {
+    fun `should update grit directly`(): Unit = character.edit {
         GRIT = 13
         ++GRIT
         GRIT shouldBe 14
     }
 
     @Test
-    fun `should update wit directly`() = character.edit {
+    fun `should update wit directly`(): Unit = character.edit {
         WIT = 13
         ++WIT
         WIT shouldBe 14
     }
 
     @Test
-    fun `should update foresight directly`() = character.edit {
+    fun `should update foresight directly`(): Unit = character.edit {
         FORESIGHT = 13
         ++FORESIGHT
         FORESIGHT shouldBe 14
     }
 
     @Test
-    fun `should update presence directly`() = character.edit {
+    fun `should update presence directly`(): Unit = character.edit {
         PRESENCE = 13
         ++PRESENCE
         PRESENCE shouldBe 14
     }
 
     @Test
-    fun `should update item weight directly`() = character.edit {
+    fun `should update item weight directly`(): Unit = character.edit {
         `ITEM-WEIGHT` = 1.1f
         ++`ITEM-WEIGHT`
         `ITEM-WEIGHT` shouldBe 2.1f

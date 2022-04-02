@@ -3,9 +3,11 @@ package hm.binkley.layers.rpg.items
 import hm.binkley.layers.rpg.RpgLayer
 import hm.binkley.layers.toValue
 
+/** Base type for items. */
 abstract class Item<I : Item<I>>(
     name: String,
-    val weight: Float, // TODO: BigDecimal with 2 decimal places
+    /** Item weight in pounds. */
+    val weight: Float, // TODO: BigDecimal with 0-2 decimal places
 ) : RpgLayer<I>(name) {
     init {
         edit {

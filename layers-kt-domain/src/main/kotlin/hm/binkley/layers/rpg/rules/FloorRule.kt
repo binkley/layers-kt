@@ -5,6 +5,7 @@ import hm.binkley.layers.rpg.RpgRule
 import hm.binkley.layers.rpg.items.Wearable
 import kotlin.math.max
 
+/** Base type for rules returning a minimum value. */
 class FloorRule(
     private val value: Int,
     private val layer: Wearable<*>,

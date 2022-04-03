@@ -2,6 +2,7 @@ package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.Character.Companion.character
 import hm.binkley.layers.rpg.rules.WornRule
+import hm.binkley.layers.rules.constantRule
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue

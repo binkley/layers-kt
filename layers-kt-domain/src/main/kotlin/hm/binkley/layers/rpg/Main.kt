@@ -7,6 +7,8 @@ import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
 import hm.binkley.layers.Value
 import hm.binkley.layers.rpg.Character.Companion.character
 import hm.binkley.layers.rpg.items.GirdleOfHillGiantMight.Companion.girdleOfHillGiantMight
+import hm.binkley.layers.rules.constantRule
+import hm.binkley.layers.rules.lastOrDefaultRule
 import hm.binkley.layers.toValue
 import lombok.Generated
 

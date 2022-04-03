@@ -1,5 +1,7 @@
 package hm.binkley.layers.rpg
 
+import hm.binkley.layers.rules.lastOrDefaultRule
+
 /**
  * This layer tracks basic player details.
  * Supported keys are:

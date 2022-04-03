@@ -1,6 +1,8 @@
 package hm.binkley.layers
 
 import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
+import hm.binkley.layers.rules.constantRule
+import hm.binkley.layers.rules.lastOrDefaultRule
 import hm.binkley.util.emptyStack
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf

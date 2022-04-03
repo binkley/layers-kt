@@ -1,6 +1,7 @@
 package hm.binkley.layers.rpg.rules
 
 import hm.binkley.layers.rpg.Character.Companion.character
+import hm.binkley.layers.rules.constantRule
 import hm.binkley.layers.toValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe

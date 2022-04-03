@@ -3,17 +3,59 @@ package hm.binkley.util
 import hm.binkley.util.ArrayMutableStack.Companion.asMutableStack
 import hm.binkley.util.ArrayMutableStack.Companion.asStack
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
 
 internal class StackTest {
     @Test
     fun `should be a list`() {
-        emptyStack<Int>() shouldBe listOf()
+        emptyStack<Int>() shouldBe emptyList()
         stackOf(3) shouldBe listOf(3)
+
         mutableStackOf<Int>() shouldBe mutableListOf()
         mutableStackOf(3) shouldBe mutableListOf(3)
         mutableStackOf(3).toStack() shouldBe listOf(3)
+    }
+
+    @Suppress("ReplaceCallWithBinaryOperator")
+    @Test
+    fun `should equate sensibly`() {
+        val stack = stackOf(3)
+        stack.equals(stack).shouldBeTrue()
+        stack.equals(stackOf(3)).shouldBeTrue()
+        stack.equals(listOf(3)).shouldBeFalse()
+        stack.equals(stackOf(4)).shouldBeFalse()
+
+        val mutableStack = mutableStackOf(3)
+        mutableStack.equals(mutableStack).shouldBeTrue()
+        mutableStack.equals(mutableStackOf(3)).shouldBeTrue()
+        mutableStack.equals(listOf(3)).shouldBeFalse()
+        mutableStack.equals(mutableStackOf(4)).shouldBeFalse()
+    }
+
+    @Test
+    fun `should hash sensibly`() {
+        emptyStack<Int>().hashCode() shouldBe emptyStack<Int>().hashCode()
+        stackOf(3).hashCode() shouldNotBe stackOf(4).hashCode()
+
+        emptyMutableStack<Int>().hashCode() shouldBe
+            emptyMutableStack<Int>().hashCode()
+        mutableStackOf(3).hashCode() shouldNotBe
+            mutableStackOf(4).hashCode()
+    }
+
+    @Test
+    fun `should print as list does`() {
+        "${emptyStack<Int>()}" shouldBe "${emptyList<Int>()}"
+        "${stackOf(3)}" shouldBe "${listOf(3)}"
+        "${stackOf(3, 7)}" shouldBe "${listOf(3, 7)}"
+
+        "${emptyMutableStack<Int>()}" shouldBe "${mutableListOf<Int>()}"
+        "${mutableStackOf(3)}" shouldBe "${mutableListOf(3)}"
+        "${mutableStackOf(3, 7)}" shouldBe "${mutableListOf(3, 7)}"
     }
 
     @Test

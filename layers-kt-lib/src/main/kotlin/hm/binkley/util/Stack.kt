@@ -66,6 +66,8 @@ interface MutableStack<T> : Stack<T>, MutableList<T> {
  * A default implementation of [MutableStack] delegating to the given
  * [elements] mutable list.
  * The list defaults to [ArrayList].
+ *
+ * Use [asStack] and [asMutableStack] to wrap a mutable list.
  */
 open class ArrayMutableStack<T> private constructor(
     private val elements: MutableList<T> = ArrayList(),
@@ -73,11 +75,15 @@ open class ArrayMutableStack<T> private constructor(
     constructor(elements: Collection<T>) : this(ArrayList(elements))
     constructor(initialCapacity: Int) : this(ArrayList(initialCapacity))
 
-    // TODO: equals and hashCode
+    override fun equals(other: Any?): Boolean = this === other ||
+        other is Stack<*> &&
+        elements == other.toList()
+
+    override fun hashCode(): Int = elements.hashCode()
     override fun toString(): String = elements.toString()
 
     companion object {
-        // TODO: Wrapper for [List]->[Stack]
+        // Access to private constructor for wrapping and not copying
 
         /** Returns a [Stack] that wraps the list. */
         fun <T> MutableList<T>.asStack(): Stack<T> =

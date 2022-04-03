@@ -3,7 +3,7 @@ package hm.binkley.layers.rpg.items
 import hm.binkley.layers.rpg.Character.Companion.character
 import hm.binkley.layers.rpg.Stat.MIGHT
 import hm.binkley.layers.rpg.items.GirdleOfHillGiantMight.Companion.girdleOfHillGiantMight
-import hm.binkley.layers.toValue
+import hm.binkley.layers.set
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -13,7 +13,7 @@ internal class GirdleOfHillGiantMightTest {
         val character = character("TEST CHARACTER")
         character.saveAndNext("Set might")
         character.edit {
-            this[MIGHT.name] = 18.toValue()
+            this[MIGHT.name] = 18
         }
 
         character.saveAndNext { girdleOfHillGiantMight() }
@@ -26,7 +26,7 @@ internal class GirdleOfHillGiantMightTest {
         val character = character("TEST CHARACTER")
         character.saveAndNext("Set might")
         character.edit {
-            this[MIGHT.name] = 18.toValue()
+            this[MIGHT.name] = 18
         }
 
         character.saveAndNext { girdleOfHillGiantMight().don() }
@@ -39,7 +39,7 @@ internal class GirdleOfHillGiantMightTest {
         val character = character("TEST CHARACTER")
         character.saveAndNext("Set might")
         character.edit {
-            this[MIGHT.name] = 20.toValue()
+            this[MIGHT.name] = 20
         }
 
         character.saveAndNext { girdleOfHillGiantMight().don() }

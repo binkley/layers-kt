@@ -5,6 +5,9 @@ import kotlin.reflect.KProperty
 
 /** A constrained mixin for editing a [MutableLayer] or [MutableLayers]. */
 interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
+    /** Convenience for converting [value] to a [Value]. */
+    fun put(key: K, value: V) = put(key, value.toValue())
+
     /** Convenience for creating a new [Rule] with a [block]. */
     fun <T : V> rule(
         name: String,
@@ -60,9 +63,9 @@ fun interface EditMapDelegate<
     }
 }
 
-/** Convenience for converting the value to a [Value]. */
+/** Convenience for converting a value to a [Value] type. */
 operator fun <
     K : Any,
     V : Any,
-    T : V,
-    > EditMap<K, V>.set(key: K, value: T) = put(key, value.toValue())
+    >
+EditMap<K, V>.set(key: K, value: V): ValueOrRule<V>? = put(key, value)

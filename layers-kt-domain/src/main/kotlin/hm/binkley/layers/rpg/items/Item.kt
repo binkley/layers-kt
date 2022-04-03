@@ -1,7 +1,7 @@
 package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.RpgLayer
-import hm.binkley.layers.toValue
+import hm.binkley.layers.set
 
 /** Base type for items. */
 abstract class Item<I : Item<I>>(
@@ -14,7 +14,7 @@ abstract class Item<I : Item<I>>(
             // TODO: Display weight:
             //       - "-" when 0
             //       - no trailing zeros in decimal places
-            this["ITEM-WEIGHT"] = weight.toValue()
+            this["ITEM-WEIGHT"] = weight
         }
     }
 }

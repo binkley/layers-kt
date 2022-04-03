@@ -19,7 +19,7 @@ internal class DefaultMutableLayerTest {
     @Test
     fun `should edit a value`() {
         val edited = layer.edit {
-            this["A KEY"] = 3.toValue()
+            this["A KEY"] = 3
         }
 
         layer shouldBe mapOf("A KEY" to 3.toValue())

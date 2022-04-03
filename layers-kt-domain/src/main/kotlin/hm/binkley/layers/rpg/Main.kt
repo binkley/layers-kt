@@ -4,12 +4,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import hm.binkley.layers.DefaultMutableLayer
 import hm.binkley.layers.DefaultMutableLayers
 import hm.binkley.layers.DefaultMutableLayers.Companion.defaultMutableLayers
-import hm.binkley.layers.Value
 import hm.binkley.layers.rpg.Character.Companion.character
 import hm.binkley.layers.rpg.items.GirdleOfHillGiantMight.Companion.girdleOfHillGiantMight
 import hm.binkley.layers.rules.constantRule
 import hm.binkley.layers.rules.lastOrDefaultRule
-import hm.binkley.layers.toValue
+import hm.binkley.layers.set
 import lombok.Generated
 
 /**
@@ -31,11 +30,11 @@ fun main() {
     }
     c.saveAndNext("First")
     c.edit @Generated {
-        this["ALICE"] = Value(3)
+        this["ALICE"] = 3
     }
     val a = c.saveAndNext("Second")
     a.edit @Generated {
-        this["BOB"] = Value(4.0)
+        this["BOB"] = 4.0
     }
 
     println(c)
@@ -65,11 +64,11 @@ fun main() {
     println("== USING LATEST RULE FOR A KEY")
 
     b.edit @Generated {
-        this["CAROL"] = 17.toValue()
+        this["CAROL"] = 17
     }
     d.saveAndNext("Second")
     d.edit @Generated {
-        this["CAROL"] = 19.toValue()
+        this["CAROL"] = 19
     }
     d.saveAndNext("Third")
     d.edit @Generated {
@@ -84,7 +83,7 @@ fun main() {
     println("== WHAT-IF SCENARIO")
 
     val e = d.whatIfWith @Generated {
-        this["CAROL"] = (-1).toValue()
+        this["CAROL"] = -1
     }
 
     println("- WHAT-IF")

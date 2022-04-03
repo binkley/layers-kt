@@ -40,7 +40,7 @@ A NAME: {}
             this["A KEY"] = lastOrDefaultRule(7)
         }
         defaultLayers.saveAndNext("First").edit {
-            this["A KEY"] = 3.toValue()
+            this["A KEY"] = 3
         }
 
         defaultLayers shouldBe mapOf("A KEY" to 3)

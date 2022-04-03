@@ -83,6 +83,7 @@ internal class StatRuleTest {
         }
         character.saveAndNext("Increase Jousation")
         character.edit {
+            // TODO: Why does using "set" operator compile but fail test?
             this[statKey] = 1.toValue()
         }
 

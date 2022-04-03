@@ -5,6 +5,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 /**
  * Base type for container items.
  *
+ * @todo what is [contents] _vs_ [_contents] about?
  * @todo Capacity for containers: mass and dimensions
  */
 @SuppressFBWarnings(
@@ -17,8 +18,8 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
     weight: Float,
     worn: Boolean,
     previous: C?,
-    /** The contents of this container. */
-    val contents: List<I>,
+    /** Containers start empty by default (empty list). */
+    val contents: List<I> = emptyList(),
 ) : WearableItem<C>(
     name,
     weight,

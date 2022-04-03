@@ -10,7 +10,7 @@ package hm.binkley.layers.rpg.items
 class Backpack<I : Item<I>>(
     worn: Boolean = false,
     previous: Backpack<I>? = null,
-    contents: List<I> = listOf(),
+    contents: List<I> = emptyList(),
 ) : Container<I, Backpack<I>>(
     "Backpack",
     5.0f,
@@ -19,7 +19,7 @@ class Backpack<I : Item<I>>(
     contents,
 ) {
     companion object {
-        /** Creates a new, unworn [Backpack]. */
+        /** Creates a new, unworn, empty [Backpack]. */
         fun <I : Item<I>> backpack(): Backpack<I> = Backpack(false)
     }
 

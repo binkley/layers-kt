@@ -4,7 +4,7 @@ import hm.binkley.layers.Layers
 import hm.binkley.layers.Rule
 
 /** Base type for rules returning the most recent value. */
-open class LatestRule<K : Any, V : Any, T : V>(
+open class LastOrDefaultRule<K : Any, V : Any, T : V>(
     private val default: T,
     name: String = "Latest(default=$default)",
 ) : Rule<K, V, T>(name) {

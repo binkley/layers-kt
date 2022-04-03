@@ -35,7 +35,7 @@ A NAME: {}
     @Test
     fun `should be a computed map`() {
         defaultLayers.edit {
-            this["A KEY"] = latestRule(7)
+            this["A KEY"] = lastOrDefaultRule(7)
         }
         defaultLayers.saveAndNext("First").edit {
             this["A KEY"] = 3.toValue()

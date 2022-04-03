@@ -22,7 +22,7 @@ fun main() {
 
     val c = defaultMutableLayers<String, Number>("C")
     c.edit @Generated {
-        this["ALICE"] = latestRule(0)
+        this["ALICE"] = lastOrDefaultRule(0)
         this["BOB"] = rule<Double>("Sum[Int]") @Generated { _, values, _ ->
             values.sum()
         }

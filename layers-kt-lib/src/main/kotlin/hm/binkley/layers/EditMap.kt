@@ -1,7 +1,7 @@
 package hm.binkley.layers
 
 import hm.binkley.layers.rules.ConstantRule
-import hm.binkley.layers.rules.LatestRule
+import hm.binkley.layers.rules.LastOrDefaultRule
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -24,8 +24,8 @@ interface EditMap<K : Any, V : Any> : MutableMap<K, ValueOrRule<V>> {
         ConstantRule(value)
 
     /** Convenience for creating a new latest-with-default rule. */
-    fun <T : V> latestRule(default: T): LatestRule<K, V, T> =
-        LatestRule(default)
+    fun <T : V> lastOrDefaultRule(default: T): LastOrDefaultRule<K, V, T> =
+        LastOrDefaultRule(default)
 }
 
 /**

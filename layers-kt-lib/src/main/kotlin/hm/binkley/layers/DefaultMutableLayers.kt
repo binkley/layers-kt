@@ -6,6 +6,7 @@ import hm.binkley.util.MutableStack
 import hm.binkley.util.Stack
 import hm.binkley.util.stackOf
 import hm.binkley.util.toMutableStack
+import hm.binkley.util.top
 import java.util.AbstractMap.SimpleEntry
 import kotlin.collections.Map.Entry
 
@@ -29,7 +30,7 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
 
     override val entries: Set<Entry<K, V>> get() = ViewSet()
     override val history: Stack<Layer<K, V, M>> = layers
-    override val current: M get() = layers.peek()
+    override val current: M get() = layers.top
 
     /**
      * Directly compute the value for [key], rather than find the entries
@@ -117,5 +118,5 @@ open class DefaultMutableLayers<K : Any, V : Any, M : MutableLayer<K, V, M>>(
     }
 
     private inner class DefaultLayersEditMap :
-        EditMap<K, V>, MutableMap<K, ValueOrRule<V>> by layers.peek()
+        EditMap<K, V>, MutableMap<K, ValueOrRule<V>> by layers.top
 }

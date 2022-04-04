@@ -45,7 +45,7 @@
         <buildplan-maven-plugin.version>1.5</buildplan-maven-plugin.version>
         <coverage.branches>92</coverage.branches>
         <coverage.instructions>96</coverage.instructions>
-        <coverage.lines>98</coverage.lines>
+        <coverage.lines>97</coverage.lines>
         <coverage.mutation>53</coverage.mutation>
         <dependency-check-maven.version>7.0.4</dependency-check-maven.version>
         <detekt-maven-plugin.version>1.19.1</detekt-maven-plugin.version>

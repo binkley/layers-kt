@@ -29,6 +29,9 @@ fun <T> stackOf(vararg elements: T): Stack<T> = mutableStackOf(*elements)
  */
 fun <T> Collection<T>.toStack(): Stack<T> = toMutableStack()
 
+/** Convenience property for [Stack.peek]. */
+val <T> Stack<T>.top get() = peek()
+
 /** A mutable stack view of [MutableList]. */
 interface MutableStack<T> : Stack<T>, MutableList<T> {
     /**

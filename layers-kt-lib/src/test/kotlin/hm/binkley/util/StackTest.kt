@@ -92,9 +92,10 @@ internal class StackTest {
 
     @Test
     fun `should peek`() {
-        val stack = stackOf(3)
+        val stack = stackOf(2, 3)
 
         stack.peek() shouldBe 3
+        stack.top shouldBe 3
     }
 
     @Test

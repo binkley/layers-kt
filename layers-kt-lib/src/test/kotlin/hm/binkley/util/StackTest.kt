@@ -14,10 +14,14 @@ internal class StackTest {
     fun `should be a list`() {
         emptyStack<Int>() shouldBe emptyList()
         stackOf(3) shouldBe listOf(3)
+        stackOf(2, 3).size shouldBe 2
+        stackOf(2, 3).last() shouldBe 3
 
         mutableStackOf<Int>() shouldBe mutableListOf()
         mutableStackOf(3) shouldBe mutableListOf(3)
         mutableStackOf(3).toStack() shouldBe listOf(3)
+        mutableStackOf(2, 3).size shouldBe 2
+        mutableStackOf(2, 3).last() shouldBe 3
     }
 
     @Suppress("ReplaceCallWithBinaryOperator")

@@ -7,6 +7,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
  *
  * @todo what is [contents] _vs_ [_contents] about?
  * @todo Capacity for containers: mass and dimensions
+ * @todo Containers are not always wearable (chest kept at home, etc)
  */
 @SuppressFBWarnings(
     "BC_BAD_CAST_TO_ABSTRACT_COLLECTION",
@@ -17,6 +18,7 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
     name: String,
     weight: Float,
     worn: Boolean,
+    /** @todo Implies FIFO or LIFO structure of stuff in the container */
     previous: C?,
     /** Containers start empty by default (empty list). */
     val contents: List<I> = emptyList(),

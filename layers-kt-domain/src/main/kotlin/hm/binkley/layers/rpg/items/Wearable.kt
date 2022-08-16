@@ -21,7 +21,7 @@ interface Wearable<I> where I : Item<I>, I : Wearable<I> {
      *
      * @todo Should this belong to a type higher up the hierarchy?
      */
-    fun same(): List<I>
+    fun versions(): List<I>
 
     /** Puts on this item, and applies its rules. */
     fun don(): I
@@ -38,13 +38,14 @@ abstract class WearableItem<I : WearableItem<I>>(
     name: String,
     weight: Float,
     override val worn: Boolean,
+    // TODO: This is a queer warning: `previous` is both private and final
     @SuppressFBWarnings("EI_EXPOSE_REP2")
     private val previous: I?,
 ) : Item<I>(name, weight), Wearable<I> {
     /** Creates a layer _copy_ linked to the parent it is copied from. */
     protected abstract fun change(previous: I, worn: Boolean): I
 
-    override fun same(): List<I> =
+    override fun versions(): List<I> =
         generateSequence(self) { it.previous }.toList()
 
     override fun don(): I =

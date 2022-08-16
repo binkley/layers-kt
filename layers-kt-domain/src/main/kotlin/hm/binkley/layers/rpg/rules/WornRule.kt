@@ -22,5 +22,5 @@ class WornRule<T : Any>(
         layers: RpgLayers,
     ): T =
         if (layer.worn) rule(key, values, layers)
-        else layers.getAs(key, except = layer.same())
+        else layers.getAs(key, except = layer.versions())
 }

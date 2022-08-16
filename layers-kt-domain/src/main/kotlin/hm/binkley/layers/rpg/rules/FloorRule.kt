@@ -14,5 +14,5 @@ class FloorRule(
         key: String,
         values: Sequence<Int>,
         layers: RpgLayers,
-    ): Int = max(value, layers.getAs(key, except = layer.same()))
+    ): Int = max(value, layers.getAs(key, except = layer.versions()))
 }

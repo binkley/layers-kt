@@ -47,35 +47,35 @@
         <coverage.instructions>96</coverage.instructions>
         <coverage.lines>97</coverage.lines>
         <coverage.mutation>53</coverage.mutation>
-        <dependency-check-maven.version>7.1.0</dependency-check-maven.version>
-        <detekt-maven-plugin.version>1.20.0</detekt-maven-plugin.version>
+        <dependency-check-maven.version>7.1.1</dependency-check-maven.version>
+        <detekt-maven-plugin.version>1.21.0</detekt-maven-plugin.version>
         <dokka.version>1.6.10</dokka.version>
         <findsecbugs-plugin.version>1.11.0</findsecbugs-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
         <java.charset>UTF-8</java.charset>
         <jdk.version>17</jdk.version>
-        <junit.version>5.8.2</junit.version>
-        <kotest.version>5.3.0</kotest.version>
+        <junit.version>5.9.0</junit.version>
+        <kotest.version>5.4.2</kotest.version>
         <kotlin.compiler.jvmTarget>${jdk.version}</kotlin.compiler.jvmTarget>
-        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin.version>1.7.20-Beta</kotlin.version>
         <ktlint-maven-plugin.version>1.13.1</ktlint-maven-plugin.version>
         <lombok.version>1.18.24</lombok.version>
         <maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
-        <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
+        <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
         <maven-project-info-reports-plugin.version>3.2.2</maven-project-info-reports-plugin.version>
         <maven-site-plugin.version>3.11.0</maven-site-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
-        <pitest-junit5-plugin.version>0.15</pitest-junit5-plugin.version>
-        <pitest-maven.version>1.7.5</pitest-maven.version>
+        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
+        <pitest-junit5-plugin.version>1.0.0</pitest-junit5-plugin.version>
+        <pitest-maven.version>1.9.3</pitest-maven.version>
         <project.build.sourceEncoding>${java.charset}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${java.charset}</project.reporting.outputEncoding>
         <spotbugs-maven-plugin.version>4.6.0.0</spotbugs-maven-plugin.version>
-        <spotbugs.version>4.6.0</spotbugs.version>
-        <versions-maven-plugin.version>2.10.0</versions-maven-plugin.version>
+        <spotbugs.version>4.7.1</spotbugs.version>
+        <versions-maven-plugin.version>2.11.0</versions-maven-plugin.version>
         <!-- @formatter:on -->
     </properties>
 

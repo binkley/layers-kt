@@ -82,7 +82,7 @@ private class TestWearableItem(
     previous: TestWearableItem? = null,
 ) : WearableItem<TestWearableItem>(
     "TEST ITEM",
-    13.13f,
+    13.13f.weight,
     worn,
     previous,
 ) {

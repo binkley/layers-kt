@@ -7,7 +7,7 @@ import hm.binkley.layers.set
 abstract class Item<I : Item<I>>(
     name: String,
     /** Item weight in pounds. */
-    val weight: Float, // TODO: BigDecimal with 0-2 decimal places
+    val weight: Weight,
 ) : RpgLayer<I>(name) {
     init {
         edit {

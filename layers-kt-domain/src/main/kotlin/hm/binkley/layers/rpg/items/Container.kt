@@ -16,7 +16,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 )
 abstract class Container<I : Item<I>, C : Container<I, C>>(
     name: String,
-    weight: Float,
+    weight: Weight,
     worn: Boolean,
     /** @todo Implies FIFO or LIFO structure of stuff in the container */
     previous: C?,
@@ -33,7 +33,7 @@ abstract class Container<I : Item<I>, C : Container<I, C>>(
     init {
         edit {
             this["$name-WEIGHT"] =
-                rule<Float>("Sum[Float]") { _, _, _ ->
+                rule<Weight>("Sum[Weight]") { _, _, _ ->
                     contents.map { it.weight }.sum()
                 }
         }

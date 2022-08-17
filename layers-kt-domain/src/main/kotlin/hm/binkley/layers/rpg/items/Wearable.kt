@@ -36,7 +36,7 @@ interface Wearable<I> where I : Item<I>, I : Wearable<I> {
  */
 abstract class WearableItem<I : WearableItem<I>>(
     name: String,
-    weight: Float,
+    weight: Weight,
     override val worn: Boolean,
     // TODO: This is a queer warning: `previous` is both private and final
     @SuppressFBWarnings("EI_EXPOSE_REP2")

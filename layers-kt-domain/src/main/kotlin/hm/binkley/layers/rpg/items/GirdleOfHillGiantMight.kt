@@ -8,7 +8,7 @@ class GirdleOfHillGiantMight private constructor(
     previous: GirdleOfHillGiantMight?,
 ) : WearableItem<GirdleOfHillGiantMight>(
     "Girdle of Might of the Hill Giant",
-    1.0f,
+    1.weight,
     worn,
     previous,
 ) {

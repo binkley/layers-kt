@@ -1,6 +1,7 @@
 package hm.binkley.layers.rpg.items
 
 import hm.binkley.layers.rpg.Character.Companion.character
+import hm.binkley.layers.rpg.items.Weight.Companion.ZERO
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -10,7 +11,7 @@ internal class ContainerTest {
     @Test
     fun `should have a debuggable representation`() =
         "${character.saveAndNext { TestContainer() }}" shouldBe
-            "[-]TEST CONTAINER: {ITEM-WEIGHT=<Value>11.1, TEST CONTAINER-WEIGHT=<Rule>Sum[Float]} -> null: []"
+            "[-]TEST CONTAINER: {ITEM-WEIGHT=<Value>11.10, TEST CONTAINER-WEIGHT=<Rule>Sum[Weight]} -> null: []"
 
     @Test
     fun `should add an item`() {
@@ -36,7 +37,7 @@ internal class ContainerTest {
         val unpacked = character.saveAndNext { packed.unstow(item) }
 
         unpacked.contents shouldBe emptyList<Item<*>>()
-        character["TEST CONTAINER-WEIGHT"] shouldBe 0.0f
+        character["TEST CONTAINER-WEIGHT"] shouldBe ZERO
     }
 }
 
@@ -46,7 +47,7 @@ private class TestContainer(
     contents: List<TestItem> = listOf(),
 ) : Container<TestItem, TestContainer>(
     "TEST CONTAINER",
-    11.1f,
+    11.1f.weight,
     worn,
     previous,
     contents

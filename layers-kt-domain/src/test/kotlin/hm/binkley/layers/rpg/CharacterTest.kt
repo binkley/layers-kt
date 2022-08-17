@@ -2,6 +2,7 @@ package hm.binkley.layers.rpg
 
 import hm.binkley.layers.rpg.Character.Companion.character
 import hm.binkley.layers.rpg.items.TestItem
+import hm.binkley.layers.rpg.items.Weight.Companion.ZERO
 import hm.binkley.util.stackOf
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -23,17 +24,17 @@ class CharacterTest {
 
     @Test
     fun `should have a player name rule`() {
-        character["PLAYER_NAME"] shouldBe ""
+        character["PLAYER-NAME"] shouldBe ""
     }
 
     @Test
     fun `should have a character name rule`() {
-        character["CHARACTER_NAME"] shouldBe ""
+        character["CHARACTER-NAME"] shouldBe ""
     }
 
     @Test
     fun `should have a net item weight`() {
-        character["ITEM-WEIGHT"] shouldBe 0.0f
+        character["ITEM-WEIGHT"] shouldBe ZERO
 
         val testItem = character.saveAndNext { TestItem() }
 
@@ -42,14 +43,14 @@ class CharacterTest {
 
     @Test
     fun `should update player name directly`(): Unit = character.edit {
-        PLAYER_NAME = "Bob"
-        PLAYER_NAME shouldBe "Bob"
+        `PLAYER-NAME` = "Bob"
+        `PLAYER-NAME` shouldBe "Bob"
     }
 
     @Test
     fun `should update character name directly`(): Unit = character.edit {
-        CHARACTER_NAME = "Bob"
-        CHARACTER_NAME shouldBe "Bob"
+        `CHARACTER-NAME` = "Bob"
+        `CHARACTER-NAME` shouldBe "Bob"
     }
 
     @Test

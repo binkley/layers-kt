@@ -1,5 +1,7 @@
 package hm.binkley.layers.rpg.items
 
+import hm.binkley.layers.rpg.items.Weight.Companion.weight
+
 /**
  * A wearable backpack container weighing 5#.
  *
@@ -13,12 +15,13 @@ class Backpack<I : Item<I>>(
     contents: List<I> = emptyList(),
 ) : Container<I, Backpack<I>>(
     "Backpack",
-    5.0f,
+    5.weight,
     worn,
     previous,
     contents,
 ) {
     companion object {
+        /** Creates a new, unworn, empty [Backpack]. */
         /** Creates a new, unworn, empty [Backpack]. */
         fun <I : Item<I>> backpack(): Backpack<I> = Backpack(false)
     }

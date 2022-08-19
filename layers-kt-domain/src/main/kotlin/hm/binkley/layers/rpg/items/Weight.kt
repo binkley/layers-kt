@@ -15,20 +15,21 @@ value class Weight private constructor(
 
     companion object {
         /** The zero weight. */
-        val ZERO = weight(BigDecimal.ZERO)
+        val ZERO: Weight = weight(BigDecimal.ZERO)
 
         /**
          * Creates a [Weight] with [HALF_EVEN] rounding to 2 decimal places.
          */
-        fun weight(value: BigDecimal) = Weight(value.setScale(2, HALF_EVEN))
+        fun weight(value: BigDecimal): Weight =
+            Weight(value.setScale(2, HALF_EVEN))
     }
 }
 
 /** Creates a [Weight] from an [Int]. */
-val Int.weight get() = weight(BigDecimal(this))
+val Int.weight: Weight get() = weight(BigDecimal(this))
 
 /** Creates a [Weight] from a [Float]. */
-val Float.weight get() = weight(BigDecimal(this.toDouble()))
+val Float.weight: Weight get() = weight(BigDecimal(this.toDouble()))
 
 /** Unary plus is the same as `this` weight. */
 operator fun Weight.unaryPlus(): Weight = this
